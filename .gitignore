@@ -1,0 +1,19 @@
+# Neovim swap/backup/undo (if you store them under your config dir)
+*.swp
+*.swo
+*.swn
+*~
+Session.vim
+
+# netrw history
+.netrwhist
+
+# Tags files
+tags
+TAGS
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+.stfolder
