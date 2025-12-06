@@ -1,6 +1,8 @@
 -- blink-indent.lua
 --
 -- Created: 11/07/25
+--
+-- Using instead of other indent plugin
 
 return {
 	'saghen/blink.indent',

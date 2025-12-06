@@ -16,6 +16,7 @@ return {
 	opts = {
 		bigfile = { enabled = true },
 		input = { enabled = true },
+		lazygit = { enabled = true },
 		quickfile = { enabled = true },
 		rename = { enabled = true },
 		scope = { enabled = true },
@@ -24,7 +25,6 @@ return {
 		dashboard = { enabled = false },
 		image = { enabled = false },
 		indent = { enabled = false },
-		lazygit = { enabled = false },
 		notifier = { enabled = false },
 		terminal = { enabled = false },
 	},
