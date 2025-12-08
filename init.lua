@@ -33,11 +33,31 @@ vim.g['loaded_perl_provider'] = 0    -- remove attempt to load Perl
 vim.g['loaded_python3_provider'] = 0 -- remove attempt to load Python
 vim.g['loaded_ruby_provider'] = 0    -- remove attempt to load Ruby
 
+Myfn = require('my_fns')
+
+if vim.g.neovide then
+	if Myfn.is_windows() then
+		vim.o.guifont = 'JetBrainsMono NFP:h15'
+		-- Don’t persist window size (prevents writing back a maximized state)
+		vim.g.neovide_fullscreen = false
+		vim.g.neovide_remember_window_size = true
+		-- vim.g.neovide_scale_factor = 1.4
+		vim.schedule(function()
+			vim.o.columns = 125
+			vim.o.lines = 35
+		end)
+	else
+		vim.o.guifont = 'JetBrainsMono NFP:h16'
+	end
+	-- vim.g.neovide.size = '1280x800'
+	-- vim.g.neovide_remember_window_size = true
+	-- vim.g.neovide_fullscreen = true
+end
+
 -- set leader to a space instead of \
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-Myfn = require('my_fns')
 
 -- point to plugins directory and load
 require('lazy').setup('plugins')
