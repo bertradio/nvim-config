@@ -36,6 +36,7 @@ local options = {
 	-- statuscolumn   = "%s%=%#FoldColumn#%C%* ", -- set format for status column
 	splitbelow     = true,     -- Open splits below current window (default  = above)
 	splitright     = true,     -- Open splits below current window (default  = above)
+	laststatus     = 3,        -- global statusline
 	tabstop        = 1,        -- tab and other indent settings
 	termguicolors  = true,     -- use colors from terminal emulator (e.g. Kitty)
 	title          = true,     -- put current filename in window header

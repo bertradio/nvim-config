@@ -6,7 +6,7 @@ return {
 	event = 'VeryLazy',
 	config = function()
 		require('mini.ai').setup()
-		require('mini.cmdline').setup()
+		-- require('mini.cmdline').setup()
 		require('plugins.mini.align')
 		require('plugins.mini.clue')
 		require('plugins.mini.comment')

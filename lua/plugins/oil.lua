@@ -38,14 +38,14 @@ local function buf_is_oil_modified(buf)
 	return vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].filetype == 'oil' and vim.bo[buf].modified
 end
 
-local function any_oil_dirty()
-	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-		if buf_is_oil_modified(buf) then
-			return true
-		end
-	end
-	return false
-end
+-- local function any_oil_dirty()
+-- 	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+-- 		if buf_is_oil_modified(buf) then
+-- 			return true
+-- 		end
+-- 	end
+-- 	return false
+-- end
 
 -- Apply: floats and normal windows both reflect dirty state
 local function apply_oil_window_indicators()
