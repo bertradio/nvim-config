@@ -33,7 +33,36 @@ return {
 		-- fzf-vim sets up :Files etc. seems to be best
 		require('fzf-lua').setup({ 'fzf-vim' })
 		local actions = require('fzf-lua.actions')
+
+		-- add file excludes - code from Gemini
 		require('fzf-lua').setup({
+			config = function()
+				local fzf = require("fzf-lua")
+
+				-- 1. Load exclude list
+				require('file_exclude.lua')
+
+				-- 2. Transform the table into an 'fd' compatible string
+				-- Result looks like: --exclude '*.7z' --exclude '*.exe' ...
+				local function get_exclude_args()
+					local args = ""
+					for _, pattern in ipairs(exclude_patterns) do
+						-- Wrap pattern in quotes to prevent shell expansion issues
+						args = args .. " --exclude '" .. pattern .. "'"
+					end
+					return args
+				end
+
+				-- 3. Pass options to setup
+				fzf.setup({
+					files = {
+						-- Default: --color=never --type f --hidden --follow --exclude .git
+						-- We append your custom excludes to the default command
+						fd_opts = "--color=never --type f --hidden --follow --exclude .git" .. get_exclude_args()
+					},
+				})
+			end,
+
 			defaults = { silent = true },
 			winopts = {
 				-- split         = 'belowright new',-- open in a split instead?
