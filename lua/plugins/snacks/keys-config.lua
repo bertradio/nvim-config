@@ -29,7 +29,7 @@ Myfn.map(
 )
 
 -- pickers with cwd displayed - from ChatGPT
-vim.keymap.set('n', '<Leader>f', function()
+vim.keymap.set('n', '<Leader>lf', function()
 	local snacks = require('snacks')
 	snacks.picker({
 		source = 'files',

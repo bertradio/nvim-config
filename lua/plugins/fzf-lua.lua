@@ -2,11 +2,12 @@
 
 -- stylua: ignore
 local function maps()
-	Myfn.map('n', '<Leader>vb', '<cmd>lua require("fzf-lua").buffers()<cr>', { desc = 'buffers' })
+	Myfn.map('n', '<Leader>vb', '<cmd>lua require("fzf-lua").builtin()<cr>', { desc = 'builtin commands' })
 	Myfn.map('n', '<Leader>vc', '<cmd>lua require("fzf-lua").command_history()<cr>', { desc = 'commands' })
-	Myfn.map('n', '<Leader>vf', '<cmd>lua require("fzf-lua").files()<cr>', { desc = 'find files' })
+	Myfn.map('n', '<Leader>vd', '<cmd>lua require("fzf-lua").diagnostics_document()<cr>', { desc = 'diagnostics' })
+	Myfn.map('n', '<Leader>f', '<cmd>lua require("fzf-lua").files()<cr>', { desc = 'find files' })
 	-- Myfn.map('n', '<Leader>f', '<cmd>lua require("fzf-lua").files()<cr>', { desc = 'find files' })
-	Myfn.map('n', '<Leader>vg', '<cmd>lua require("fzf-lua").grep_visual()<cr>', { desc = 'grep' })
+	Myfn.map('n', '<Leader>vg', '<cmd>lua require("fzf-lua").grep()<cr>', { desc = 'grep' })
 	Myfn.map('n', '<Leader>vk', '<cmd>lua require("fzf-lua").keymaps()<cr>', { desc = 'keymaps' })
 	Myfn.map('n', '<Leader>vl', '<cmd>lua require("fzf-lua").changes()<cr>', { desc = 'line changes' })
 	Myfn.map('n', '<Leader>vm', '<cmd>lua require("fzf-lua").marks()<cr>', { desc = 'marks' })
@@ -248,7 +249,7 @@ return {
 			},
 			grep = {
 				prompt = 'grep > ',
-				input_prompt = 'Grep For ❯ ',
+				input_prompt = 'Grep for ❯ ',
 				-- wide layout with preview on bottom
 				winopts = { preview = { layout = 'horizontal' } },
 				multiprocess = true, -- run command in a separate process
