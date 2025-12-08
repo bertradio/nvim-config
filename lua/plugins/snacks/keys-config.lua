@@ -20,13 +20,13 @@ Myfn.map('n', '<Leader>]', '<cmd>lua Snacks.dashboard.open()<cr>', { desc = 'Ope
 -- 	{ desc = 'diagnostics - buffer' }
 -- )
 
--- Myfn.map(
--- 	'n',
--- 	-- '<Leader>le',
--- 	'<Leader><space>',
--- 	'<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
--- 	{ desc = 'explorer' }
--- )
+Myfn.map(
+	'n',
+	-- '<Leader>le',
+	'<Leader><space>',
+	'<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
+	{ desc = 'explorer' }
+)
 
 -- -- pickers with cwd displayed - from ChatGPT
 -- vim.keymap.set('n', '<Leader>lf', function()
