@@ -46,8 +46,9 @@ miniclue.setup({
 		{ mode = 'n', keys = '<Leader>b', desc = '+buffer' },
 		{ mode = 'n', keys = '<Leader>d', desc = '+diff' },
 		{ mode = 'n', keys = '<Leader>e', desc = '+edit configs' },
+		{ mode = 'n', keys = '<Leader>f', desc = '+fzf' },
 		{ mode = 'n', keys = '<Leader>g', desc = '+goto' },
-		{ mode = 'n', keys = '<Leader>l', desc = '+snacks' },
+		-- { mode = 'n', keys = '<Leader>l', desc = '+snacks' },
 		{ mode = 'n', keys = '<Leader>m', desc = '+markdown' },
 
 		-- { mode = 'n', keys = '<Leader>a', desc = '+telescope' },

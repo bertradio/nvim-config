@@ -5,19 +5,20 @@
 local function maps()
 	-- Assuming 'Myfn' is defined globally in your config.
 	-- If it isn't, ensure you require it here, e.g.: local Myfn = require('your.utils')
-	Myfn.map('n', '<Leader>vb', '<cmd>lua require("fzf-lua").builtin()<cr>', { desc = 'builtin commands' })
-	Myfn.map('n', '<Leader>vc', '<cmd>lua require("fzf-lua").command_history()<cr>', { desc = 'commands' })
-	Myfn.map('n', '<Leader>vd', '<cmd>lua require("fzf-lua").diagnostics_document()<cr>', { desc = 'diagnostics' })
-	Myfn.map('n', '<Leader>f', '<cmd>lua require("fzf-lua").files()<cr>', { desc = 'find files' })
-	Myfn.map('n', '<Leader>vg', '<cmd>lua require("fzf-lua").grep()<cr>', { desc = 'grep' })
-	Myfn.map('n', '<Leader>vk', '<cmd>lua require("fzf-lua").keymaps()<cr>', { desc = 'keymaps' })
-	Myfn.map('n', '<Leader>vl', '<cmd>lua require("fzf-lua").changes()<cr>', { desc = 'line changes' })
-	Myfn.map('n', '<Leader>vm', '<cmd>lua require("fzf-lua").marks()<cr>', { desc = 'marks' })
-	Myfn.map('n', '<Leader>vo', '<cmd>lua require("fzf-lua").oldfiles()<cr>', { desc = 'oldfiles' })
-	Myfn.map('n', '<Leader>vq', '<cmd>lua require("fzf-lua").quickfix()<cr>', { desc = 'quickfix' })
-	Myfn.map('n', '<Leader>vr', '<cmd>lua require("fzf-lua").resume()<cr>', { desc = 'resume' })
-	Myfn.map('n', '<Leader>vs', '<cmd>lua require("fzf-lua").registers()<cr>', { desc = 'registers' })
-	Myfn.map('n', '<Leader>vw', '<cmd>lua require("fzf-lua").grep_cword()<cr>', { desc = 'grep word' })
+	Myfn.map('n', '<Leader>fb', '<cmd>lua require("fzf-lua").builtin()<cr>', { desc = 'builtin commands' })
+	Myfn.map('n', '<Leader>fc', '<cmd>lua require("fzf-lua").command_history()<cr>', { desc = 'commands' })
+	Myfn.map('n', '<Leader>fd', '<cmd>lua require("fzf-lua").diagnostics_document()<cr>', { desc = 'diagnostics' })
+	Myfn.map('n', '<Leader>ff', '<cmd>lua require("fzf-lua").files()<cr>', { desc = 'find files' })
+	Myfn.map('n', '<Leader><space>', '<cmd>lua require("fzf-lua").files()<cr>', { desc = 'find files' })
+	Myfn.map('n', '<Leader>fg', '<cmd>lua require("fzf-lua").grep()<cr>', { desc = 'grep' })
+	Myfn.map('n', '<Leader>fk', '<cmd>lua require("fzf-lua").keymaps()<cr>', { desc = 'keymaps' })
+	Myfn.map('n', '<Leader>fl', '<cmd>lua require("fzf-lua").changes()<cr>', { desc = 'line changes' })
+	Myfn.map('n', '<Leader>fm', '<cmd>lua require("fzf-lua").marks()<cr>', { desc = 'marks' })
+	Myfn.map('n', '<Leader>fo', '<cmd>lua require("fzf-lua").oldfiles()<cr>', { desc = 'oldfiles' })
+	Myfn.map('n', '<Leader>fq', '<cmd>lua require("fzf-lua").quickfix()<cr>', { desc = 'quickfix' })
+	Myfn.map('n', '<Leader>fr', '<cmd>lua require("fzf-lua").resume()<cr>', { desc = 'resume' })
+	Myfn.map('n', '<Leader>fs', '<cmd>lua require("fzf-lua").spellcheck()<cr>', { desc = 'spell check' })
+	Myfn.map('n', '<Leader>fw', '<cmd>lua require("fzf-lua").grep_cword()<cr>', { desc = 'grep word' })
 	Myfn.map('n', '<Leader>z', '<cmd>lua require("fzf-lua").zoxide()<cr>', { desc = 'zoxide' })
 end
 
@@ -109,7 +110,7 @@ return {
 					wrap = 'wrap',
 					hidden = 'nohidden',
 					vertical = 'down:45%',
-					horizontal = 'right:60%',
+					horizontal = 'right:65%', -- relative width of preview pane
 					layout = 'horizontal',
 					flip_columns = 120,
 					title = true,
