@@ -10,7 +10,11 @@ local function maps()
 	Myfn.map('n', '<Leader>fd', '<cmd>lua require("fzf-lua").diagnostics_document()<cr>', { desc = 'diagnostics' })
 	Myfn.map('n', '<Leader>ff', '<cmd>lua require("fzf-lua").files()<cr>', { desc = 'find files' })
 	-- Myfn.map('n', '<Leader><space>', '<cmd>lua require("fzf-lua").files()<cr>', { desc = 'find files' })
-	Myfn.map('n', '<Leader>fg', '<cmd>lua require("fzf-lua").grep()<cr>', { desc = 'grep' })
+	Myfn.map('n', '<Leader>fgc', '<cmd>lua require("fzf-lua").git_commits()<cr>', { desc = 'git commits' })
+	Myfn.map('n', '<Leader>fgg', '<cmd>lua require("fzf-lua").grep()<cr>', { desc = 'grep' })
+	Myfn.map('n', '<Leader>fgw', '<cmd>lua require("fzf-lua").grep_cword()<cr>', { desc = 'grep word' })
+	Myfn.map('n', '<Leader>fgs', '<cmd>lua require("fzf-lua").git_status()<cr>', { desc = 'git status' })
+	Myfn.map('n', '<Leader>fh', '<cmd>lua require("fzf-lua").helptags()<cr>', { desc = 'helptags' })
 	Myfn.map('n', '<Leader>fk', '<cmd>lua require("fzf-lua").keymaps()<cr>', { desc = 'keymaps' })
 	Myfn.map('n', '<Leader>fl', '<cmd>lua require("fzf-lua").changes()<cr>', { desc = 'line changes' })
 	Myfn.map('n', '<Leader>fm', '<cmd>lua require("fzf-lua").marks()<cr>', { desc = 'marks' })
@@ -18,7 +22,6 @@ local function maps()
 	Myfn.map('n', '<Leader>fq', '<cmd>lua require("fzf-lua").quickfix()<cr>', { desc = 'quickfix' })
 	Myfn.map('n', '<Leader>fr', '<cmd>lua require("fzf-lua").resume()<cr>', { desc = 'resume' })
 	Myfn.map('n', '<Leader>fs', '<cmd>lua require("fzf-lua").spellcheck()<cr>', { desc = 'spell check' })
-	Myfn.map('n', '<Leader>fw', '<cmd>lua require("fzf-lua").grep_cword()<cr>', { desc = 'grep word' })
 	Myfn.map('n', '<Leader>z', '<cmd>lua require("fzf-lua").zoxide()<cr>', { desc = 'zoxide' })
 end
 
@@ -28,6 +31,47 @@ return {
 	'ibhagwan/fzf-lua',
 	lazy = false,
 	dependencies = { 'nvim-tree/nvim-web-devicons' },
+
+	-- Global default for all pickers
+	defaults = {
+		git_icons = true, -- specific to git status (e.g., showing 'M' or icon for modified)
+		file_icons = true, -- show the filetype icon (e.g., Lua icon for .lua files)
+		color_icons = true, -- colorize the icons
+	},
+
+	-- Specific overrides for Git pickers
+	git = {
+		files = {
+			prompt      = 'GitFiles❯ ',
+			cmd         = 'git ls-files --exclude-standard --cached --others',
+			git_icons   = true, -- show git icons
+			file_icons  = true, -- show file icons
+			color_icons = true, -- colorize file icons
+		},
+		status = {
+			prompt     = 'GitStatus❯ ',
+			cmd        = 'git status -s',
+			previewer  = 'git_diff',
+			file_icons = true,
+			git_icons  = true,
+		},
+		commits = {
+			prompt  = 'Commits❯ ',
+			cmd     = 'git log --color --pretty=format:"%C(yellow)%h%Creset %C(green)%ad%Creset %s %C(bold blue)<%an>%Creset"',
+			preview = 'git show --pretty --stat --color {1}',
+		},
+		icons = {
+			['M'] = { icon = 'M', color = 'yellow' },
+			['D'] = { icon = 'D', color = 'red' },
+			['A'] = { icon = 'A', color = 'green' },
+			['R'] = { icon = 'R', color = 'yellow' },
+			['C'] = { icon = 'C', color = 'yellow' },
+			['?'] = { icon = '?', color = 'magenta' },
+			-- Override these if you want actual Nerd Font icons instead of letters
+			-- ['M'] = { icon = '★', color = 'yellow' },
+		},
+	},
+
 	config = function()
 		local fzf = require("fzf-lua")
 		local actions = require('fzf-lua.actions')
@@ -68,7 +112,7 @@ return {
 				winopts = { preview = { layout = 'horizontal' } },
 				header = false,
 				multiprocess = true,
-				git_icons = false,
+				git_icons = true,
 				file_icons = true,
 				color_icons = true,
 				cwd_prompt = true,
@@ -174,6 +218,7 @@ return {
 				['--height'] = '100%',
 				['--layout'] = 'reverse',
 				['--border'] = 'none',
+				['--exact'] = ''
 			},
 			previewers = {
 				cat = {
@@ -213,7 +258,7 @@ return {
 				input_prompt = 'Grep for ❯ ',
 				winopts = { preview = { layout = 'horizontal' } },
 				multiprocess = true,
-				git_icons = false,
+				git_icons = true,
 				file_icons = true,
 				color_icons = true,
 				grep_opts = '--binary-files=without-match --line-number --recursive --color=auto --perl-regexp -e',
@@ -308,7 +353,7 @@ return {
 				ctags_file = nil,
 				multiprocess = true,
 				file_icons = true,
-				git_icons = false,
+				git_icons = true,
 				color_icons = true,
 				rg_opts = '--no-heading --color=always --smart-case',
 				grep_opts = '--color=auto --perl-regexp',
@@ -324,7 +369,7 @@ return {
 				ctags_autogen = false,
 				multiprocess = true,
 				file_icons = true,
-				git_icons = false,
+				git_icons = true,
 				color_icons = true,
 				rg_opts = '--no-heading --color=always',
 				grep_opts = '--color=auto --perl-regexp',
@@ -374,7 +419,7 @@ return {
 			},
 			quickfix = {
 				file_icons = true,
-				git_icons = false,
+				git_icons = true,
 			},
 			quickfix_stack = {
 				prompt = 'Quickfix Stack> ',
@@ -385,7 +430,7 @@ return {
 				cwd_only = false,
 				async_or_timeout = 5000,
 				file_icons = true,
-				git_icons = false,
+				git_icons = true,
 				includeDeclaration = true,
 				symbols = {
 					async_or_timeout = true,
@@ -436,7 +481,7 @@ return {
 					fzf_opts = { ['--info'] = 'default' },
 					file_icons = true,
 					color_icons = true,
-					git_icons = false,
+					git_icons = true,
 					async = true,
 					silent = true,
 					separator = '| ',
@@ -456,7 +501,7 @@ return {
 				prompt = 'Diagnostics❯ ',
 				cwd_only = false,
 				file_icons = true,
-				git_icons = false,
+				git_icons = true,
 				diag_icons = true,
 				diag_source = true,
 				icon_padding = '',
@@ -470,7 +515,7 @@ return {
 				cmd = nil,
 				file_icons = true,
 				color_icons = true,
-				git_icons = false,
+				git_icons = true,
 				actions = { ['default'] = actions.complete },
 				winopts = { preview = { hidden = 'hidden' } },
 			},
