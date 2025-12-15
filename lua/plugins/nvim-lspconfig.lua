@@ -21,6 +21,12 @@ return {
 						},
 						workspace = { checkThirdParty = false },
 						telemetry = { enable = false },
+						codeLens = {
+							enable = false, -- Disables the usage counts/numbers
+						},
+						hint = {
+							enable = false, -- Disables the argument names
+						},
 					},
 				},
 			},

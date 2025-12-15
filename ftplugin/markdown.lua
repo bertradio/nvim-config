@@ -16,6 +16,7 @@ local options = {
 	autoread       = true, -- automatically re-read the file if changed outside nvim
 	breakindent    = true,
 	conceallevel   = 0,
+	filetype       = 'markdown',
 	linebreak      = true, -- don't break lines in the middle of words
 	-- foldcolumn     = 'auto',    -- set location of fold markers
 	-- foldlevel	     = 99,
