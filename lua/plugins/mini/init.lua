@@ -6,8 +6,7 @@ return {
 	event = 'VeryLazy',
 	config = function()
 		require('mini.ai').setup()
-		-- require('mini.cmdline').setup()
-		require('plugins.mini.align')
+		require('mini.align').setup({ mappings = { start = 'ga' } })
 		require('plugins.mini.clue')
 		require('plugins.mini.comment')
 		require('plugins.mini.move')

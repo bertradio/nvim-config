@@ -4,8 +4,8 @@
 
 return {
 	'stevearc/conform.nvim',
-	event = { 'BufReadPre', 'BufNewFile' },
-	cmd = { 'ConformInfo' },
+	event  = { 'BufReadPre', 'BufNewFile' },
+	cmd    = { 'ConformInfo' },
 
 	config = function()
 		local conform = require('conform')
@@ -67,8 +67,8 @@ return {
 
 		-- shfmt: set the command + 2-space indent
 		conform.formatters.shfmt = {
-			inherit = true,
-			command = shfmt_cmd,
+			inherit      = true,
+			command      = shfmt_cmd,
 			prepend_args = { '-i', '2' },
 		}
 

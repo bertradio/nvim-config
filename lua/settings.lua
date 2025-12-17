@@ -13,15 +13,10 @@ local options = {
 	-- DISPLAY AND WRAP --
 
 	autoindent     = true, -- autoindent on
-	cmdwinheight   = 12,   -- set size of command window
+	cmdwinheight   = 12, -- set size of command window
 	conceallevel   = 0,
 	copyindent     = true, -- copy the previous indentation on autoindenting
 	expandtab      = false, -- expand tabs to spaces by default
-	-- foldcolumn     = '1',  -- set only fold  markers
-	-- foldexpr       = 'nvim_treesitter#foldexpr()',
-	-- foldlevel      = 99,
-	-- foldlevelstart = 9,
-	-- foldmethod     = 'expr', -- set up default folding
 	linebreak      = true, -- don't break lines in the middle of words
 	listchars      = { eol = '↲', tab = '▸ ', trail = '·' }, -- set visuals for list mode (:set list)
 	number         = false, -- show line numbers

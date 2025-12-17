@@ -3,8 +3,8 @@
 
 return {
 	'dkarter/bullets.vim',
-	event = { 'BufReadPre', 'BufNewFile' },
-	ft = { 'markdown', 'text' },
+	event  = { 'BufReadPre', 'BufNewFile' },
+	ft     = { 'markdown', 'text' },
 
 	config = function()
 		vim.g.bullets_enabled_file_types = { 'markdown', 'text' }

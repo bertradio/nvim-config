@@ -51,48 +51,48 @@ return {
 
 				per_filetype = {
 					-- Code-like
-					lua = { 'buffer', 'lsp', 'path', 'snippets' },
-					sh = { 'buffer', 'lsp', 'path', 'snippets' },
-					ps1 = { 'lsp', 'buffer', 'path', 'snippets' },
-					python = { 'buffer', 'lsp', 'path', 'snippets' },
+					lua        = { 'buffer', 'lsp', 'path', 'snippets' },
+					sh         = { 'buffer', 'lsp', 'path', 'snippets' },
+					ps1        = { 'lsp', 'buffer', 'path', 'snippets' },
+					python     = { 'buffer', 'lsp', 'path', 'snippets' },
 					javascript = { 'buffer', 'lsp', 'path', 'snippets' },
 					typescript = { 'buffer', 'lsp', 'path', 'snippets' },
 
 					-- Prose-like
-					markdown = { 'spell', 'buffer', 'path' },
-					text = { 'spell', 'buffer', 'path' },
-					gitcommit = { 'spell', 'buffer', 'path' },
-					rst = { 'spell', 'buffer', 'path' },
-					latex = { 'spell', 'buffer', 'path' },
+					markdown   = { 'spell', 'buffer', 'path' },
+					text       = { 'spell', 'buffer', 'path' },
+					gitcommit  = { 'spell', 'buffer', 'path' },
+					rst        = { 'spell', 'buffer', 'path' },
+					latex      = { 'spell', 'buffer', 'path' },
 				},
 
 				providers = {
-					lsp = {
+					lsp      = {
 						score_offset = 3,
-						fallbacks = {},
+						fallbacks    = {},
 					},
-					buffer = {
-						score_offset = 10,
+					buffer   = {
+						score_offset       = 10,
 						min_keyword_length = 2,
-						opts = {
+						opts               = {
 							get_bufnrs = function()
 								return { vim.api.nvim_get_current_buf() }
 							end,
 						},
 					},
-					path = { score_offset = 2 },
+					path     = { score_offset = 2 },
 					snippets = { score_offset = 1 },
-					cmdline = { score_offset = 1 },
+					cmdline  = { score_offset = 1 },
 
-					spell = {
+					spell    = {
 						name = 'Spell',
 						module = 'blink-cmp-spell',
 						score_offset = 3,
 						opts = {
-							max_entries = 8,
+							max_entries            = 8,
 							preselect_current_word = false,
-							keep_all_entries = false,
-							use_cmp_spell_sorting = false,
+							keep_all_entries       = false,
+							use_cmp_spell_sorting  = false,
 							-- enable_in_context is set in config() below
 						},
 					},
@@ -100,8 +100,8 @@ return {
 			},
 
 			fuzzy = {
-				implementation = 'prefer_rust_with_warning',
-				use_proximity = true,
+				implementation    = 'prefer_rust_with_warning',
+				use_proximity     = true,
 				prebuilt_binaries = { download = true },
 			},
 
@@ -162,7 +162,7 @@ return {
 				if cmdline and cmdline.setup then
 					cmdline.setup({
 						cmdline = { enabled = true },
-						search = { enabled = true },
+						search  = { enabled = true },
 					})
 				end
 			end)
@@ -241,8 +241,8 @@ return {
 			return is_windows and nil or 'make install_jsregexp'
 		end)(),
 		opts = {
-			history = true,
-			updateevents = 'TextChanged,TextChangedI',
+			history             = true,
+			updateevents        = 'TextChanged,TextChangedI',
 			enable_autosnippets = false,
 			region_check_events = 'CursorMoved,CursorHold,InsertEnter',
 			delete_check_events = 'TextChanged,InsertLeave',

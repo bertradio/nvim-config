@@ -5,14 +5,14 @@
 return {
 	'folke/flash.nvim',
 	event = 'VeryLazy',
-	opts = {
-		jump = { autojump = true },
+	opts  = {
+		jump  = { autojump = true },
 		modes = {
 			search = { enabled = true },
-			char = { jump_labels = true },
+			char   = { jump_labels = true },
 		},
 	},
-	keys = {
+	keys  = {
 		{
 			's',
 			mode = { 'n', 'x', 'o' },
