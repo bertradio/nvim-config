@@ -22,6 +22,7 @@ local function maps()
 	Myfn.map('n', '<Leader>fq', '<cmd>lua require("fzf-lua").quickfix()<cr>', { desc = 'quickfix' })
 	Myfn.map('n', '<Leader>fr', '<cmd>lua require("fzf-lua").resume()<cr>', { desc = 'resume' })
 	Myfn.map('n', '<Leader>fs', '<cmd>lua require("fzf-lua").spellcheck()<cr>', { desc = 'spell check' })
+	Myfn.map('n', '<Leader>fu', '<cmd>lua require("fzf-lua").buffers()<cr>', { desc = 'buffers' })
 	Myfn.map('n', '<Leader>z', '<cmd>lua require("fzf-lua").zoxide()<cr>', { desc = 'zoxide' })
 end
 
