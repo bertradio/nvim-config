@@ -23,23 +23,8 @@ return {
 		ts.setup({
 			-- Install the parsers you actually use
 			ensure_installed = {
-				'awk',
-				'bash',
-				'c',
-				'csv',
-				'json',
-				'lua',
-				'markdown',
-				'markdown_inline',
-				'python',
-				'query',
-				'regex',
-				'toml',
-				'vim',
-				'vimdoc',
-				'powershell',
-				'diff',
-			},
+				'awk', 'bash', 'c', 'csv', 'diff', 'json', 'lua', 'markdown', 'markdown_inline',
+				'powershell', 'python', 'query', 'regex', 'toml', 'vim', 'vimdoc' },
 
 			auto_install = true,
 
