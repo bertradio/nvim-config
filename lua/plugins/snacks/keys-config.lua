@@ -22,8 +22,8 @@ Myfn.map('n', '<Leader>]', '<cmd>lua Snacks.dashboard.open()<cr>', { desc = 'Ope
 
 Myfn.map(
 	'n',
-	-- '<Leader>le',
-	'<Leader><space>',
+	'<Leader>x',
+	-- '<Leader><space>',
 	'<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
 	{ desc = 'explorer' }
 )
