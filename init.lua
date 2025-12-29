@@ -58,10 +58,27 @@ end
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-
--- point to plugins directory and load
-require('lazy').setup('plugins')
-
+-- code from Gemini to speed up loading
+require("lazy").setup({
+	spec = { { import = "plugins" } },
+	cache = { { enabled = true } }, -- make sure everything compiled
+	defaults = {
+		lazy = true,                 -- This makes plugins lazy-loaded by default unless specified otherwise
+	},
+	performance = {
+		rtp = {
+			-- Disable unused builtin vim plugins to save startup time
+			disabled_plugins = {
+				"gzip",
+				"tarPlugin",
+				"tohtml",
+				"tutor",
+				"zipPlugin",
+				"netrwPlugin", -- Only if you use a different file explorer like nvim-tree/oil
+			},
+		},
+	},
+})
 -- initialization files
 require('augroups')
 require('keymaps')
@@ -84,6 +101,7 @@ vim.api.nvim_set_hl(0, 'Folded', { fg = '#cccccc', bg = '#154360', italic = true
 vim.cmd([[
   iabbrev pbk <div style="page-break-after:always"></div>
 ]])
+
 
 -- Ensure nvim can find the yazi executable - from ChatGPT
 -- adds director to nvim path

@@ -9,7 +9,7 @@ local function getWords()
 	local wc = vim.fn.wordcount()
 	if wc['visual_words'] then -- if in visual mode, show words in selection
 		return wc['visual_words'] .. ' Words selected'
-	else                       -- otherwise words in all of the document
+	else                      -- otherwise words in all of the document
 		return wc['words'] .. ' Words'
 	end
 end
@@ -92,6 +92,7 @@ end
 return {
 
 	'nvim-lualine/lualine.nvim',
+	lazy = false,
 	dependencies = { 'nvim-tree/nvim-web-devicons' },
 
 	config = function()

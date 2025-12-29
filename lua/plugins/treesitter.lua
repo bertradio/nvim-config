@@ -1,16 +1,7 @@
 -- treesitter.lua
 -- code from ChatGPT
 
-return {
-	'nvim-treesitter/nvim-treesitter',
-	branch = 'master',
-	build = ':TSUpdate',
-	lazy = false,
-
-	config = function()
-		local ts = require('nvim-treesitter.configs')
-
-		-- Helper to auto-disable on huge files
+-- Helper to auto-disable on huge files
 		local function too_big(lang, buf)
 			local max = 200 * 1024 -- 200 KB
 			local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
@@ -19,6 +10,15 @@ return {
 			end
 			return false
 		end
+
+return {
+	'nvim-treesitter/nvim-treesitter',
+ 	branch = 'master',
+	build = ':TSUpdate',
+  event = { "BufReadPost", "BufNewFile" }, -- from Gemini instead of lazy=false
+
+	config = function()
+		local ts = require('nvim-treesitter.configs')
 
 		ts.setup({
 			-- Install the parsers you actually use

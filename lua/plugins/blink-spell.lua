@@ -9,12 +9,13 @@ return {
 		version = '1.*',
 
 		dependencies = {
-			'rafamadriz/friendly-snippets',
+			{ 'rafamadriz/friendly-snippets', lazy = true }, -- from Gemini only laod when needed
 			'nvim-lua/plenary.nvim',
 			'ribru17/blink-cmp-spell',
 			'L3MON4D3/LuaSnip',
 		},
-		event = 'InsertEnter',
+		-- event = 'InsertEnter',
+		event = "LspAttach", -- suggested by Gemini to speed up load - more lazy
 
 		opts = {
 			keymap = { preset = 'super-tab' },
