@@ -1,5 +1,10 @@
 -- init.lua
 
+-- from Gemini to makes sure everything is compiled
+if vim.loader then
+  vim.loader.enable()
+end
+
 -- disable netrw
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1

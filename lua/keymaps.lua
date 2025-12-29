@@ -32,7 +32,7 @@ Myfn.map({ 'n', 'i' }, '<c-s>', '<esc><cmd>w<cr>', { desc = 'Write buffer' })
 
 -- Exit nvim normally
 -- Myfn.map({ 'n', 'i', 'v' }, '<F10>', '<cmd>q<cr>', { desc = 'Exit nvim' })
-Myfn.map({ 'n', 'i', 'v' }, '<c-q>', '<cmd>qall<cr>', { desc = 'Exit nvim' })
+Myfn.map({ 'n', 'i', 'v' }, '<c-q>', '<cmd>q<cr>', { desc = 'Exit nvim' })
 
 ------------------------------------------------
 -- >>> WORKING WITH TEXT

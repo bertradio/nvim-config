@@ -2,7 +2,7 @@
 -- to handle bulleted lists only in markdown and text files
 
 return {
-	'dkarter/bullets.vim',
+ 	'dkarter/bullets.vim',
 	event  = { 'BufReadPre', 'BufNewFile' },
 	ft     = { 'markdown', 'text' },
 
