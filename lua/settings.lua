@@ -28,7 +28,6 @@ local options = {
 	showmode       = true, -- always show what mode we're currently in on status line
 	smartindent    = true,
 	softtabstop    = 2,
-	-- statuscolumn   = "%s%=%#FoldColumn#%C%* ", -- set format for status column
 	splitbelow     = true,     -- Open splits below current window (default  = above)
 	splitright     = true,     -- Open splits below current window (default  = above)
 	laststatus     = 3,        -- global statusline
@@ -76,7 +75,7 @@ local options = {
 
 -- loop to use vim.opt to execute settings from options dictionary defined above
 for k, v in pairs(options) do
-	vim.opt[k] = v
+  vim.opt[k] = v
 end
 
 -- should work for linux and win
@@ -96,18 +95,18 @@ vim.cmd('set spell syntax=off')
 
 --[[ setup for internal file search plugin access with :field
    [ if followed by wildcard expression, use tab to expand into menu ]]
-vim.opt.path = '+= **'        -- set path for recursive search of directories
+vim.opt.path = '+= **' -- set path for recursive search of directories
 -- vim.opt.wildmenu = true      -- use menu for wildcards
 vim.cmd('filetype plugin on') -- activate plugin
 
 -- icons for diagnostics
 vim.diagnostic.config({
-	signs = {
-		[vim.diagnostic.severity.ERROR] = { text = '🤬' },
-		[vim.diagnostic.severity.WARN] = { text = '🖐️' },
-		[vim.diagnostic.severity.HINT] = { text = '☝️' },
-		[vim.diagnostic.severity.INFO] = { text = '🤓' },
-	},
+  signs = {
+    [vim.diagnostic.severity.ERROR] = { text = '🤬' },
+    [vim.diagnostic.severity.WARN] = { text = '🖐️' },
+    [vim.diagnostic.severity.HINT] = { text = '☝️' },
+    [vim.diagnostic.severity.INFO] = { text = '🤓' },
+  },
 })
 
 -------------------------
@@ -115,74 +114,74 @@ vim.diagnostic.config({
 -------------------------
 
 vim.api.nvim_create_user_command('DiffWithSaved', function()
-	-- Get current buffer info
-	local cur_buf = vim.api.nvim_get_current_buf()
-	local filename = vim.api.nvim_buf_get_name(cur_buf)
+  -- Get current buffer info
+  local cur_buf = vim.api.nvim_get_current_buf()
+  local filename = vim.api.nvim_buf_get_name(cur_buf)
 
-	-- Check if file exists on disk
-	if filename == '' or not vim.fn.filereadable(filename) then
-		vim.notify('File not saved on disk!', vim.log.levels.ERROR)
-		return
-	end
+  -- Check if file exists on disk
+  if filename == '' or not vim.fn.filereadable(filename) then
+    vim.notify('File not saved on disk!', vim.log.levels.ERROR)
+    return
+  end
 
-	local ft = vim.bo.filetype
-	local cur_lines = vim.api.nvim_buf_get_lines(cur_buf, 0, -1, false)
-	local saved_lines = vim.fn.readfile(filename)
+  local ft = vim.bo.filetype
+  local cur_lines = vim.api.nvim_buf_get_lines(cur_buf, 0, -1, false)
+  local saved_lines = vim.fn.readfile(filename)
 
-	-- Create new tab
-	vim.cmd('tabnew')
+  -- Create new tab
+  vim.cmd('tabnew')
 
-	-- Function to create and setup a scratch buffer
-	local function create_scratch_buffer(lines, title)
-		local buf = vim.api.nvim_create_buf(false, true)
-		vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
-		vim.api.nvim_set_option_value('filetype', ft, { buf = buf })
-		vim.api.nvim_set_option_value('buftype', 'nofile', { buf = buf })
-		vim.api.nvim_set_current_buf(buf)
-		vim.api.nvim_set_option_value('winbar', title, { scope = 'local' })
-		return buf
-	end
+  -- Function to create and setup a scratch buffer
+  local function create_scratch_buffer(lines, title)
+    local buf = vim.api.nvim_create_buf(false, true)
+    vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+    vim.api.nvim_set_option_value('filetype', ft, { buf = buf })
+    vim.api.nvim_set_option_value('buftype', 'nofile', { buf = buf })
+    vim.api.nvim_set_current_buf(buf)
+    vim.api.nvim_set_option_value('winbar', title, { scope = 'local' })
+    return buf
+  end
 
-	-- Create first scratch buffer with current content
-	local buf1 = create_scratch_buffer(cur_lines, 'Unsaved changes')
+  -- Create first scratch buffer with current content
+  local buf1 = create_scratch_buffer(cur_lines, 'Unsaved changes')
 
-	-- Create vertical split
-	vim.cmd('vsplit')
+  -- Create vertical split
+  vim.cmd('vsplit')
 
-	-- Create second scratch buffer with saved content
-	local buf2 = create_scratch_buffer(saved_lines, 'File on disk')
+  -- Create second scratch buffer with saved content
+  local buf2 = create_scratch_buffer(saved_lines, 'File on disk')
 
-	-- Enable diff mode for both windows
-	vim.cmd('windo diffthis')
+  -- Enable diff mode for both windows
+  vim.cmd('windo diffthis')
 
-	-- Add keymapping to close diff view
-	local function close_diff()
-		vim.cmd('tabclose')
-	end
+  -- Add keymapping to close diff view
+  local function close_diff()
+    vim.cmd('tabclose')
+  end
 
-	vim.keymap.set('n', 'q', close_diff, { buffer = buf1, silent = true })
-	vim.keymap.set('n', 'q', close_diff, { buffer = buf2, silent = true })
+  vim.keymap.set('n', 'q', close_diff, { buffer = buf1, silent = true })
+  vim.keymap.set('n', 'q', close_diff, { buffer = buf2, silent = true })
 end, {})
 
 vim.keymap.set(
-	'n',
-	'<leader>ds',
-	'<cmd>DiffWithSaved<cr>',
-	{ desc = 'Diff with last save' },
-	{ remap = false, silent = true }
+  'n',
+  '<leader>ds',
+  '<cmd>DiffWithSaved<cr>',
+  { desc = 'Diff with last save' },
+  { remap = false, silent = true }
 )
 
 -- command to sort tables
 -- works in visual mode Sort followed by the column number
 vim.api.nvim_create_user_command('Sort', function(opts)
-	if not tonumber(opts.args) then
-		print('Error: Argument must be a number')
-		return
-	end
-	local bang = opts.bang and '!' or ''
-	local range = opts.range == 0 and '' or ('%d,%d'):format(opts.line1, opts.line2)
-	-- use next line for sort case insensitive
-	-- local pattern = string.format('%ssort i%s /^\\([^|]*|\\)\\{%s\\}/', range, bang, opts.args)
-	local pattern = string.format('%ssort%s /^\\([^|]*|\\)\\{%s\\}/', range, bang, opts.args)
-	vim.cmd(pattern)
+  if not tonumber(opts.args) then
+    print('Error: Argument must be a number')
+    return
+  end
+  local bang = opts.bang and '!' or ''
+  local range = opts.range == 0 and '' or ('%d,%d'):format(opts.line1, opts.line2)
+  -- use next line for sort case insensitive
+  -- local pattern = string.format('%ssort i%s /^\\([^|]*|\\)\\{%s\\}/', range, bang, opts.args)
+  local pattern = string.format('%ssort%s /^\\([^|]*|\\)\\{%s\\}/', range, bang, opts.args)
+  vim.cmd(pattern)
 end, { nargs = 1, bang = true, range = true })
