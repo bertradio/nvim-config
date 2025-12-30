@@ -1,5 +1,8 @@
 -- init.lua
 
+-- make sure mason dir can be found
+vim.env.PATH = vim.fn.stdpath("data") .. "/mason/bin" .. (vim.fn.has("win32") == 1 and ";" or ":") .. vim.env.PATH
+
 -- from Gemini to makes sure everything is compiled
 if vim.loader then
   vim.loader.enable()

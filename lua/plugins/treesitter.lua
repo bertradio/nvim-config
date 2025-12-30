@@ -1,51 +1,54 @@
--- treesitter.lua
--- code from ChatGPT and Gemini
-
--- Helper to auto-disable on huge files (Defined outside to keep config clean)
-local function too_big(_, buf)
-    local max = 100 * 1024 -- Reduced to 100 KB for even better performance
-    local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-    return ok and stats and stats.size > max
-end
+-- treesitter re-write for new main branch of treesitter
+-- code from Gemini 12/30/25
 
 return {
-    'nvim-treesitter/nvim-treesitter',
-    version = false, -- Last release is very old, use master for better perf
-    build = ':TSUpdate',
-    event = { 'BufReadPost', 'BufNewFile' },
-    cmd = { 'TSUpdateSync', 'TSUpdate', 'TSInstall' },
-    
-    -- Using 'main' lets lazy.nvim call setup automatically
-    main = 'nvim-treesitter.configs',
-    
-    opts = {
-        ensure_installed = {
-            'awk', 'bash', 'c', 'csv', 'diff', 'json', 'lua', 'markdown', 'markdown_inline',
-            'powershell', 'python', 'query', 'regex', 'toml', 'vim', 'vimdoc'
-        },
-        auto_install = true,
-        highlight = {
-            enable = true,
-            additional_vim_regex_highlighting = false,
-            disable = too_big,
-        },
-        indent = {
-            enable = true,
-            disable = { 'markdown' },
-        },
-        incremental_selection = {
-            enable = true,
-            keymaps = {
-                init_selection = '<CR>',
-                node_incremental = '<CR>',
-                node_decremental = '<BS>',
-                scope_incremental = '<TAB>',
-            },
-        },
-    },
-    
-    -- Use config if you need custom logic, otherwise 'opts' + 'main' is faster
-    config = function(_, opts)
-        require('nvim-treesitter.configs').setup(opts)
-    end,
+  'nvim-treesitter/nvim-treesitter',
+  branch = 'main',
+  lazy = false,
+  config = function()
+    -- In the rewrite, we use the 'nvim-treesitter' module directly
+    local ts = require('nvim-treesitter')
+
+    -- 1. Setup the basic configuration
+    ts.setup({
+      -- Provide your list of parsers here
+      ensure_installed = {
+        'awk',
+        'bash',
+        'c',
+        'csv',
+        'json',
+        'lua',
+        'markdown',
+        'markdown_inline',
+        'python',
+        'query',
+        'regex',
+        'toml',
+        'vim',
+        'vimdoc',
+        'powershell',
+        'diff',
+      },
+      -- This is key: auto_install handles the "Safe Install" logic
+      -- correctly so you don't need a manual loop.
+      auto_install = true,
+      highlight = {
+        enable = true,
+        -- Reuse your big file logic
+        disable = function(lang, buf)
+          local max_filesize = 200 * 1024 -- 200 KB
+          local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
+          if ok and stats and stats.size > max_filesize then
+            return true
+          end
+        end,
+      },
+    })
+
+    -- 2. Modern Folding (Built into Neovim 0.10+)
+    vim.o.foldmethod = 'expr'
+    vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+    vim.o.foldenable = false
+  end,
 }
