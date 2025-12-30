@@ -1,72 +1,54 @@
--- treesitter.lua
--- code from ChatGPT
+-- treesitter re-write for new main branch of treesitter
+-- code from Gemini 12/30/25
 
 return {
   'nvim-treesitter/nvim-treesitter',
-  branch = 'master',
+  branch = 'main',
   lazy = false,
-  build = ':TSUpdate',
-
   config = function()
-    local ts = require('nvim-treesitter.configs')
+    -- In the rewrite, we use the 'nvim-treesitter' module directly
+    local ts = require('nvim-treesitter')
 
-    -- Helper to auto-disable on huge files
-    local function too_big(lang, buf)
-      local max = 200 * 1024 -- 200 KB
-      local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-      if ok and stats and stats.size > max then
-        return true
-      end
-      return false
-    end
-
+    -- 1. Setup the basic configuration
     ts.setup({
-      -- Install the parsers you actually use
+      -- Provide your list of parsers here
       ensure_installed = {
         'awk',
         'bash',
         'c',
         'csv',
-        'diff',
         'json',
         'lua',
         'markdown',
         'markdown_inline',
-        'powershell',
         'python',
         'query',
         'regex',
         'toml',
         'vim',
         'vimdoc',
+        'powershell',
+        'diff',
       },
-
+      -- This is key: auto_install handles the "Safe Install" logic
+      -- correctly so you don't need a manual loop.
       auto_install = true,
-
       highlight = {
         enable = true,
-        -- Avoid regex fallback; reduces flicker/dup highlights
-        additional_vim_regex_highlighting = {},
+        -- Reuse your big file logic
         disable = function(lang, buf)
-          return too_big(lang, buf)
+          local max_filesize = 200 * 1024 -- 200 KB
+          local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
+          if ok and stats and stats.size > max_filesize then
+            return true
+          end
         end,
       },
-
-      indent = {
-        enable = true,
-        -- Markdown indent can be quirky
-        disable = { 'markdown' },
-      },
-
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = '<CR>',
-          node_incremental = '<CR>',
-          node_decremental = '<BS>',
-          scope_incremental = '<TAB>',
-        },
-      },
     })
+
+    -- 2. Modern Folding (Built into Neovim 0.10+)
+    vim.o.foldmethod = 'expr'
+    vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+    vim.o.foldenable = false
   end,
 }

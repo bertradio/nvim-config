@@ -19,7 +19,6 @@
   "noice.nvim": { "branch": "main", "commit": "7bfd942445fb63089b59f97ca487d605e715f155" },
   "nui.nvim": { "branch": "main", "commit": "de740991c12411b663994b2860f1a4fd0937c130" },
   "nvim-autopairs": { "branch": "master", "commit": "c2a0dd0d931d0fb07665e1fedb1ea688da3b80b4" },
-  "nvim-biscuits": { "branch": "main", "commit": "b79fa6d24388f3bcfdad33a77ee8e5668b6df07f" },
   "nvim-lspconfig": { "branch": "master", "commit": "41ceb6bba3a40128b7841f5b7f5a9dae7201e823" },
   "nvim-notify": { "branch": "master", "commit": "8701bece920b38ea289b457f902e2ad184131a5d" },
   "nvim-treesitter": { "branch": "main", "commit": "7efc1b58a8061d29786860006c7257c90a5196dc" },
@@ -30,5 +29,5 @@
   "render-markdown": { "branch": "main", "commit": "07d088bf8bdadd159eb807b90eaee86a4778383f" },
   "snacks.nvim": { "branch": "main", "commit": "fe7cfe9800a182274d0f868a74b7263b8c0c020b" },
   "undotree": { "branch": "master", "commit": "178d19e00a643f825ea11d581b1684745d0c4eda" },
-  "yazi.nvim": { "branch": "main", "commit": "e1b6cb3fe629090dd5cbda257f507469086d5658" }
+  "yazi.nvim": { "branch": "main", "commit": "eec2d77b66dd89151394ba8f5a95d3be8439fd1c" }
 }
