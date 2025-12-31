@@ -40,11 +40,5 @@ return {
         end,
       },
     })
-
-    -- set in snacks/statuscolumn
-    -- 2. Modern Folding (Built into Neovim 0.10+)
-    -- vim.o.foldmethod = 'expr'
-    -- vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-    -- vim.o.foldenable = false
   end,
 }

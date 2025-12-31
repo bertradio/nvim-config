@@ -1,6 +1,7 @@
 -- bash settings
 
 local options = {
+  filetype = 'bash',
   number = false,
   list = false,
   conceallevel = 0,
