@@ -20,7 +20,6 @@ return {
         -- enable to show underlines on the line above the current scope
         underline = {
           enabled = true,
-          -- optionally add: 'BlinkIndentRedUnderline', 'BlinkIndentCyanUnderline', 'BlinkIndentYellowUnderline', 'BlinkIndentGreenUnderline'
           highlights = {
             'BlinkIndentOrangeUnderline',
             'BlinkIndentVioletUnderline',
