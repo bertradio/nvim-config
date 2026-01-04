@@ -1,5 +1,7 @@
 -- treesitter re-write for new main branch of treesitter
 -- code from Gemini 12/30/25
+-- tried to use this but then code-biscuits didn't work
+-- so went back to master branch
 
 return {
   'nvim-treesitter/nvim-treesitter',
