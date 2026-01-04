@@ -3,10 +3,10 @@
 -- Created: 07/14/25
 
 return {
-	'code-biscuits/nvim-biscuits',
-	event = 'VeryLazy',
+  'code-biscuits/nvim-biscuits',
+  event = 'VeryLazy',
 
-	config = function()
+  config = function()
 		-- stylua: ignore
 		require('nvim-biscuits').setup({
 			default_config = {
@@ -20,5 +20,8 @@ return {
 				text     = { disabled = true },
 			},
 		})
-	end,
+  end,
+  require('nvim-treesitter.configs').setup({
+    ensure_installed = 'maintained',
+  }),
 }
