@@ -6,17 +6,6 @@
 local augroup = vim.api.nvim_create_augroup -- Create/get autocommand group
 local autocmd = vim.api.nvim_create_autocmd -- Create autocommand
 
----------- >> To set initial working directory << ---------------
-
-local dir = vim.fn.stdpath('config') .. '/lua/plugins/'
-
-augroup('Set_Directory', { clear = true })
-autocmd({ 'VimEnter' }, {
-  group = 'Set_Directory',
-  pattern = '*',
-  command = 'cd! ' .. dir,
-})
-
 ---------- >> Autogroups and Autocommands << ---------------
 
 -- need different functions for file name in Win and Linux
@@ -86,60 +75,6 @@ autocmd({ 'WinLeave' }, {
   end,
 })
 
----------- >> For Filetype Templates << ---------------
-
-local skeleton_path = vim.fn.stdpath('config') .. '/skeletons/'
-
-augroup('Filetype_Settings', { clear = true })
-
-vim.api.nvim_create_autocmd('FileType', {
-  group = 'Filetype_Settings',
-  pattern = 'sh',
-  callback = function()
-    local ok, err = pcall(function()
-      if vim.fn.line('$') == 1 and vim.fn.getline(1) == '' then
-        local skeleton = skeleton_path .. 'sh.tpl'
-        vim.cmd('0r ' .. skeleton)
-      end
-    end)
-    if not ok then
-      vim.notify('Error inserting sh skeleton: ' .. tostring(err), vim.log.levels.WARN)
-    end
-  end,
-})
-
-vim.api.nvim_create_autocmd('FileType', {
-  group = 'Filetype_Settings',
-  pattern = 'awk',
-  callback = function()
-    local ok, err = pcall(function()
-      if vim.fn.line('$') == 1 and vim.fn.getline(1) == '' then
-        local skeleton = skeleton_path .. 'awk.tpl'
-        vim.cmd('0r ' .. skeleton)
-      end
-    end)
-    if not ok then
-      vim.notify('Error inserting awk skeleton: ' .. tostring(err), vim.log.levels.WARN)
-    end
-  end,
-})
-
-vim.api.nvim_create_autocmd('FileType', {
-  group = 'Filetype_Settings',
-  pattern = 'lua',
-  callback = function()
-    local ok, err = pcall(function()
-      if vim.fn.line('$') == 1 and vim.fn.getline(1) == '' then
-        local skeleton = skeleton_path .. 'lua.tpl'
-        vim.cmd('0r ' .. skeleton)
-      end
-    end)
-    if not ok then
-      vim.notify('Error inserting lua skeleton: ' .. tostring(err), vim.log.levels.WARN)
-    end
-  end,
-})
-
 -- doe replacements in templates code from Perplexity
 vim.cmd(string.format(
   [[
@@ -154,27 +89,6 @@ augroup END
   skeleton_path,
   skeleton_path
 ))
-
----------- >> Set up folding for markdown  << ---------------
-
--- this code from ChatGPT seems more reliable
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'markdown',
-  callback = function()
-    vim.opt_local.foldmethod = 'expr'
-    vim.opt_local.foldexpr = 'v:lua.MarkdownFold(v:lnum)'
-    vim.opt_local.foldlevel = 9
-  end,
-})
-
-function _G.MarkdownFold(lnum)
-  local line = vim.fn.getline(lnum)
-  local _, hashes = string.find(line, '^(#+) ')
-  if hashes then
-    return '>' .. hashes
-  end
-  return '='
-end
 
 ---------- >> Open buffers at last location (protected) << ---------------
 

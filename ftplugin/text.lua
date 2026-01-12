@@ -2,14 +2,16 @@
 
 -- stylua: ignore
 local options = {
+  spell             = true,
+  spelllang         = 'en_us',
   number            = false,
   relativenumber    = false,
   list              = false,
   conceallevel      = 0,
   autoindent        = true,
-  tabstop           = 4,
-  softtabstop       = 4,
-  shiftwidth        = 4,
+  tabstop           = 2,
+  softtabstop       = 2,
+  shiftwidth        = 2,
   wrap              = true,
   linebreak         = true,  -- don't break lines in the middle of words
   showmatch         = false, -- don't match parens

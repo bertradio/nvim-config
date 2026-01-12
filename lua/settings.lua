@@ -16,7 +16,7 @@ local options = {
 	cmdwinheight   = 12, -- set size of command window
 	conceallevel   = 0,
 	copyindent     = true, -- copy the previous indentation on autoindenting
-	expandtab      = false, -- expand tabs to spaces by default
+	expandtab      = true, -- expand tabs to spaces by default
 	linebreak      = true, -- don't break lines in the middle of words
 	listchars      = { eol = '↲', tab = '▸ ', trail = '·' }, -- set visuals for list mode (:set list)
 	number         = false, -- show line numbers
@@ -25,13 +25,13 @@ local options = {
 	shiftround     = true, -- use multiple of shiftwidth when indenting with '<' and '>'
 	shiftwidth     = 2, -- amount to shift when hitting > or <
 	shortmess      = 'IF', -- don't display startup screen when nvim starts or file info on load
-	showmode       = true, -- always show what mode we're currently in on status line
+	showmode       = false, -- always show what mode we're currently in on status line
 	smartindent    = true,
 	softtabstop    = 2,
 	splitbelow     = true,     -- Open splits below current window (default  = above)
 	splitright     = true,     -- Open splits below current window (default  = above)
 	laststatus     = 3,        -- global statusline
-	tabstop        = 1,        -- tab and other indent settings
+	tabstop        = 2,        -- tab and other indent settings
 	termguicolors  = true,     -- use colors from terminal emulator (e.g. Kitty)
 	title          = true,     -- put current filename in window header
 	timeout        = true,
@@ -55,7 +55,7 @@ local options = {
 	-- autochdir      = true, -- automatically change cwd to buffer?
 	backup         = true, -- turn backup on and specify directory
 	backupcopy     = 'yes',
-	-- backupdir      = vim.fn.stdpath('data') .. '/backup',
+	backupdir      = vim.fn.stdpath('data') .. '/backup//',
 	confirm        = true,         -- ask for confirmation if try to exit with unsaved buffer
 	clipboard      = 'unnamedplus', -- use system clipboard - for wl-clipboard
 	history        = 500,          -- keep 500 lines of history
@@ -78,16 +78,22 @@ for k, v in pairs(options) do
   vim.opt[k] = v
 end
 
+-- Don't clobber default shortmess; just add the flags we want.
+vim.opt.shortmess:append('I') -- no intro
+vim.opt.shortmess:append('F')
+
+
+-- Ensure backup/undo directories exist (prevents silent failures)
+local data_dir = vim.fn.stdpath('data')
+vim.fn.mkdir(data_dir .. '/undo', 'p')
+vim.fn.mkdir(data_dir .. '/backup', 'p')
 -- should work for linux and win
 local backupdir = vim.fn.stdpath('data') .. '/backup/'
 vim.opt.backup = true
 vim.opt.backupdir = backupdir
 
 -- Enable spell checking globally (optional)
-vim.opt.spell = true
-
--- Disable spell checking on syntax regions
-vim.cmd('set spell syntax=off')
+vim.opt.spell          = false
 
 --------------------------------------------------
 -- >>> OTHER SETUP

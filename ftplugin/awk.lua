@@ -8,9 +8,9 @@ local options = {
   breakindentopt = 'shift:2',
   -- tab and other indent settings
   autoindent = true,
-  tabstop = 4,
-  softtabstop = 4,
-  shiftwidth = 4,
+  tabstop = 2,
+  softtabstop = 2,
+  shiftwidth = 2,
   -- word wrap on
   wrap = true,
   -- don't break lines in the middle of words
