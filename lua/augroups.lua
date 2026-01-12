@@ -75,20 +75,46 @@ autocmd({ 'WinLeave' }, {
   end,
 })
 
--- doe replacements in templates code from Perplexity
-vim.cmd(string.format(
-  [[
-augroup template_replace
-  autocmd!
-  autocmd BufNewFile *.sh 0r %ssh.tpl | %%s#\[:VIM_EVAL:\]\(.\{-\}\)\[:END_EVAL:\]#\=eval(submatch(1))#ge
-  autocmd BufNewFile *.awk 0r %sawk.tpl | %%s#\[:VIM_EVAL:\]\(.\{-\}\)\[:END_EVAL:\]#\=eval(submatch(1))#ge
-  autocmd BufNewFile *.lua 0r %slua.tpl | %%s#\[:VIM_EVAL:\]\(.\{-\}\)\[:END_EVAL:\]#\=eval(submatch(1))#ge
-augroup END
-]],
-  skeleton_path,
-  skeleton_path,
-  skeleton_path
-))
+-- do replacements - from ChatGPT
+
+local skeleton_path = vim.fn.stdpath('config') .. '/skeletons/'
+
+local function read_template(tpl)
+  local file = vim.fs.normalize(skeleton_path .. tpl) -- handles \ vs /
+  -- :read needs fnameescape for spaces etc.
+  vim.cmd(('0read %s'):format(vim.fn.fnameescape(file)))
+
+  -- Evaluate [:VIM_EVAL:]...[:END_EVAL:] blocks
+  vim.cmd([[
+    silent! %s#\[:VIM_EVAL:\]\(.\{-\}\)\[:END_EVAL:\]#\=eval(submatch(1))#ge
+  ]])
+end
+
+local grp = vim.api.nvim_create_augroup('template_replace', { clear = true })
+
+vim.api.nvim_create_autocmd('BufNewFile', {
+  group = grp,
+  pattern = '*.sh',
+  callback = function()
+    read_template('sh.tpl')
+  end,
+})
+
+vim.api.nvim_create_autocmd('BufNewFile', {
+  group = grp,
+  pattern = '*.awk',
+  callback = function()
+    read_template('awk.tpl')
+  end,
+})
+
+vim.api.nvim_create_autocmd('BufNewFile', {
+  group = grp,
+  pattern = '*.lua',
+  callback = function()
+    read_template('lua.tpl')
+  end,
+})
 
 ---------- >> Open buffers at last location (protected) << ---------------
 

@@ -8,17 +8,12 @@
 local M = {}
 
 function M.is_windows()
-	return vim.loop.os_uname().version:match('Windows')
+	return require("platform").is_windows()
 end
 
 -- Add a directory to PATH (cross-platform, idempotent)
-function M.add_to_vim_path(dir)
-	local pathsep = M.is_windows() and ';' or ':'
-	dir = vim.fn.expand(dir) -- expand ~ to full path
-
-	if not string.find(vim.env.PATH or '', dir, 1, true) then
-		vim.env.PATH = dir .. pathsep .. (vim.env.PATH or '')
-	end
+function M.add_to_vim_path(dir, opts)
+	return require("platform").add_to_vim_path(dir, opts)
 end
 
 -- Wrapper for mapping custom keybindings to make mapping code easier and cleaner - from internet

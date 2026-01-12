@@ -240,8 +240,7 @@ return {
     event = 'InsertEnter',
     build = (function()
       -- Optional: jsregexp for advanced regex in snippets (skip on Windows)
-      local ok, uname = pcall(vim.loop.os_uname)
-      local is_windows = ok and uname and uname.sysname and uname.sysname:match('Windows')
+      local is_windows = require('platform').is_windows()
       return is_windows and nil or 'make install_jsregexp'
     end)(),
     opts = {
