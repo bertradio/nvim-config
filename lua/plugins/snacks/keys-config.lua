@@ -3,7 +3,29 @@
 -- dashboard
 Myfn.map('n', '<Leader>]', '<cmd>lua Snacks.dashboard.open()<cr>', { desc = 'Open dashboard' })
 
--- pickers
+-- for deletes
+Myfn.map('n', '<Leader>bd', '<cmd>lua Snacks.bufdelete()<cr>', { desc = 'delete current' })
+Myfn.map('n', '<Leader>bo', '<cmd>lua Snacks.bufdelete.other()<cr>', { desc = 'delete other' })
+Myfn.map('n', '<Leader>ba', '<cmd>lua Snacks.bufdelete.all()<cr>', { desc = 'delete all' })
+
+return {
+  'snacks.nvim',
+  keys = { -- use snacks for spelling correction suggestions
+    {
+      'zz',
+      function()
+        if vim.v.count == 0 then
+          Snacks.picker.spelling()
+        else
+          vim.cmd('normal! ' .. vim.v.count .. 'z=')
+        end
+      end,
+      desc = 'Spelling Suggestions',
+    },
+  },
+}
+
+-- unused pickers
 
 -- Myfn.map('n', '<Leader>lb', '<cmd>lua Snacks.picker.buffers()<cr>', { desc = 'buffers' })
 -- Myfn.map(
@@ -81,25 +103,3 @@ Myfn.map('n', '<Leader>]', '<cmd>lua Snacks.dashboard.open()<cr>', { desc = 'Ope
 -- )
 -- Myfn.map('n', '<Leader>lz', '<cmd>lua Snacks.picker.zoxide()<cr>', { desc = 'zoxide' })
 -- -- Myfn.map('n', '<Leader>lz', '<cmd>lua Snacks.zen()<cr>', { desc = 'zen mode' })
-
--- for deletes
-Myfn.map('n', '<Leader>bd', '<cmd>lua Snacks.bufdelete()<cr>', { desc = 'delete current' })
-Myfn.map('n', '<Leader>bo', '<cmd>lua Snacks.bufdelete.other()<cr>', { desc = 'delete other' })
-Myfn.map('n', '<Leader>ba', '<cmd>lua Snacks.bufdelete.all()<cr>', { desc = 'delete all' })
-
-return {
-	'snacks.nvim',
-	keys = { -- use snacks for spelling correction suggestions
-		{
-			'zz',
-			function()
-				if vim.v.count == 0 then
-					Snacks.picker.spelling()
-				else
-					vim.cmd('normal! ' .. vim.v.count .. 'z=')
-				end
-			end,
-			desc = 'Spelling Suggestions',
-		},
-	},
-}

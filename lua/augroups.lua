@@ -75,7 +75,7 @@ autocmd({ 'WinLeave' }, {
   end,
 })
 
--- do replacements - from ChatGPT
+-- set up templates
 
 local skeleton_path = vim.fn.stdpath('config') .. '/skeletons/'
 
