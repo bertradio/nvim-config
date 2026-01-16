@@ -3,7 +3,6 @@
 -- • FIX: <C-q> maps to <cmd>bd!<cr> via string mapping.
 -- • FIX: Float borders now correctly turn red (OilBorderDirty) when modified.
 
--- vim.opt.termguicolors = true
 local detail = false
 
 -- =========================
