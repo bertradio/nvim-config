@@ -31,7 +31,7 @@ return {
       { '<leader>e',  group = 'Edit config' },
       { '<leader>f',  group = 'FZF' },
       { '<leader>fg', group = 'Grep' },
-      { '<leader>fG', group = 'Git' },
+      { '<leader>g',  group = 'Git' },
     },
 
     -- 3. WINDOW
