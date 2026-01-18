@@ -42,7 +42,7 @@ Myfn.map({ 'n', 'i', 'v' }, '<c-q>', '<cmd>q<cr>', { desc = 'Exit nvim' })
 -- Myfn.map("n", "<Leader>dt", "<cmd>=strftime('%a %b %d %Y - %H.%M ')<cr>", { desc = 'Insert date and time' })
 
 -- disable s key to substitute
-Snacks.keymap.set({ 'n', 'v' }, 's', '<nop>')
+Myfn.map({ 'n', 'v' }, 's', '<nop>')
 
 -- Insert blank lines without going into insert mode
 -- adds line and deletes anything that might be on it - stays in normal mode
@@ -63,23 +63,18 @@ Myfn.map('n', '<Leader>S', '<cmd>set spell!<cr>', { desc = 'Spell check toggle' 
 Myfn.map({ 'n', 'i' }, '<C-l>', '<cmd>set hlsearch!<cr>', { desc = 'hlsearch toggle' })
 
 -- Select all - from ChatGPT
-Snacks.keymap.set("n", "<C-a>", function()
-	vim.cmd("normal! ggVG")
+Myfn.map('n', '<C-a>', function()
+  vim.cmd('normal! ggVG')
 end, {
-	desc = "Select all",
-	silent = true,
+  desc = 'Select all',
+  silent = true,
 })
 
 -- Yank all
 Myfn.map('n', '<C-y>', '<cmd>%y+<cr>', { desc = 'Yank all' })
 
 -- Save current buffer and source this file
-Myfn.map(
-	'n',
-	'<Leader>R',
-	"<cmd>w<cr><cmd>source %  <cr><cmd>echom '** Re-sourced **' <cr>",
-	{ desc = 'Save & re-source this file' }
-)
+Myfn.map('n', '<Leader>R', "<cmd>w<cr><cmd>source %  <cr><cmd>echom '** Re-sourced **' <cr>")
 
 -- map ~ to cycle through case changes in visual mode - in vimscript
 -- from https://vim.fandom.com/wiki/Switching_case_of_characters#Twiddle_case
@@ -98,36 +93,36 @@ vim.cmd([[
 	]])
 
 -- create copy of line(s) and comment out originals
-Snacks.keymap.set('n', 'ycc', function()
-	vim.cmd('normal! ' .. vim.v.count1 .. 'yy')
-	vim.cmd('normal ' .. vim.v.count1 .. 'gcc')
-	vim.cmd("normal! ']$p")
+Myfn.map('n', 'ycc', function()
+  vim.cmd('normal! ' .. vim.v.count1 .. 'yy')
+  vim.cmd('normal ' .. vim.v.count1 .. 'gcc')
+  vim.cmd("normal! ']$p")
 end, { desc = 'Duplicate and comment lines' })
 
 -- search only in selected area in visual mode
-Snacks.keymap.set('x', '/', '<Esc>/\\%V')
+Myfn.map('x', '/', '<Esc>/\\%V')
 
 -- run lazy
-Myfn.map('n', '<Leader>L', '<cmd>Lazy<cr>', { desc = 'Lazy' })
+Myfn.map('n', '<Leader>L', '<cmd>Lazy sync<cr>', { desc = 'Lazy sync' })
 
 -- open file in Typora
 
 vim.api.nvim_set_keymap(
-	'n',
-	'<leader>t',
-	'<cmd>lua Myfn.OpenInTypora()<CR>',
-	{ noremap = true, silent = true, desc = 'Open in Typora' }
+  'n',
+  '<leader>t',
+  '<cmd>lua Myfn.OpenInTypora()<CR>',
+  { noremap = true, silent = true, desc = 'Open in Typora' }
 )
 
 -- use tab in normal mode to open and close folds
-Snacks.keymap.set('n', '<tab>', function()
-	local linenr = vim.fn.line('.')
-	-- If there's no fold to be opened/closed, do nothing.
-	if vim.fn.foldlevel(linenr) == 0 then
-		return
-	end
+Myfn.map('n', '<tab>', function()
+  local linenr = vim.fn.line('.')
+  -- If there's no fold to be opened/closed, do nothing.
+  if vim.fn.foldlevel(linenr) == 0 then
+    return
+  end
 
-	-- Open recursively if closed, close if open.
-	local cmd = vim.fn.foldclosed(linenr) == -1 and 'zc' or 'zO'
-	vim.cmd('normal! ' .. cmd)
+  -- Open recursively if closed, close if open.
+  local cmd = vim.fn.foldclosed(linenr) == -1 and 'zc' or 'zO'
+  vim.cmd('normal! ' .. cmd)
 end, { silent = true, desc = 'Folds: Toggle' })

@@ -306,13 +306,13 @@ return {
 
       -- Non-conflicting snippet keys (keep Blink's <Tab>/<CR> behavior)
       local map_opts = { expr = true, silent = true, desc = 'LuaSnip jump/expand' }
-      Snacks.keymap.set({ 'i', 's' }, '<C-j>', function()
+      Myfn.map({ 'i', 's' }, '<C-j>', function()
         return ls.expand_or_jumpable() and '<Plug>luasnip-expand-or-jump' or '<C-j>'
       end, map_opts)
-      Snacks.keymap.set({ 'i', 's' }, '<C-k>', function()
+      Myfn.map({ 'i', 's' }, '<C-k>', function()
         return ls.jumpable(-1) and '<Plug>luasnip-jump-prev' or '<C-k>'
       end, map_opts)
-      Snacks.keymap.set('i', '<C-l>', function()
+      Myfn.map('i', '<C-l>', function()
         return ls.choice_active() and '<Plug>luasnip-next-choice' or '<C-l>'
       end, map_opts)
     end,
