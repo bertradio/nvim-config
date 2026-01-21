@@ -42,9 +42,11 @@ local options = {
 
 	-- set cursor see :h guicursor
 	-- block for command, vertical line for insert - blink
-	guicursor      = 'n-v-c-sm:block,i-ci-ve:ver25-Cursor,r-cr-o:hor20',
+	-- guicursor      = 'n-v-c-sm:block,i-ci-ve:ver25-Cursor,r-cr-o:hor20',
+  -- Add the blink settings to the end of your string - from Gemini
+  guicursor = 'n-v-c-sm:block,i-ci-ve:ver25-Cursor,r-cr-o:hor20,a:blinkwait700-blinkoff400-blinkon250',
 
-	-- SEARCH --
+  -- SEARCH --
 
 	ignorecase     = true, -- ignore case on searches
 	incsearch      = true, -- show search results as type
@@ -82,7 +84,6 @@ end
 vim.opt.shortmess:append('I') -- no intro
 vim.opt.shortmess:append('F')
 
-
 -- Ensure backup/undo directories exist (prevents silent failures)
 local data_dir = vim.fn.stdpath('data')
 vim.fn.mkdir(data_dir .. '/undo', 'p')
@@ -93,7 +94,7 @@ vim.opt.backup = true
 vim.opt.backupdir = backupdir
 
 -- Enable spell checking globally (optional)
-vim.opt.spell          = false
+vim.opt.spell = false
 
 --------------------------------------------------
 -- >>> OTHER SETUP

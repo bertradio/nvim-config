@@ -24,6 +24,7 @@ local cwd_config = {
   v = '$HOME/Insync/bert.kleinman@gmail.com/Google Drive',
   w = '$HOME/Insync/bertkleinman@outlook.com/OneDrive/My Docs/Moving Forward/Wisteria',
   y = '$HOME/.config/yazi',
+  z = '$HOME/.cfgfiles',
 }
 
 ----------------------------------------------------------
