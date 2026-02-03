@@ -25,6 +25,7 @@ return {
       markdown = { 'prettierd' },
       sh = { 'shfmt' },
       bash = { 'shfmt' },
+      toml = { 'taplo' },
     },
     format_on_save = {
       lsp_format = 'fallback',

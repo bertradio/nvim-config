@@ -14,8 +14,8 @@ return {
       'ribru17/blink-cmp-spell',
       'L3MON4D3/LuaSnip',
     },
-    event = 'InsertEnter',
-    -- event = 'LspAttach', -- suggested by Gemini to speed up load - more lazy
+    -- event = 'InsertEnter',
+    event = 'LspAttach', -- suggested by Gemini to speed up load - more lazy
 
     opts = {
       keymap = { preset = 'super-tab' },
