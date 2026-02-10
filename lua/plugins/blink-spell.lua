@@ -6,7 +6,6 @@
 return {
   {
     'saghen/blink.cmp',
-    -- version = '1.*',
     version = '*', -- Use a release tag to keep it stable
     build = 'cargo build --release',
     dependencies = {
@@ -16,7 +15,6 @@ return {
       'L3MON4D3/LuaSnip',
     },
     event = 'InsertEnter',
-    -- event = 'LspAttach', -- suggested by Gemini to speed up load - more lazy
 
     opts = {
       keymap = { preset = 'super-tab' },
@@ -29,7 +27,7 @@ return {
       signature = { enabled = true, window = { border = 'rounded' } },
 
       completion = {
-        list = { selection = 'manual', insert = false },
+        -- list = { selection = 'manual', insert = false },
         menu = {
           auto_show = function(ctx)
             return ctx.mode ~= 'cmdline'
@@ -142,7 +140,6 @@ return {
 
       -- Always-on for prose; TS-gated in code
       local prose_fts_set = {
-        markdown = true,
         text = true,
         gitcommit = true,
         rst = true,
