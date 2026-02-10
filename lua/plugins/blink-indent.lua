@@ -4,7 +4,6 @@
 --
 -- Using instead of other indent plugin
 -- re-written for new re-write of treesitter
--- version of nvim-biscuits not compatible
 
 return {
   'saghen/blink.indent',

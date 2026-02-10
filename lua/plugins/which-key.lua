@@ -35,11 +35,11 @@ return {
     },
 
     -- 3. WINDOW
-    win = {
-      border = 'double',
-      -- You can usually delete this "win" section entirely if you use a preset,
-      -- unless you want to force a specific border style on top of the preset.
-    },
+    -- win = {
+    --   border = 'double',
+    --   -- You can usually delete this "win" section entirely if you use a preset,
+    --   -- unless you want to force a specific border style on top of the preset.
+    -- },
 
     -- 4. SCROLLING
     keys = {

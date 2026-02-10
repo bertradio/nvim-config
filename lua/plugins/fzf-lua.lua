@@ -5,7 +5,7 @@
 local function maps()
 	Myfn.map('n', '<Leader><space>', '<cmd>FzfLua files<cr>',           { desc = 'find files' })
 	Myfn.map('n', '<Leader>fb', '<cmd>FzfLua builtin<cr>',              { desc = 'builtin commands' })
-	Myfn.map('n', '<Leader>fc', '<cmd>FzfLua command_history<cr>',      { desc = 'commands' })
+	Myfn.map('n', '<Leader>fc', '<cmd>FzfLua command_history<cr>',      { desc = 'command history' })
 	Myfn.map('n', '<Leader>fd', '<cmd>FzfLua diagnostics_document<cr>', { desc = 'diagnostics' })
 	Myfn.map('n', '<Leader>ff', '<cmd>FzfLua files<cr>',                { desc = 'find files' })
 	Myfn.map('n', '<Leader>fgb', '<cmd>FzfLua grep_curbuf<cr>',         { desc = 'grep curr buff' })
