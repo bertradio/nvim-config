@@ -10,19 +10,19 @@ Myfn.map('n', '<Leader>ba', '<cmd>lua Snacks.bufdelete.all()<cr>', { desc = 'del
 
 return {
   'snacks.nvim',
-  keys = { -- use snacks for spelling correction suggestions
-    {
-      'zz',
-      function()
-        if vim.v.count == 0 then
-          Snacks.picker.spelling()
-        else
-          vim.cmd('normal! ' .. vim.v.count .. 'z=')
-        end
-      end,
-      desc = 'Spelling Suggestions',
-    },
-  },
+  -- keys = { -- use snacks for spelling correction suggestions
+  --   {
+  --     'zz',
+  --     function()
+  --       if vim.v.count == 0 then
+  --         Snacks.picker.spelling()
+  --       else
+  --         vim.cmd('normal! ' .. vim.v.count .. 'z=')
+  --       end
+  --     end,
+  --     desc = 'Spelling Suggestions',
+  --   },
+  -- },
 }
 
 -- unused pickers
