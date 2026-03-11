@@ -1,4 +1,4 @@
--- vim-notify.lua
+-- nvim-notify.lua
 
 -- Created: 03/09/24
 
