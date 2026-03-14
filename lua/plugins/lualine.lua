@@ -87,7 +87,7 @@ return {
 
     require('lualine').setup({
       options = {
-        theme = 'catppuccin',
+        theme = 'catppuccin-nvim',
         icons_enabled = true,
         -- RESTORED ARROW LOOK:
         section_separators = { left = '', right = '' },
