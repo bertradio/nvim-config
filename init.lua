@@ -34,6 +34,9 @@ end
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+-- make sure nvim can find all parsers
+vim.opt.runtimepath:append('/home/bert/.local/share/nvim/site')
+
 -- Enable floating cmdline/popupmenu (required for Noice cmdline popup)
 vim.opt.cmdheight = 0
 
