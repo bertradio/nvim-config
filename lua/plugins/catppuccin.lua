@@ -17,6 +17,13 @@ return {
       no_bold = false,
       styles = { comments = { 'italic' } },
 
+      -- from ChatCPT
+      custom_highlights = function(colors)
+        return {
+          EndOfBuffer = { fg = colors.base, bg = colors.base },
+        }
+      end,
+
       highlight_overrides = {
         all = function(colors)
           return {

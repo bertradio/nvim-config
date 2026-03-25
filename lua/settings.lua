@@ -80,6 +80,9 @@ for k, v in pairs(options) do
   vim.opt[k] = v
 end
 
+-- remove ~ at end of buffers
+vim.opt.fillchars:append({ eob = ' ' })
+
 -- Don't clobber default shortmess; just add the flags we want.
 vim.opt.shortmess:append('I') -- no intro
 vim.opt.shortmess:append('F')

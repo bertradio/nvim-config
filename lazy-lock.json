@@ -8,7 +8,7 @@
   "conform.nvim": { "branch": "master", "commit": "086a40dc7ed8242c03be9f47fbcee68699cc2395" },
   "flash.nvim": { "branch": "main", "commit": "fcea7ff883235d9024dc41e638f164a450c14ca2" },
   "friendly-snippets": { "branch": "main", "commit": "6cd7280adead7f586db6fccbd15d2cac7e2188b9" },
-  "fzf-lua": { "branch": "main", "commit": "8a79ee54d6216d10b2f153921a12b152be0c1a20" },
+  "fzf-lua": { "branch": "main", "commit": "3b01dc83a893749f5ae4639f1aa0af523821840a" },
   "hexinspector.nvim": { "branch": "main", "commit": "b143318a57ef9312eba7478bcdd372f67f081901" },
   "lazy.nvim": { "branch": "main", "commit": "306a05526ada86a7b30af95c5cc81ffba93fef97" },
   "lazydev.nvim": { "branch": "main", "commit": "ff2cbcba459b637ec3fd165a2be59b7bbaeedf0d" },
@@ -22,7 +22,7 @@
   "nui.nvim": { "branch": "main", "commit": "de740991c12411b663994b2860f1a4fd0937c130" },
   "nvim-autopairs": { "branch": "master", "commit": "59bce2eef357189c3305e25bc6dd2d138c1683f5" },
   "nvim-biscuits": { "branch": "main", "commit": "d93dcdee3a3dfd5101785447658e744f153957db" },
-  "nvim-lspconfig": { "branch": "master", "commit": "841c6d4139aedb8a3f2baf30cef5327371385b93" },
+  "nvim-lspconfig": { "branch": "master", "commit": "46204c8fdaa36a9aa3768780450e4bc7a210025f" },
   "nvim-notify": { "branch": "master", "commit": "8701bece920b38ea289b457f902e2ad184131a5d" },
   "nvim-treesitter": { "branch": "main", "commit": "6620ae1c44dfa8623b22d0cbf873a9e8d073b849" },
   "nvim-web-devicons": { "branch": "master", "commit": "d7462543c9e366c0d196c7f67a945eaaf5d99414" },
@@ -34,5 +34,5 @@
   "snacks.nvim": { "branch": "main", "commit": "ad9ede6a9cddf16cedbd31b8932d6dcdee9b716e" },
   "undotree": { "branch": "master", "commit": "6fa6b57cda8459e1e4b2ca34df702f55242f4e4d" },
   "which-key.nvim": { "branch": "main", "commit": "3aab2147e74890957785941f0c1ad87d0a44c15a" },
-  "yazi.nvim": { "branch": "main", "commit": "9c881003b71816f4b8e9e6364095e20c90370711" }
+  "yazi.nvim": { "branch": "main", "commit": "22e6d9bb4f4043fe8f003385e0e207a31043ef0e" }
 }
