@@ -80,7 +80,7 @@ if vim.g.neovide then
       vim.o.lines = 35
     end)
   else
-    vim.o.guifont = 'JetBrainsMono NFP:h16'
+    vim.o.guifont = 'JetBrainsMono NFP:h12'
   end
   -- vim.g.neovide.size = '1280x800'
   -- vim.g.neovide_remember_window_size = true

@@ -11,7 +11,7 @@ return {
 		require('nvim-biscuits').setup({
 			default_config = {
 				trim_by_words = true,
-				max_length    = 4, -- max number of words to display
+				max_length    = 5, -- max number of words to display
 				min_distance  = 3, -- won't display less than these number of lines
 			},
 			-- disable for languages
