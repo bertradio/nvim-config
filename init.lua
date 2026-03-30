@@ -40,25 +40,6 @@ vim.opt.runtimepath:append('/home/bert/.local/share/nvim/site')
 -- Enable floating cmdline/popupmenu (required for Noice cmdline popup)
 vim.opt.cmdheight = 0
 
--- make sure lazy.vim is downloaded and load
-local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
-  local out =
-    vim.fn.system({ 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath })
-  if vim.v.shell_error ~= 0 then
-    vim.api.nvim_echo({
-      { 'Failed to clone lazy.nvim:\n', 'ErrorMsg' },
-      { out, 'WarningMsg' },
-      { '\nPress any key to exit...' },
-    }, true, {})
-    vim.fn.getchar()
-    os.exit(1)
-  end
-end
-
-vim.opt.rtp:prepend(lazypath)
-
 -- Provider loading can add startup cost and noisy errors if you don't use them.
 -- Set `vim.g.enable_providers = true` before startup to keep them enabled.
 if vim.g.enable_providers ~= true then
@@ -90,28 +71,6 @@ end
 -- set leader to a space instead of \
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-
--- code from Gemini to speed up loading
-require('lazy').setup({
-  spec = { { import = 'plugins' } },
-  cache = { enabled = true }, -- make sure everything compiled
-  defaults = {
-    lazy = true, -- This makes plugins lazy-loaded by default unless specified otherwise
-  },
-  performance = {
-    rtp = {
-      -- Disable unused builtin vim plugins to save startup time
-      disabled_plugins = {
-        'gzip',
-        'tarPlugin',
-        'tohtml',
-        'tutor',
-        'zipPlugin',
-        'netrwPlugin', -- Only if you use a different file explorer like nvim-tree/oil
-      },
-    },
-  },
-})
 
 -- initialization files
 require('augroups')
