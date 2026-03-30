@@ -77,6 +77,17 @@ require('augroups')
 require('keymaps')
 require('settings')
 
+-- plugins
+-- Load catppuccin first (colorscheme must be first)
+require('plugins.catppuccin')
+-- Then load everything else in lua/plugins/ automatically
+for _, file in ipairs(vim.fn.globpath(vim.fn.stdpath('config') .. '/lua/plugins', '*.lua', false, true)) do
+  local name = vim.fn.fnamemodify(file, ':t:r')  -- strip path and .lua extension
+  if name ~= 'catppuccin' then                    -- skip since already loaded
+    require('plugins.' .. name)
+  end
+end
+
 -- set directories and shortcuts based on platform
 if Myfn.is_windows() then
   require('bookmarks_win')

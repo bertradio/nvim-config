@@ -1,0 +1,19 @@
+-- code-biscuits.lua
+--
+-- Created: 07/14/25
+
+vim.pack.add({ 'https://github.com/code-biscuits/nvim-biscuits' })
+
+ -- stylua: ignore
+ require('nvim-biscuits').setup({
+    default_config = {
+ 		trim_by_words = true,
+ 		max_length    = 5, -- max number of words to display
+ 		min_distance  = 3, -- won't display less than these number of lines
+ 	},
+ 	-- disable for languages
+ 	language_config = {
+ 		markdown = { disabled = true },
+ 		text     = { disabled = true },
+ 	},
+ })
