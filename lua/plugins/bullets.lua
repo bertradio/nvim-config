@@ -1,0 +1,8 @@
+-- bullets.lua
+-- to handle bulleted lists only in markdown and text files
+
+vim.pack.add({ 'https://github.com/dkarter/bullets.vim' })
+ft = { 'markdown', 'text' }
+vim.g.bullets_enabled_file_types = { 'markdown', 'text' }
+-- vim.g.bullets_renumber_on_change = 1
+vim.g.bullets_outline_levels = { 'ROM', 'ABC', 'num', 'abc', 'rom', 'std-', 'std*', 'std+', 'chk' }

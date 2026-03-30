@@ -1,0 +1,37 @@
+-- treesitter re-write for new main branch of treesitter
+-- code from Gemini 12/30/25
+
+vim.pack.add({ { src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'main' } })
+
+local ts = require('nvim-treesitter')
+
+ts.setup({
+  ensure_installed = {
+    'awk',
+    'bash',
+    'c',
+    'csv',
+    'json',
+    'lua',
+    'markdown',
+    'markdown_inline',
+    'python',
+    'query',
+    'toml',
+    'vim',
+    'vimdoc',
+    'powershell',
+    'diff',
+  },
+  auto_install = true,
+  highlight = {
+    enable = true,
+    disable = function(lang, buf)
+      local max_filesize = 200 * 1024 -- 200 KB
+      local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
+      if ok and stats and stats.size > max_filesize then
+        return true
+      end
+    end,
+  },
+})

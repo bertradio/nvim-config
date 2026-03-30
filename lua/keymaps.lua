@@ -102,9 +102,6 @@ end, { desc = 'Duplicate and comment lines' })
 -- search only in selected area in visual mode
 Myfn.map('x', '/', '<Esc>/\\%V')
 
--- run lazy
-Myfn.map('n', '<Leader>L', '<cmd>Lazy sync<cr>', { desc = 'Lazy sync' })
-
 -- open file in Typora
 
 vim.api.nvim_set_keymap(
