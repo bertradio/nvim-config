@@ -2,10 +2,10 @@
 -- changed from lazy to vim.pack 3-30-26
 
 vim.pack.add({ 'https://github.com/saghen/blink.cmp' })
-vim.pack.add({ 'https://github.com/folke/lazydev.nvim' })
+vim.pack.add({
+  { src = 'https://github.com/folke/lazydev.nvim', data = { ft = 'lua' }, opts = {} },
+})
 vim.pack.add({ 'https://github.com/neovim/nvim-lspconfig' })
-
--- { 'folke/lazydev.nvim', ft = 'lua', opts = {} },
 
 local capabilities = require('blink.cmp').get_lsp_capabilities()
 

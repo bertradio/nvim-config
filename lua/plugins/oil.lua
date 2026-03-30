@@ -4,8 +4,8 @@
 -- vim.pack version of your old lazy.nvim oil config
 
 vim.pack.add({
-  'https://github.com/stevearc/oil.nvim',
   'https://github.com/nvim-tree/nvim-web-devicons',
+  'https://github.com/stevearc/oil.nvim',
 })
 
 local detail = false

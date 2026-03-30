@@ -1,5 +1,6 @@
 -- main setup for mini modules
 -- changed from lazy to vim.pack 3-30-26
+-- put everything in one file for convenience
 
 vim.pack.add({ 'https://github.com/nvim-mini/mini.nvim' })
 
