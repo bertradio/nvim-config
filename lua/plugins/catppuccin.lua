@@ -1,4 +1,5 @@
 -- lua/plugins/catppuccin.lua
+-- changed from lazy to vim.pack 3-30-26
 -- code from ChatGPT for fold icons
 
 vim.pack.add({'https://github.com/catppuccin/nvim'})

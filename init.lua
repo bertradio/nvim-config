@@ -1,4 +1,5 @@
 -- init.lua
+-- changed from lazy to vim.pack 3-30-26
 
 -- PATH setup (all PATH mutations live here)
 Myfn = require('my_fns')

@@ -1,4 +1,5 @@
 -- conform.lua
+-- changed from lazy to vim.pack 3-30-26
 -- Created: 2023-12-17
 -- Sync-safe across Linux & Windows (Syncthing). No Myfn dependency.
 -- code re-written by Gemini to simplify with new treesitter

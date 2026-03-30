@@ -1,4 +1,5 @@
 -- oil.lua
+-- changed from lazy to vim.pack 3-30-26
 --
 -- vim.pack version of your old lazy.nvim oil config
 

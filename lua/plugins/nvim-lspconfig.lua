@@ -1,4 +1,5 @@
 -- nvim-lspconfig.lua (Optimized for v0.11.x)
+-- changed from lazy to vim.pack 3-30-26
 
 vim.pack.add({ 'https://github.com/saghen/blink.cmp' })
 vim.pack.add({ 'https://github.com/folke/lazydev.nvim' })

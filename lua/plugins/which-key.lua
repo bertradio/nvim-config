@@ -1,4 +1,5 @@
 -- which-key.lua
+-- changed from lazy to vim.pack 3-30-26
 
 vim.pack.add({ 'https://github.com/folke/which-key.nvim' })
 

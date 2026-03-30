@@ -1,4 +1,5 @@
 -- bullets.lua
+-- changed from lazy to vim.pack 3-30-26
 -- to handle bulleted lists only in markdown and text files
 
 vim.pack.add({ 'https://github.com/dkarter/bullets.vim' })

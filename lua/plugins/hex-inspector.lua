@@ -1,4 +1,5 @@
 -- hex-inspector.lua
+-- changed from lazy to vim.pack 3-30-26
 --
 -- Created: 02/27/26
 

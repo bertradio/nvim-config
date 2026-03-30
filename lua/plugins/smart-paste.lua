@@ -1,4 +1,5 @@
 -- smart-paste.lua
+-- changed from lazy to vim.pack 3-30-26
 --
 -- Modifies paste to follow indent of target
 --

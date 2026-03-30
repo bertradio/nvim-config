@@ -1,4 +1,5 @@
 -- snacks-config.lua
+-- changed from lazy to vim.pack 3-30-26
 
 if Myfn and Myfn.is_windows and Myfn.is_windows() then
   vim.o.shell = 'pwsh.exe'

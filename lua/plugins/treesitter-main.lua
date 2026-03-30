@@ -1,4 +1,5 @@
 -- treesitter re-write for new main branch of treesitter
+-- changed from lazy to vim.pack 3-30-26
 -- code from Gemini 12/30/25
 
 vim.pack.add({ { src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'main' } })

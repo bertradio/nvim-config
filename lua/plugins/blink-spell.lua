@@ -1,4 +1,5 @@
 -- blink-spell.lua
+-- changed from lazy to vim.pack 3-30-26
 -- Keeps your original Blink UI & docs behavior intact.
 -- Adds LuaSnip config, curated friendly-snippets, and small Bash/PowerShell snippets.
 -- Also preserves your spell gating, cmdline/search completion, and prose autocmds.
