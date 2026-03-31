@@ -78,10 +78,11 @@ require('augroups')
 require('keymaps')
 require('settings')
 
--- plugins
 -- Load catppuccin first (colorscheme must be first)
 require('plugins.catppuccin')
--- Then load everything else in lua/plugins/ automatically
+
+-- Load everything else in lua/plugins automatically.
+-- nvim-lspconfig.lua will load here once, including its vim.pack.add().
 for _, file in
   ipairs(vim.fn.globpath(vim.fn.stdpath('config') .. '/lua/plugins', '*.lua', false, true))
 do

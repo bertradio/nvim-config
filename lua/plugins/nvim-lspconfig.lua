@@ -1,55 +1,68 @@
--- nvim-lspconfig.lua (Optimized for v0.11.x)
--- changed from lazy to vim.pack 3-30-26
+-- nvim-lspconfig.lua
+-- Neovim 0.12-style LSP setup using:
+--   - vim.lsp.config()
+--   - vim.lsp.enable()
+-- while keeping vim.pack.add() in this file
 
-vim.pack.add({ 'https://github.com/saghen/blink.cmp' })
 vim.pack.add({
-  { src = 'https://github.com/folke/lazydev.nvim', data = { ft = 'lua' }, opts = {} },
+  { src = 'https://github.com/neovim/nvim-lspconfig' },
+  { src = 'https://github.com/saghen/blink.cmp' },
+  { src = 'https://github.com/folke/lazydev.nvim', data = { ft = 'lua' } },
 })
-vim.pack.add({ 'https://github.com/neovim/nvim-lspconfig' })
+
+-- Provide :LspInfo even if nvim-lspconfig doesn't define it yet.
+-- Current nvim-lspconfig documents :LspInfo as an alias to:
+--   :checkhealth vim.lsp
+if vim.fn.exists(':LspInfo') == 0 then
+  vim.api.nvim_create_user_command('LspInfo', function()
+    vim.cmd('checkhealth vim.lsp')
+  end, { desc = 'Alias for :checkhealth vim.lsp' })
+end
 
 local capabilities = require('blink.cmp').get_lsp_capabilities()
 
--- 1. Define Servers
 local servers = {
   lua_ls = {
-    -- On Linux Mint, the binary is usually named exactly this:
     cmd = { 'lua-language-server' },
     settings = {
       Lua = {
-        diagnostics = { globals = { 'vim', 'Snacks', 'Status', 'cx', 'ui', 'ya' } },
-        workspace = { checkThirdParty = false },
+        diagnostics = {
+          globals = { 'vim', 'Snacks', 'Status', 'cx', 'ui', 'ya' },
+        },
+        workspace = {
+          checkThirdParty = false,
+        },
       },
     },
   },
+
   marksman = {
-    -- Explicitly setting this stops the "mdx" warning in checkhealth
     filetypes = { 'markdown' },
   },
+
   taplo = {},
+
   vimls = {},
+
   bashls = {
-    filetypes = { 'sh', 'zsh', 'bash' },
-    -- Ensure it picks up zsh properly
-    settings = { bashIde = { shellbeers = 'bash' } },
+    filetypes = { 'sh', 'bash', 'zsh' },
   },
 }
 
--- 2. Apply using Native v0.11 API
-for name, config in pairs(servers) do
-  config.capabilities = vim.tbl_deep_extend('force', capabilities, config.capabilities or {})
+for name, conf in pairs(servers) do
+  vim.lsp.config(
+    name,
+    vim.tbl_deep_extend('force', {
+      capabilities = capabilities,
+    }, conf)
+  )
 
-  -- Set the configuration
-  vim.lsp.config(name, config)
-
-  -- Crucial: Check if the binary exists before enabling
-  -- If 'cmd' isn't defined, it defaults to the server name
-  local bin = (config.cmd and config.cmd[1]) or name
+  local bin = (conf.cmd and conf.cmd[1]) or name
   if vim.fn.executable(bin) == 1 then
     vim.lsp.enable(name)
   end
 end
 
--- 3. Diagnostic Styling
 vim.diagnostic.config({
   underline = true,
   update_in_insert = false,
