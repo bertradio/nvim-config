@@ -1,17 +1,19 @@
 -- init.lua
 -- changed from lazy to vim.pack 3-30-26
 
--- PATH setup (all PATH mutations live here)
+-- -- set mason path
+-- if vim.fn.has('win32') == 1 then
+--   Myfn.add_to_vim_path(nvimdata .. '\\mason\\bin')
+-- else
+--   -- Myfn.add_to_vim_path(nvimdata .. '/mason/bin')
+--   -- Only add Mason to PATH if it's missing to avoid duplicates
+--   local mason_bin = vim.fn.stdpath('data') .. '/mason/bin'
+--   if not string.find(vim.env.PATH, mason_bin, 1, true) then
+--     vim.env.PATH = mason_bin .. ':' .. vim.env.PATH
+--   end
+-- end
+
 Myfn = require('my_fns')
-
-local data = vim.fn.stdpath('data')
-
--- set mason path
-if vim.fn.has('win32') == 1 then
-  Myfn.add_to_vim_path(data .. '\\mason\\bin')
-else
-  Myfn.add_to_vim_path(data .. '/mason/bin')
-end
 
 -- user / app binaries
 if vim.fn.has('win32') == 1 then
@@ -35,6 +37,13 @@ end
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.g.loaded_matchit = 1
+
+-- Disable the new 0.12 native autocomplete feature
+vim.opt.autocomplete = false
+-- Disable the horizontal wildmenu so it doesn't conflict with blink's menu
+vim.opt.wildmenu = false
+-- Change how the command line completes to avoid the native popup
+vim.opt.wildmode = 'longest:full,full'
 
 -- make sure nvim can find all parsers
 vim.opt.runtimepath:append('/home/bert/.local/share/nvim/site')

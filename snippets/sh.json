@@ -1,0 +1,19 @@
+{
+  "Bash Boilerplate": {
+    "prefix": "shb",
+    "body": [
+      "#!/usr/bin/env bash",
+      "set -euo pipefail",
+      "IFS=$'\\n\\t'",
+      "",
+      "# ${1:script description}",
+      "",
+      "main() {",
+      "  ${2:# TODO}",
+      "}",
+      "",
+      "main \"$@\""
+    ],
+    "description": "Standard robust Bash template"
+  }
+}

@@ -1,79 +1,31 @@
 -- blink-spell.lua
--- changed from lazy to vim.pack 3-30-26
--- Keeps your original Blink UI & docs behavior intact.
--- Adds LuaSnip config, curated friendly-snippets, and small Bash/PowerShell snippets.
--- Also preserves your spell gating, cmdline/search completion, and prose autocmds.
+--
+-- Finalized 3-31-26: Fixed cmdline keymap hijacking and E5113 error
+-- Optimized for Nvim 0.12 native features and sub-100ms startup
 
--- Dependencies first
 vim.pack.add({
-  { src = 'https://github.com/nvim-lua/plenary.nvim' },
-  -- { src = 'https://github.com/rafamadriz/friendly-snippets' },
   { src = 'https://github.com/ribru17/blink-cmp-spell' },
-  { src = 'https://github.com/L3MON4D3/LuaSnip', build = 'make install_jsregexp' },
   { src = 'https://github.com/saghen/blink.cmp', version = 'v1.10.1' },
 })
 
--- ── LuaSnip config ────────────────────────────────────────────────────────────
-local ls = require('luasnip')
-ls.config.setup({
-  history = true,
-  updateevents = 'TextChanged,TextChangedI',
-  enable_autosnippets = false,
-  region_check_events = 'CursorMoved,CursorHold,InsertEnter',
-  delete_check_events = 'TextChanged,InsertLeave',
-})
+-- ── Native Snippet Jumps ────────────────────────────────────────────────────
+vim.keymap.set({ 'i', 's' }, '<C-j>', function()
+  if vim.snippet.active({ direction = 1 }) then
+    vim.snippet.jump(1)
+  else
+    return '<C-j>'
+  end
+end, { expr = true, silent = true, desc = 'Native snippet jump forward' })
 
-local vs = require('luasnip.loaders.from_vscode')
-pcall(vs.lazy_load, { include = { 'lua', 'markdown', 'shellscript', 'powershell' } })
+vim.keymap.set({ 'i', 's' }, '<C-k>', function()
+  if vim.snippet.active({ direction = -1 }) then
+    vim.snippet.jump(-1)
+  else
+    return '<C-k>'
+  end
+end, { expr = true, silent = true, desc = 'Native snippet jump backward' })
 
-local user_snips = vim.fn.stdpath('config') .. '/snippets'
-if vim.fn.isdirectory(user_snips) == 1 then
-  pcall(vs.lazy_load, { paths = { user_snips } })
-end
-
-local s = ls.snippet
-local t = ls.text_node
-local i = ls.insert_node
-
-ls.add_snippets('sh', {
-  s('shb', {
-    t({ '#!/usr/bin/env bash', 'set -euo pipefail', "IFS=$'\\n\\t'", '' }),
-    t({ '# ' }),
-    i(1, 'script description'),
-    t({ '', '', 'main() {', '  ' }),
-    i(2, '# TODO'),
-    t({ '', '}', '', 'main "$@"' }),
-  }),
-})
-ls.add_snippets('bash', ls.get_snippets('sh'))
-
-ls.add_snippets('ps1', {
-  s('param', {
-    t({ '[CmdletBinding()]', 'param(', '    ' }),
-    i(1, '[string]$Path = "."'),
-    t({ '', ')', '', 'begin {', '    ' }),
-    i(2, '# init'),
-    t({ '', '}', '', 'process {', '    ' }),
-    i(3, '# work'),
-    t({ '', '}', '', 'end {', '    ' }),
-    i(4, '# cleanup'),
-    t({ '', '}' }),
-  }),
-})
-ls.add_snippets('powershell', ls.get_snippets('ps1'))
-
-local map_opts = { expr = true, silent = true, desc = 'LuaSnip jump/expand' }
-Myfn.map({ 'i', 's' }, '<C-j>', function()
-  return ls.expand_or_jumpable() and '<Plug>luasnip-expand-or-jump' or '<C-j>'
-end, map_opts)
-Myfn.map({ 'i', 's' }, '<C-k>', function()
-  return ls.jumpable(-1) and '<Plug>luasnip-jump-prev' or '<C-k>'
-end, map_opts)
-Myfn.map('i', '<C-l>', function()
-  return ls.choice_active() and '<Plug>luasnip-next-choice' or '<C-l>'
-end, map_opts)
-
--- ── blink.cmp config ──────────────────────────────────────────────────────────
+-- ── Helper Functions for Spell Gating ───────────────────────────────────────
 local function in_comment_or_string()
   local ok, ts = pcall(require, 'vim.treesitter')
   if not ok then
@@ -87,9 +39,6 @@ local function in_comment_or_string()
   end
   for _, cap in ipairs(caps) do
     local name = cap.capture or cap
-    if name == 'nospell' or name == '@nospell' then
-      return false
-    end
     if name:match('^@?comment$') or name:match('^@?string$') then
       return true
     end
@@ -105,12 +54,52 @@ local prose_fts_set = {
   markdown = true,
   [''] = true,
 }
+
 local function enable_spell_context()
   return prose_fts_set[vim.bo.filetype] or in_comment_or_string()
 end
 
+-- ── blink.cmp config ──────────────────────────────────────────────────────────
 require('blink.cmp').setup({
-  keymap = { preset = 'super-tab' },
+  -- Global Keymaps (Insert mode)
+  keymap = {
+    preset = 'none',
+    ['<Tab>'] = { 'select_and_accept', 'fallback' },
+    ['<Up>'] = { 'select_prev', 'fallback' },
+    ['<Down>'] = { 'select_next', 'fallback' },
+    ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+  },
+
+  -- Cmdline Config (Explicitly overrides floating UI hijacking)
+  cmdline = {
+    enabled = true,
+    keymap = {
+      preset = 'none',
+      ['<Tab>'] = { 'select_and_accept', 'fallback' },
+      ['<Up>'] = { 'select_prev', 'fallback' },
+      ['<Down>'] = { 'select_next', 'fallback' },
+    },
+    completion = {
+      menu = { auto_show = true },
+      ghost_text = { enabled = false },
+    },
+    sources = function()
+      local type = vim.fn.getcmdtype()
+      if type == '/' or type == '?' then
+        return { 'buffer' }
+      end
+      if type == ':' or type == '@' then
+        return { 'cmdline' }
+      end
+      return {}
+    end,
+  },
+
+  -- Native Snippet Bridge
+  snippets = {
+    preset = 'default',
+  },
+
   appearance = { use_nvim_cmp_as_default = true, nerd_font_variant = 'mono' },
   signature = { enabled = true, window = { border = 'rounded' } },
 
@@ -134,24 +123,19 @@ require('blink.cmp').setup({
   },
 
   sources = {
-    default = { 'buffer', 'path', 'spell' },
+    default = { 'lsp', 'snippets', 'buffer', 'path', 'spell' },
     per_filetype = {
-      [''] = { 'buffer', 'path', 'spell' },
-      lua = { 'buffer', 'lsp', 'path', 'snippets' },
-      sh = { 'buffer', 'lsp', 'path', 'snippets' },
-      ps1 = { 'lsp', 'buffer', 'path', 'snippets' },
-      python = { 'buffer', 'lsp', 'path', 'snippets' },
-      javascript = { 'buffer', 'lsp', 'path', 'snippets' },
-      typescript = { 'buffer', 'lsp', 'path', 'snippets' },
-      markdown = { 'spell', 'buffer', 'path' },
-      text = { 'spell', 'buffer', 'path' },
-      gitcommit = { 'spell', 'buffer', 'path' },
-      rst = { 'spell', 'buffer', 'path' },
-      latex = { 'spell', 'buffer', 'path' },
+      lua = { 'lsp', 'snippets', 'buffer', 'path' },
+      sh = { 'lsp', 'snippets', 'buffer', 'path' },
+      bash = { 'lsp', 'snippets', 'buffer', 'path' },
+      ps1 = { 'lsp', 'snippets', 'buffer', 'path' },
+      markdown = { 'spell', 'buffer', 'path', 'snippets' },
     },
     providers = {
-      lsp = { score_offset = 3, fallbacks = {} },
+      lsp = { name = 'LSP', module = 'blink.cmp.sources.lsp', score_offset = 3 },
       buffer = {
+        name = 'Buffer',
+        module = 'blink.cmp.sources.buffer',
         score_offset = 10,
         min_keyword_length = 2,
         opts = {
@@ -160,18 +144,14 @@ require('blink.cmp').setup({
           end,
         },
       },
-      path = { score_offset = 2 },
-      snippets = { score_offset = 1 },
-      cmdline = { score_offset = 1 },
+      path = { name = 'Path', module = 'blink.cmp.sources.path', score_offset = 2 },
+      snippets = { name = 'Snippets', module = 'blink.cmp.sources.snippets', score_offset = 1 },
       spell = {
         name = 'Spell',
         module = 'blink-cmp-spell',
         score_offset = 3,
         opts = {
           max_entries = 8,
-          preselect_current_word = false,
-          keep_all_entries = false,
-          use_cmp_spell_sorting = false,
           enable_in_context = enable_spell_context,
         },
       },
@@ -179,30 +159,15 @@ require('blink.cmp').setup({
   },
 
   fuzzy = {
-    implementation = 'lua', -- use Lua since we can't build Rust
+    implementation = 'lua',
     use_proximity = true,
-    prebuilt_binaries = { download = false }, -- stop trying to download
+    prebuilt_binaries = { download = false },
   },
 })
 
-pcall(function()
-  local cmdline = require('blink.cmp.cmdline')
-  if cmdline and cmdline.setup then
-    cmdline.setup({ cmdline = { enabled = true }, search = { enabled = true } })
-  end
-end)
-
 -- ── Spell / prose autocmds ────────────────────────────────────────────────────
 local SPELL_LANGS = { 'en' }
-local spellfile_path = vim.fs.normalize(
-  vim.fn.stdpath('config') .. '/spell/' .. (SPELL_LANGS[1] or 'en') .. '.utf-8.add'
-)
-do
-  local dir = vim.fs.dirname(spellfile_path)
-  if dir and vim.fn.isdirectory(dir) == 0 then
-    vim.fn.mkdir(dir, 'p')
-  end
-end
+local spellfile_path = vim.fs.normalize(vim.fn.stdpath('config') .. '/spell/en.utf-8.add')
 
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'markdown', 'text', 'gitcommit', 'rst', 'latex' },
@@ -214,38 +179,11 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.opt_local.wrap = true
     vim.opt_local.linebreak = true
   end,
-  desc = 'Enable spell (and comfy settings) for prose buffers',
 })
 
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = {
-    'bash',
-    'c',
-    'cpp',
-    'go',
-    'java',
-    'javascript',
-    'jsx',
-    'kotlin',
-    'lua',
-    'ps1',
-    'python',
-    'rust',
-    'sh',
-    'tsx',
-    'typescript',
-    'zsh',
-  },
+  pattern = { 'bash', 'lua', 'python', 'sh', 'ps1' },
   callback = function()
     vim.opt_local.spell = false
   end,
-  desc = 'Disable spell for code buffers',
-})
-
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = { 'sh', 'bash', 'zsh' },
-  callback = function()
-    vim.opt_local.iskeyword:append('-')
-  end,
-  desc = 'Shell editing comfort',
 })
