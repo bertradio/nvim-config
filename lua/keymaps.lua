@@ -123,3 +123,9 @@ Myfn.map('n', '<tab>', function()
   local cmd = vim.fn.foldclosed(linenr) == -1 and 'zc' or 'zO'
   vim.cmd('normal! ' .. cmd)
 end, { silent = true, desc = 'Folds: Toggle' })
+
+-- update all plugins
+vim.keymap.set('n', '<leader>U', function()
+  vim.notify('Updating plugins...', vim.log.levels.INFO)
+  vim.pack.update()
+end, { desc = 'Update plugins' })

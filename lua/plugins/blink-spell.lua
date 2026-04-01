@@ -7,7 +7,7 @@
 -- Dependencies first
 vim.pack.add({
   { src = 'https://github.com/nvim-lua/plenary.nvim' },
-  { src = 'https://github.com/rafamadriz/friendly-snippets' },
+  -- { src = 'https://github.com/rafamadriz/friendly-snippets' },
   { src = 'https://github.com/ribru17/blink-cmp-spell' },
   { src = 'https://github.com/L3MON4D3/LuaSnip', build = 'make install_jsregexp' },
   { src = 'https://github.com/saghen/blink.cmp', version = 'v1.10.1' },

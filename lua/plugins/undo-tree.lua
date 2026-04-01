@@ -1,15 +1,6 @@
--- undo-tree.lua
--- changed from lazy to vim.pack 3-30-26
---
--- Created: 10/17/23
+-- undotree.lua
 
-vim.pack.add({ 'https://github.com/mbbill/undotree' })
+-- activate built-in for nvim 0.12
 
-vim.g.undotree_CursorLine = 1 -- Show cursorline
-vim.g.undotree_HelpLine = 1 -- Show help line
-vim.g.undotree_HighlightChangedText = 1 -- Highlight changed text
-vim.g.undotree_HighlightChangedWithSign = 1 -- Highlight changed text using signs in the gutter
-vim.g.undotree_RelativeTimestamp = 1 -- relative timestamp
-vim.g.undotree_WindowLayout = 2 -- window layout
-
-Myfn.map('n', '<leader>u', '<cmd>UndotreeToggle<cr>', { desc = 'UndoTree' })
+vim.cmd('packadd nvim.undotree')
+vim.keymap.set('n', '<leader>u', require('undotree').open)

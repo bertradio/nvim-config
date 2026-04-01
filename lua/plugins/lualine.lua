@@ -134,5 +134,5 @@ require('lualine').setup({
     },
   },
 
-  extensions = { 'neo-tree', 'mason', 'quickfix', 'oil' },
+  extensions = { 'oil' },
 })

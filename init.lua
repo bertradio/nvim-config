@@ -34,6 +34,7 @@ end
 -- disable netrw
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_matchit = 1
 
 -- make sure nvim can find all parsers
 vim.opt.runtimepath:append('/home/bert/.local/share/nvim/site')
@@ -50,6 +51,7 @@ if vim.g.enable_providers ~= true then
   vim.g.loaded_ruby_provider = 0 -- don't load Ruby provider
 end
 
+-- set config if running neovide
 if vim.g.neovide then
   if Myfn.is_windows() then
     vim.o.guifont = 'JetBrainsMono NFP:h15'
@@ -64,22 +66,19 @@ if vim.g.neovide then
   else
     vim.o.guifont = 'JetBrainsMono NFP:h12'
   end
-  -- vim.g.neovide.size = '1280x800'
-  -- vim.g.neovide_remember_window_size = true
-  -- vim.g.neovide_fullscreen = true
 end
 
 -- set leader to a space instead of \
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+-- Load catppuccin first (colorscheme must be first)
+require('plugins.catppuccin')
+
 -- initialization files
 require('augroups')
 require('keymaps')
 require('settings')
-
--- Load catppuccin first (colorscheme must be first)
-require('plugins.catppuccin')
 
 -- Load everything else in lua/plugins automatically.
 -- nvim-lspconfig.lua will load here once, including its vim.pack.add().
