@@ -24,8 +24,8 @@ require('snacks').setup({
   statuscolumn = {
     enabled = true,
     segments = {
-      { text = { '%s' }, click = 'v:lua.ScSa' },
-      { text = { '%C' } },
+      { text = { '%s' }, click = 'v:lua.scsa' },
+      { text = { '%c' } },
       {
         text = {
           function()
@@ -39,7 +39,7 @@ require('snacks').setup({
             return string.format('%d ', vim.v.lnum)
           end,
         },
-        click = 'v:lua.ScNa',
+        click = 'v:lua.scna',
       },
     },
   },
@@ -49,6 +49,51 @@ require('snacks').setup({
   indent = { enabled = false },
   notifier = { enabled = false },
   terminal = { enabled = false },
+
+  picker = {
+    enabled = true,
+    prompt = '> ',
+    ui_select = true,
+    exclude = require('config.file_exclude'),
+
+    layout = {
+      layout = {
+        box = 'horizontal',
+        width = 0.9,
+        height = 0.8,
+        {
+          box = 'vertical',
+          border = 'rounded',
+          title = '{source} {live} {flags}',
+          title_pos = 'center',
+          { win = 'input', height = 1, border = 'bottom' },
+          { win = 'list', border = 'none' },
+        },
+        {
+          win = 'preview',
+          border = 'rounded',
+          width = 0.65,
+          title = '{preview}',
+        },
+      },
+    },
+
+    win = {
+      preview = {
+        wo = {
+          number = false,
+          relativenumber = false,
+          signcolumn = 'no',
+        },
+      },
+      input = {
+        keys = {
+          ['<PageDown>'] = { 'list_scroll_down', mode = { 'i', 'n' } },
+          ['<PageUp>'] = { 'list_scroll_up', mode = { 'i', 'n' } },
+        },
+      },
+    },
+  },
 })
 
 -- for deletes

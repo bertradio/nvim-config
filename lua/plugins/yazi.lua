@@ -5,7 +5,7 @@
 
 vim.pack.add({
   'https://github.com/mikavilpas/yazi.nvim',
-  'https://github.com/folke/snacks.nvim',
+  -- 'https://github.com/folke/snacks.nvim',
 })
 
 Myfn.map('n', '<Leader>y', function()
@@ -57,10 +57,10 @@ require('yazi').setup({
       require('fzf-lua').grep({})
     end,
 
-    grep_in_selected_files = function(selected_files)
-      require('snacks.picker').grep({
-        files = selected_files,
-      })
-    end,
+    -- grep_in_selected_files = function(selected_files)
+    --   require('snacks.picker').grep({
+    --     files = selected_files,
+    --   })
+    -- end,
   },
 })
