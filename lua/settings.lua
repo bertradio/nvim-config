@@ -195,3 +195,28 @@ vim.api.nvim_create_user_command('Sort', function(opts)
   local pattern = string.format('%ssort%s /^\\([^|]*|\\)\\{%s\\}/', range, bang, opts.args)
   vim.cmd(pattern)
 end, { nargs = 1, bang = true, range = true })
+
+-- Disable built-in plugins not needed- from Gemini
+local disabled_builtins = {
+  '2html_plugin',
+  'getscript',
+  'getscriptPlugin',
+  'gzip',
+  'logipat',
+  'matchit',
+  'matchparen',
+  'netrwPlugin',
+  'nwtrw',
+  'rrhelper',
+  'tar',
+  'tarPl`ugin',
+  'tohtml',
+  'tutor',
+  'vimball',
+  'zip',
+  'zipPlugin',
+}
+
+for _, plugin in ipairs(disabled_builtins) do
+  vim.g['loaded_' .. plugin] = 1
+end

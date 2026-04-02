@@ -1,10 +1,11 @@
 -- main setup for mini modules
 -- changed from lazy to vim.pack 3-30-26
--- put everything in one file for convenience
+-- put everything in one file for convenience since small
 
 vim.pack.add({ 'https://github.com/nvim-mini/mini.nvim' })
 
 require('mini.ai').setup()
+
 require('mini.align').setup({ mappings = { start = 'ga' } })
 
 require('mini.surround').setup({
