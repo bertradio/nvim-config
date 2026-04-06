@@ -13,6 +13,9 @@
 --   end
 -- end
 
+-- Load catppuccin first (colorscheme must be first)
+-- require('plugin.catppuccin')
+
 Myfn = require('my_fns')
 
 -- user / app binaries
@@ -81,24 +84,10 @@ end
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- Load catppuccin first (colorscheme must be first)
-require('plugins.catppuccin')
-
 -- initialization files
 require('augroups')
 require('keymaps')
 require('settings')
-
--- Load everything else in lua/plugins automatically.
--- nvim-lspconfig.lua will load here once, including its vim.pack.add().
-for _, file in
-  ipairs(vim.fn.globpath(vim.fn.stdpath('config') .. '/lua/plugins', '*.lua', false, true))
-do
-  local name = vim.fn.fnamemodify(file, ':t:r') -- strip path and .lua extension
-  if name ~= 'catppuccin' then -- skip since already loaded
-    require('plugins.' .. name)
-  end
-end
 
 -- set directories and shortcuts based on platform
 if Myfn.is_windows() then
