@@ -36,6 +36,11 @@ require('catppuccin').setup({
         LineNr = { bg = '#262626', fg = 'Grey' },
         Folded = { bg = '#262626', fg = '#ffffff' },
         FoldColumn = { bg = '#262626', fg = colors.sapphire },
+        FzfLuaSearch = { fg = colors.yellow, style = { 'bold' } },
+        FzfLuaGrep = { fg = colors.yellow, style = { 'bold' } },
+        FzfLuaGrepHighlight = { fg = colors.sky, style = { 'bold' } },
+        Search = { fg = colors.base, bg = colors.yellow }, -- General search matches
+        CurSearch = { fg = colors.base, bg = colors.magenta }, -- The currently selected match
       }
     end,
   },
@@ -45,9 +50,6 @@ require('catppuccin').setup({
     blink_indent = true,
     markdown = true,
     noice = true,
-    neotree = true,
-    pounce = true,
-    treesitter = true,
     rainbow_delimiters = true,
     indent_blankline = {
       enabled = true,

@@ -7,6 +7,7 @@
 -- re-written for new re-write of treesitter
 
 vim.pack.add({ 'https://github.com/saghen/blink.indent' })
+
 vim.g.indent_guide = false -- start with guides disabled
 
 local indent = require('blink.indent')

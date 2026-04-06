@@ -134,5 +134,6 @@ require('lualine').setup({
     },
   },
 
-  extensions = { 'oil' },
+  -- doesn't seem to add anything and can be a performance hit
+  -- extensions = { 'oil', 'fzf' },
 })

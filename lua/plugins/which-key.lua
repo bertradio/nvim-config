@@ -1,7 +1,7 @@
 -- which-key.lua
 -- changed from lazy to vim.pack 3-30-26
 
-vim.pack.add({ 'https://github.com/folke/which-key.nvim' })
+vim.pack.add({ { src = 'https://github.com/folke/which-key.nvim' } })
 
 vim.o.timeout = true
 vim.o.timeoutlen = 2000
@@ -24,6 +24,7 @@ require('which-key').setup({
     { "<leader>f",  group = "FZF" },
     { "<leader>fg", group = "Grep" },
     { "<leader>g",  group = "Git" },
+    { "<leader>h",  group = "Grapple" },
   },
 
   keys = {
