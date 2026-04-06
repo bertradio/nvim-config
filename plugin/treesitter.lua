@@ -1,8 +1,21 @@
 -- treesitter re-write for new main branch of treesitter
--- changed from lazy to vim.pack 3-30-26
+-- changed from lazy to -- vim.pack 3-30-26
 -- code from Gemini 12/30/25
 
-vim.pack.add({ { src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'main' } })
+-- suggested in docs
+vim.api.nvim_create_autocmd('PackChanged', {
+  callback = function(ev)
+    local name, kind = ev.data.spec.name, ev.data.kind
+    if name == 'nvim-treesitter' and kind == 'update' then
+      if not ev.data.active then
+        vim.cmd.packadd('nvim-treesitter')
+      end
+      vim.cmd('TSUpdate')
+    end
+  end,
+})
+
+-- vim.pack.add({ { src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'main' } })
 
 local ts = require('nvim-treesitter')
 

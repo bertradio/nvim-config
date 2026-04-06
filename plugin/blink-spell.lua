@@ -1,13 +1,13 @@
 -- blink-spell.lua
--- changed from lazy to vim.pack 3-30-26
+-- changed from lazy to -- vim.pack 3-30-26
 --
 -- Finalized 3-31-26: Fixed cmdline keymap hijacking and E5113 error
 -- Optimized for Nvim 0.12 native features and sub-100ms startup
 
-vim.pack.add({
-  { src = 'https://github.com/saghen/blink.cmp', version = 'v1.10.2' },
-  { src = 'https://github.com/ribru17/blink-cmp-spell' },
-})
+-- vim.pack.add({
+--   { src = 'https://github.com/saghen/blink.cmp', version = 'v1.10.2' },
+--   { src = 'https://github.com/ribru17/blink-cmp-spell' },
+-- })
 
 -- ── Native Snippet Jumps ────────────────────────────────────────────────────
 vim.keymap.set({ 'i', 's' }, '<C-j>', function()

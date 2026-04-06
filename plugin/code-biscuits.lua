@@ -1,9 +1,9 @@
 -- code-biscuits.lua
--- changed from lazy to vim.pack 3-30-26
+-- changed from lazy to -- vim.pack 3-30-26
 --
 -- Created: 07/14/25
 
-vim.pack.add({ { src = 'https://github.com/code-biscuits/nvim-biscuits' } })
+-- vim.pack.add({ { src = 'https://github.com/code-biscuits/nvim-biscuits' } })
 
  -- stylua: ignore
  require('nvim-biscuits').setup({

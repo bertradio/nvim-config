@@ -1,12 +1,12 @@
 -- oil.lua
--- changed from lazy to vim.pack 3-30-26
+-- changed from lazy to -- vim.pack 3-30-26
 --
--- vim.pack version of your old lazy.nvim oil config
+-- -- vim.pack version of your old lazy.nvim oil config
 
-vim.pack.add({
-  'https://github.com/nvim-tree/nvim-web-devicons',
-  'https://github.com/stevearc/oil.nvim',
-})
+-- vim.pack.add({
+--   'https://github.com/nvim-tree/nvim-web-devicons',
+--   'https://github.com/stevearc/oil.nvim',
+-- })
 
 local detail = false
 

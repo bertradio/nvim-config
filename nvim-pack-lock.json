@@ -6,7 +6,8 @@
     },
     "blink.cmp": {
       "rev": "78336bc89ee5365633bcf754d93df01678b5c08f",
-      "src": "https://github.com/saghen/blink.cmp"
+      "src": "https://github.com/saghen/blink.cmp",
+      "version": "'v1.10.2'"
     },
     "blink.indent": {
       "rev": "9c80820ca77218a8d28e70075d6f44a1609911fe",
@@ -102,7 +103,7 @@
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
     "rainbow-delimiters.nvim": {
-      "rev": "5dc9b29d0d06d5fcc3b6ab42aedd22a089ea3703",
+      "rev": "d061c2c8421f394c834ff63be825cd4ec80c39b3",
       "src": "https://github.com/HiPhish/rainbow-delimiters.nvim"
     },
     "smart-paste.nvim": {
@@ -114,7 +115,7 @@
       "src": "https://github.com/folke/which-key.nvim"
     },
     "yazi.nvim": {
-      "rev": "1a2dd38bd3631e62b410680ac009d1c103535786",
+      "rev": "0933e57be31ff0a496f904bfff8ee0465abe8449",
       "src": "https://github.com/mikavilpas/yazi.nvim"
     }
   }
