@@ -5,6 +5,8 @@
 *~
 Session.vim
 
+*.json
+
 # netrw history
 .netrwhist
 

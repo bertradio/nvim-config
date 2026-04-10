@@ -20,6 +20,7 @@ return {
   '*.kdbx',
   '*.lnk',
   '*.max',
+  '*.mkv',
   '*.mov',
   '*.m4a',
   '*.mp*',

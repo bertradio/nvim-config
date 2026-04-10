@@ -2,10 +2,10 @@
 -- Converted to vim.pack.add 4-3-26
 -- Code from ChatGPT to customize
 
-vim.pack.add({
-  { src = 'https://github.com/nvim-lua/plenary.nvim' },
-  { src = 'https://github.com/cbochs/grapple.nvim' },
-})
+-- vim.pack.add({
+--   { src = 'https://github.com/nvim-lua/plenary.nvim' },
+--   { src = 'https://github.com/cbochs/grapple.nvim' },
+-- })
 
 local g = require('grapple')
 

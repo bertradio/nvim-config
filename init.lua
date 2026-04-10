@@ -13,42 +13,46 @@
 --   end
 -- end
 
--- recommended way - to do all adds at once
+-- simplify code
+local gh = function(x)
+  return 'https://github.com/' .. x
+end
+
+-- recommended way - load all adds at once
 vim.pack.add({
-  { src = 'https://github.com/catppuccin/nvim' },
-  { src = 'https://github.com/HiPhish/rainbow-delimiters.nvim' },
-  { src = 'https://github.com/MeanderingProgrammer/markdown.nvim' },
-  { src = 'https://github.com/MunifTanjim/nui.nvim' },
-  { src = 'https://github.com/code-biscuits/nvim-biscuits' },
-  { src = 'https://github.com/dkarter/bullets.vim' },
-  { src = 'https://github.com/folke/flash.nvim' },
-  { src = 'https://github.com/folke/lazydev.nvim', data = { ft = 'lua' } },
-  { src = 'https://github.com/folke/noice.nvim' },
-  { src = 'https://github.com/folke/which-key.nvim' },
-  { src = 'https://github.com/ibhagwan/fzf-lua' },
-  { src = 'https://github.com/kdheepak/lazygit.nvim' },
-  { src = 'https://github.com/mikavilpas/yazi.nvim' },
-  { src = 'https://github.com/nemanjamalesija/smart-paste.nvim' },
-  { src = 'https://github.com/neovim/nvim-lspconfig' },
-  { src = 'https://github.com/nvim-lua/plenary.nvim' },
-  { src = 'https://github.com/nvim-lualine/lualine.nvim' },
-  { src = 'https://github.com/nvim-mini/mini.nvim' },
-  { src = 'https://github.com/nvim-tree/nvim-web-devicons' },
-  { src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'main' },
-  { src = 'https://github.com/rcarriga/nvim-notify' },
-  { src = 'https://github.com/ribru17/blink-cmp-spell' },
-  { src = 'https://github.com/saghen/blink.cmp', version = 'v1.10.2' },
-  { src = 'https://github.com/saghen/blink.indent' },
-  { src = 'https://github.com/stevearc/conform.nvim' },
-  { src = 'https://github.com/stevearc/oil.nvim' },
-  { src = 'https://github.com/williamboman/mason-lspconfig.nvim' },
-  { src = 'https://github.com/williamboman/mason.nvim' },
-  { src = 'https://github.com/windwp/nvim-autopairs' },
+  { src = gh('catppuccin/nvim'), name = 'catppuccin' },
+  { src = gh('HiPhish/rainbow-delimiters.nvim') },
+  { src = gh('MeanderingProgrammer/markdown.nvim') },
+  { src = gh('MunifTanjim/nui.nvim') },
+  { src = gh('code-biscuits/nvim-biscuits') },
+  { src = gh('dkarter/bullets.vim') },
+  { src = gh('folke/flash.nvim') },
+  { src = gh('folke/lazydev.nvim'), data = { ft = 'lua' } },
+  { src = gh('folke/noice.nvim') },
+  { src = gh('folke/which-key.nvim') },
+  { src = gh('ibhagwan/fzf-lua') },
+  { src = gh('kdheepak/lazygit.nvim') },
+  { src = gh('mikavilpas/yazi.nvim') },
+  { src = gh('nemanjamalesija/smart-paste.nvim') },
+  { src = gh('neovim/nvim-lspconfig') },
+  { src = gh('nvim-lua/plenary.nvim') },
+  { src = gh('nvim-lualine/lualine.nvim') },
+  { src = gh('nvim-mini/mini.nvim') },
+  { src = gh('nvim-tree/nvim-web-devicons') },
+  { src = gh('nvim-treesitter/nvim-treesitter'), version = 'main' },
+  { src = gh('rcarriga/nvim-notify') },
+  { src = gh('ribru17/blink-cmp-spell') },
+  { src = gh('saghen/blink.cmp'), version = 'v1.10.2' },
+  { src = gh('saghen/blink.indent') },
+  { src = gh('stevearc/conform.nvim') },
+  { src = gh('stevearc/oil.nvim') },
+  { src = gh('williamboman/mason-lspconfig.nvim') },
+  { src = gh('williamboman/mason.nvim') },
+  { src = gh('windwp/nvim-autopairs') },
 })
 
 Myfn = require('my_fns')
 
--- require('plugin.catppuccin')
 -- user / app binaries
 if vim.fn.has('win32') == 1 then
   for _, p in ipairs({
