@@ -1,5 +1,5 @@
 -- Configure status line
--- changed from lazy to -- vim.pack 3-30-26
+-- changed from lazy to vim.pack 3-30-26
 -- Code for Oil from ChatGPT
 -- (Merged: Oil buffers in tabline show current directory as their label)
 -- Rewrite to optimize from Gemini
@@ -67,8 +67,8 @@ end
 
 -----------------------------
 
--- vim.pack.add({ 'https://github.com/nvim-tree/nvim-web-devicons' })
--- vim.pack.add({ 'https://github.com/nvim-lualine/lualine.nvim' })
+vim.pack.add({ 'https://github.com/nvim-tree/nvim-web-devicons' })
+vim.pack.add({ 'https://github.com/nvim-lualine/lualine.nvim' })
 
 -- Refresh logic for macro recording
 vim.schedule(function()

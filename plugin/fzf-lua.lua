@@ -1,12 +1,12 @@
 -- fzf-lua.lua
--- changed from lazy to -- vim.pack 3-30-26
+-- changed from lazy to vim.pack 3-30-26
 -- fuzzy finder
 -- code from Gemini to incorporate config/exclude_files.lua and hide hidden files
 
--- vim.pack.add({
---   { src = 'https://github.com/nvim-tree/nvim-web-devicons' },
---   { src = 'https://github.com/ibhagwan/fzf-lua' },
--- })
+vim.pack.add({
+   { src = 'https://github.com/nvim-tree/nvim-web-devicons' },
+   { src = 'https://github.com/ibhagwan/fzf-lua' },
+ })
 
 local fzf = require('fzf-lua')
 local actions = require('fzf-lua.actions')

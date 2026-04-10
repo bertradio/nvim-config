@@ -1,8 +1,8 @@
 -- bullets.lua
--- changed from lazy to -- vim.pack 3-30-26
+-- changed from lazy to vim.pack 3-30-26
 -- to handle bulleted lists only in markdown and text files
 
--- vim.pack.add({ 'https://github.com/dkarter/bullets.vim' })
+vim.pack.add({ 'https://github.com/dkarter/bullets.vim' })
 
 -- ft = { 'markdown', 'text' } - not sure what this is for, but not needed
 vim.g.bullets_enabled_file_types = { 'markdown', 'text' }

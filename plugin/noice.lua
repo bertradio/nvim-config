@@ -1,5 +1,5 @@
 -- noice.lua
--- changed from lazy to -- vim.pack 3-30-26
+-- changed from lazy to vim.pack 3-30-26
 --
 -- display of error and other messages as well as commandline
 
@@ -14,9 +14,9 @@ vim.api.nvim_create_autocmd('User', {
 -- surpass Diagnosing workspace lua_ls messages
 vim.lsp.handlers['$/progress'] = function() end
 
--- vim.pack.add({ 'https://github.com/rcarriga/nvim-notify' })
--- vim.pack.add({ 'https://github.com/MunifTanjim/nui.nvim' })
--- vim.pack.add({ 'https://github.com/folke/noice.nvim' })
+vim.pack.add({ 'https://github.com/rcarriga/nvim-notify' })
+vim.pack.add({ 'https://github.com/MunifTanjim/nui.nvim' })
+vim.pack.add({ 'https://github.com/folke/noice.nvim' })
 
 -- make border of commandline popup orange to match command color
 vim.cmd([[

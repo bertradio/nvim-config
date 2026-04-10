@@ -2,12 +2,12 @@
 -- Neovim 0.12-style LSP setup
 -- Updated 3-31-26: Fixed LSP snippet negotiation for blink.cmp
 
--- vim.pack.add({
---   { src = 'https://github.com/neovim/nvim-lspconfig' },
---   { src = 'https://github.com/saghen/blink.cmp' },
---   -- lazydev handles the "vim" global and workspace library discovery efficiently
---   { src = 'https://github.com/folke/lazydev.nvim', data = { ft = 'lua' } },
--- })
+vim.pack.add({
+   { src = 'https://github.com/neovim/nvim-lspconfig' },
+   { src = 'https://github.com/saghen/blink.cmp' },
+   -- lazydev handles the "vim" global and workspace library discovery efficiently
+   { src = 'https://github.com/folke/lazydev.nvim', data = { ft = 'lua' } },
+ })
 
 -- Provide :LspInfo even if nvim-lspconfig doesn't define it yet.
 if vim.fn.exists(':LspInfo') == 0 then
@@ -16,7 +16,7 @@ if vim.fn.exists(':LspInfo') == 0 then
   end, { desc = 'Alias for :checkhealth vim.lsp' })
 end
 
--- IMPORTANT: This must be called AFTER blink.cmp is added to -- vim.pack
+-- IMPORTANT: This must be called AFTER blink.cmp is added to vim.pack
 local capabilities = require('blink.cmp').get_lsp_capabilities()
 
 local servers = {

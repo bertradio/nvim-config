@@ -1,11 +1,11 @@
 -- smart-paste.lua
--- changed from lazy to -- vim.pack 3-30-26
+-- changed from lazy to vim.pack 3-30-26
 --
 -- Modifies paste to follow indent of target
 --
 -- Created: 02/09/26
 
--- vim.pack.add({ 'https://github.com/nemanjamalesija/smart-paste.nvim' })
+vim.pack.add({ 'https://github.com/nemanjamalesija/smart-paste.nvim' })
 
 require('smart-paste').setup({})
 --   keys = { 'p', 'P', 'gp', 'gP' }, -- keys to enhance (default)

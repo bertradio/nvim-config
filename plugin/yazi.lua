@@ -1,12 +1,12 @@
 -- yazi.lua
--- changed from lazy to -- vim.pack 3-30-26
+-- changed from lazy to vim.pack 3-30-26
 --
 -- Created: 04/23/24
 
--- vim.pack.add({
---   'https://github.com/mikavilpas/yazi.nvim',
---   -- 'https://github.com/folke/snacks.nvim',
--- })
+vim.pack.add({
+   'https://github.com/mikavilpas/yazi.nvim',
+   -- 'https://github.com/folke/snacks.nvim',
+})
 
 Myfn.map('n', '<Leader>y', function()
   require('yazi').yazi(nil, vim.fn.getcwd())
