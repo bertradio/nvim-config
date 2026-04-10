@@ -101,6 +101,10 @@
       "rev": "0fcc83805ad11cf714a949c98c605ed717e0b83e",
       "src": "https://github.com/stevearc/oil.nvim"
     },
+    "plenary.nvim": {
+      "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
+      "src": "https://github.com/nvim-lua/plenary.nvim"
+    },
     "rainbow-delimiters.nvim": {
       "rev": "aab6caaffd79b8def22ec4320a5344f7c42f58d2",
       "src": "https://github.com/HiPhish/rainbow-delimiters.nvim"
@@ -118,7 +122,7 @@
       "src": "https://github.com/folke/which-key.nvim"
     },
     "yazi.nvim": {
-      "rev": "c12505adceaf0f22f9b0749bdbdf7a2c566784fb",
+      "rev": "91cebd40716a73534165762e23c9f96847e7587c",
       "src": "https://github.com/mikavilpas/yazi.nvim"
     }
   }
