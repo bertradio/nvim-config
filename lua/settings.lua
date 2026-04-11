@@ -11,7 +11,7 @@ end
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- 3. LOAD MODULAR OPTIONS
+-- 3. LOAD MODULAR SETTINGS OPTIONS
 require('options').setup()
 
 -- 4. DIRECTORY & BINARY LOGIC
@@ -32,8 +32,8 @@ do
 end
 
 -- 5. LOAD EXISTING MODULES
-require('keymaps')
 require('augroups')
+require('keymaps')
 
 -- Platform-specific bookmarks
 if Myfn.is_windows() then

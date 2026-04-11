@@ -29,7 +29,7 @@
       "src": "https://github.com/folke/flash.nvim"
     },
     "fzf-lua": {
-      "rev": "eee072d89ccdc0a4627bf67d0757d2e4981c7292",
+      "rev": "657c1bbb7357c61e26a20d868b53a460b05c18c0",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "lazydev.nvim": {
@@ -57,7 +57,7 @@
       "src": "https://github.com/echasnovski/mini.completion"
     },
     "mini.nvim": {
-      "rev": "69b7433355664cf76898eb86a12a019f39bd86d1",
+      "rev": "4182d64727fb4876407af65c181b85428a4a70d1",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "noice.nvim": {
@@ -113,16 +113,16 @@
       "rev": "328f90f7f4535f58d5bd987edb48588836efdecc",
       "src": "https://github.com/nemanjamalesija/smart-paste.nvim"
     },
-    "tiny-cmdline.nvim": {
-      "rev": "807d23bcb7cdf26da9e92c5ea5299e7f0d07383d",
-      "src": "https://github.com/rachartier/tiny-cmdline.nvim"
+    "snacks.nvim": {
+      "rev": "ad9ede6a9cddf16cedbd31b8932d6dcdee9b716e",
+      "src": "https://github.com/folke/snacks.nvim"
     },
     "which-key.nvim": {
       "rev": "3aab2147e74890957785941f0c1ad87d0a44c15a",
       "src": "https://github.com/folke/which-key.nvim"
     },
     "yazi.nvim": {
-      "rev": "91cebd40716a73534165762e23c9f96847e7587c",
+      "rev": "7d864fd3ccc3fc8fc88ad7765f5a7a1aca76c8ec",
       "src": "https://github.com/mikavilpas/yazi.nvim"
     }
   }

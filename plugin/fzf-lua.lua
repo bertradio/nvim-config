@@ -4,9 +4,9 @@
 -- code from Gemini to incorporate config/exclude_files.lua and hide hidden files
 
 vim.pack.add({
-   { src = 'https://github.com/nvim-tree/nvim-web-devicons' },
-   { src = 'https://github.com/ibhagwan/fzf-lua' },
- })
+  { src = 'https://github.com/nvim-tree/nvim-web-devicons' },
+  { src = 'https://github.com/ibhagwan/fzf-lua' },
+})
 
 local fzf = require('fzf-lua')
 local actions = require('fzf-lua.actions')
@@ -484,7 +484,7 @@ fzf.setup({
 
 -- stylua: ignore
 local function maps()
-  Myfn.map('n', '<Leader><space>', '<cmd>FzfLua files<cr>',           { desc = 'find files' })
+  -- Myfn.map('n', '<Leader><space>', '<cmd>FzfLua files<cr>',           { desc = 'find files' })
   Myfn.map('n', '<Leader>fb',     '<cmd>FzfLua builtin<cr>',          { desc = 'builtin commands' })
   Myfn.map('n', '<Leader>fc',     '<cmd>FzfLua command_history<cr>',  { desc = 'command history' })
   Myfn.map('n', '<Leader>fd',     '<cmd>FzfLua diagnostics_document<cr>', { desc = 'diagnostics' })

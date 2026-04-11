@@ -55,7 +55,11 @@ require('snacks').setup({
     prompt = '> ',
     ui_select = true,
     exclude = require('config.file_exclude'),
-
+    icons = {
+      git = {
+        enabled = true, -- Ensures git icons are active
+      },
+    },
     layout = {
       layout = {
         box = 'horizontal',

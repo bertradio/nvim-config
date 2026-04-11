@@ -125,4 +125,5 @@ Myfn.map('n', '<Leader>ea', '<cmd>e ' .. cfg .. '/lua/augroups.lua<cr>', { desc 
 Myfn.map('n', '<Leader>ei', '<cmd>e ' .. cfg .. '/init.lua<cr>', { desc = 'init.lua' })
 Myfn.map('n', '<Leader>ek', '<cmd>e ' .. cfg .. '/lua/keymaps.lua<cr>', { desc = 'keymaps.lua' })
 Myfn.map('n', '<Leader>em', '<cmd>e ' .. cfg .. '/lua/my_fns.lua<cr>', { desc = 'my_fns.lua' })
+Myfn.map('n', '<Leader>eo', '<cmd>e ' .. cfg .. '/lua/options.lua<cr>', { desc = 'my_fns.lua' })
 Myfn.map('n', '<Leader>es', '<cmd>e ' .. cfg .. '/lua/settings.lua<cr>', { desc = 'settings.lua' })

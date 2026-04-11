@@ -53,11 +53,12 @@ vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.opt.foldlevel = 99
 vim.opt.foldtext = 'v:lua.MyFoldText()'
-vim.opt.foldcolumn = '1'
+vim.opt.foldcolumn = 'auto:1'
 
 vim.opt.fillchars:append({
   foldopen = '▼',
   foldclose = '▶',
-  fold = '·',
+  -- fold = '·',
+  fold = ' ',
   foldsep = ' ',
 })

@@ -1,13 +1,51 @@
 -- treesitter re-write for new main branch of treesitter
--- changed from lazy to vim.pack 3-30-26
+-- changed from lazy to -- vim.pack 3-30-26
 -- code from Gemini 12/30/25
 
--- simplified code from ChatGPT for simplicity
--- have to load parsers manually
-
--- Enable treesitter highlighting
-vim.api.nvim_create_autocmd('FileType', {
-  callback = function(args)
-    pcall(vim.treesitter.start, args.buf)
+-- suggested in docs
+vim.api.nvim_create_autocmd('PackChanged', {
+  callback = function(ev)
+    local name, kind = ev.data.spec.name, ev.data.kind
+    if name == 'nvim-treesitter' and kind == 'update' then
+      if not ev.data.active then
+        vim.cmd.packadd('nvim-treesitter')
+      end
+      vim.cmd('TSUpdate')
+    end
   end,
+})
+
+vim.pack.add({ { src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'main' } })
+
+local ts = require('nvim-treesitter')
+
+ts.setup({
+  ensure_installed = {
+    'awk',
+    'bash',
+    'c',
+    'csv',
+    'json',
+    'lua',
+    'markdown',
+    'markdown_inline',
+    'python',
+    'query',
+    'toml',
+    'vim',
+    'vimdoc',
+    'powershell',
+    'diff',
+  },
+  auto_install = true,
+  highlight = {
+    enable = true,
+    disable = function(lang, buf)
+      local max_filesize = 200 * 1024 -- 200 KB
+      local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
+      if ok and stats and stats.size > max_filesize then
+        return true
+      end
+    end,
+  },
 })

@@ -24,7 +24,7 @@ require('which-key').setup({
     { "<leader>f",  group = "FZF" },
     { "<leader>fg", group = "Grep" },
     { "<leader>g",  group = "Git" },
-    { "<leader>h",  group = "Grapple" },
+    { "<leader>l",  group = "Snacks" },
   },
 
   keys = {
