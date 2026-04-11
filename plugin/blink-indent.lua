@@ -6,7 +6,7 @@
 -- Using instead of other indent plugin
 -- re-written for new re-write of treesitter
 
-vim.pack.add({ 'https://github.com/saghen/blink.indent' })
+vim.pack.add({ 'src = https://github.com/saghen/blink.indent' })
 
 vim.g.indent_guide = false -- start with guides disabled
 

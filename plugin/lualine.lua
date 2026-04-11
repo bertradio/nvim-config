@@ -67,8 +67,8 @@ end
 
 -----------------------------
 
-vim.pack.add({ 'https://github.com/nvim-tree/nvim-web-devicons' })
-vim.pack.add({ 'https://github.com/nvim-lualine/lualine.nvim' })
+vim.pack.add({ 'src = https://github.com/nvim-tree/nvim-web-devicons' })
+vim.pack.add({ 'src = https://github.com/nvim-lualine/lualine.nvim' })
 
 -- Refresh logic for macro recording
 vim.schedule(function()

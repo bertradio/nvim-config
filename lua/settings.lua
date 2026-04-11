@@ -31,6 +31,8 @@ do
   end
 end
 
+Myfn = require('my_fns') -- make my functions accessible
+
 -- 5. LOAD EXISTING MODULES
 require('augroups')
 require('keymaps')

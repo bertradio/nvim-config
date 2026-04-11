@@ -8,9 +8,7 @@ if Myfn and Myfn.is_windows and Myfn.is_windows() then
   vim.o.shellxquote = ''
 end
 
-vim.pack.add({
-  'https://github.com/folke/snacks.nvim',
-})
+vim.pack.add({ 'src = https://github.com/folke/snacks.nvim' })
 
 require('snacks').setup({
   bigfile = { enabled = true },
