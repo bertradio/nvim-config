@@ -3,7 +3,7 @@
 -- better than mini.pairs since it handles quotes before and after text well
 -- Created: 03/30/25
 
-vim.pack.add({ 'src = https://github.com/windwp/nvim-autopairs' })
+vim.pack.add({ 'https://github.com/windwp/nvim-autopairs' })
 
 local npairs = require('nvim-autopairs')
 npairs.setup({})

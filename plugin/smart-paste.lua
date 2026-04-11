@@ -5,7 +5,7 @@
 --
 -- Created: 02/09/26
 
-vim.pack.add({ 'src = https://github.com/nemanjamalesija/smart-paste.nvim' })
+vim.pack.add({ 'https://github.com/nemanjamalesija/smart-paste.nvim' })
 
 require('smart-paste').setup({})
 --   keys = { 'p', 'P', 'gp', 'gP' }, -- keys to enhance (default)

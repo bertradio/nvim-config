@@ -14,9 +14,11 @@ vim.api.nvim_create_autocmd('User', {
 -- surpass Diagnosing workspace lua_ls messages
 vim.lsp.handlers['$/progress'] = function() end
 
-vim.pack.add({ 'src = https://github.com/rcarriga/nvim-notify' })
-vim.pack.add({ 'src = https://github.com/MunifTanjim/nui.nvim' })
-vim.pack.add({ 'src = https://github.com/folke/noice.nvim' })
+vim.pack.add({
+  'https://github.com/rcarriga/nvim-notify',
+  'https://github.com/MunifTanjim/nui.nvim',
+  'https://github.com/folke/noice.nvim',
+})
 
 -- make border of commandline popup orange to match command color
 vim.cmd([[

@@ -4,8 +4,8 @@
 -- code from Gemini to incorporate config/exclude_files.lua and hide hidden files
 
 vim.pack.add({
-  { src = 'https://github.com/nvim-tree/nvim-web-devicons' },
-  { src = 'https://github.com/ibhagwan/fzf-lua' },
+  'https://github.com/nvim-tree/nvim-web-devicons',
+  'https://github.com/ibhagwan/fzf-lua',
 })
 
 local fzf = require('fzf-lua')

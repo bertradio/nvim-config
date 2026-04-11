@@ -3,7 +3,8 @@
 
 -- Created: 03/09/24
 
-vim.pack.add({ 'src = https://github.com/rcarriga/nvim-notify' })
+vim.pack.add({ 'https://github.com/rcarriga/nvim-notify' })
+
 require('notify').setup({
   timeout = 150,
   render = 'compact',

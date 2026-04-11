@@ -5,9 +5,9 @@
 -- Optimized for Nvim 0.12 native features and sub-100ms startup
 
 vim.pack.add({
-   { src = 'https://github.com/saghen/blink.cmp', version = 'v1.10.2' },
-   { src = 'https://github.com/ribru17/blink-cmp-spell' },
- })
+  { src = 'https://github.com/saghen/blink.cmp', version = 'v1.10.2' },
+  'https://github.com/ribru17/blink-cmp-spell',
+})
 
 -- ── Native Snippet Jumps ────────────────────────────────────────────────────
 vim.keymap.set({ 'i', 's' }, '<C-j>', function()
