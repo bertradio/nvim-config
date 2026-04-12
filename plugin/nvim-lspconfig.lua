@@ -3,10 +3,10 @@
 -- Updated 3-31-26: Fixed LSP snippet negotiation for blink.cmp
 
 vim.pack.add({
-  'https://github.com/neovim/nvim-lspconfig',
-  'https://github.com/saghen/blink.cmp',
+  Gh('neovim/nvim-lspconfig'),
+  Gh('saghen/blink.cmp'),
   -- lazydev handles the "vim" global and workspace library discovery efficiently
-  { src = 'https://github.com/folke/lazydev.nvim', data = { ft = 'lua' } },
+  { src = Gh('folke/lazydev.nvim'), data = { ft = 'lua' } },
 })
 
 -- Provide :LspInfo even if nvim-lspconfig doesn't define it yet.

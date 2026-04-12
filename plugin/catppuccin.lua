@@ -2,7 +2,7 @@
 -- changed from lazy to vim.pack 3-30-26
 -- code from ChatGPT for fold icons
 
-vim.pack.add({ 'https://github.com/catppuccin/nvim' })
+vim.pack.add({ { src = Gh('catppuccin/nvim'), name = 'catppuccin' } })
 
 vim.opt.termguicolors = true
 
@@ -79,4 +79,4 @@ require('catppuccin').setup({
   },
 })
 
-vim.cmd.colorscheme('catppuccin-nvim')
+vim.cmd.colorscheme('catppuccin')

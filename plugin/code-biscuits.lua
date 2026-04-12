@@ -3,7 +3,7 @@
 --
 -- Created: 07/14/25
 
-vim.pack.add({ 'https://github.com/code-biscuits/nvim-biscuits' })
+vim.pack.add({ Gh('code-biscuits/nvim-biscuits') })
 
  -- stylua: ignore
  require('nvim-biscuits').setup({

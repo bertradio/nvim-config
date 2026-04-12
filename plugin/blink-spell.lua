@@ -5,8 +5,8 @@
 -- Optimized for Nvim 0.12 native features and sub-100ms startup
 
 vim.pack.add({
-  { src = 'https://github.com/saghen/blink.cmp', version = 'v1.10.2' },
-  'https://github.com/ribru17/blink-cmp-spell',
+  { src = Gh('saghen/blink.cmp'), version = 'v1.10.2' },
+  Gh('ribru17/blink-cmp-spell'),
 })
 
 -- ── Native Snippet Jumps ────────────────────────────────────────────────────

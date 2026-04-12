@@ -4,8 +4,8 @@
 -- Created: 12/10/23
 
 vim.pack.add({
-  'https://github.com/williamboman/mason-lspconfig.nvim',
-  'https://github.com/williamboman/mason.nvim',
+  Gh('williamboman/mason-lspconfig.nvim'),
+  Gh('williamboman/mason.nvim'),
 })
 
 cmd = { 'Mason', 'MasonInstall', 'MasonUpdate' }

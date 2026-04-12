@@ -4,7 +4,7 @@
 -- Sync-safe across Linux & Windows (Syncthing). No Myfn dependency.
 -- code re-written by Gemini to simplify with new treesitter
 
-vim.pack.add({ 'https://github.com/stevearc/conform.nvim' })
+vim.pack.add({ Gh('stevearc/conform.nvim') })
 
 require('conform').setup({
   formatters_by_ft = {

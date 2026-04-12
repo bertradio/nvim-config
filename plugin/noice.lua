@@ -15,9 +15,9 @@ vim.api.nvim_create_autocmd('User', {
 vim.lsp.handlers['$/progress'] = function() end
 
 vim.pack.add({
-  'https://github.com/rcarriga/nvim-notify',
-  'https://github.com/MunifTanjim/nui.nvim',
-  'https://github.com/folke/noice.nvim',
+  Gh('rcarriga/nvim-notify'),
+  Gh('MunifTanjim/nui.nvim'),
+  Gh('folke/noice.nvim'),
 })
 
 -- make border of commandline popup orange to match command color

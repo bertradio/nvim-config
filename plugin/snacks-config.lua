@@ -8,7 +8,7 @@ if Myfn and Myfn.is_windows and Myfn.is_windows() then
   vim.o.shellxquote = ''
 end
 
-vim.pack.add({ 'https://github.com/folke/snacks.nvim' })
+vim.pack.add({ Gh('folke/snacks.nvim') })
 
 require('snacks').setup({
   bigfile = { enabled = true },
@@ -92,8 +92,3 @@ require('snacks').setup({
     },
   },
 })
-
--- for deletes
-Myfn.map('n', '<Leader>bd', '<cmd>lua Snacks.bufdelete()<cr>', { desc = 'delete current' })
-Myfn.map('n', '<Leader>bo', '<cmd>lua Snacks.bufdelete.other()<cr>', { desc = 'delete other' })
-Myfn.map('n', '<Leader>ba', '<cmd>lua Snacks.bufdelete.all()<cr>', { desc = 'delete all' })

@@ -15,7 +15,9 @@ vim.api.nvim_create_autocmd('PackChanged', {
   end,
 })
 
-vim.pack.add({ { src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'main' } })
+vim.pack.add({
+  { src = Gh('nvim-treesitter/nvim-treesitter'), version = 'main' },
+})
 
 local ts = require('nvim-treesitter')
 

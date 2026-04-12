@@ -1,5 +1,4 @@
 -- snacks-statuscolumn.lua
--- changed from lazy to vim.pack 3-30-26
 
 local function _clean_leader(s)
   s = (s or ''):gsub('^%s*', '')

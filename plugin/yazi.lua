@@ -4,8 +4,8 @@
 -- Created: 04/23/24
 
 vim.pack.add({
-  'https://github.com/mikavilpas/yazi.nvim',
-  'https://github.com/nvim-lua/plenary.nvim',
+  Gh('mikavilpas/yazi.nvim'),
+  Gh('nvim-lua/plenary.nvim'),
 })
 
 Myfn.map('n', '<Leader>y', function()

@@ -1,7 +1,7 @@
 -- which-key.lua
 -- changed from lazy to vim.pack 3-30-26
 
-vim.pack.add({ 'https://github.com/folke/which-key.nvim' })
+vim.pack.add({ Gh('folke/which-key.nvim') })
 
 vim.o.timeout = true
 vim.o.timeoutlen = 2000

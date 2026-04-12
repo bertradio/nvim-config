@@ -1,11 +1,9 @@
--- file extensions exclude list for Snacks.picker and neo-tree
--- for neo-tree these show as hidden
--- for explorer, these are excluded from the files list
--- but do appear in the preview pane
+-- file extensions exclude list for oil and Snacks.picker
 
 return {
   '*.7z',
   '*.AppImage',
+  '*.appimage',
   '*.au*',
   '*.avi*',
   '*.CR*',
@@ -24,6 +22,7 @@ return {
   '*.mov',
   '*.m4a',
   '*.mp*',
+  '*.MP4',
   '*.MV4',
   '*.od*',
   '*.P*',
