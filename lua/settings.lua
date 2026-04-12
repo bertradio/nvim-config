@@ -106,7 +106,7 @@ end
 -- 8. ABBREVIATIONS
 vim.cmd([[iabbrev pbk <div style="page-break-after:always"></div>]]) --
 
--- shortcut fpr simple vim.pack.add
+-- shortcut for simpler vim.pack.add to insert github.com
 Gh = function(x)
   return 'https://github.com/' .. x
 end
