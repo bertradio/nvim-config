@@ -52,15 +52,15 @@ require('yazi').setup({
     send_to_quickfix_list = '<c-q>',
   },
 
-  integrations = {
-    grep_in_directory = function()
-      require('fzf-lua').grep({})
-    end,
+  -- integrations = {
+  --   grep_in_directory = function()
+  --     require('fzf-lua').grep({})
+  --   end,
 
-    -- grep_in_selected_files = function(selected_files)
-    --   require('snacks.picker').grep({
-    --     files = selected_files,
-    --   })
-    -- end,
-  },
+  --   -- grep_in_selected_files = function(selected_files)
+  --   --   require('snacks.picker').grep({
+  --   --     files = selected_files,
+  --   --   })
+  --   -- end,
+  -- },
 })

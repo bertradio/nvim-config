@@ -53,6 +53,11 @@ require('snacks').setup({
     prompt = '> ',
     ui_select = true,
     exclude = require('config.file_exclude'),
+    matcher = {
+      fuzzy = false, -- Disable fuzzy matching globally
+      smartcase = true,
+      ignorecase = true,
+    },
     layout = {
       layout = {
         box = 'horizontal',
@@ -90,5 +95,14 @@ require('snacks').setup({
         },
       },
     },
+  },
+})
+
+-- Force diagnostics to use a standard character for virtual text
+vim.diagnostic.config({
+  virtual_text = {
+    prefix = '●', -- If this still gives óŹ, change '●' to '>>'
+    source = 'if_many',
+    spacing = 4,
   },
 })
