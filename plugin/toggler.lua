@@ -4,7 +4,7 @@
 
 vim.pack.add({ Gh('nguyenvukhang/nvim-toggler') })
 
-vim.keymap.set({ 'n', 'v' }, '<leader>T', require('nvim-toggler').toggle)
+vim.keymap.set({ 'n', 'v' }, '<leader>T', require('nvim-toggler').toggle, { desc = 'Toggle word' })
 
 require('nvim-toggler').setup({
   remove_default_keybinds = true,

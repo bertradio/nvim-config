@@ -9,12 +9,6 @@ Myfn.map('n', '<Leader>bo', '<cmd>lua Snacks.bufdelete.other()<cr>', { desc = 'd
 Myfn.map('n', '<Leader>ba', '<cmd>lua Snacks.bufdelete.all()<cr>', { desc = 'delete all' })
 
 Myfn.map('n', '<Leader>lb', '<cmd>lua Snacks.picker.buffers()<cr>', { desc = 'buffers' })
-Myfn.map(
-  'n',
-  '<Leader>lc',
-  '<cmd>lua Snacks.picker.command_history()<cr>',
-  { desc = 'cmd history' }
-)
 
 Myfn.map(
   'n',
@@ -23,20 +17,20 @@ Myfn.map(
   { desc = 'diagnostics - buffer' }
 )
 
--- Myfn.map(
---   'n',
---   '<Leader>x',
---   -- '<Leader><space>',
---   '<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
---   { desc = 'explorer' }
--- )
+Myfn.map(
+  'n',
+  '<Leader>x',
+  -- '<Leader><space>',
+  '<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
+  { desc = 'explorer' }
+)
 
 -- pickers with cwd displayed - from ChatGPT
 vim.keymap.set('n', '<Leader>lf', function()
   local snacks = require('snacks')
   snacks.picker({
     source = 'files',
-    -- layout = 'my_default',
+    layout = 'my_default',
     title = Myfn.short_cwd(),
   })
 end, { desc = 'files cwd' })
@@ -45,7 +39,7 @@ vim.keymap.set('n', '<Leader><space>', function()
   local snacks = require('snacks')
   snacks.picker({
     source = 'files',
-    -- layout = 'my_default',
+    layout = 'my_default',
     title = Myfn.short_cwd(),
   })
 end, { desc = 'files cwd' })
@@ -70,7 +64,12 @@ end, { desc = 'smart with cwd' })
 Myfn.map('n', '<Leader>lg', '<cmd>lua Snacks.picker.grep()<cr>', { desc = 'grep' })
 Myfn.map('n', '<Leader>lh', '<cmd>lua Snacks.picker.help()<cr>', { desc = 'help' })
 -- Myfn.map('n', '<Leader>lj', '<cmd>lua Snacks.picker.jumps()<cr>', { desc = 'jumps' })
-Myfn.map('n', '<Leader>lk', '<cmd>lua Snacks.picker.keymaps()<cr>', { desc = 'keymaps' })
+Myfn.map(
+  'n',
+  '<Leader>lk',
+  '<cmd>lua Snacks.picker.keymaps({layout = {preview = false}})<cr>',
+  { desc = 'keymaps' }
+)
 Myfn.map('n', '<Leader>ll', '<cmd>lua Snacks.picker.lines()<cr>', { desc = 'buffer lines' })
 Myfn.map('n', '<Leader>lm', '<cmd>lua Snacks.picker.marks()<cr>', { desc = 'marks' })
 Myfn.map(
@@ -91,5 +90,20 @@ Myfn.map(
   '<cmd>lua Snacks.picker.grep_word()<cr>',
   { desc = 'grep selection or word' }
 )
-Myfn.map('n', '<Leader>lz', '<cmd>lua Snacks.picker.zoxide()<cr>', { desc = 'zoxide' })
--- Myfn.map('n', '<Leader>lz', '<cmd>lua Snacks.zen()<cr>', { desc = 'zen mode' })
+Myfn.map('n', '<Leader>lz', '<cmd>lua Snacks.zen()<cr>', { desc = 'zen mode' })
+Myfn.map('n', '<Leader>z', '<cmd>lua Snacks.picker.zoxide()<cr>', { desc = 'zoxide' })
+
+-- Spelling picker
+vim.keymap.set('n', 'zz', function()
+  require('snacks').picker.spelling({
+    layout = 'my_spelling',
+  })
+end, { desc = 'Spelling Suggestions' })
+
+-- Command picker
+vim.keymap.set('n', '<Leader>lc', function()
+  require('snacks').picker.command_history({
+    layout = 'my_keymaps',
+    preview = false, -- It doesn't have a preview window in the box, so this is safe
+  })
+end, { desc = 'cmd history' })

@@ -68,7 +68,7 @@ require('blink.cmp').setup({
     ['<Tab>'] = { 'select_and_accept', 'fallback' },
     ['<Up>'] = { 'select_prev', 'fallback' },
     ['<Down>'] = { 'select_next', 'fallback' },
-    ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+    ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation', 'hide' },
   },
 
   -- Cmdline Config (Explicitly overrides floating UI hijacking)

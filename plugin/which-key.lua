@@ -21,7 +21,7 @@ require('which-key').setup({
     { "<leader>b",  group = "Buffer" },
     { "<leader>d",  group = "Diff" },
     { "<leader>e",  group = "Edit config" },
-    { "<leader>f",  group = "FZF" },
+    -- { "<leader>f",  group = "FZF" },
     { "<leader>fg", group = "Grep" },
     { "<leader>g",  group = "Git" },
     { "<leader>l",  group = "Snacks" },
@@ -53,7 +53,7 @@ require('which-key').setup({
     marks = true,
     registers = true,
     spelling = {
-      enabled = false,
+      enabled = true,
     },
     presets = {
       operators = true,
