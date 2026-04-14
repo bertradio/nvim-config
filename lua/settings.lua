@@ -1,5 +1,9 @@
--- settings.lua (Main Entry)
+--    ╭─────────────────────────────────╮
+--    │    settings.lua (Main Entry)    │
+--    ╰─────────────────────────────────╯
+
 -- Optimized for Neovim 0.12
+-- General settings and global logic
 -- From Gemini. Options moved to options.lua
 
 -- 1. PERFORMANCE FIRST

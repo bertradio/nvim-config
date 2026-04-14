@@ -1,4 +1,8 @@
--- ~/.config/nvim/lua/options.lua
+--    ╭────────────────────────────╮
+--    │        options.lua         │
+--    ╰────────────────────────────╯
+
+-- global options settings
 -- split from settings on advice from Gemini for clarity and maintenance
 
 local M = {}

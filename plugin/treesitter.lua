@@ -1,5 +1,9 @@
--- treesitter re-write for new main branch of treesitter
+--    ╭────────────────────────────╮
+--    │       treesitter.lua       │
+--    ╰────────────────────────────╯
+
 -- changed from lazy to -- vim.pack 3-30-26
+-- Re-write for new main branch of treesitter
 -- code from Gemini 12/30/25
 
 -- suggested in docs

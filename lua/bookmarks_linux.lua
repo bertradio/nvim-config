@@ -1,3 +1,7 @@
+--    ╭────────────────────────────╮
+--    │    bookmarks_linux.lua     │
+--    ╰────────────────────────────╯
+
 -- Directory bookmarks with vim.ui.select (dressing.nvim)
 -- Uses your Myfn.short_cwd() to shorten displayed paths.
 -- Keys:

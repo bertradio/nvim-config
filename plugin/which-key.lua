@@ -1,4 +1,7 @@
--- which-key.lua
+--    ╭────────────────────────────╮
+--    │       which-key.lua        │
+--    ╰────────────────────────────╯
+
 -- changed from lazy to vim.pack 3-30-26
 
 vim.pack.add({ Gh('folke/which-key.nvim') })
@@ -16,12 +19,14 @@ require('which-key').setup({
     spacing = 8,
   },
 
+
+  --  ───── labels for second character ─────
   -- stylua: ignore
+
   spec = {
     { "<leader>b",  group = "Buffer" },
     { "<leader>d",  group = "Diff" },
     { "<leader>e",  group = "Edit config" },
-    -- { "<leader>f",  group = "FZF" },
     { "<leader>fg", group = "Grep" },
     { "<leader>g",  group = "Git" },
     { "<leader>l",  group = "Snacks" },

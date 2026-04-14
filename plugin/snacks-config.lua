@@ -1,8 +1,10 @@
--- snacks-config.lua
+--    ╭────────────────────────────╮
+--    │     snacks-config.lua      │
+--    ╰────────────────────────────╯
+
 -- converted from nvim 0.11 by Gemini
 --
 -- ============================================================================
---
 -- 1. NATIVE PLUGIN LOADING (Neovim 0.12+)
 -- ============================================================================
 vim.pack.add({
@@ -203,7 +205,8 @@ require('snacks').setup({
     ui_select = true,
     exclude = excluded_exts,
 
-    -- Global settings - applies to Files, Grep, Explorer, etc.
+    --  ───── Global settings - applies to Files, Grep, Explorer, etc. ─────
+
     win = {
       preview = {
         wo = {
@@ -212,9 +215,17 @@ require('snacks').setup({
           signcolumn = 'no',
         },
       },
+      -- engable pgup and pgdown for movement
+      input = {
+        keys = {
+          ['<PageUp>'] = { 'list_scroll_up', mode = { 'i', 'n' } },
+          ['<PageDown>'] = { 'list_scroll_down', mode = { 'i', 'n' } },
+        },
+      },
     },
 
-    -- define my custom layouts
+    --  ───── define my custom layouts ─────
+
     layouts = {
       my_default = {
         layout = {
@@ -271,6 +282,7 @@ require('snacks').setup({
       files           = { layout = { present = 'my_default' } },
       grep            = { layout = { preset  = 'my_default' } },
       keymaps         = { layout = { preset  = 'my_keymaps' } },
+      lines           = { layout = { preset  = 'my_keymaps'}},
       lsp_symbols     = { layout = { preset  = 'default' } },
       marks           = { layout = { preset  = 'default' } },
       qflist          = { layout = { preset  = 'my_default' } },
@@ -524,6 +536,59 @@ require('snacks').setup({
     },
     matcher = {
       history_bonus = true,
+    },
+  },
+  dashboard = {
+    enabled = false,
+    width = 45,
+    preset = {
+      keys = {
+        {
+          icon = '',
+          key = 'e',
+          desc = 'Explorer',
+          action = '<Leader>x',
+        },
+        {
+          icon = '',
+          key = 'f',
+          desc = 'Find file',
+          action = '<Leader>lf',
+        },
+        {
+          icon = '',
+          key = 'r',
+          desc = 'Recent',
+          action = '<Leader>lo',
+        },
+        {
+          icon = '',
+          key = 'g',
+          desc = 'Grep',
+          action = '<Leader>lg',
+        },
+        {
+          icon = '',
+          key = 'z',
+          desc = 'Zoxide',
+          action = '<Leader>z',
+        },
+      },
+      header = [[]],
+    },
+    formats = {
+      key = function(item)
+        return {
+          { '[', hl = 'special' },
+          { item.key, hl = 'key' },
+          { ']', hl = 'special' },
+        }
+      end,
+    },
+    sections = {
+      { title = "\nIf it ain't broke, don't fix it", align = 'center', padding = 1 },
+      { section = 'recent_files', align = 'left', limit = 10, padding = 1 },
+      { section = 'keys', align = 'left', padding = 1 },
     },
   },
 })

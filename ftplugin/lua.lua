@@ -1,4 +1,6 @@
--- lua settings
+--    ╭────────────────────────────╮
+--    │        lua settings        │
+--    ╰────────────────────────────╯
 
 local options = {
   relativenumber = false,

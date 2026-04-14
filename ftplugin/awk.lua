@@ -1,4 +1,6 @@
--- awk settings
+--    ╭────────────────────────────╮
+--    │        awk settings        │
+--    ╰────────────────────────────╯
 
 local options = {
   number = true,

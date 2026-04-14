@@ -1,4 +1,9 @@
--- snacks-statuscolumn.lua
+--    ╭───────────────────────────────╮
+--    │    snacks-statuscolumn.lua    │
+--    ╰───────────────────────────────╯
+
+-- set up for status column to display folds with no numbers
+-- and proper icons
 
 local function _clean_leader(s)
   s = (s or ''):gsub('^%s*', '')

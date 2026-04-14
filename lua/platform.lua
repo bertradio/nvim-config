@@ -1,4 +1,7 @@
--- platform.lua
+--    ╭────────────────────────────╮
+--    │        platform.lua        │
+--    ╰────────────────────────────╯
+
 -- Small cross-platform helpers (Windows-safe)
 -- from ChatGPT to keep cross-platform functions separate
 

@@ -1,7 +1,9 @@
--- key mappings for snacks
+--    ╭───────────────────────────────╮
+--    │    key mappings for snacks    │
+--    ╰───────────────────────────────╯
 
 -- dashboard
--- Myfn.map('n', '<Leader>]', '<cmd>lua Snacks.dashboard.open()<cr>', { desc = 'Open dashboard' })
+Myfn.map('n', '<Leader>]', '<cmd>lua Snacks.dashboard.open()<cr>', { desc = 'Open dashboard' })
 
 -- -- for deletes
 Myfn.map('n', '<Leader>bd', '<cmd>lua Snacks.bufdelete()<cr>', { desc = 'delete current' })
@@ -78,7 +80,13 @@ Myfn.map(
   '<cmd>lua Snacks.picker.notifications()<cr>',
   { desc = 'notifications' }
 )
-Myfn.map('n', '<Leader>lo', '<cmd>lua Snacks.picker.recent()<cr>', { desc = 'oldfiles' })
+Myfn.map(
+  'n',
+  '<Leader>lo',
+  '<cmd>lua Snacks.picker.recent({filter = { cwd = false }})<cr>',
+  -- filter does not take project into account and just shows same as telescope
+  { desc = 'oldfiles' }
+)
 Myfn.map('n', '<Leader>lq', '<cmd>lua Snacks.picker.qflist()<cr>', { desc = 'quick fix' })
 Myfn.map('n', '<Leader>lr', '<cmd>lua Snacks.picker.registers()<cr>', { desc = 'registers' })
 Myfn.map('n', '<Leader>lt', '<cmd>lua Snacks.lazygit.open(opts)<cr>', { desc = 'lazygit' })

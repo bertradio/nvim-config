@@ -1,3 +1,7 @@
+--    ╭────────────────────────────╮
+--    │      file_exclude.lua      │
+--    ╰────────────────────────────╯
+
 -- file extensions exclude list for oil and Snacks.picker
 
 return {

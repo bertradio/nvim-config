@@ -1,10 +1,13 @@
--- Configure status line
+--    ╭──────────────────────────────────────╮
+--    │    Configure status and tab lines    │
+--    ╰──────────────────────────────────────╯
+
 -- changed from lazy to vim.pack 3-30-26
 -- Code for Oil from ChatGPT
 -- (Merged: Oil buffers in tabline show current directory as their label)
 -- Rewrite to optimize from Gemini
 
--- >>>>>>>>>> local display functions for use on status line <<<<<<<<<<<<<<
+--  ───── local display functions for use on status line ─────
 
 local function getWords()
   local wc = vim.fn.wordcount()
@@ -28,9 +31,7 @@ local function show_macro_recording()
   end
 end
 
----------------------------------
--- Oil buffer tab title formatter
----------------------------------
+--  ───── Oil buffer tab title formatter ─────
 
 local OIL_TAB_SHOW_FULL_PATH = true
 
@@ -65,7 +66,7 @@ local function oil_tab_fmt(name, context)
   end
 end
 
------------------------------
+--  ──────────────────────────────────────────
 
 vim.pack.add({
   Gh('nvim-tree/nvim-web-devicons'),
@@ -135,7 +136,4 @@ require('lualine').setup({
       },
     },
   },
-
-  -- doesn't seem to add anything and can be a performance hit
-  -- extensions = { 'oil', 'fzf' },
 })

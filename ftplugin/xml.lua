@@ -1,4 +1,6 @@
--- xml settings - copied from sh settings
+--    ╭────────────────────────────╮
+--    │        xml settings        │
+--    ╰────────────────────────────╯
 
 local options = {
   number = true,

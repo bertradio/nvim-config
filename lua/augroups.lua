@@ -1,3 +1,7 @@
+--    ╭────────────────────────────╮
+--    │        autroups.lua        │
+--    ╰────────────────────────────╯
+
 -- code modified by Perplexity for more robustness - 7/8/25
 -- adding callbacks and pcall for error trapping
 

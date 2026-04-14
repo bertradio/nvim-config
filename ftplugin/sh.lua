@@ -1,4 +1,6 @@
--- bash settings
+--    ╭────────────────────────────╮
+--    │       bash settings        │
+--    ╰────────────────────────────╯
 
 local options = {
   filetype = 'bash',

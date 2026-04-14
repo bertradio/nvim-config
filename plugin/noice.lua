@@ -1,4 +1,7 @@
--- noice.lua
+--    ╭────────────────────────────╮
+--    │         noice.lua          │
+--    ╰────────────────────────────╯
+
 -- changed from lazy to vim.pack 3-30-26
 --
 -- display of error and other messages as well as commandline

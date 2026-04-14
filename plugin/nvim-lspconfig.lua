@@ -1,4 +1,7 @@
--- nvim-lspconfig.lua
+--    ╭────────────────────────────╮
+--    │     nvim-lspconfig.lua     │
+--    ╰────────────────────────────╯
+
 -- Neovim 0.12-style LSP setup
 -- Updated 3-31-26: Fixed LSP snippet negotiation for blink.cmp
 
@@ -81,5 +84,6 @@ vim.diagnostic.config({
   update_in_insert = false,
   severity_sort = true,
   float = { border = 'rounded' },
-  virtual_text = { spacing = 4, prefix = '‚óŹ' },
+  -- CHANGE THIS LINE: Use a standard ASCII-compatible dot or space
+  virtual_text = { spacing = 4, prefix = '●' }, -- If '●' still breaks, use '>>'
 })

@@ -1,4 +1,6 @@
--- settings for text filetype
+--    ╭──────────────────────────────────╮
+--    │    settings for text filetype    │
+--    ╰──────────────────────────────────╯
 
 -- stylua: ignore
 local options = {
@@ -18,7 +20,6 @@ local options = {
 }
 
 --use vim.opt to execute settings from options array defined above
-
 for k, v in pairs(options) do
   vim.opt[k] = v
 end

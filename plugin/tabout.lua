@@ -1,5 +1,7 @@
--- tabout.lua
---
+--    ╭────────────────────────────╮
+--    │         tabout.lua         │
+--    ╰────────────────────────────╯
+
 -- Created: 04/12/26
 
 vim.pack.add({ Gh('abecodes/tabout.nvim') })

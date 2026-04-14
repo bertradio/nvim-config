@@ -1,4 +1,6 @@
--- undotree.lua
+--    ╭────────────────────────────╮
+--    │        undotree.lua        │
+--    ╰────────────────────────────╯
 
 -- activate built-in for nvim 0.12
 

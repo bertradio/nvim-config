@@ -1,4 +1,6 @@
--- keymaps.lua
+--    ╭────────────────────────────╮
+--    │        keymaps.lua         │
+--    ╰────────────────────────────╯
 
 -------------------------------------------------
 -- >>> MOVEMENT
@@ -8,7 +10,7 @@
 Myfn.map('n', 'gg', 'gg0', { desc = 'Move to first char of file' })
 Myfn.map('n', 'G', 'G$', { desc = 'Move to last char of file' })
 
--- Buffer manipulation - also in Snacks.keys-config
+-- Buffer manipulation - see others in Snacks.keys-config
 
 Myfn.map({ 'n' }, '<Leader>bc', '<cmd>CopyBufferName<cr>', { desc = 'path copy' })
 Myfn.map({ 'n' }, '<Leader>bk', '<cmd>bd!<cr>', { desc = 'kill buffer' })
@@ -103,7 +105,6 @@ end, { desc = 'Duplicate and comment lines' })
 Myfn.map('x', '/', '<Esc>/\\%V')
 
 -- open file in Typora
-
 vim.api.nvim_set_keymap(
   'n',
   '<leader>t',

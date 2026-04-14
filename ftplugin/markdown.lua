@@ -1,12 +1,15 @@
--- skeleton for markdown files
+--    ╭────────────────────────────╮
+--    │     markdown settings      │
+--    ╰────────────────────────────╯
 
----------- >> Mappings << ---------------
+--  ──────────── mappings ────────────
 
 -- make mappings local to the markdown buffer with buffer = true
 Myfn.map('v', '<Leader>b', '<esc>`>a**<esc>`<i**<esc>', { buffer = true, desc = 'Make bold' })
 Myfn.map('v', '<Leader>i', '<esc>`>a*<esc>`<i*<esc>', { buffer = true, desc = 'Make italic' })
 
----------- >> Other Markdown File Settings << ---------------
+--  ───── Other Markdown File Settings ─────
+
 -- stylua: ignore
 local options = {
 	autoindent     = true,
