@@ -5,7 +5,6 @@
 --
 -- 1. NATIVE PLUGIN LOADING (Neovim 0.12+)
 -- ============================================================================
--- This replaces the 'lazy.nvim' table structure.
 vim.pack.add({
   { src = 'https://github.com/folke/snacks.nvim' },
   -- You can specify a branch if you're tracking the development version
@@ -166,6 +165,7 @@ local excluded_exts = require('config.file_exclude')
 
 require('snacks').setup({
   bigfile = { enabled = true },
+  explorer = { enabled = true },
   input = { enabled = true },
   lazygit = { enabled = true },
   quickfile = { enabled = true },
@@ -214,6 +214,7 @@ require('snacks').setup({
       },
     },
 
+    -- define my custom layouts
     layouts = {
       my_default = {
         layout = {
@@ -263,21 +264,22 @@ require('snacks').setup({
       },
     },
 
+    -- stylua: ignore
     sources = {
-      buffers = { layout = { preset = 'my_default' } },
-      command_history = { layout = { preset = 'my_spelling' } },
-      files = { layout = { present = 'my_default' } },
-      grep = { layout = { preset = 'my_default' } },
-      keymaps = { layout = { preset = 'my_keymaps' } },
-      lsp_symbols = { layout = { preset = 'default' } },
-      marks = { layout = { preset = 'default' } },
-      qflist = { layout = { preset = 'my_default' } },
-      recent = { layout = { preset = 'my_default' } },
-      registers = { layout = { preset = 'my_default' } },
-      smart = { layout = { preset = 'my_default' } },
-      spelling = { layout = { preset = 'my_spelling' } },
-      undo = { layout = { preset = 'my_default' } },
-      zoxide = { layout = { preset = 'my_spelling' } },
+      buffers         = { layout = { preset  = 'my_default' } },
+      command_history = { layout = { preset  = 'my_spelling' } },
+      files           = { layout = { present = 'my_default' } },
+      grep            = { layout = { preset  = 'my_default' } },
+      keymaps         = { layout = { preset  = 'my_keymaps' } },
+      lsp_symbols     = { layout = { preset  = 'default' } },
+      marks           = { layout = { preset  = 'default' } },
+      qflist          = { layout = { preset  = 'my_default' } },
+      recent          = { layout = { preset  = 'my_default' } },
+      registers       = { layout = { preset  = 'my_default' } },
+      smart           = { layout = { preset  = 'my_default' } },
+      spelling        = { layout = { preset  = 'my_spelling' } },
+      undo            = { layout = { preset  = 'my_default' } },
+      zoxide          = { layout = { preset  = 'my_spelling' } },
 
       -- Explorer configuration
       explorer = {
