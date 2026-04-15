@@ -12,18 +12,19 @@ vim.pack.add({ Gh('HiPhish/rainbow-delimiters.nvim') })
 
 local rainbow_delimiters = require('rainbow-delimiters')
 
+-- stylua: ignore 
 vim.g.rainbow_delimiters = {
   strategy = {
     [''] = rainbow_delimiters.strategy['global'],
-    vim = rainbow_delimiters.strategy['local'],
+    vim  = rainbow_delimiters.strategy['local'],
   },
   query = {
     [''] = 'rainbow-delimiters',
-    lua = 'rainbow-blocks',
+    lua  = 'rainbow-blocks',
   },
   priority = {
     [''] = 110,
-    lua = 210,
+    lua  = 210,
   },
   highlight = {
     'RainbowDelimiterBlue',

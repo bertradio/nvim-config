@@ -159,9 +159,9 @@ local function current_entry(picker)
   return sel and sel[1] or nil
 end
 
--- ============================================================================
--- 3. SNACKS SETUP
--- ============================================================================
+--  ───── ───────────────────────────────────────────────────────────────────────── ─────
+--  ────────────────────────────────── 3. SNACKS SETUP ──────────────────────────────────
+--  ───── ───────────────────────────────────────────────────────────────────────── ─────
 
 local excluded_exts = require('config.file_exclude')
 
@@ -175,7 +175,7 @@ require('snacks').setup({
   scope = { enabled = true },
   scroll = { enabled = true },
 
-  -- for clean status column without numbers and proper fold icons
+  --  ───── for clean status column without numbers and proper fold icons ─────
   statuscolumn = {
     enabled = true,
     segments = {
@@ -215,7 +215,8 @@ require('snacks').setup({
           signcolumn = 'no',
         },
       },
-      -- engable pgup and pgdown for movement
+
+      -- enable pgup and pgdown for movement
       input = {
         keys = {
           ['<PageUp>'] = { 'list_scroll_up', mode = { 'i', 'n' } },
@@ -227,6 +228,8 @@ require('snacks').setup({
     --  ───── define my custom layouts ─────
 
     layouts = {
+
+      -- 2 panes standard with input box and preview
       my_default = {
         layout = {
           box = 'horizontal',
@@ -243,6 +246,8 @@ require('snacks').setup({
           { win = 'preview', border = 'rounded', width = 0.65, title = '{preview}' },
         },
       },
+
+      -- single narrow pane with input box - no preview
       my_spelling = {
         layout = {
           box = 'horizontal',
@@ -258,6 +263,8 @@ require('snacks').setup({
           },
         },
       },
+
+      -- single wide pane with no preview
       my_keymaps = {
         layout = {
           box = 'horizontal',
@@ -275,6 +282,7 @@ require('snacks').setup({
       },
     },
 
+    -- define which layouts for various pickers
     -- stylua: ignore
     sources = {
       buffers         = { layout = { preset  = 'my_default' } },
@@ -293,7 +301,8 @@ require('snacks').setup({
       undo            = { layout = { preset  = 'my_default' } },
       zoxide          = { layout = { preset  = 'my_spelling' } },
 
-      -- Explorer configuration
+      --  ───── Explorer configuration ─────
+
       explorer = {
         layout = {
           { preview = true },
@@ -321,6 +330,8 @@ require('snacks').setup({
               ['C'] = 'explorer_copy',
               ['M'] = 'explorer_move',
               ['g.'] = 'toggle_hidden',
+              ['<PageUp>'] = { 'list_scroll_up', mode = { 'i', 'n' } },
+              ['<PageDown>'] = { 'list_scroll_down', mode = { 'i', 'n' } },
             },
           },
         },
@@ -337,13 +348,18 @@ require('snacks').setup({
           file = { filename_only = true },
           severity = { pos = 'right' },
         },
+
+        --  ───── define my custom actions ─────
+
+        -- stylua: ignore 
         actions = {
+
           safe_copy = function(picker)
             local Actions = require('snacks.explorer.actions')
-            local Tree = require('snacks.explorer.tree')
+            local Tree    = require('snacks.explorer.tree')
 
-            local sel = picker:selected({ fallback = true })
-            if #sel == 0 then
+            local sel =  picker:selected({ fallback = true })
+            if #sel   == 0 then
               return
             end
 
@@ -538,39 +554,43 @@ require('snacks').setup({
       history_bonus = true,
     },
   },
+
+  --  ──────── define dashboard ────────
+
+  -- stylua: ignore 
   dashboard = {
-    enabled = false,
+    enabled = false, -- have to start disabled
     width = 45,
     preset = {
       keys = {
         {
-          icon = '',
-          key = 'e',
-          desc = 'Explorer',
+          icon   = '',
+          key    = 'e',
+          desc   = 'Explorer',
           action = '<Leader>x',
         },
         {
-          icon = '',
-          key = 'f',
-          desc = 'Find file',
+          icon   = '',
+          key    = 'f',
+          desc   = 'Find file',
           action = '<Leader>lf',
         },
         {
-          icon = '',
-          key = 'r',
-          desc = 'Recent',
+          icon   = '',
+          key    = 'r',
+          desc   = 'Recent',
           action = '<Leader>lo',
         },
         {
-          icon = '',
-          key = 'g',
-          desc = 'Grep',
+          icon   = '',
+          key    = 'g',
+          desc   = 'Grep',
           action = '<Leader>lg',
         },
         {
-          icon = '',
-          key = 'z',
-          desc = 'Zoxide',
+          icon   = '',
+          key    = 'z',
+          desc   = 'Zoxide',
           action = '<Leader>z',
         },
       },
@@ -586,7 +606,7 @@ require('snacks').setup({
       end,
     },
     sections = {
-      { title = "\nIf it ain't broke, don't fix it", align = 'center', padding = 1 },
+      { title   = "\nIf it ain't broke, don't fix it", align = 'center', padding = 1 },
       { section = 'recent_files', align = 'left', limit = 10, padding = 1 },
       { section = 'keys', align = 'left', padding = 1 },
     },

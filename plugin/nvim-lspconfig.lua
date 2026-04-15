@@ -79,11 +79,11 @@ for name, conf in pairs(servers) do
 end
 
 -- Diagnostic UI Customization
+-- stylua: ignore 
 vim.diagnostic.config({
-  underline = true,
+  underline        = true,
   update_in_insert = false,
-  severity_sort = true,
-  float = { border = 'rounded' },
-  -- CHANGE THIS LINE: Use a standard ASCII-compatible dot or space
-  virtual_text = { spacing = 4, prefix = '●' }, -- If '●' still breaks, use '>>'
+  severity_sort    = true,
+  float            = { border  = 'rounded' },
+  virtual_text     = { spacing = 4, prefix = '●' },
 })

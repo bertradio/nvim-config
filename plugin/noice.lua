@@ -47,94 +47,98 @@ require('noice').setup({
     },
     view = 'mini',
   },
+  -- stylua: ignore 
   presets = {
-    bottom_search = false,
-    command_palette = true,
+    bottom_search         = false,
+    command_palette       = true,
     long_message_to_split = true,
-    inc_rename = false,
+    inc_rename            = false,
   },
 
   cmdline = {
     enabled = true, -- enables the Noice cmdline UI
     view = 'cmdline_popup', -- view for rendering the cmdline
+    -- stylua: ignore 
     format = {
       cmdline = {
         pattern = '^:',
-        icon = '',
-        lang = 'vim',
-        title = ' cmdline ',
+        icon    = '',
+        lang    = 'vim',
+        title   = ' cmdline ',
       },
       search_down = {
-        kind = 'search',
+        kind    = 'search',
         pattern = '^/',
-        icon = ' ',
-        lang = 'regex',
+        icon    = ' ',
+        lang    = 'regex',
       },
       search_up = {
-        kind = 'search',
+        kind    = 'search',
         pattern = '^%?',
-        icon = ' ',
-        lang = 'regex',
+        icon    = ' ',
+        lang    = 'regex',
       },
       lua = {
-        pattern = { '^:%s*lua%s+', '^:%s*lua%s*=%s*', '^:%s*=%s*' },
-        icon = '',
-        lang = 'lua',
-        title = ' lua ',
+        pattern = { '^:%s*lua%s+', '^:%s*lua%s *= %s*', '^:%s *= %s*' },
+        icon    = '',
+        lang    = 'lua',
+        title   = ' lua ',
       },
       help = {
         pattern = '^:%s*he?l?p?%s+',
-        icon = ':h',
-        title = ' help ',
+        icon    = ':h',
+        title   = ' help ',
       },
       input = {}, -- Used by input()
     },
   },
+  -- stylua: ignore 
   messages = {
-    enabled = true, -- enables the Noice messages UI
-    view = 'notify',
-    view_error = 'notify', -- view for errors
-    view_warn = 'notify', -- view for warnings
-    view_history = 'messages', -- view for :messages
+    enabled         = true, -- enables the Noice messages UI
+    view            = 'notify',
+    view_error      = 'notify', -- view for errors
+    view_warn       = 'notify', -- view for warnings
+    view_history    = 'messages', -- view for :messages
     -- view_history = 'mini', -- view for :messages
-    view_search = 'virtualtext', -- view for search count messages. Set to `false` to disable
+    view_search     = 'virtualtext', -- view for search count messages. Set to `false` to disable
   },
+  -- stylua: ignore 
   views = {
     cmdline_popup = {
-      position = { row = 12, col = '50%' },
-      size = { width = 60, height = 'auto' },
+      position = { row   = 12, col    = '50%' },
+      size     = { width = 60, height = 'auto' },
     },
     popupmenu = {
-      enabled = true,
-      backend = 'cmp',
-      relative = 'editor',
-      position = { row = 15, col = '50%' },
-      size = { width = 60, height = 10 },
-      border = { style = 'rounded', padding = { 0, 1 } },
+      enabled     = true,
+      backend     = 'cmp',
+      relative    = 'editor',
+      position    = { row          = 15, col            = '50%' },
+      size        = { width        = 60, height         = 10 },
+      border      = { style        = 'rounded', padding = { 0, 1 } },
       win_options = { winhighlight = { Normal = 'Normal', FloatBorder = 'DiagnosticInfo' } },
     },
     mini = {
-      backend = 'mini',
-      relative = 'editor',
-      align = 'message-left',
-      timeout = 3000,
-      reverse = true,
+      backend   = 'mini',
+      relative  = 'editor',
+      align     = 'message-left',
+      timeout   = 3000,
+      reverse   = true,
       focusable = false,
-      position = { row = 1, col = '95%' },
-      size = 'auto',
-      border = { style = 'rounded' },
-      zindex = 600,
+      position  = { row   = 1, col = '95%' },
+      size      = 'auto',
+      border    = { style = 'rounded' },
+      zindex    = 600,
       win_options = {
-        wrap = true,
-        timeout = 1000,
-        winbar = '',
+        wrap       = true,
+        timeout    = 1000,
+        winbar     = '',
         foldenable = true,
-        winblend = 20,
+        winblend   = 20,
         winhighlight = {
-          Normal = 'NoiceMini',
+          Normal    = 'NoiceMini',
           IncSearch = '',
           CurSearch = '',
-          Search = '',
+          Search    = '',
         },
       },
     },

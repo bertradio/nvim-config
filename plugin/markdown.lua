@@ -8,11 +8,12 @@
 
 vim.pack.add({
   { src = Gh('MeanderingProgrammer/markdown.nvim'), name = 'render-markdown' },
-}) -- Only needed if you have another plugin named markdown.nvim
+})
 
+-- stylua: ignore 
 require('render-markdown').setup({
-  latex = { enabled = false },
-  html = { enabled = false },
-  yaml = { enabled = false },
+  latex       = { enabled = false },
+  html        = { enabled = false },
+  yaml        = { enabled = false },
   completions = { lsp = { enabled = true } },
 })

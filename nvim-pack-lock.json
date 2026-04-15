@@ -65,7 +65,7 @@
       "src": "https://github.com/code-biscuits/nvim-biscuits"
     },
     "nvim-lspconfig": {
-      "rev": "8a9378a822719346a0288fa004dab302ca3c0a8f",
+      "rev": "d10ce09e42bb0ca8600fd610c3bb58676e61208d",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-notify": {
@@ -87,7 +87,7 @@
     },
     "pretty-comment.nvim": {
       "rev": "48f76dc7414e7aa5ca652dad32a5cf1a2c3c01a8",
-      "src": "https://github.com/Cartoone9/pretty-comment.nvim"
+      "src": "https://github.com//Cartoone9/pretty-comment.nvim"
     },
     "rainbow-delimiters.nvim": {
       "rev": "aab6caaffd79b8def22ec4320a5344f7c42f58d2",

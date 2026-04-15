@@ -12,27 +12,29 @@ require('mini.ai').setup()
 require('mini.align').setup({ mappings = { start = 'ga' } })
 
 require('mini.surround').setup({
+  -- stylua: ignore 
   mappings = {
-    add = 'gza', -- Add surround
-    delete = 'gzd', -- Delete surround
-    replace = 'gzr', -- Replace surround
-    find = 'gzf', -- Find to the right
-    find_left = 'gzF', -- Find to the left
-    highlight = 'gzh', -- Highlight surrounding
+    add            = 'gza', -- Add surround
+    delete         = 'gzd', -- Delete surround
+    replace        = 'gzr', -- Replace surround
+    find           = 'gzf', -- Find to the right
+    find_left      = 'gzF', -- Find to the left
+    highlight      = 'gzh', -- Highlight surrounding
     update_n_lines = 'gzn', -- Update n_lines
   },
   n_lines = 50, -- search window for surroundings
 })
 
 require('mini.move').setup({
+  -- stylua: ignore 
   mappings = {
-    left = '<C-left>',
-    right = '<C-right>',
-    down = '<C-down>',
-    up = '<C-up>',
-    line_left = '<C-left>',
+    left       = '<C-left>',
+    right      = '<C-right>',
+    down       = '<C-down>',
+    up         = '<C-up>',
+    line_left  = '<C-left>',
     line_right = '<C-right>',
-    line_down = '<C-down>',
-    line_up = '<C-up>',
+    line_down  = '<C-down>',
+    line_up    = '<C-up>',
   },
 })

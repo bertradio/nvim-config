@@ -89,9 +89,10 @@ Myfn.map(
 )
 Myfn.map('n', '<Leader>lq', '<cmd>lua Snacks.picker.qflist()<cr>', { desc = 'quick fix' })
 Myfn.map('n', '<Leader>lr', '<cmd>lua Snacks.picker.registers()<cr>', { desc = 'registers' })
-Myfn.map('n', '<Leader>lt', '<cmd>lua Snacks.lazygit.open(opts)<cr>', { desc = 'lazygit' })
+Myfn.map('n', '<Leader>lt', '<cmd>lua Snacks.picker.terminal()<cr>', { desc = 'terminal' })
 Myfn.map('n', '<Leader>lu', '<cmd>lua Snacks.picker.undo()<cr>', { desc = 'undo history' })
-Myfn.map('n', '<Leader>ly', '<cmd>lua Snacks.picker.lsp_symbols()<cr>', { desc = 'lsp symbols' })
+-- Myfn.map('n', '<Leader>ly', '<cmd>lua Snacks.picker.lsp_symbols()<cr>', { desc = 'lsp symbols' })
+Myfn.map('n', '<Leader>ly', '<cmd>lua Snacks.lazygit.open(opts)<cr>', { desc = 'lazygit' })
 Myfn.map(
   'n',
   '<Leader>lw',

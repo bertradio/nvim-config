@@ -66,21 +66,23 @@ end
 -- ── blink.cmp config ──────────────────────────────────────────────────────────
 require('blink.cmp').setup({
   -- Global Keymaps (Insert mode)
+  -- stylua: ignore 
   keymap = {
-    preset = 'none',
-    ['<Tab>'] = { 'select_and_accept', 'fallback' },
-    ['<Up>'] = { 'select_prev', 'fallback' },
-    ['<Down>'] = { 'select_next', 'fallback' },
+    preset        = 'none',
+    ['<Tab>']     = { 'select_and_accept', 'fallback' },
+    ['<Up>']      = { 'select_prev', 'fallback' },
+    ['<Down>']    = { 'select_next', 'fallback' },
     ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation', 'hide' },
   },
 
   -- Cmdline Config (Explicitly overrides floating UI hijacking)
+  -- stylua: ignore 
   cmdline = {
     enabled = true,
     keymap = {
-      preset = 'none',
-      ['<Tab>'] = { 'select_and_accept', 'fallback' },
-      ['<Up>'] = { 'select_prev', 'fallback' },
+      preset     = 'none',
+      ['<Tab>']  = { 'select_and_accept', 'fallback' },
+      ['<Up>']   = { 'select_prev', 'fallback' },
       ['<Down>'] = { 'select_next', 'fallback' },
     },
     completion = {
@@ -128,11 +130,12 @@ require('blink.cmp').setup({
 
   sources = {
     default = { 'lsp', 'snippets', 'buffer', 'path', 'spell' },
+    -- stylua: ignore 
     per_filetype = {
-      lua = { 'lsp', 'snippets', 'buffer', 'path' },
-      sh = { 'lsp', 'snippets', 'buffer', 'path' },
-      bash = { 'lsp', 'snippets', 'buffer', 'path' },
-      ps1 = { 'lsp', 'snippets', 'buffer', 'path' },
+      lua      = { 'lsp', 'snippets', 'buffer', 'path' },
+      sh       = { 'lsp', 'snippets', 'buffer', 'path' },
+      bash     = { 'lsp', 'snippets', 'buffer', 'path' },
+      ps1      = { 'lsp', 'snippets', 'buffer', 'path' },
       markdown = { 'spell', 'buffer', 'path', 'snippets' },
     },
     providers = {

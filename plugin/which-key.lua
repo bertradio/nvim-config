@@ -13,9 +13,10 @@ require('which-key').setup({
   delay = 500,
   preset = 'modern',
 
+  -- stylua: ignore 
   layout = {
-    align = 'center',
-    width = { min = 25 },
+    align   = 'center',
+    width   = { min = 25 },
     spacing = 8,
   },
 
@@ -27,7 +28,7 @@ require('which-key').setup({
     { "<leader>b",  group = "Buffer" },
     { "<leader>d",  group = "Diff" },
     { "<leader>e",  group = "Edit config" },
-    { "<leader>fg", group = "Grep" },
+    { "<leader>lg", group = "Grep" },
     { "<leader>g",  group = "Git" },
     { "<leader>l",  group = "Snacks" },
   },
@@ -54,20 +55,21 @@ require('which-key').setup({
     },
   },
 
+  -- stylua: ignore 
   plugins = {
-    marks = true,
+    marks     = true,
     registers = true,
-    spelling = {
-      enabled = true,
+    spelling  = {
+        enabled = true,
     },
     presets = {
-      operators = true,
-      motions = true,
+      operators    = true,
+      motions      = true,
       text_objects = true,
-      windows = true,
-      nav = true,
-      z = true,
-      g = true,
+      windows      = true,
+      nav          = true,
+      z            = true,
+      g            = true,
     },
   },
 })

@@ -86,7 +86,7 @@ end)
 
 require('lualine').setup({
   options = {
-    theme = 'catppuccin-nvim',
+    theme = 'catppuccin-nvim', -- need to use this since lualine loaded before catppuccin
     icons_enabled = true,
     -- RESTORED ARROW LOOK:
     section_separators = { left = '', right = '' },
@@ -123,17 +123,18 @@ require('lualine').setup({
   },
 
   tabline = {
+    -- stylua: ignore 
     lualine_a = {
       {
         'buffers',
-        mode = 0,
-        tab_max_length = 40,
-        max_length = 100,
+        mode                 = 0,
+        tab_max_length       = 40,
+        max_length           = 100,
         show_modified_status = true,
-        symbols = { modified = ' ●' },
-        use_mode_colors = true,
-        fmt = oil_tab_fmt,
-      },
+        symbols              = { modified = ' ●' },
+        use_mode_colors      = true,
+        fmt                  = oil_tab_fmt,
     },
+  },
   },
 })

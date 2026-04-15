@@ -108,7 +108,8 @@ if vim.g.neovide then
 end
 
 -- 8. ABBREVIATIONS
-vim.cmd([[iabbrev pbk <div style="page-break-after:always"></div>]]) --
+vim.cmd([[iabbrev pbk <div style="page-break-after:always"></div>]])
+vim.cmd([[iabbrev stylig -- stylua: ignore]])
 
 -- shortcut for simpler vim.pack.add to insert github.com
 Gh = function(x)
