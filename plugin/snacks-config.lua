@@ -296,7 +296,7 @@ require('snacks').setup({
       qflist          = { layout = { preset  = 'my_default' } },
       recent          = { layout = { preset  = 'my_default' } },
       registers       = { layout = { preset  = 'my_default' } },
-      smart           = { layout = { preset  = 'my_default' } },
+      search_history  = { layout = { preset  = 'my_spelling' } },
       spelling        = { layout = { preset  = 'my_spelling' } },
       undo            = { layout = { preset  = 'my_default' } },
       zoxide          = { layout = { preset  = 'my_spelling' } },
@@ -550,9 +550,9 @@ require('snacks').setup({
         },
       },
     },
-    matcher = {
-      history_bonus = true,
-    },
+    -- matcher = {
+    --   history_bonus = true,
+    -- },
   },
 
   --  ──────── define dashboard ────────

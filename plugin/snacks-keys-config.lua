@@ -57,11 +57,11 @@ end, { desc = 'jumps' })
 vim.keymap.set('n', '<Leader>ls', function()
   local snacks = require('snacks')
   snacks.picker({
-    source = 'smart',
+    source = 'search_history',
     -- layout = 'my_default',
-    title = Myfn.short_cwd(),
+    title = 'Search history',
   })
-end, { desc = 'smart with cwd' })
+end, { desc = 'search history' })
 
 Myfn.map('n', '<Leader>lg', '<cmd>lua Snacks.picker.grep()<cr>', { desc = 'grep' })
 Myfn.map('n', '<Leader>lh', '<cmd>lua Snacks.picker.help()<cr>', { desc = 'help' })
@@ -89,10 +89,26 @@ Myfn.map(
 )
 Myfn.map('n', '<Leader>lq', '<cmd>lua Snacks.picker.qflist()<cr>', { desc = 'quick fix' })
 Myfn.map('n', '<Leader>lr', '<cmd>lua Snacks.picker.registers()<cr>', { desc = 'registers' })
-Myfn.map('n', '<Leader>lt', '<cmd>lua Snacks.picker.terminal()<cr>', { desc = 'terminal' })
 Myfn.map('n', '<Leader>lu', '<cmd>lua Snacks.picker.undo()<cr>', { desc = 'undo history' })
 -- Myfn.map('n', '<Leader>ly', '<cmd>lua Snacks.picker.lsp_symbols()<cr>', { desc = 'lsp symbols' })
 Myfn.map('n', '<Leader>ly', '<cmd>lua Snacks.lazygit.open(opts)<cr>', { desc = 'lazygit' })
+
+--  ───── Snacks terminal setup ──────
+
+-- Toggle terminal in a centered floating window
+vim.keymap.set({ 'n', 't' }, '<leader>lt', function()
+  Snacks.terminal.toggle(nil, {
+    win = {
+      position = 'float',
+      border = 'rounded',
+      width = 0.9,
+      height = 0.9,
+    },
+  })
+end, { desc = 'Toggle Floating Terminal' })
+
+--  ──────────────────────────────────
+
 Myfn.map(
   'n',
   '<Leader>lw',

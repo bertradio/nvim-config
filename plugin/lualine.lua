@@ -31,6 +31,18 @@ local function show_macro_recording()
   end
 end
 
+--  ─────── Terminal indicator ───────
+
+local function terminal_status()
+  local bufs = vim.api.nvim_list_bufs()
+  for _, buf in ipairs(bufs) do
+    if vim.bo[buf].buftype == 'terminal' then
+      return ' ' -- Use any icon or text you like (e.g., "TERM")
+    end
+  end
+  return ''
+end
+
 --  ───── Oil buffer tab title formatter ─────
 
 local OIL_TAB_SHOW_FULL_PATH = true
@@ -115,6 +127,10 @@ require('lualine').setup({
     lualine_x = {
       { show_macro_recording, color = { fg = '#FFA500' } },
       { spellOn },
+      {
+        terminal_status,
+        color = { fg = '#ff3e54' }, -- Optional: subtle orange to stand out
+      },
       -- 'encoding',
       -- 'filetype',
     },
