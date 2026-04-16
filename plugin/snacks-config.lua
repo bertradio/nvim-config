@@ -7,11 +7,7 @@
 -- ============================================================================
 -- 1. NATIVE PLUGIN LOADING (Neovim 0.12+)
 -- ============================================================================
-vim.pack.add({
-  { src = 'https://github.com/folke/snacks.nvim' },
-  -- You can specify a branch if you're tracking the development version
-  -- version = 'main',
-})
+vim.pack.add({ Gh('folke/snacks.nvim') })
 
 -- ============================================================================
 -- 2. HELPER FUNCTIONS (For Explorer Actions)
@@ -159,9 +155,7 @@ local function current_entry(picker)
   return sel and sel[1] or nil
 end
 
---  ───── ───────────────────────────────────────────────────────────────────────── ─────
 --  ────────────────────────────────── 3. SNACKS SETUP ──────────────────────────────────
---  ───── ───────────────────────────────────────────────────────────────────────── ─────
 
 local excluded_exts = require('config.file_exclude')
 
@@ -287,8 +281,10 @@ require('snacks').setup({
     sources = {
       buffers         = { layout = { preset  = 'my_default' } },
       command_history = { layout = { preset  = 'my_spelling' } },
-      files           = { layout = { present = 'my_default' } },
+      files           = { layout = { preset  = 'my_default' } },
       grep            = { layout = { preset  = 'my_default' } },
+      help            = { layout = { preset  = 'my_default' } },
+      jumps           = { layout = { preset  = 'my_default' } },
       keymaps         = { layout = { preset  = 'my_keymaps' } },
       lines           = { layout = { preset  = 'my_keymaps'}},
       lsp_symbols     = { layout = { preset  = 'default' } },
@@ -299,7 +295,7 @@ require('snacks').setup({
       search_history  = { layout = { preset  = 'my_spelling' } },
       spelling        = { layout = { preset  = 'my_spelling' } },
       undo            = { layout = { preset  = 'my_default' } },
-      zoxide          = { layout = { preset  = 'my_spelling' } },
+      zoxide          = { layout = { preset  = "my_keymaps", }, },
 
       --  ───── Explorer configuration ─────
 
@@ -567,25 +563,25 @@ require('snacks').setup({
           icon   = '',
           key    = 'e',
           desc   = 'Explorer',
-          action = '<Leader>x',
+          action = '<Leader>se',
         },
         {
           icon   = '',
           key    = 'f',
           desc   = 'Find file',
-          action = '<Leader>lf',
+          action = '<Leader>sf',
         },
         {
           icon   = '',
           key    = 'r',
           desc   = 'Recent',
-          action = '<Leader>lo',
+          action = '<Leader>so',
         },
         {
           icon   = '',
           key    = 'g',
           desc   = 'Grep',
-          action = '<Leader>lg',
+          action = '<Leader>sg',
         },
         {
           icon   = '',

@@ -28,9 +28,9 @@ require('which-key').setup({
     { "<leader>b",  group = "Buffer" },
     { "<leader>d",  group = "Diff" },
     { "<leader>e",  group = "Edit config" },
-    { "<leader>lg", group = "Grep" },
+    { "<leader>sg", group = "Grep" },
     { "<leader>g",  group = "Git" },
-    { "<leader>l",  group = "Snacks" },
+    { "<leader>s",  group = "Snacks" },
   },
 
   keys = {
