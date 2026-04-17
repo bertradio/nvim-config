@@ -45,7 +45,7 @@
       "src": "https://github.com/williamboman/mason.nvim"
     },
     "mini.nvim": {
-      "rev": "29447d7b0e1fc9bc9d0384953e63be3fae816736",
+      "rev": "418ef4930ddabe80f449c6f1323f8b6abb172d1c",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "noice.nvim": {
@@ -56,10 +56,6 @@
       "rev": "de740991c12411b663994b2860f1a4fd0937c130",
       "src": "https://github.com/MunifTanjim/nui.nvim"
     },
-    "nvim-autopairs": {
-      "rev": "59bce2eef357189c3305e25bc6dd2d138c1683f5",
-      "src": "https://github.com//windwp/nvim-autopairs"
-    },
     "nvim-biscuits": {
       "rev": "d93dcdee3a3dfd5101785447658e744f153957db",
       "src": "https://github.com/code-biscuits/nvim-biscuits"
@@ -67,14 +63,6 @@
     "nvim-lspconfig": {
       "rev": "4b7fbaa239c5db6b36f424a4521ca9f1a401be33",
       "src": "https://github.com/neovim/nvim-lspconfig"
-    },
-    "nvim-notify": {
-      "rev": "8701bece920b38ea289b457f902e2ad184131a5d",
-      "src": "https://github.com/rcarriga/nvim-notify"
-    },
-    "nvim-toggler": {
-      "rev": "467808600882fd6c9e33b9dbc4889b1b80cfd917",
-      "src": "https://github.com/nguyenvukhang/nvim-toggler"
     },
     "nvim-treesitter": {
       "rev": "4916d6592ede8c07973490d9322f187e07dfefac",
@@ -101,10 +89,6 @@
       "rev": "0fd43fb4b1f073931c4b481f5f3b7cea3749e190",
       "src": "https://github.com/MeanderingProgrammer/markdown.nvim"
     },
-    "smart-paste.nvim": {
-      "rev": "328f90f7f4535f58d5bd987edb48588836efdecc",
-      "src": "https://github.com/nemanjamalesija/smart-paste.nvim"
-    },
     "snacks.nvim": {
       "rev": "ad9ede6a9cddf16cedbd31b8932d6dcdee9b716e",
       "src": "https://github.com/folke/snacks.nvim"
@@ -118,7 +102,7 @@
       "src": "https://github.com/folke/which-key.nvim"
     },
     "yazi.nvim": {
-      "rev": "41b5594323e074cb45ba134eb08c07b3cfe06f16",
+      "rev": "9f7073dfcf25cf246819030194fbaf2d5760053f",
       "src": "https://github.com/mikavilpas/yazi.nvim"
     }
   }

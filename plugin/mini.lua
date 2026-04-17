@@ -11,6 +11,8 @@ require('mini.ai').setup()
 
 require('mini.align').setup({ mappings = { start = 'ga' } })
 
+require('mini.pairs').setup()
+
 require('mini.surround').setup({
   -- stylua: ignore 
   mappings = {
