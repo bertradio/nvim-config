@@ -20,10 +20,11 @@ vim.api.nvim_create_user_command('YaziHere', function()
   require('yazi').yazi(nil, vim.fn.getcwd())
 end, {})
 
+-- stylua: ignore 
 require('yazi').setup({
-  open_for_directories = true,
+  open_for_directories    = true,
   use_yazi_client_id_flag = true,
-  enable_mouse_support = true,
+  enable_mouse_support    = true,
 
   -- the type of border to use for the floating window
   yazi_floating_window_border = 'double',
@@ -40,27 +41,16 @@ require('yazi').setup({
     end,
   },
 
+  -- stylua: ignore
   keymaps = {
-    show_help = '<f1>',
-    open_file_in_vertical_split = '<c-v>',
-    open_file_in_horizontal_split = '<c-x>',
-    open_file_in_tab = '<c-t>',
-    grep_in_directory = '<c-g>',
-    replace_in_directory = 'false',
-    cycle_open_buffers = '<tab>',
+    show_help                            = '<f1>',
+    open_file_in_vertical_split          = '<c-v>',
+    open_file_in_horizontal_split        = '<c-x>',
+    -- open_file_in_tab                     = '<c-t>',
+    grep_in_directory                    = '<c-g>',
+    replace_in_directory                 = 'false',
+    cycle_open_buffers                   = '<tab>',
     copy_relative_path_to_selected_files = '<c-y>',
-    send_to_quickfix_list = '<c-q>',
+    send_to_quickfix_list                = '<c-q>',
   },
-
-  -- integrations = {
-  --   grep_in_directory = function()
-  --     require('fzf-lua').grep({})
-  --   end,
-
-  --   -- grep_in_selected_files = function(selected_files)
-  --   --   require('snacks.picker').grep({
-  --   --     files = selected_files,
-  --   --   })
-  --   -- end,
-  -- },
 })

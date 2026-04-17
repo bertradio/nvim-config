@@ -2,13 +2,17 @@
 --    │    key mappings for snacks    │
 --    ╰───────────────────────────────╯
 
--- dashboard
+--  ─────────── dashboard ────────────
+
 Myfn.map('n', '<Leader>]', '<cmd>lua Snacks.dashboard.open()<cr>', { desc = 'Open dashboard' })
 
--- -- for deletes
+--  ────────── for deletes ───────────
+
 Myfn.map('n', '<Leader>bd', '<cmd>lua Snacks.bufdelete()<cr>', { desc = 'delete current' })
 Myfn.map('n', '<Leader>bo', '<cmd>lua Snacks.bufdelete.other()<cr>', { desc = 'delete other' })
 Myfn.map('n', '<Leader>ba', '<cmd>lua Snacks.bufdelete.all()<cr>', { desc = 'delete all' })
+
+--  ──────────── pickers ─────────────
 
 Myfn.map('n', '<Leader>sb', '<cmd>lua Snacks.picker.buffers()<cr>', { desc = 'buffers' })
 
@@ -27,7 +31,8 @@ Myfn.map(
   { desc = 'explorer' }
 )
 
--- pickers with cwd displayed - from ChatGPT
+--  ───── pickers with cwd displayed - from ChatGPT ─────
+
 vim.keymap.set('n', '<Leader>sf', function()
   local snacks = require('snacks')
   snacks.picker({
@@ -45,6 +50,8 @@ vim.keymap.set('n', '<Leader><space>', function()
     title = Myfn.short_cwd(),
   })
 end, { desc = 'files cwd' })
+
+--  ───────── other pickers ──────────
 
 vim.keymap.set('n', '<Leader>sj', function()
   local snacks = require('snacks')
@@ -80,13 +87,11 @@ Myfn.map(
   'n',
   '<Leader>so',
   '<cmd>lua Snacks.picker.recent({filter = { cwd = false }})<cr>',
-  -- filter does not take project into account and just shows same as telescope
   { desc = 'oldfiles' }
 )
 Myfn.map('n', '<Leader>sq', '<cmd>lua Snacks.picker.qflist()<cr>', { desc = 'quick fix' })
 Myfn.map('n', '<Leader>sr', '<cmd>lua Snacks.picker.registers()<cr>', { desc = 'registers' })
 Myfn.map('n', '<Leader>su', '<cmd>lua Snacks.picker.undo()<cr>', { desc = 'undo history' })
--- Myfn.map('n', '<Leader>sy', '<cmd>lua Snacks.picker.lsp_symbols()<cr>', { desc = 'lsp symbols' })
 Myfn.map('n', '<Leader>sy', '<cmd>lua Snacks.lazygit.open(opts)<cr>', { desc = 'lazygit' })
 
 --  ───── Snacks terminal setup ──────

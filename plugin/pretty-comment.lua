@@ -10,9 +10,8 @@ require('pretty-comment').setup({
   default_width = 50,
 })
 
---    ╭────────────────────────────────────────────╮
---    │            Recommended keybinds            │
---    ╰────────────────────────────────────────────╯
+--  ────── Recommended keybinds ──────
+
 vim.keymap.set('v', 'gcb', ':CommentBox<CR>', { silent = true, desc = 'Comment box' })
 vim.keymap.set('n', 'gcb', '<cmd>CommentBox<CR>', { silent = true, desc = 'Comment box (line)' })
 vim.keymap.set('v', 'gcB', ':CommentBoxFat<CR>', { silent = true, desc = 'Fat comment box' })

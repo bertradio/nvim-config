@@ -11,7 +11,26 @@ require('mini.ai').setup()
 
 require('mini.align').setup({ mappings = { start = 'ga' } })
 
-require('mini.pairs').setup()
+require('mini.move').setup({
+  -- stylua: ignore 
+  mappings = {
+    left       = '<C-left>',
+    right      = '<C-right>',
+    down       = '<C-down>',
+    up         = '<C-up>',
+    line_left  = '<C-left>',
+    line_right = '<C-right>',
+    line_down  = '<C-down>',
+    line_up    = '<C-up>',
+  },
+})
+
+require('mini.pairs').setup({
+  -- add < > as a pair
+  mappings = {
+    ['<'] = { action = 'open', pair = '<>', neigh_pattern = '[^\\].' },
+  },
+})
 
 require('mini.surround').setup({
   -- stylua: ignore 
@@ -25,18 +44,4 @@ require('mini.surround').setup({
     update_n_lines = 'gzn', -- Update n_lines
   },
   n_lines = 50, -- search window for surroundings
-})
-
-require('mini.move').setup({
-  -- stylua: ignore 
-  mappings = {
-    left       = '<C-left>',
-    right      = '<C-right>',
-    down       = '<C-down>',
-    up         = '<C-up>',
-    line_left  = '<C-left>',
-    line_right = '<C-right>',
-    line_down  = '<C-down>',
-    line_up    = '<C-up>',
-  },
 })

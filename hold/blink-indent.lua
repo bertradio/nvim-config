@@ -23,7 +23,7 @@ indent.setup({
   scope = {
     -- enable to show underlines on the line above the current scope
     underline = {
-      enabled = true,
+      enabled = false,
       highlights = {
         'BlinkIndentOrangeUnderline',
         'BlinkIndentVioletUnderline',

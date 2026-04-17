@@ -22,6 +22,7 @@ end
 -- IMPORTANT: This must be called AFTER blink.cmp is added to vim.pack
 local capabilities = require('blink.cmp').get_lsp_capabilities()
 
+-- server configurations
 local servers = {
   lua_ls = {
     cmd = { 'lua-language-server' },

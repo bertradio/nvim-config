@@ -53,12 +53,14 @@ function _G.MyFoldText()
 end
 
 -- stylua: ignore 
+{
 vim.opt.foldenable = true
 vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
-vim.opt.foldlevel = 99
-vim.opt.foldtext = 'v:lua.MyFoldText()'
+vim.opt.foldexpr   = 'nvim_treesitter#foldexpr()'
+vim.opt.foldlevel  = 99
+vim.opt.foldtext   = 'v:lua.MyFoldText()'
 vim.opt.foldcolumn = 'auto:1'
+},
 
 -- stylua: ignore 
 vim.opt.fillchars:append({

@@ -22,8 +22,8 @@ require('which-key').setup({
 
 
   --  ───── labels for second character ─────
-  -- stylua: ignore
 
+  -- stylua: ignore
   spec = {
     { "<leader>b",  group = "Buffer" },
     { "<leader>d",  group = "Diff" },
