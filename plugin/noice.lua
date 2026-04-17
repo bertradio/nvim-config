@@ -55,8 +55,8 @@ require('noice').setup({
     view = 'cmdline_popup', -- Centered popup
     format = {
       cmdline = { pattern = '^:', icon = '', lang = 'vim', title = ' cmdline ' },
-      search_down = { kind = 'search', pattern = '^/', icon = ' ', lang = 'regex' },
-      search_up = { kind = 'search', pattern = '^%?', icon = ' ', lang = 'regex' },
+      search_down = { kind = 'search', pattern = '^/', icon = '', lang = 'regex' },
+      search_up = { kind = 'search', pattern = '^%?', icon = '', lang = 'regex' },
       lua = {
         pattern = { '^:%s*lua%s+', '^:%s*lua%s *= %s*', '^:%s *= %s*' },
         icon = '',
@@ -68,7 +68,7 @@ require('noice').setup({
   },
   messages = {
     enabled = true,
-    view = 'notify', -- Routes to Snacks.notify
+    view = 'notify',
     view_error = 'notify',
     view_warn = 'notify',
     view_history = 'messages',

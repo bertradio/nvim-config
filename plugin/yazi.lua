@@ -46,7 +46,6 @@ require('yazi').setup({
     show_help                            = '<f1>',
     open_file_in_vertical_split          = '<c-v>',
     open_file_in_horizontal_split        = '<c-x>',
-    -- open_file_in_tab                     = '<c-t>',
     grep_in_directory                    = '<c-g>',
     replace_in_directory                 = 'false',
     cycle_open_buffers                   = '<tab>',

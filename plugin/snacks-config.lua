@@ -3,19 +3,13 @@
 --    ╰────────────────────────────╯
 
 -- Updated: Centralized Snacks setup with Notifier - 4-16-26
--- Explorer: Removed custom copy and move since they did not seem stable
+-- Explorer: Removed custom copy and move actions since they did not seem stable
 
 vim.pack.add({ Gh('folke/snacks.nvim') })
 
 local excluded_exts = require('config.file_exclude')
 
 require('snacks').setup({
-
-  --  ───── Centralized Notification & Progress ─────
-  notifier = {
-    enabled = true,
-    timeout = 3000,
-  },
 
   --  ────── enable other modules ──────
 
@@ -34,43 +28,14 @@ require('snacks').setup({
     enabled = false,
     width = 45,
     preset = {
+      -- stylua: ignore 
       keys = {
-        {
-          icon = '',
-          key = 'e',
-          desc = 'Explorer',
-          action = '<Leader>se',
-        },
-        {
-          icon = '',
-          key = 'f',
-          desc = 'Find file',
-          action = '<Leader>sf',
-        },
-        {
-          icon = '',
-          key = 'r',
-          desc = 'Recent',
-          action = '<Leader>so',
-        },
-        {
-          icon = '',
-          key = 'g',
-          desc = 'Grep',
-          action = '<Leader>sg',
-        },
-        {
-          icon = '',
-          key = 'y',
-          desc = 'Yazi',
-          action = '<Leader>y',
-        },
-        {
-          icon = '',
-          key = 'z',
-          desc = 'Zoxide',
-          action = '<Leader>z',
-        },
+        { icon = '', key = 'e', desc = 'Explorer', action  = '<Leader>se' },
+        { icon = '', key = 'f', desc = 'Find file', action = '<Leader>sf' },
+        { icon = '', key = 'r', desc = 'Recent', action    = '<Leader>so' },
+        { icon = '', key = 'g', desc = 'Grep', action      = '<Leader>sg' },
+        { icon = '', key = 'y', desc = 'Yazi', action      = '<Leader>y' },
+        { icon = '', key = 'z', desc = 'Zoxide', action    = '<Leader>z' },
       },
       header = [[]],
     },
@@ -312,9 +277,3 @@ vim.opt.fillchars:append({
   fold      = ' ',
   foldsep   = ' ',
 })
-
---  ───── Global override to ensure all plugins use Snacks for notifications ─────
-
-vim.notify = function(msg, level, opts)
-  require('snacks').notifier.notify(msg, level, opts)
-end
