@@ -14,8 +14,8 @@ Myfn.map('n', 'G', 'G$', { desc = 'Move to last char of file' })
 
 Myfn.map({ 'n' }, '<Leader>bc', '<cmd>CopyBufferName<cr>', { desc = 'path copy' })
 Myfn.map({ 'n' }, '<Leader>bk', '<cmd>bd!<cr>', { desc = 'kill buffer' })
-Myfn.map({ 'n' }, ']b', '<cmd>bnext<cr>', { desc = 'next buffer' })
-Myfn.map({ 'n' }, '[b', '<cmd>bprev<cr>', { desc = 'prev buffer' })
+-- Myfn.map({ 'n' }, ']b', '<cmd>bnext<cr>', { desc = 'next buffer' })
+-- Myfn.map({ 'n' }, '[b', '<cmd>bprev<cr>', { desc = 'prev buffer' })
 
 -- Go up/down one line on the screen rather than one file line at a time
 Myfn.map('i', '<down>', '<c-o>gj')
@@ -76,7 +76,12 @@ end, {
 Myfn.map('n', '<C-y>', '<cmd>%y+<cr>', { desc = 'Yank all' })
 
 -- Save current buffer and source this file
-Myfn.map('n', '<Leader>R', "<cmd>w<cr><cmd>source %  <cr><cmd>echom '** Re-sourced **' <cr>")
+Myfn.map(
+  'n',
+  '<Leader>R',
+  "<cmd>w<cr><cmd>source %  <cr><cmd>echom '** Re-sourced **' <cr>",
+  { desc = 'Re-source' }
+)
 
 -- map ~ to cycle through case changes in visual mode - in vimscript
 -- from https://vim.fandom.com/wiki/Switching_case_of_characters#Twiddle_case
