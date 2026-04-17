@@ -6,7 +6,7 @@
 -- code from ChatGPT for fold icons
 
 -- need to name it otherwise vim.pack.add assigns the name 'nvim'
-vim.pack.add({ { src = Gh('catppuccin/nvim'), name = 'catppuccin' } }) 
+vim.pack.add({ { src = Gh('catppuccin/nvim'), name = 'catppuccin' } })
 
 vim.opt.termguicolors = true
 
