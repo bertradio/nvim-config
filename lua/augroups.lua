@@ -195,3 +195,11 @@ vim.api.nvim_create_autocmd({ 'ShellCmdPost' }, {
     end, 50) -- 50ms
   end,
 })
+
+-- disable next line automatic commenting
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = '*',
+  callback = function()
+    vim.opt_local.formatoptions:remove({ 'r', 'o' })
+  end,
+})

@@ -33,7 +33,7 @@ local servers = {
         },
         diagnostics = {
           -- globals removed here because lazydev.nvim (above) handles them automatically
-          globals = { 'Snacks', 'Status', 'cx', 'ui', 'ya', 'vim' },
+          globals = { 'Snacks', 'Status', 'cx', 'ui', 'ya', 'vim', 'MiniFiles' },
         },
         workspace = {
           checkThirdParty = false,

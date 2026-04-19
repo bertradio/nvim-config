@@ -7,7 +7,9 @@
 -- (Merged: Oil buffers in tabline show current directory as their label)
 -- Rewrite to optimize from Gemini
 
---  ───── local display functions for use on status line ─────
+--  ━━━━━ display functions for use on status line ━━━━━
+
+--  ───── number of words in buffer ─────
 
 local function getWords()
   local wc = vim.fn.wordcount()
@@ -18,9 +20,13 @@ local function getWords()
   end
 end
 
+--  ───── whether spellcheck is on ─────
+
 local function spellOn()
   return vim.wo.spell and 's+' or ''
 end
+
+--  ───── display while macro is being recorded ─────
 
 local function show_macro_recording()
   local recording_register = vim.fn.reg_recording()
@@ -31,7 +37,18 @@ local function show_macro_recording()
   end
 end
 
---  ─────── Terminal indicator ───────
+-- Refresh logic for macro recording
+vim.schedule(function()
+  local grp = vim.api.nvim_create_augroup('LualineRecording', { clear = true })
+  vim.api.nvim_create_autocmd({ 'RecordingEnter', 'RecordingLeave' }, {
+    group = grp,
+    callback = function()
+      require('lualine').refresh({ place = { 'statusline' } })
+    end,
+  })
+end)
+
+--  ─────── Terminal on indicator ───────
 
 local function terminal_status()
   local bufs = vim.api.nvim_list_bufs()
@@ -78,18 +95,7 @@ end
 --   end
 -- end
 
--- Refresh logic for macro recording
-vim.schedule(function()
-  local grp = vim.api.nvim_create_augroup('LualineRecording', { clear = true })
-  vim.api.nvim_create_autocmd({ 'RecordingEnter', 'RecordingLeave' }, {
-    group = grp,
-    callback = function()
-      require('lualine').refresh({ place = { 'statusline' } })
-    end,
-  })
-end)
-
---  ────── end helper functions ──────
+--  ━━━━━━ end helper functions ━━━━━━
 
 vim.pack.add({
   Gh('nvim-tree/nvim-web-devicons'),
@@ -122,7 +128,7 @@ require('lualine').setup({
       { spellOn },
       {
         terminal_status,
-        color = { fg = '#ff3e54' }, -- Optional: subtle orange to stand out
+        color = { fg = '#ff3e54' },
       },
     },
     lualine_y = {},

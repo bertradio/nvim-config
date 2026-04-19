@@ -22,3 +22,6 @@ local options = {
 for k, v in pairs(options) do
   vim.opt[k] = v
 end
+
+vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.wo[0][0].foldmethod = 'expr'

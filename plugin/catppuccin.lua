@@ -61,7 +61,6 @@ require('catppuccin').setup({
       colored_indent_levels = false,
     },
     mini = { enabled = true, indentscope_color = '' },
-    -- snacks = { enabled = true, indent_scope_color = '' },
     native_lsp = {
       enabled = true,
       virtual_text = {

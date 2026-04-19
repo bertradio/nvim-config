@@ -13,6 +13,7 @@ vim.pack.add({
 })
 
 -- ── Native Snippet Jumps ────────────────────────────────────────────────────
+
 vim.keymap.set({ 'i', 's' }, '<C-j>', function()
   if vim.snippet.active({ direction = 1 }) then
     vim.snippet.jump(1)
@@ -30,6 +31,7 @@ vim.keymap.set({ 'i', 's' }, '<C-k>', function()
 end, { expr = true, silent = true, desc = 'Native snippet jump backward' })
 
 -- ── Helper Functions for Spell Gating ───────────────────────────────────────
+
 local function in_comment_or_string()
   local ok, ts = pcall(require, 'vim.treesitter')
   if not ok then
@@ -64,6 +66,7 @@ local function enable_spell_context()
 end
 
 -- ── blink.cmp config ──────────────────────────────────────────────────────────
+
 require('blink.cmp').setup({
   -- Global Keymaps (Insert mode)
   -- stylua: ignore 
@@ -75,8 +78,9 @@ require('blink.cmp').setup({
     ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation', 'hide' },
   },
 
-  -- Cmdline Config (Explicitly overrides floating UI hijacking)
-  -- stylua: ignore 
+--  ───── Cmdline Config (Explicitly overrides floating UI hijacking) ─────
+
+-- stylua: ignore
   cmdline = {
     enabled = true,
     keymap = {
@@ -173,6 +177,7 @@ require('blink.cmp').setup({
 })
 
 -- ── Spell / prose autocmds ────────────────────────────────────────────────────
+
 local SPELL_LANGS = { 'en' }
 local spellfile_path = vim.fs.normalize(vim.fn.stdpath('config') .. '/spell/en.utf-8.add')
 

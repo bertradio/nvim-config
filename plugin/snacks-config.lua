@@ -2,8 +2,8 @@
 --    │     snacks-config.lua      │
 --    ╰────────────────────────────╯
 
--- Updated: Centralized Snacks setup with Notifier - 4-16-26
 -- Explorer: Removed custom copy and move actions since they did not seem stable
+-- Just using noice
 
 vim.pack.add({ Gh('folke/snacks.nvim') })
 
