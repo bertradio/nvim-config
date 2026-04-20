@@ -21,10 +21,11 @@ function M.add_to_vim_path(dir, opts)
 end
 
 -- Wrapper for mapping custom keybindings to make mapping code easier and cleaner - from internet
+-- changed from vim.keymap to Snacks.keymap 4-20-26
 function M.map(mode, lhs, rhs, opts)
   local options = { noremap = true, silent = true } -- sets defaults
   options = opts and vim.tbl_extend('force', options, opts)
-  vim.keymap.set(mode, lhs, rhs, options) -- maps key
+  Snacks.keymap.set(mode, lhs, rhs, options) -- maps key
 end
 
 -- simplify setting up maps to change cwd
@@ -32,7 +33,7 @@ end
 -- dir is the dir to change to
 -- suggestion for simplicity from Perplexity
 function M.map_cwd(k, dir)
-  vim.keymap.set(
+  Snacks.keymap.set(
     'n',
     '\\' .. k,
     '<cmd>cd! ' .. dir .. '<cr><cmd>lua vim.notify(vim.fn.getcwd(), "info", { title = "" })<cr>',
