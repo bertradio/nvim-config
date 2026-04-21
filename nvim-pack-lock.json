@@ -24,10 +24,6 @@
       "rev": "fcea7ff883235d9024dc41e638f164a450c14ca2",
       "src": "https://github.com/folke/flash.nvim"
     },
-    "indent-blankline.nvim": {
-      "rev": "d28a3f70721c79e3c5f6693057ae929f3d9c0a03",
-      "src": "https://github.com/lukas-reineke/indent-blankline.nvim"
-    },
     "lazydev.nvim": {
       "rev": "ff2cbcba459b637ec3fd165a2be59b7bbaeedf0d",
       "src": "https://github.com/folke/lazydev.nvim"
@@ -41,11 +37,11 @@
       "src": "https://github.com/williamboman/mason-lspconfig.nvim"
     },
     "mason.nvim": {
-      "rev": "b03fb0f20bc1d43daf558cda981a2be22e73ac42",
+      "rev": "12ddd182d9efbdc848b540f16484a583d52da0fb",
       "src": "https://github.com/williamboman/mason.nvim"
     },
     "mini.nvim": {
-      "rev": "d76247d6e3ffa222784be5b156770e37c665f67e",
+      "rev": "5849ef04c32a6a8e55957b946c0a275801d87530",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "noice.nvim": {
@@ -61,7 +57,7 @@
       "src": "https://github.com/code-biscuits/nvim-biscuits"
     },
     "nvim-lspconfig": {
-      "rev": "e05fb8c3bd61d909dacff24f77f23beb644daf54",
+      "rev": "e146efacbafed3789ac568abcc5a981c5decaa58",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-treesitter": {
@@ -90,15 +86,15 @@
       "src": "https://github.com/HiPhish/rainbow-delimiters.nvim"
     },
     "render-markdown": {
-      "rev": "0fd43fb4b1f073931c4b481f5f3b7cea3749e190",
+      "rev": "d67113f11384c0dad96fced2f7b91f1fc811e97f",
       "src": "https://github.com/MeanderingProgrammer/markdown.nvim"
     },
     "snacks.nvim": {
       "rev": "ad9ede6a9cddf16cedbd31b8932d6dcdee9b716e",
-      "src": "https://github.com/folke/snacks.nvim"
+      "src": "http://github.com/folke/snacks.nvim"
     },
     "yazi.nvim": {
-      "rev": "982781518274c723202f73064e93beda7f0468fe",
+      "rev": "49b3417e4bc2002ce8003f8fca275fea1d710d50",
       "src": "https://github.com/mikavilpas/yazi.nvim"
     }
   }

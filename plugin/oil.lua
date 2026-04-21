@@ -1,4 +1,7 @@
--- oil.lua
+--    ╭────────────────────────────╮
+--    │          oil.lua           │
+--    ╰────────────────────────────╯
+
 -- changed from lazy to vim.pack 3-30-26
 --
 -- vim.pack version of your old lazy.nvim oil config
@@ -27,6 +30,7 @@ set_oil_highlights()
 -- Hidden File Logic
 -- =========================
 local exclude_globs = require('config.file_exclude')
+-- local exclude_globs = {} -- exclude nothing
 local hidden_patterns = {}
 
 for _, glob in ipairs(exclude_globs) do
@@ -135,9 +139,8 @@ require('oil').setup({
     ['g?'] = 'actions.show_help',
     ['gs'] = 'actions.change_sort',
     ['<C-c>'] = '<cmd>bd!<cr>',
-    ['<C-h>'] = 'false',
     ['<C-s>'] = 'false',
-    ['<C-t>'] = 'false',
+    ['<C-h>'] = 'false',
     ['g\\'] = 'false',
     ['gx'] = 'false',
     ['<C-q>'] = '<cmd>bd!<cr>',

@@ -103,7 +103,8 @@ if vim.g.neovide then
       vim.o.columns, vim.o.lines = 125, 35
     end)
   else
-    vim.o.guifont = 'JetBrainsMono NFP:h12'
+    -- vim.o.guifont = 'JetBrainsMono NFP:h12'
+    vim.o.guifont = 'JetBrainsMono Nerd Font Mono:h12'
   end
 end
 

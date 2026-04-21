@@ -99,8 +99,8 @@ miniclue.setup({
   },
 })
 
---  ──────── mini.files setup ────────
-
+-- --  ──────── mini.files setup ────────
+--
 -- vim.keymap.set('n', '<Leader>m', '<cmd>lua MiniFiles.open()<cr>', { desc = 'mini.files' })
 --
 -- require('mini.files').setup({
@@ -217,7 +217,7 @@ miniclue.setup({
 --
 --   -- Change Neovim's CWD
 --   vim.api.nvim_set_current_dir(dir)
---   vim.notify('CWD changed to: ' .. dir)
+--   vim.notify('cwd changed to: ' .. dir)
 -- end
 --
 -- vim.api.nvim_create_autocmd('User', {

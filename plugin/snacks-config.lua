@@ -55,6 +55,11 @@ require('snacks').setup({
     },
   },
 
+  indent = {
+    enabled = false,
+    only_current = false,
+  },
+
   statuscolumn = {
     enabled = true,
     segments = {
@@ -80,10 +85,11 @@ require('snacks').setup({
 
   -- stylua: ignore 
   picker = {
-    enabled   = true,
-    prompt    = '> ',
-    ui_select = true,
-    exclude   = excluded_exts,
+    enabled      = true,
+    layout       = "my_default",
+    prompt       = '> ',
+    ui_select    = true,
+    -- exclude      = excluded_exts,
     win = {
       preview = {
         wo = { number = false, relativenumber = false, signcolumn = 'no' },
@@ -92,10 +98,9 @@ require('snacks').setup({
         keys = {
           ['<PageUp>']   = { 'list_scroll_up', mode   = { 'i', 'n' } },
           ['<PageDown>'] = { 'list_scroll_down', mode = { 'i', 'n' } },
-        },
       },
     },
-
+  },
     --  ─────── my custom layouts ────────
 
     -- stylua: ignore 
@@ -103,7 +108,7 @@ require('snacks').setup({
       my_default = { -- 2 pane standard
         layout = {
           box    = 'horizontal',
-          width  = 0.9,
+          width  = 0.95,
           height = 0.8,
           {
             box       = 'vertical',

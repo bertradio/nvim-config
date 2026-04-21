@@ -30,36 +30,41 @@ Myfn.map(
   { desc = 'explorer' }
 )
 
+Myfn.map(
+  'n',
+  '<Leader>x',
+  '<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
+  { desc = 'explorer' }
+)
+
 --  ───── pickers with cwd displayed - from ChatGPT ─────
 
-vim.keymap.set('n', '<Leader>sf', function()
+Snacks.keymap.set('n', '<Leader>sf', function()
   local snacks = require('snacks')
   snacks.picker({
     source = 'files',
-    layout = 'my_default',
     title = Myfn.short_cwd(),
   })
 end, { desc = 'files cwd' })
 
-vim.keymap.set('n', '<Leader><space>', function()
+Snacks.keymap.set('n', '<Leader><space>', function()
   local snacks = require('snacks')
   snacks.picker({
     source = 'files',
-    layout = 'my_default',
     title = Myfn.short_cwd(),
   })
 end, { desc = 'files cwd' })
 
 --  ───────── other pickers ──────────
 
-vim.keymap.set('n', '<Leader>sj', function()
+Snacks.keymap.set('n', '<Leader>sj', function()
   local snacks = require('snacks')
   snacks.picker({
     source = 'jumps',
   })
 end, { desc = 'jumps' })
 
-vim.keymap.set('n', '<Leader>ss', function()
+Snacks.keymap.set('n', '<Leader>ss', function()
   local snacks = require('snacks')
   snacks.picker({
     source = 'search_history',
@@ -96,7 +101,7 @@ Myfn.map('n', '<Leader>sy', '<cmd>lua Snacks.lazygit.open(opts)<cr>', { desc = '
 --  ───── Snacks terminal setup ──────
 
 -- Toggle terminal in a centered floating window
-vim.keymap.set({ 'n', 't' }, '<Leader>st', function()
+Snacks.keymap.set({ 'n', 't' }, '<Leader>st', function()
   Snacks.terminal.toggle(nil, {
     win = {
       position = 'float',
@@ -119,16 +124,25 @@ Myfn.map('n', '<Leader>sz', '<cmd>lua Snacks.zen()<cr>', { desc = 'zen mode' })
 Myfn.map('n', '<Leader>z', '<cmd>lua Snacks.picker.zoxide()<cr>', { desc = 'zoxide' })
 
 -- Spelling picker
-vim.keymap.set('n', 'zz', function()
+Snacks.keymap.set('n', 'zz', function()
   require('snacks').picker.spelling({
-    layout = 'my_spelling',
+    -- layout = 'my_spelling',
   })
 end, { desc = 'Spelling Suggestions' })
 
 -- Command picker
-vim.keymap.set('n', '<Leader>sc', function()
+Snacks.keymap.set('n', '<Leader>sc', function()
   require('snacks').picker.command_history({
     layout = 'my_keymaps',
     preview = false, -- It doesn't have a preview window in the box, so this is safe
   })
 end, { desc = 'cmd history' })
+
+-- Indent toggle
+Snacks.keymap.set('n', '<leader>si', function()
+  if Snacks.indent.enabled then
+    Snacks.indent.disable()
+  else
+    Snacks.indent.enable()
+  end
+end, { desc = 'Toggle indent Guides' })
