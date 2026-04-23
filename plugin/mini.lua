@@ -1,9 +1,9 @@
---    ╭───────────────────────────────────╮
---    │    main setup for mini modules    │
---    ╰───────────────────────────────────╯
+--    ╭────────────────────────────╮
+--    │          mini.lua          │
+--    ╰────────────────────────────╯
 
 -- changed from lazy to vim.pack 3-30-26
--- put everything in one file for convenience since small
+-- put everything in one file for convenience
 
 vim.pack.add({ { src = Gh('nvim-mini/mini.nvim'), branch = 'main' } })
 
@@ -24,13 +24,6 @@ require('mini.move').setup({
     line_right = '<C-right>',
     line_down  = '<C-down>',
     line_up    = '<C-up>',
-  },
-})
-
-require('mini.pairs').setup({
-  -- add < > as a pair
-  mappings = {
-    ['<'] = { action = 'open', pair = '<>', neigh_pattern = '[^\\].' },
   },
 })
 

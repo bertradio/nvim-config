@@ -1,11 +1,13 @@
--- indent-blankline.lua
+--    ╭────────────────────────────╮
+--    │    indent-blankline.lua    │
+--    ╰────────────────────────────╯
 
 -- Created: 10/30/23
-
 -- To show colored bars for indents
-Myfn.map('n', '<Leader>i', '<cmd>IBLToggle<cr>', { desc = 'Indent lines toggle' })
 
 vim.pack.add({ { src = Gh('lukas-reineke/indent-blankline.nvim'), main = 'ibl' } })
+
+Myfn.map('n', '<Leader>i', '<cmd>IBLToggle<cr>', { desc = 'Indent lines toggle' })
 
 -- sets the order of colors on the indent markers
 local highlight = {
@@ -35,6 +37,6 @@ local hooks = require('ibl.hooks')
 
 require('ibl').setup({
   -- need to disable on start so that first toggle turns it on
-  enabled = false,
+  enabled = true,
   indent = { highlight = highlight },
 })

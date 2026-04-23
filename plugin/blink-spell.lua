@@ -17,10 +17,10 @@ vim.pack.add({
 
 -- Load snippets from friendly-snippets
 require('luasnip.loaders.from_vscode').lazy_load({
-  exclude = { 'fortran', 'java', 'cobol', 'c', 'c++' },
+  exclude = { 'fortran', 'java', 'cobol', 'c', 'c++', 'ruby' },
 })
 
---  ──────── add my snippets ─────────
+--  ──────── add my custom snippets ─────────
 
 local ls = require('luasnip')
 local s = ls.snippet
@@ -29,6 +29,12 @@ local t = ls.text_node
 ls.add_snippets('all', {
   s('copy', {
     t('Copyright (c) 2026 Bert Kleinman. All rights reserved.'),
+  }),
+  s('bk', {
+    t('Bert Kleinman'),
+  }),
+  s('eml', {
+    t('Bert@KleinmanMedia.com'),
   }),
 })
 
@@ -78,7 +84,7 @@ require('blink.cmp').setup({
     ['<Tab>'] = { 'snippet_forward', 'fallback' },
     ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
     ['<CR>'] = { 'accept', 'fallback' },
-    ['<Right>'] = { 'accept', 'fallback' }, -- Accept ghost text in the buffer},
+    -- ['<Right>'] = { 'accept', 'fallback' }, -- Accept ghost text in the buffer},
   },
 
   cmdline = {
@@ -109,7 +115,7 @@ require('blink.cmp').setup({
     preset = 'luasnip',
   },
 
-  appearance = { use_nvim_cmp_as_default = true, nerd_font_variant = 'mono' },
+  appearance = { nerd_font_variant = 'mono' },
   signature = { enabled = true, window = { border = 'rounded' } },
 
   completion = {
@@ -127,10 +133,10 @@ require('blink.cmp').setup({
       },
     },
 
-    -- 1. Ensure documentation shows as soon as the item is selected
+    -- Ensure documentation shows as soon as the item is selected
     documentation = {
       auto_show = true,
-      auto_show_delay_ms = 0, -- Set to 0 for instant display
+      auto_show_delay_ms = 150,
       window = { border = 'rounded' },
     },
 
@@ -160,26 +166,26 @@ require('blink.cmp').setup({
     providers = {
       lsp = { name = 'LSP', module = 'blink.cmp.sources.lsp', score_offset = 100 },
       snippets = { name = 'Snippets', module = 'blink.cmp.sources.snippets', score_offset = 90 },
-      spell = {
-        name = 'Spell',
-        module = 'blink-cmp-spell',
-        score_offset = 70,
-        opts = { enable_in_context = enable_spell_context },
-      },
       buffer = {
         name = 'Buffer',
         module = 'blink.cmp.sources.buffer',
         score_offset = 80,
         min_keyword_length = 2,
       },
+      spell = {
+        name = 'Spell',
+        module = 'blink-cmp-spell',
+        score_offset = 40,
+        opts = { enable_in_context = enable_spell_context },
+      },
       path = { name = 'Path', module = 'blink.cmp.sources.path', score_offset = 60 },
     },
 
     -- stylua: ignore 
     per_filetype = {
-      markdown = { 'buffer', 'spell', 'snippets', 'path'  },
+      markdown = { 'spell', 'buffer', 'snippets', 'path' },
       lua      = { 'lsp', 'snippets', 'buffer', 'path' },
-      bash     = { 'lsp', 'snippets', 'path' },
+      bash     = { 'lsp', 'snippets', 'path', 'buffer' },
     },
   },
 })
@@ -189,6 +195,7 @@ require('blink.cmp').setup({
 local SPELL_LANGS = { 'en' }
 local spellfile_path = vim.fs.normalize(vim.fn.stdpath('config') .. '/spell/en.utf-8.add')
 
+-- setup for text files
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'markdown', 'text', 'gitcommit', 'rst', 'latex' },
   callback = function()
@@ -201,6 +208,7 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
+-- setup for coding languages
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'bash', 'lua', 'python', 'sh', 'ps1' },
   callback = function()

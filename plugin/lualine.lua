@@ -1,6 +1,6 @@
---    ╭──────────────────────────────────────╮
---    │    Configure status and tab lines    │
---    ╰──────────────────────────────────────╯
+--    ╭────────────────────────────╮
+--    │        lualine.lua         │
+--    ╰────────────────────────────╯
 
 -- changed from lazy to vim.pack 3-30-26
 -- Code for Oil from ChatGPT
