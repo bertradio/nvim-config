@@ -10,13 +10,14 @@ vim.pack.add({ { src = Gh('catppuccin/nvim'), name = 'catppuccin' } })
 
 vim.opt.termguicolors = true
 
+-- stylua: ignore 
 require('catppuccin').setup({
-  flavour = 'mocha',
+  flavour                = 'mocha',
   transparent_background = false,
-  show_end_of_buffer = false,
-  no_italic = false,
-  no_bold = false,
-  styles = { comments = { 'italic' } },
+  show_end_of_buffer     = false,
+  no_italic              = false,
+  no_bold                = false,
+  styles                 = { comments = { 'italic' } },
 
   custom_highlights = function(colors)
     return {
@@ -24,58 +25,60 @@ require('catppuccin').setup({
     }
   end,
 
+  -- stylua: ignore 
   highlight_overrides = {
     all = function(colors)
       return {
         FoldColumn = { fg = colors.lavender, bg = colors.none },
-        Folded = { fg = colors.flamingo, bg = colors.base },
+        Folded     = { fg = colors.flamingo, bg = colors.base },
         SignColumn = { bg = colors.none },
       }
     end,
     mocha = function(colors)
       return {
-        Comment = { bg = '#1f1f1f', style = { 'italic' } },
-        Cursor = { bg = '#a8a8a8' },
-        CursorLine = { bg = '#273746' },
-        LineNr = { bg = '#262626', fg = 'Grey' },
-        Folded = { bg = '#262626', fg = '#ffffff' },
-        FoldColumn = { bg = '#262626', fg = colors.sapphire },
-        FzfLuaSearch = { fg = colors.yellow, style = { 'bold' } },
-        FzfLuaGrep = { fg = colors.yellow, style = { 'bold' } },
-        FzfLuaGrepHighlight = { fg = colors.sky, style = { 'bold' } },
-        Search = { fg = colors.base, bg = colors.yellow }, -- General search matches
-        CurSearch = { fg = colors.base, bg = colors.magenta }, -- The currently selected match
+        Comment             = { bg = '#1f1f1f', style     = { 'italic' } },
+        Cursor              = { bg = '#a8a8a8' },
+        CursorLine          = { bg = '#273746' },
+        LineNr              = { bg = '#262626', fg        = 'Grey' },
+        Folded              = { bg = '#262626', fg        = '#ffffff' },
+        FoldColumn          = { bg = '#262626', fg        = colors.sapphire },
+        FzfLuaSearch        = { fg = colors.yellow, style = { 'bold' } },
+        FzfLuaGrep          = { fg = colors.yellow, style = { 'bold' } },
+        FzfLuaGrepHighlight = { fg = colors.sky, style    = { 'bold' } },
+        Search              = { fg = colors.base, bg      = colors.yellow }, -- General search matches
+        CurSearch           = { fg = colors.base, bg      = colors.magenta }, -- The currently selected match
       }
     end,
   },
 
+  -- stylua: ignore 
   integrations = {
-    blink_cmp = { style = 'bordered' },
-    blink_indent = true,
-    markdown = true,
-    noice = true,
+    blink_cmp          = { style = 'bordered' },
+    blink_indent       = true,
+    markdown           = true,
+    noice              = true,
     rainbow_delimiters = true,
-    indent_blankline = {
-      enabled = true,
-      scope_color = '',
+    indent_blankline   = {
+      enabled               = true,
+      scope_color           = '',
       colored_indent_levels = false,
     },
     mini = { enabled = true, indentscope_color = '' },
     native_lsp = {
       enabled = true,
       virtual_text = {
-        errors = { 'italic' },
-        hints = { 'italic' },
-        warnings = { 'italic' },
+        errors      = { 'italic' },
+        hints       = { 'italic' },
+        warnings    = { 'italic' },
         information = { 'italic' },
-        ok = { 'italic' },
+        ok          = { 'italic' },
       },
       underlines = {
-        errors = { 'underline' },
-        hints = { 'underline' },
-        warnings = { 'underline' },
+        errors      = { 'underline' },
+        hints       = { 'underline' },
+        warnings    = { 'underline' },
         information = { 'underline' },
-        ok = { 'underline' },
+        ok          = { 'underline' },
       },
       inlay_hints = { background = true },
     },

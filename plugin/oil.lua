@@ -105,48 +105,54 @@ end, { desc = 'Close Oil without saving' })
 -- =========================
 -- Plugin setup
 -- =========================
+-- stylua: ignore 
 require('oil').setup({
   default_file_explorer = true,
-  columns = { 'icon' },
-  buf_options = { buflisted = false, bufhidden = 'hide' },
-  win_options = {
+  columns               = { 'icon' },
+  buf_options           = { buflisted = false, bufhidden = 'hide' },
+  win_options           = {
     conceallevel = 3,
     cursorcolumn = false,
-    foldcolumn = '0',
-    list = false,
-    signcolumn = 'no',
-    spell = false,
-    wrap = true,
+    foldcolumn   = '0',
+    list         = false,
+    signcolumn   = 'no',
+    spell        = false,
+    wrap         = true,
   },
-  cleanup_delay_ms = 1,
-  delete_to_trash = true,
+  cleanup_delay_ms                = 1,
+  delete_to_trash                 = true,
   prompt_save_on_select_new_entry = true,
-  skip_confirm_for_simple_edits = true,
-  watch_for_changes = true,
-  constrain_cursor = 'name',
-  use_default_keymaps = true,
-
+  skip_confirm_for_simple_edits   = true,
+  watch_for_changes               = true,
+  constrain_cursor                = 'name',
+  use_default_keymaps             = true,
+  confirmation                    = {
+    border = 'rounded', -- sets border for confirmation dialog
+    win_options = {
+      winhl = 'FloatBorder:FloatBorder,NormalFloat:NormalFloat',
+    },
+  },
   keymaps = {
-    ['.'] = 'actions.tcd',
-    ['~'] = 'actions.tcd',
-    ['_'] = 'actions.open_cwd',
-    ['<BS>'] = 'actions.parent',
+    ['.']     = 'actions.tcd',
+    ['~']     = 'actions.tcd',
+    ['_']     = 'actions.open_cwd',
+    ['<BS>']  = 'actions.parent',
     ['<ESC>'] = 'actions.close',
     ['<C-l>'] = 'actions.refresh',
-    ['<CR>'] = 'actions.select',
+    ['<CR>']  = 'actions.select',
     ['<S-p>'] = 'actions.preview',
-    ['g.'] = 'actions.toggle_hidden',
-    ['g?'] = 'actions.show_help',
-    ['gs'] = 'actions.change_sort',
+    ['g.']    = 'actions.toggle_hidden',
+    ['g?']    = 'actions.show_help',
+    ['gs']    = 'actions.change_sort',
     ['<C-c>'] = '<cmd>bd!<cr>',
     ['<C-s>'] = 'false',
     ['<C-h>'] = 'false',
-    ['g\\'] = 'false',
-    ['gx'] = 'false',
+    ['g\\']   = 'false',
+    ['gx']    = 'false',
     ['<C-q>'] = '<cmd>bd!<cr>',
 
-    ['gd'] = {
-      desc = 'Toggle file detail view',
+    ['gd']    = {
+      desc     = 'Toggle file detail view',
       callback = function()
         detail = not detail
         if detail then
@@ -187,27 +193,29 @@ require('oil').setup({
     preview = true,
   },
 
+  -- stylua: ignore 
   float = {
-    padding = 3,
-    max_width = 0.9,
-    max_height = 0,
-    border = 'double',
+    padding     = 3,
+    max_width   = 0.9,
+    max_height  = 0,
+    border      = 'double',
     win_options = { winblend = 0 },
-    override = function(conf)
+    override    = function(conf)
       return conf
     end,
   },
 
+  -- stylua: ignore 
   progress = {
-    max_width = 0.8,
-    min_width = { 30, 0.4 },
-    width = nil,
-    max_height = { 10, 0.9 },
-    min_height = { 5, 0.1 },
-    height = nil,
-    border = 'rounded',
+    max_width        = 0.8,
+    min_width        = { 30, 0.4 },
+    width            = nil,
+    max_height       = { 10, 0.9 },
+    min_height       = { 5, 0.1 },
+    height           = nil,
+    border           = 'rounded',
     minimized_border = 'none',
-    win_options = { winblend = 0 },
+    win_options      = { winblend = 0 },
   },
 })
 

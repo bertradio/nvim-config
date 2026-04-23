@@ -9,14 +9,15 @@
 
 vim.pack.add({ Gh('stevearc/conform.nvim') })
 
+-- stylua: ignore 
 require('conform').setup({
   formatters_by_ft = {
-    lua = { 'stylua' },
+    lua        = { 'stylua' },
     javascript = { 'prettierd', stop_after_first = true },
-    markdown = { 'prettierd' },
-    sh = { 'shfmt' },
-    bash = { 'shfmt' },
-    toml = { 'taplo' },
+    markdown   = { 'prettierd' },
+    sh         = { 'shfmt' },
+    bash       = { 'shfmt' },
+    toml       = { 'taplo' },
   },
   format_on_save = {
     lsp_format = 'fallback',

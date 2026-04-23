@@ -103,19 +103,20 @@ vim.pack.add({
 })
 
 require('lualine').setup({
+  -- stylua: ignore 
   options = {
-    theme = 'catppuccin-nvim', -- need to use this since lualine loaded before catppuccin
-    icons_enabled = true,
-    section_separators = { left = '', right = '' },
+    theme                = 'catppuccin-nvim', -- need to use this since lualine loaded before catppuccin
+    icons_enabled        = true,
+    section_separators   = { left = '', right = '' },
     component_separators = { left = '', right = '' },
-    disabled_filetypes = {
+    disabled_filetypes   = {
       statusline = { 'dashboard', 'alpha', 'starter' },
     },
     always_divide_middle = true,
-    globalstatus = true,
+    globalstatus         = true,
     refresh = {
       statusline = 500,
-      tabline = 500,
+      tabline    = 500,
     },
   },
 

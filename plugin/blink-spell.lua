@@ -3,32 +3,34 @@
 --    ╰────────────────────────────╯
 
 -- changed from lazy to vim.pack 3-30-26
---
 -- Finalized 3-31-26: Fixed cmdline keymap hijacking and E5113 error
 -- Optimized for Nvim 0.12 native features and sub-100ms startup
+-- Added LuaSnip and friendly-snippets per Gemini 4-22-26
+-- Code revised as per Gemini
 
 vim.pack.add({
-  { src = Gh('saghen/blink.cmp'), version = 'v1.10.2' },
+  Gh('L3MON4D3/LuaSnip'),
   Gh('ribru17/blink-cmp-spell'),
+  Gh('rafamadriz/friendly-snippets'),
+  { src = Gh('saghen/blink.cmp'), version = 'v1.10.2' },
 })
 
--- ── Native Snippet Jumps ────────────────────────────────────────────────────
+-- Load snippets from friendly-snippets
+require('luasnip.loaders.from_vscode').lazy_load({
+  exclude = { 'fortran', 'java', 'cobol', 'c', 'c++' },
+})
 
-vim.keymap.set({ 'i', 's' }, '<C-j>', function()
-  if vim.snippet.active({ direction = 1 }) then
-    vim.snippet.jump(1)
-  else
-    return '<C-j>'
-  end
-end, { expr = true, silent = true, desc = 'Native snippet jump forward' })
+--  ──────── add my snippets ─────────
 
-vim.keymap.set({ 'i', 's' }, '<C-k>', function()
-  if vim.snippet.active({ direction = -1 }) then
-    vim.snippet.jump(-1)
-  else
-    return '<C-k>'
-  end
-end, { expr = true, silent = true, desc = 'Native snippet jump backward' })
+local ls = require('luasnip')
+local s = ls.snippet
+local t = ls.text_node
+
+ls.add_snippets('all', {
+  s('copy', {
+    t('Copyright (c) 2026 Bert Kleinman. All rights reserved.'),
+  }),
+})
 
 -- ── Helper Functions for Spell Gating ───────────────────────────────────────
 
@@ -68,30 +70,28 @@ end
 -- ── blink.cmp config ──────────────────────────────────────────────────────────
 
 require('blink.cmp').setup({
-  -- Global Keymaps (Insert mode)
-  -- stylua: ignore 
   keymap = {
-    preset        = 'none',
-    ['<Tab>']     = { 'select_and_accept', 'fallback' },
-    ['<Up>']      = { 'select_prev', 'fallback' },
-    ['<Down>']    = { 'select_next', 'fallback' },
+    preset = 'default',
+    ['<Up>'] = { 'select_prev', 'fallback' },
+    ['<Down>'] = { 'select_next', 'fallback' },
     ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation', 'hide' },
+    ['<Tab>'] = { 'snippet_forward', 'fallback' },
+    ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
+    ['<CR>'] = { 'accept', 'fallback' },
+    ['<Right>'] = { 'accept', 'fallback' }, -- Accept ghost text in the buffer},
   },
 
---  ───── Cmdline Config (Explicitly overrides floating UI hijacking) ─────
-
--- stylua: ignore
   cmdline = {
     enabled = true,
     keymap = {
-      preset     = 'none',
-      ['<Tab>']  = { 'select_and_accept', 'fallback' },
-      ['<Up>']   = { 'select_prev', 'fallback' },
+      preset = 'none',
+      ['<Tab>'] = { 'select_and_accept', 'fallback' },
+      ['<Up>'] = { 'select_prev', 'fallback' },
       ['<Down>'] = { 'select_next', 'fallback' },
     },
     completion = {
       menu = { auto_show = true },
-      ghost_text = { enabled = false },
+      ghost_text = { enabled = true },
     },
     sources = function()
       local type = vim.fn.getcmdtype()
@@ -105,9 +105,8 @@ require('blink.cmp').setup({
     end,
   },
 
-  -- Native Snippet Bridge
   snippets = {
-    preset = 'default',
+    preset = 'luasnip',
   },
 
   appearance = { use_nvim_cmp_as_default = true, nerd_font_variant = 'mono' },
@@ -127,52 +126,61 @@ require('blink.cmp').setup({
         },
       },
     },
-    documentation = { auto_show = true, window = { border = 'rounded' } },
-    trigger = { show_in_snippet = false },
-    list = { selection = { preselect = false, auto_insert = false } },
+
+    -- 1. Ensure documentation shows as soon as the item is selected
+    documentation = {
+      auto_show = true,
+      auto_show_delay_ms = 0, -- Set to 0 for instant display
+      window = { border = 'rounded' },
+    },
+
+    trigger = {
+      show_in_snippet = false,
+      show_on_keyword = true,
+    },
+
+    -- This enables ghost text globally for all buffers
+    ghost_text = {
+      enabled = true,
+      -- Optional: show ghost text even when the menu is hidden
+      show_without_selection = true,
+    },
+
+    list = {
+      selection = {
+        preselect = true, -- Required for ghost text to know what to preview
+        auto_insert = false,
+      },
+    },
   },
 
   sources = {
     default = { 'lsp', 'snippets', 'buffer', 'path', 'spell' },
-    -- stylua: ignore 
-    per_filetype = {
-      lua      = { 'lsp', 'snippets', 'buffer', 'path' },
-      sh       = { 'lsp', 'snippets', 'buffer', 'path' },
-      bash     = { 'lsp', 'snippets', 'buffer', 'path' },
-      ps1      = { 'lsp', 'snippets', 'buffer', 'path' },
-      markdown = { 'spell', 'buffer', 'path', 'snippets' },
-    },
+
     providers = {
-      lsp = { name = 'LSP', module = 'blink.cmp.sources.lsp', score_offset = 3 },
-      buffer = {
-        name = 'Buffer',
-        module = 'blink.cmp.sources.buffer',
-        score_offset = 10,
-        min_keyword_length = 2,
-        opts = {
-          get_bufnrs = function()
-            return { vim.api.nvim_get_current_buf() }
-          end,
-        },
-      },
-      path = { name = 'Path', module = 'blink.cmp.sources.path', score_offset = 2 },
-      snippets = { name = 'Snippets', module = 'blink.cmp.sources.snippets', score_offset = 1 },
+      lsp = { name = 'LSP', module = 'blink.cmp.sources.lsp', score_offset = 100 },
+      snippets = { name = 'Snippets', module = 'blink.cmp.sources.snippets', score_offset = 90 },
       spell = {
         name = 'Spell',
         module = 'blink-cmp-spell',
-        score_offset = 3,
-        opts = {
-          max_entries = 8,
-          enable_in_context = enable_spell_context,
-        },
+        score_offset = 70,
+        opts = { enable_in_context = enable_spell_context },
       },
+      buffer = {
+        name = 'Buffer',
+        module = 'blink.cmp.sources.buffer',
+        score_offset = 80,
+        min_keyword_length = 2,
+      },
+      path = { name = 'Path', module = 'blink.cmp.sources.path', score_offset = 60 },
     },
-  },
 
-  fuzzy = {
-    implementation = 'lua',
-    use_proximity = true,
-    prebuilt_binaries = { download = false },
+    -- stylua: ignore 
+    per_filetype = {
+      markdown = { 'buffer', 'spell', 'snippets', 'path'  },
+      lua      = { 'lsp', 'snippets', 'buffer', 'path' },
+      bash     = { 'lsp', 'snippets', 'path' },
+    },
   },
 })
 

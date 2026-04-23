@@ -5,7 +5,7 @@
 *~
 Session.vim
 
-*.json
+nvim-pack-lock.json
 
 # netrw history
 .netrwhist

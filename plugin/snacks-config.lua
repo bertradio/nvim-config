@@ -23,73 +23,13 @@ require('snacks').setup({
   scope = { enabled = true },
   scroll = { enabled = true },
 
-  -- dashboard config
-  dashboard = {
-    enabled = false,
-    width = 45,
-    preset = {
-      -- stylua: ignore 
-      keys = {
-        { icon = '', key = 'e', desc = 'Explorer', action  = '<Leader>se' },
-        { icon = '', key = 'f', desc = 'Find file', action = '<Leader>sf' },
-        { icon = '', key = 'r', desc = 'Recent', action    = '<Leader>so' },
-        { icon = '', key = 'g', desc = 'Grep', action      = '<Leader>sg' },
-        { icon = '', key = 'y', desc = 'Yazi', action      = '<Leader>y' },
-        { icon = '', key = 'z', desc = 'Zoxide', action    = '<Leader>z' },
-      },
-      header = [[]],
-    },
-    formats = {
-      key = function(item)
-        return {
-          { '[', hl = 'special' },
-          { item.key, hl = 'key' },
-          { ']', hl = 'special' },
-        }
-      end,
-    },
-    sections = {
-      { title = "\nIf it ain't broke, don't fix it", align = 'center', padding = 1 },
-      { section = 'recent_files', align = 'left', limit = 10, padding = 1 },
-      { section = 'keys', align = 'left', padding = 1 },
-    },
-  },
-
-  indent = {
-    enabled = false,
-    only_current = false,
-  },
-
-  statuscolumn = {
-    enabled = true,
-    segments = {
-      { text = { '%s' }, click = 'v:lua.scsa' },
-      { text = { '%c' } },
-      {
-        text = {
-          function()
-            if vim.v.virtnum ~= 0 then
-              return ''
-            end
-            if vim.wo.relativenumber then
-              local rel = math.abs(vim.fn.line('.') - vim.v.lnum)
-              return (rel == 0 and vim.v.lnum or rel) .. ' '
-            end
-            return string.format('%d ', vim.v.lnum)
-          end,
-        },
-        click = 'v:lua.scna',
-      },
-    },
-  },
-
   -- stylua: ignore 
   picker = {
     enabled      = true,
     layout       = "my_default",
     prompt       = '> ',
     ui_select    = true,
-    -- exclude      = excluded_exts,
+    exclude      = excluded_exts,
     win = {
       preview = {
         wo = { number = false, relativenumber = false, signcolumn = 'no' },
@@ -101,7 +41,8 @@ require('snacks').setup({
       },
     },
   },
-    --  ─────── my custom layouts ────────
+
+  --  ─────── my custom layouts ────────
 
     -- stylua: ignore 
     layouts = {
@@ -213,13 +154,72 @@ require('snacks').setup({
       },
     },
   },
+
+  -- dashboard config
+  dashboard = {
+    enabled = false,
+    width = 45,
+    preset = {
+      -- stylua: ignore 
+      keys = {
+        { icon = '', key = 'e', desc = 'Explorer', action  = '<Leader>se' },
+        { icon = '', key = 'f', desc = 'Find file', action = '<Leader>sf' },
+        { icon = '', key = 'r', desc = 'Recent', action    = '<Leader>so' },
+        { icon = '', key = 'g', desc = 'Grep', action      = '<Leader>sg' },
+        { icon = '', key = 'y', desc = 'Yazi', action      = '<Leader>y' },
+        { icon = '', key = 'z', desc = 'Zoxide', action    = '<Leader>z' },
+      },
+      header = [[]],
+    },
+    formats = {
+      key = function(item)
+        return {
+          { '[', hl = 'special' },
+          { item.key, hl = 'key' },
+          { ']', hl = 'special' },
+        }
+      end,
+    },
+    sections = {
+      { title = "\nIf it ain't broke, don't fix it", align = 'center', padding = 1 },
+      { section = 'recent_files', align = 'left', limit = 10, padding = 1 },
+      { section = 'keys', align = 'left', padding = 1 },
+    },
+  },
+
+  indent = {
+    enabled = false,
+    only_current = false,
+  },
+
+  statuscolumn = {
+    enabled = true,
+    segments = {
+      { text = { '%s' }, click = 'v:lua.scsa' },
+      { text = { '%c' } },
+      {
+        text = {
+          function()
+            if vim.v.virtnum ~= 0 then
+              return ''
+            end
+            if vim.wo.relativenumber then
+              local rel = math.abs(vim.fn.line('.') - vim.v.lnum)
+              return (rel == 0 and vim.v.lnum or rel) .. ' '
+            end
+            return string.format('%d ', vim.v.lnum)
+          end,
+        },
+        click = 'v:lua.scna',
+      },
+    },
+  },
 })
 
 --  ────── status column setup ───────
 
 -- set up for status column to display folds with no numbers
 -- and proper icons
-
 local function _clean_leader(s)
   s = (s or ''):gsub('^%s*', '')
   s = s:gsub('^([%-%*#;/%%!]+)%s*', '')
