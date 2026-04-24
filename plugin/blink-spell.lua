@@ -53,7 +53,7 @@ local function in_comment_or_string()
   end
   for _, cap in ipairs(caps) do
     local name = cap.capture or cap
-    if name:match('^@?comment$') or name:match('^@?string$') then
+    if name:match('comment') or name:match('string') then
       return true
     end
   end
@@ -80,7 +80,7 @@ require('blink.cmp').setup({
     preset = 'default',
     ['<Up>'] = { 'select_prev', 'fallback' },
     ['<Down>'] = { 'select_next', 'fallback' },
-    ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation', 'hide' },
+    ['<C-space>'] = { 'show', 'show_documentation', 'hide' },
     ['<Tab>'] = { 'snippet_forward', 'fallback' },
     ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
     ['<CR>'] = { 'accept', 'fallback' },
@@ -194,6 +194,7 @@ require('blink.cmp').setup({
 
 local SPELL_LANGS = { 'en' }
 local spellfile_path = vim.fs.normalize(vim.fn.stdpath('config') .. '/spell/en.utf-8.add')
+vim.opt.spellfile = spellfile_path
 
 -- setup for text files
 vim.api.nvim_create_autocmd('FileType', {

@@ -9,6 +9,8 @@
 -- need to load snacks early so Snacks.keymap works in config files
 vim.pack.add({ { src = 'http://github.com/folke/snacks.nvim' } })
 require('snacks')
+vim.ui.select = Snacks.picker.select
+vim.ui.input = Snacks.input.input
 
 -- initialization file
 require('settings')

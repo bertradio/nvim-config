@@ -2,36 +2,33 @@
 --    │       catppuccin.lua       │
 --    ╰────────────────────────────╯
 
--- changed from lazy to vim.pack 3-30-26
--- code from ChatGPT for fold icons
+-- Updated by Perplexity 4-23-26:
+--                  Removed redundant EndOfBuffer custom_highlight (show_end_of_buffer=false
+--                  already handles it), removed duplicate Folded from 'all' block,
+--                  removed no_italic/no_bold (defaults), added fzf integration,
+--                  removed likely-invalid blink_indent key.
 
 -- need to name it otherwise vim.pack.add assigns the name 'nvim'
-vim.pack.add({ { src = Gh('catppuccin/nvim'), name = 'catppuccin' } })
+-- vim.pack.add({ { src = Gh('catppuccin/nvim'), name = 'catppuccin' } })
+vim.pack.add({ Gh('catppuccin/nvim') })
 
+-- Set before setup and colorscheme to ensure true color is active
 vim.opt.termguicolors = true
 
--- stylua: ignore 
+-- stylua: ignore
 require('catppuccin').setup({
   flavour                = 'mocha',
   transparent_background = false,
   show_end_of_buffer     = false,
-  no_italic              = false,
-  no_bold                = false,
   styles                 = { comments = { 'italic' } },
 
-  custom_highlights = function(colors)
-    return {
-      EndOfBuffer = { fg = colors.base, bg = colors.base },
-    }
-  end,
-
-  -- stylua: ignore 
+  -- stylua: ignore
   highlight_overrides = {
     all = function(colors)
       return {
+        -- Folded removed here — defined in mocha block below (mocha wins anyway)
         FoldColumn = { fg = colors.lavender, bg = colors.none },
-        Folded     = { fg = colors.flamingo, bg = colors.base },
-        SignColumn = { bg = colors.none },
+        SignColumn  = { bg = colors.none },
       }
     end,
     mocha = function(colors)
@@ -44,23 +41,22 @@ require('catppuccin').setup({
         FoldColumn          = { bg = '#262626', fg        = colors.sapphire },
         FzfLuaSearch        = { fg = colors.yellow, style = { 'bold' } },
         FzfLuaGrep          = { fg = colors.yellow, style = { 'bold' } },
-        FzfLuaGrepHighlight = { fg = colors.sky, style    = { 'bold' } },
-        Search              = { fg = colors.base, bg      = colors.yellow }, -- General search matches
-        CurSearch           = { fg = colors.base, bg      = colors.magenta }, -- The currently selected match
+        FzfLuaGrepHighlight = { fg = colors.sky,    style = { 'bold' } },
+        Search              = { fg = colors.base,   bg    = colors.yellow },  -- general search matches
+        CurSearch           = { fg = colors.base,   bg    = colors.red }, -- currently selected match
       }
     end,
   },
 
-  -- stylua: ignore 
+  -- stylua: ignore
   integrations = {
     blink_cmp          = { style = 'bordered' },
-    blink_indent       = true,
+    fzf                = true,   -- base FzfLua theming; needed for highlight_overrides above to build on
     markdown           = true,
     noice              = true,
     rainbow_delimiters = true,
     indent_blankline   = {
       enabled               = true,
-      scope_color           = '',
       colored_indent_levels = false,
     },
     mini = { enabled = true, indentscope_color = '' },
@@ -85,4 +81,4 @@ require('catppuccin').setup({
   },
 })
 
-vim.cmd.colorscheme('catppuccin')
+vim.cmd.colorscheme('catppuccin-nvim')

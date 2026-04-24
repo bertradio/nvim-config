@@ -15,6 +15,19 @@ end
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+-- === GLOBAL UI STYLE ===
+local BORDER = 'double'
+
+-- Consistent border highlights
+vim.api.nvim_set_hl(0, 'FloatBorder', { link = 'Normal' })
+vim.api.nvim_set_hl(0, 'FloatTitle', { link = 'Title' })
+vim.api.nvim_set_hl(0, 'NormalFloat', { link = 'Normal' })
+
+-- Optional: your Oil custom group (keep if you like it)
+vim.api.nvim_set_hl(0, 'OilBorderClean', { fg = '#7aa2f7', bg = 'NONE' })
+
+-- Make it accessible everywhere
+vim.g.ui_border = BORDER
 -- 3. LOAD MODULAR SETTINGS OPTIONS
 require('options').setup()
 

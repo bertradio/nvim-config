@@ -2,11 +2,11 @@
 --    │       treesitter.lua       │
 --    ╰────────────────────────────╯
 
--- changed from lazy to -- vim.pack 3-30-26
--- Re-write for new main branch of treesitter
--- code from Gemini 12/30/25
+-- Updated by Perplexity 4-23-26: Fixed TSUpdate typo, improved PackChanged autocmd,
+--                  added incremental_selection + indent modules,
+--                  raised file size threshold, added luadoc grammar,
+--                  wrapped setup in vim.schedule for safety.
 
--- suggested in docs
 vim.api.nvim_create_autocmd('PackChanged', {
   callback = function(ev)
     local name, kind = ev.data.spec.name, ev.data.kind
@@ -14,44 +14,69 @@ vim.api.nvim_create_autocmd('PackChanged', {
       if not ev.data.active then
         vim.cmd.packadd('nvim-treesitter')
       end
-      vim.cmd('TSUpdate')
+      -- Schedule to avoid blocking the event loop during an update
+      vim.schedule(function()
+        vim.cmd('TSUpdate')
+      end)
     end
   end,
 })
 
 vim.pack.add({
-  { src = Gh('nvim-treesitter/nvim-treesitter'), version = 'main', build = ':TSUPdate' },
+  { src = Gh('nvim-treesitter/nvim-treesitter'), version = 'main', build = ':TSUpdate' },
 })
 
-local ts = require('nvim-treesitter')
+-- Wrapped in vim.schedule to avoid potential race with parser availability
+-- on the main branch when loading at pack time
+vim.schedule(function()
+  local ts = require('nvim-treesitter')
 
-ts.setup({
-  ensure_installed = {
-    'awk',
-    'bash',
-    'c',
-    'csv',
-    'json',
-    'lua',
-    'markdown',
-    'markdown_inline',
-    'python',
-    'query',
-    'toml',
-    'vim',
-    'vimdoc',
-    'powershell',
-    'diff',
-  },
-  auto_install = true,
-  highlight = {
-    enable = true,
-    disable = function(lang, buf)
-      local max_filesize = 200 * 1024 -- 200 KB
-      local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
-      if ok and stats and stats.size > max_filesize then
-        return true
-      end
-    end,
-  },
-})
+  ts.setup({
+    ensure_installed = {
+      'awk',
+      'bash',
+      'c',
+      'csv',
+      'diff',
+      'json',
+      'lua',
+      'luadoc', -- adds grammar for ---@param annotation comments
+      'markdown',
+      'markdown_inline',
+      'powershell',
+      'python',
+      'query',
+      'toml',
+      'vim',
+      'vimdoc',
+    },
+
+    -- auto_install is convenient on a personal machine; disable if you're
+    -- ever in a restricted environment (no network / read-only fs)
+    auto_install = true,
+
+    highlight = {
+      enable = true,
+      disable = function(lang, buf)
+        local max_filesize = 500 * 1024
+        local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
+        if ok and stats and stats.size > max_filesize then
+          return true
+        end
+      end,
+    },
+
+    -- Allows expanding/shrinking selections by treesitter node boundaries
+    -- incremental_selection = {
+    --   enable = true,
+    --   keymaps = {
+    --     init_selection = '<C-space>',
+    --     node_incremental = '<C-space>',
+    --     node_decremental = '<bs>',
+    --   },
+    -- },
+
+    -- Treesitter-based indentation; particularly useful for Lua and Python
+    indent = { enable = true },
+  })
+end)

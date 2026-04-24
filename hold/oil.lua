@@ -122,12 +122,21 @@ require('oil').setup({
   cleanup_delay_ms                = 1,
   delete_to_trash                 = true,
   prompt_save_on_select_new_entry = true,
+<<<<<<< Updated upstream:hold/oil.lua
   skip_confirm_for_simple_edits   = true,
   watch_for_changes               = true,
   constrain_cursor                = 'name',
   use_default_keymaps             = true,
   confirmation                    = {
     border = 'rounded', -- sets border for confirmation dialog
+=======
+  skip_confirm_for_simple_edits = true,
+  watch_for_changes = true,
+  constrain_cursor = 'name',
+  use_default_keymaps = true,
+  confirmation = {
+    border = 'double', -- 👈 THIS is the fix
+>>>>>>> Stashed changes:plugin/oil.lua
     win_options = {
       winhl = 'FloatBorder:FloatBorder,NormalFloat:NormalFloat',
     },
@@ -150,9 +159,14 @@ require('oil').setup({
     ['g\\']   = 'false',
     ['gx']    = 'false',
     ['<C-q>'] = '<cmd>bd!<cr>',
+<<<<<<< Updated upstream:hold/oil.lua
 
     ['gd']    = {
       desc     = 'Toggle file detail view',
+=======
+    ['gd'] = {
+      desc = 'Toggle file detail view',
+>>>>>>> Stashed changes:plugin/oil.lua
       callback = function()
         detail = not detail
         if detail then
@@ -207,6 +221,7 @@ require('oil').setup({
 
   -- stylua: ignore 
   progress = {
+<<<<<<< Updated upstream:hold/oil.lua
     max_width        = 0.8,
     min_width        = { 30, 0.4 },
     width            = nil,
@@ -216,6 +231,20 @@ require('oil').setup({
     border           = 'rounded',
     minimized_border = 'none',
     win_options      = { winblend = 0 },
+=======
+    max_width = 0.8,
+    min_width = { 30, 0.4 },
+    width = nil,
+    max_height = { 10, 0.9 },
+    min_height = { 5, 0.1 },
+    height = nil,
+    border = 'double', -- Change this from 'rounded' to 'double'
+    minimized_border = 'none',
+    win_options = {
+      winblend = 0,
+      winhl = 'FloatBorder:OilBorderClean', -- Optional: applies your light blue border
+    },
+>>>>>>> Stashed changes:plugin/oil.lua
   },
 })
 

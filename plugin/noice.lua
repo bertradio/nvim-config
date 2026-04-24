@@ -4,13 +4,8 @@
 
 -- Updated for Snacks Hybrid Setup - 4-16-26
 
--- disable lazyredraw while in Noice
-vim.api.nvim_create_autocmd('User', {
-  pattern = 'Noice',
-  callback = function()
-    vim.opt.lazyredraw = false
-  end,
-})
+-- disable lazyredraw - recommended in docs
+-- vim.opt.lazyredraw = false
 
 -- Load required UI plugins (Snacks is in snacks-config.lua)
 vim.pack.add({
@@ -42,6 +37,7 @@ require('noice').setup({
         },
       },
       view = 'mini',
+      { filter = { event = 'msg_show', kind = 'shell_cmd' }, view = 'split' },
     },
   },
   -- stylua: ignore 
@@ -98,7 +94,7 @@ require('noice').setup({
       relative    = 'editor',
       align       = 'message-left',
       timeout     = 3000,
-      reverse     = true,
+      -- reverse     = true,
       focusable   = false,
       position    = { row   = 1, col = '95%' },
       size        = 'auto',
@@ -107,7 +103,6 @@ require('noice').setup({
       win_options = {
         wrap         = true,
         winbar       = '',
-        foldenable   = true,
         winblend     = 20,
         winhighlight = {
           Normal    = 'NoiceMini',

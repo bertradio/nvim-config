@@ -11,17 +11,18 @@ local excluded_exts = require('config.file_exclude')
 
 require('snacks').setup({
 
-  --  ────── enable other modules ──────
+  --  ────── enable/disable modules ──────
 
   bigfile = { enabled = true },
   explorer = { enabled = true },
-  input = { enabled = true },
+  indent = { enabled = false },
+  input = { enabled = true, border = 'double' },
   lazygit = { enabled = true },
-  lsp_progress = { enabled = true },
+  lsp_progress = { enabled = false },
   quickfile = { enabled = true },
   rename = { enabled = true },
-  scope = { enabled = true },
-  scroll = { enabled = true },
+  scope = { enabled = false },
+  scroll = { enabled = false },
 
   -- stylua: ignore 
   picker = {
@@ -31,6 +32,7 @@ require('snacks').setup({
     ui_select    = true,
     exclude      = excluded_exts,
     win = {
+      border = "double",
       preview = {
         wo = { number = false, relativenumber = false, signcolumn = 'no' },
       },
@@ -105,10 +107,13 @@ require('snacks').setup({
       jumps           = { layout = { preset = 'my_default' } },
       keymaps         = { layout = { preset = 'my_keymaps' } },
       lines           = { layout = { preset = 'my_keymaps' } },
-      lsp_symbols     = { layout = { preset = 'default' } },
+      lsp_symbols     = { layout = { preset = "my_default" } },
       marks           = { layout = { preset = 'default' } },
       qflist          = { layout = { preset = 'my_default' } },
-      recent          = { layout = { preset = 'my_default' } },
+      recent = {
+        layout = { preset = "my_default" },
+        filter = { cwd = false },
+      },
       registers       = { layout = { preset = 'my_default' } },
       search_history  = { layout = { preset = 'my_spelling' } },
       spelling        = { layout = { preset = 'my_spelling' } },
@@ -185,11 +190,6 @@ require('snacks').setup({
       { section = 'recent_files', align = 'left', limit = 10, padding = 1 },
       { section = 'keys', align = 'left', padding = 1 },
     },
-  },
-
-  indent = {
-    enabled = false,
-    only_current = false,
   },
 
   statuscolumn = {

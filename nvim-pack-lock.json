@@ -16,10 +16,6 @@
       "rev": "28c22791153a90bb61a86fbeeae0f812e048ade7",
       "src": "https://github.com/dkarter/bullets.vim"
     },
-    "catppuccin": {
-      "rev": "426dbebe06b5c69fd846ceb17b42e12f890aedf1",
-      "src": "https://github.com/catppuccin/nvim"
-    },
     "conform.nvim": {
       "rev": "dca1a190aa85f9065979ef35802fb77131911106",
       "src": "https://github.com/stevearc/conform.nvim"
@@ -64,6 +60,10 @@
       "rev": "de740991c12411b663994b2860f1a4fd0937c130",
       "src": "https://github.com/MunifTanjim/nui.nvim"
     },
+    "nvim": {
+      "rev": "426dbebe06b5c69fd846ceb17b42e12f890aedf1",
+      "src": "https://github.com/catppuccin/nvim"
+    },
     "nvim-autopairs": {
       "rev": "59bce2eef357189c3305e25bc6dd2d138c1683f5",
       "src": "https://github.com//windwp/nvim-autopairs"
@@ -85,14 +85,6 @@
       "rev": "c72328a5494b4502947a022fe69c0c47e53b6aa6",
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
-    "oil.nvim": {
-      "rev": "0fcc83805ad11cf714a949c98c605ed717e0b83e",
-      "src": "https://github.com/stevearc/oil.nvim"
-    },
-    "plenary.nvim": {
-      "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
-      "src": "https://github.com/nvim-lua/plenary.nvim"
-    },
     "pretty-comment.nvim": {
       "rev": "3b55388d7badb92adc649be36dd867a0abf325f9",
       "src": "https://github.com//Cartoone9/pretty-comment.nvim"
@@ -108,10 +100,6 @@
     "snacks.nvim": {
       "rev": "ad9ede6a9cddf16cedbd31b8932d6dcdee9b716e",
       "src": "http://github.com/folke/snacks.nvim"
-    },
-    "yazi.nvim": {
-      "rev": "a8c51b5965108107eb7b36c7d52ebb2af5f33e0d",
-      "src": "https://github.com/mikavilpas/yazi.nvim"
     }
   }
 }
