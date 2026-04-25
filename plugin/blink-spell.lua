@@ -22,21 +22,7 @@ require('luasnip.loaders.from_vscode').lazy_load({
 
 --  ──────── add my custom snippets ─────────
 
-local ls = require('luasnip')
-local s = ls.snippet
-local t = ls.text_node
-
-ls.add_snippets('all', {
-  s('copy', {
-    t('Copyright (c) 2026 Bert Kleinman. All rights reserved.'),
-  }),
-  s('bk', {
-    t('Bert Kleinman'),
-  }),
-  s('eml', {
-    t('Bert@KleinmanMedia.com'),
-  }),
-})
+require('config/my_snippets')
 
 -- ── Helper Functions for Spell Gating ───────────────────────────────────────
 
