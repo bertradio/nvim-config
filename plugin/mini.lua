@@ -8,11 +8,30 @@
 
 vim.pack.add({ { src = Gh('nvim-mini/mini.nvim'), branch = 'main' } })
 
-require('mini.ai').setup()
+require('mini.ai').setup({
+  -- disable these so builtin c-space and bs work
+  mappings = {
+    around_next = '',
+    inside_next = '',
+    around_last = '',
+    inside_last = '',
+  },
+})
 
 require('mini.align').setup({ mappings = { start = 'ga' } })
 
 require('mini.bracketed').setup()
+
+require('mini.jump').setup()
+
+require('mini.jump2d').setup()
+-- Jump to any character
+Snacks.keymap.set(
+  'n',
+  '<Leader>J',
+  '<cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.single_character)<CR>',
+  { desc = 'Jump to character' }
+)
 
 require('mini.move').setup({
   -- stylua: ignore 
