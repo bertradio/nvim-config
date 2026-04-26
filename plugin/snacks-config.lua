@@ -171,7 +171,6 @@ require('snacks').setup({
         { icon = '', key = 'f', desc = 'Find file', action = '<Leader>sf' },
         { icon = '', key = 'r', desc = 'Recent', action    = '<Leader>so' },
         { icon = '', key = 'g', desc = 'Grep', action      = '<Leader>sg' },
-        { icon = '', key = 'y', desc = 'Yazi', action      = '<Leader>y' },
         { icon = '', key = 'z', desc = 'Zoxide', action    = '<Leader>z' },
       },
       header = [[]],
