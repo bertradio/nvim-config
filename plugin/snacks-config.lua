@@ -9,20 +9,25 @@ vim.pack.add({ Gh('folke/snacks.nvim') })
 
 local excluded_exts = require('config.file_exclude')
 
+-- stylua: ignore
 require('snacks').setup({
 
   --  ────── enable/disable modules ──────
 
-  bigfile = { enabled = true },
-  explorer = { enabled = true },
-  indent = { enabled = false },
-  input = { enabled = true, border = 'double' },
-  lazygit = { enabled = true },
-  lsp_progress = { enabled = false },
-  quickfile = { enabled = true },
-  rename = { enabled = true },
-  scope = { enabled = false },
-  scroll = { enabled = false },
+  bigfile      = { enabled = true },
+  explorer     = { enabled = true },
+  indent       = { enabled = true },
+  input        = { enabled = true, border = 'double' },
+  lazygit      = { enabled = true },
+  quickfile    = { enabled = true },
+  rename       = { enabled = true },
+  scope        = { enabled = true },
+  scroll       = { enabled = true },
+
+  image        = { enabled = false },
+  notifier     = { enabled = false },
+  terminal     = { enabled = false },
+  words        = { enabled = false },
 
   -- stylua: ignore 
   picker = {
@@ -162,7 +167,7 @@ require('snacks').setup({
 
   -- dashboard config
   dashboard = {
-    enabled = false,
+    enabled = false, -- start disabled
     width = 45,
     preset = {
       -- stylua: ignore 

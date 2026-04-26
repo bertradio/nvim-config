@@ -28,6 +28,12 @@ ls.add_snippets('all', {
 
 ls.add_snippets('lua', {
   s(
+    'cmd',
+    fmt('<cmd>{}<cr>', {
+      i(1, 'command'),
+    })
+  ),
+  s(
     'gh',
     fmt('vim.pack.add( Gh("{}") ) ', {
       i(1, 'Link'),
