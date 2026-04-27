@@ -9,7 +9,7 @@
 -- Code revised as per Gemini
 
 vim.pack.add({
-  Gh('L3MON4D3/LuaSnip'),
+  { src = Gh('L3MON4D3/LuaSnip'), run = 'make install_jsregexp' },
   Gh('ribru17/blink-cmp-spell'),
   Gh('rafamadriz/friendly-snippets'),
   { src = Gh('saghen/blink.cmp'), version = 'v1.10.2' },
@@ -62,23 +62,24 @@ end
 -- ── blink.cmp config ──────────────────────────────────────────────────────────
 
 require('blink.cmp').setup({
+  -- stylua: ignore
   keymap = {
-    preset = 'default',
-    ['<Up>'] = { 'select_prev', 'fallback' },
-    ['<Down>'] = { 'select_next', 'fallback' },
+    preset        = 'default',
+    ['<Up>']      = { 'select_prev', 'fallback' },
+    ['<Down>']    = { 'select_next', 'fallback' },
     ['<C-space>'] = { 'show', 'show_documentation', 'hide' },
-    ['<Tab>'] = { 'snippet_forward', 'fallback' },
-    ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
-    ['<CR>'] = { 'accept', 'fallback' },
+    ['<Tab>']     = { 'snippet_forward', 'fallback' },
+    ['<S-Tab>']   = { 'snippet_backward', 'fallback' },
+    ['<CR>']      = { 'accept', 'fallback' },
     -- ['<Right>'] = { 'accept', 'fallback' }, -- Accept ghost text in the buffer},
   },
 
   cmdline = {
     enabled = true,
+    -- stylua: ignore
     keymap = {
-      preset = 'none',
-      ['<Tab>'] = { 'select_and_accept', 'fallback' },
-      ['<Up>'] = { 'select_prev', 'fallback' },
+      preset     = 'none',
+      ['<Up>']   = { 'select_prev', 'fallback' },
       ['<Down>'] = { 'select_next', 'fallback' },
     },
     completion = {
@@ -149,9 +150,10 @@ require('blink.cmp').setup({
   sources = {
     default = { 'lsp', 'snippets', 'buffer', 'path', 'spell' },
 
+    -- all offsets set tne same so order below controls
     providers = {
-      lsp = { name = 'LSP', module = 'blink.cmp.sources.lsp', score_offset = 100 },
-      snippets = { name = 'Snippets', module = 'blink.cmp.sources.snippets', score_offset = 90 },
+      lsp = { name = 'LSP', module = 'blink.cmp.sources.lsp', score_offset = 80 },
+      snippets = { name = 'Snippets', module = 'blink.cmp.sources.snippets', score_offset = 80 },
       buffer = {
         name = 'Buffer',
         module = 'blink.cmp.sources.buffer',
@@ -161,16 +163,16 @@ require('blink.cmp').setup({
       spell = {
         name = 'Spell',
         module = 'blink-cmp-spell',
-        score_offset = 40,
+        score_offset = 80,
         opts = { enable_in_context = enable_spell_context },
       },
-      path = { name = 'Path', module = 'blink.cmp.sources.path', score_offset = 60 },
+      path = { name = 'Path', module = 'blink.cmp.sources.path', score_offset = 80 },
     },
 
     -- stylua: ignore 
     per_filetype = {
       markdown = { 'spell', 'buffer', 'snippets', 'path' },
-      lua      = { 'lsp', 'snippets', 'buffer', 'path' },
+      lua      = { 'snippets', 'buffer', 'lsp', 'path' },
       bash     = { 'lsp', 'snippets', 'path', 'buffer' },
     },
   },

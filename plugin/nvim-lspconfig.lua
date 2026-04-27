@@ -7,7 +7,7 @@
 
 vim.pack.add({
   Gh('neovim/nvim-lspconfig'),
-  Gh('saghen/blink.cmp'),
+  -- Gh('saghen/blink.cmp'),
   -- lazydev handles the "vim" global and workspace library discovery efficiently
   { src = Gh('folke/lazydev.nvim'), data = { ft = 'lua' } },
 })

@@ -135,3 +135,32 @@ vim.keymap.set('n', '<leader>U', function()
   vim.notify('Updating plugins...', vim.log.levels.INFO)
   vim.pack.update()
 end, { desc = 'Update plugins' })
+
+-- toggle boolean
+local function toggle_bool()
+  local word = vim.fn.expand('<cword>')
+  -- stylua: ignore
+  local bool_map = {
+    ['true']  = 'false',
+    ['false'] = 'true',
+    ['True']  = 'False',
+    ['False'] = 'True',
+    ['TRUE']  = 'FALSE',
+    ['FALSE'] = 'TRUE',
+    ['on']    = 'off',
+    ['off']   = 'on',
+    ['1']     = '0',
+    ['0']     = '1',
+    ['yes']   = 'no',
+    ['no']    = 'yes'
+  }
+
+  if bool_map[word] then
+    vim.cmd('normal! ciw' .. bool_map[word])
+  else
+    print('Not a boolean!')
+  end
+end
+
+-- Keymap: Pressing <leader>T will toggle the value
+vim.keymap.set('n', '<leader>T', toggle_bool, { desc = 'Toggle boolean under cursor' })

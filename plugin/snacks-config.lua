@@ -127,6 +127,7 @@ require('snacks').setup({
 
       -- stylua: ignore 
       explorer = {
+       replace_netrw = true, -- Replace netrw with the snacks explorer
         layout = {
           { preview = true },
           layout = {

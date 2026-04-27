@@ -47,24 +47,6 @@ ls.add_snippets('lua', {
   ),
   s('stig', t('-- stylua: ignore')),
   s(
-    'pack',
-    fmt(
-      [[
-        -- {}
-        vim.pack.add({{ Gh( "{}" ) }})
-        require("{}").setup({{
-            {}
-        }})
-      ]],
-      {
-        i(1, 'Plugin Description'),
-        i(2, 'link'),
-        i(3, 'plugin_name'),
-        i(0),
-      }
-    )
-  ),
-  s(
     'map',
     fmt([[Snacks.keymap.set("{}", "<Leader>{}", "{}", {{ desc = "{}" }})]], {
       i(1, 'n'),
@@ -79,7 +61,7 @@ ls.add_snippets('lua', {
 
 -- stylua: ignore
 local writing_snips = {
-  s('bk',   t('Bert Kleinman')),
+  s('bak',   t('Bert Kleinman')),
   s('eml',  t('Bert@KleinmanMedia.com')),
   s('ph',   t('310 450-5210')),
 }

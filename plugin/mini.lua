@@ -122,5 +122,6 @@ miniclue.setup({
     { mode = 'n', keys = '<Leader>b', desc = '+buffer' },
     { mode = 'n', keys = '<Leader>e', desc = '+edit configs' },
     { mode = 'n', keys = '<Leader>s', desc = '+snacks' },
+    { mode = 'n', keys = '<Leader>w', desc = '+window' },
   },
 })

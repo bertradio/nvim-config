@@ -7,7 +7,6 @@
 -- Revisions by Gemini 04/25/26
 
 vim.pack.add({
-  -- Lightweight parser manager; handles downloading and building .so files
   Gh('romus204/tree-sitter-manager.nvim'),
 })
 
@@ -25,6 +24,7 @@ require('tree-sitter-manager').setup({
     'python',
     'query',
     'toml',
+    'vimdoc',
   },
 
   -- Automatically install missing parsers when opening a new filetype
@@ -56,6 +56,5 @@ vim.api.nvim_create_autocmd('FileType', {
 
 -- 2. NATIVE INCREMENTAL SELECTION
 -- 0.12 includes native keymaps: 'v an' (outer) and 'v in' (inner).
--- Here we remap them to match your preferred <C-space> and <BS> style.
 vim.keymap.set('x', '<C-space>', 'an', { remap = true, desc = 'Increment selection (Native)' })
 vim.keymap.set('x', '<BS>', 'in', { remap = true, desc = 'Decrement selection (Native)' })
