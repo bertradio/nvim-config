@@ -35,7 +35,7 @@ ls.add_snippets('lua', {
   ),
   s(
     'gh',
-    fmt('vim.pack.add( Gh("{}") ) ', {
+    fmt('vim.pack.add( Gh("{}") )', {
       i(1, 'Link'),
     })
   ),
@@ -45,7 +45,6 @@ ls.add_snippets('lua', {
       i(1, 'module'),
     })
   ),
-  s('stig', t('-- stylua: ignore')),
   s(
     'map',
     fmt([[Snacks.keymap.set("{}", "<Leader>{}", "{}", {{ desc = "{}" }})]], {
@@ -61,9 +60,6 @@ ls.add_snippets('lua', {
 
 -- stylua: ignore
 local writing_snips = {
-  s('bak',   t('Bert Kleinman')),
-  s('eml',  t('Bert@KleinmanMedia.com')),
-  s('ph',   t('310 450-5210')),
 }
 
 -- Loop through the types and add the snippets to each

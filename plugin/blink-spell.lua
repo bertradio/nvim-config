@@ -11,14 +11,14 @@
 vim.pack.add({
   { src = Gh('L3MON4D3/LuaSnip'), run = 'make install_jsregexp' },
   Gh('ribru17/blink-cmp-spell'),
-  Gh('rafamadriz/friendly-snippets'),
+  -- Gh('rafamadriz/friendly-snippets'),
   { src = Gh('saghen/blink.cmp'), version = 'v1.10.2' },
 })
 
--- Load snippets from friendly-snippets
-require('luasnip.loaders.from_vscode').lazy_load({
-  exclude = { 'fortran', 'java', 'cobol', 'c', 'c++', 'ruby' },
-})
+-- Load snippets from friendly-snippets and exclude filetypes
+-- require('luasnip.loaders.from_vscode').lazy_load({
+--   exclude = { 'markdown', 'fortran', 'java', 'cobol', 'c', 'c++', 'ruby' },
+-- })
 
 --  ──────── add my custom snippets ─────────
 
@@ -63,24 +63,30 @@ end
 
 require('blink.cmp').setup({
   -- stylua: ignore
+  -- sets <tab> to enter snippet and navigate
   keymap = {
     preset        = 'default',
     ['<Up>']      = { 'select_prev', 'fallback' },
     ['<Down>']    = { 'select_next', 'fallback' },
     ['<C-space>'] = { 'show', 'show_documentation', 'hide' },
-    ['<Tab>']     = { 'snippet_forward', 'fallback' },
+    -- 1. If snippet active, go forward.
+    -- 2. If completion menu open, accept selection.
+    ['<Tab>']     = { 'snippet_forward', 'accept', 'fallback' },
     ['<S-Tab>']   = { 'snippet_backward', 'fallback' },
-    ['<CR>']      = { 'accept', 'fallback' },
-    -- ['<Right>'] = { 'accept', 'fallback' }, -- Accept ghost text in the buffer},
+
+  --  < CR > to fallback so it just inserts a new line
+    ['<CR>']      = { 'fallback' },
   },
 
   cmdline = {
     enabled = true,
     -- stylua: ignore
-    keymap = {
+ keymap = {
       preset     = 'none',
       ['<Up>']   = { 'select_prev', 'fallback' },
       ['<Down>'] = { 'select_next', 'fallback' },
+      -- Add Tab here if you want to use it to accept cmdline completions
+      ['<Tab>']  = { 'accept', 'fallback' },
     },
     completion = {
       menu = { auto_show = true },
@@ -147,6 +153,8 @@ require('blink.cmp').setup({
     },
   },
 
+  --  ──────────────────────────────────────────────────────────────────
+
   sources = {
     default = { 'lsp', 'snippets', 'buffer', 'path', 'spell' },
 
@@ -178,7 +186,7 @@ require('blink.cmp').setup({
   },
 })
 
--- ── Spell / prose autocmds ────────────────────────────────────────────────────
+--  ───── Spell / prose autocmds to enable or disable spellcheck ─────
 
 local SPELL_LANGS = { 'en' }
 local spellfile_path = vim.fs.normalize(vim.fn.stdpath('config') .. '/spell/en.utf-8.add')
