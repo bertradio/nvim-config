@@ -25,7 +25,7 @@ end
 
 -- stylua: ignore 
 local set_cabbrevs = {
-  { 'vpd', 'vim.pack.del({""})' },
+  { 'vpd', 'lua vim.pack.del({""})' },
 }
 
 for _, v in ipairs(set_cabbrevs) do

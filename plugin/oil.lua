@@ -1,14 +1,11 @@
---    ╭────────────────────────────╮
---    │          oil.lua           │
---    ╰────────────────────────────╯
-
+-- oil.lua
 -- changed from lazy to vim.pack 3-30-26
 --
 -- vim.pack version of your old lazy.nvim oil config
 
 vim.pack.add({
-  Gh('nvim-tree/nvim-web-devicons'),
-  Gh('stevearc/oil.nvim'),
+  'https://github.com/nvim-tree/nvim-web-devicons',
+  'https://github.com/stevearc/oil.nvim',
 })
 
 local detail = false
@@ -30,7 +27,6 @@ set_oil_highlights()
 -- Hidden File Logic
 -- =========================
 local exclude_globs = require('config.file_exclude')
--- local exclude_globs = {} -- exclude nothing
 local hidden_patterns = {}
 
 for _, glob in ipairs(exclude_globs) do
@@ -105,68 +101,49 @@ end, { desc = 'Close Oil without saving' })
 -- =========================
 -- Plugin setup
 -- =========================
--- stylua: ignore 
 require('oil').setup({
   default_file_explorer = true,
-  columns               = { 'icon' },
-  buf_options           = { buflisted = false, bufhidden = 'hide' },
-  win_options           = {
+  columns = { 'icon' },
+  buf_options = { buflisted = false, bufhidden = 'hide' },
+  win_options = {
     conceallevel = 3,
     cursorcolumn = false,
-    foldcolumn   = '0',
-    list         = false,
-    signcolumn   = 'no',
-    spell        = false,
-    wrap         = true,
+    foldcolumn = '0',
+    list = false,
+    signcolumn = 'no',
+    spell = false,
+    wrap = true,
   },
-  cleanup_delay_ms                = 1,
-  delete_to_trash                 = true,
+  cleanup_delay_ms = 1,
+  delete_to_trash = true,
   prompt_save_on_select_new_entry = true,
-<<<<<<< Updated upstream:hold/oil.lua
-  skip_confirm_for_simple_edits   = true,
-  watch_for_changes               = true,
-  constrain_cursor                = 'name',
-  use_default_keymaps             = true,
-  confirmation                    = {
-    border = 'rounded', -- sets border for confirmation dialog
-=======
   skip_confirm_for_simple_edits = true,
   watch_for_changes = true,
   constrain_cursor = 'name',
   use_default_keymaps = true,
-  confirmation = {
-    border = 'double', -- 👈 THIS is the fix
->>>>>>> Stashed changes:plugin/oil.lua
-    win_options = {
-      winhl = 'FloatBorder:FloatBorder,NormalFloat:NormalFloat',
-    },
-  },
+
   keymaps = {
-    ['.']     = 'actions.tcd',
-    ['~']     = 'actions.tcd',
-    ['_']     = 'actions.open_cwd',
-    ['<BS>']  = 'actions.parent',
+    ['.'] = 'actions.tcd',
+    ['~'] = 'actions.tcd',
+    ['_'] = 'actions.open_cwd',
+    ['<BS>'] = 'actions.parent',
     ['<ESC>'] = 'actions.close',
     ['<C-l>'] = 'actions.refresh',
-    ['<CR>']  = 'actions.select',
+    ['<CR>'] = 'actions.select',
     ['<S-p>'] = 'actions.preview',
-    ['g.']    = 'actions.toggle_hidden',
-    ['g?']    = 'actions.show_help',
-    ['gs']    = 'actions.change_sort',
+    ['g.'] = 'actions.toggle_hidden',
+    ['g?'] = 'actions.show_help',
+    ['gs'] = 'actions.change_sort',
     ['<C-c>'] = '<cmd>bd!<cr>',
-    ['<C-s>'] = 'false',
     ['<C-h>'] = 'false',
-    ['g\\']   = 'false',
-    ['gx']    = 'false',
+    ['<C-s>'] = 'false',
+    ['<C-t>'] = 'false',
+    ['g\\'] = 'false',
+    ['gx'] = 'false',
     ['<C-q>'] = '<cmd>bd!<cr>',
-<<<<<<< Updated upstream:hold/oil.lua
 
-    ['gd']    = {
-      desc     = 'Toggle file detail view',
-=======
     ['gd'] = {
       desc = 'Toggle file detail view',
->>>>>>> Stashed changes:plugin/oil.lua
       callback = function()
         detail = not detail
         if detail then
@@ -207,44 +184,27 @@ require('oil').setup({
     preview = true,
   },
 
-  -- stylua: ignore 
   float = {
-    padding     = 3,
-    max_width   = 0.9,
-    max_height  = 0,
-    border      = 'double',
+    padding = 3,
+    max_width = 0.9,
+    max_height = 0,
+    border = 'double',
     win_options = { winblend = 0 },
-    override    = function(conf)
+    override = function(conf)
       return conf
     end,
   },
 
-  -- stylua: ignore 
   progress = {
-<<<<<<< Updated upstream:hold/oil.lua
-    max_width        = 0.8,
-    min_width        = { 30, 0.4 },
-    width            = nil,
-    max_height       = { 10, 0.9 },
-    min_height       = { 5, 0.1 },
-    height           = nil,
-    border           = 'rounded',
-    minimized_border = 'none',
-    win_options      = { winblend = 0 },
-=======
     max_width = 0.8,
     min_width = { 30, 0.4 },
     width = nil,
     max_height = { 10, 0.9 },
     min_height = { 5, 0.1 },
     height = nil,
-    border = 'double', -- Change this from 'rounded' to 'double'
+    border = 'rounded',
     minimized_border = 'none',
-    win_options = {
-      winblend = 0,
-      winhl = 'FloatBorder:OilBorderClean', -- Optional: applies your light blue border
-    },
->>>>>>> Stashed changes:plugin/oil.lua
+    win_options = { winblend = 0 },
   },
 })
 
@@ -260,10 +220,19 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 -- Update indicators when Oil buffers change
-vim.api.nvim_create_autocmd({ 'BufModifiedSet', 'BufWritePost' }, {
-  pattern = 'oil://*',
-  callback = function()
-    vim.schedule(apply_oil_window_indicators)
+vim.api.nvim_create_autocmd({ 'OptionSet', 'BufWritePost' }, {
+  group = vim.api.nvim_create_augroup('OilCustomIndicators', { clear = true }),
+  -- We use '*' because OptionSet needs to catch the 'modified' option name
+  pattern = { 'modified', 'oil://*' },
+  callback = function(args)
+    -- 1. If it's an OptionSet event, ensure it's the 'modified' option
+    -- 2. Ensure we are actually in an oil buffer
+    local is_modified_event = vim.v.event.option_name == 'modified'
+    local is_oil_buffer = vim.api.nvim_buf_get_name(args.buf):find('oil://')
+
+    if is_oil_buffer and (is_modified_event or args.event == 'BufWritePost') then
+      vim.schedule(apply_oil_window_indicators)
+    end
   end,
 })
 

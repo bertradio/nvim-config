@@ -203,3 +203,26 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.opt_local.formatoptions:remove({ 'r', 'o' })
   end,
 })
+
+-- comand to delete plugins
+-- Simply type :PackDel plugin-name to remove it from disk and the json
+vim.api.nvim_create_user_command('PackDel', function(opts)
+  local plugin = opts.args
+  local ok, err = pcall(function()
+    vim.pack.del({ plugin })
+  end)
+
+  if ok then
+    print('✓ Successfully deleted: ' .. plugin)
+  else
+    print('✕ Error: ' .. err)
+  end
+end, {
+  nargs = 1,
+  -- This adds autocomplete so you can Tab-complete the plugin name
+  complete = function()
+    return vim.tbl_map(function(p)
+      return p.spec.name
+    end, vim.pack.get())
+  end,
+})

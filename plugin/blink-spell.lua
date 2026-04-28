@@ -62,6 +62,14 @@ end
 -- ── blink.cmp config ──────────────────────────────────────────────────────────
 
 require('blink.cmp').setup({
+
+  snippets = {
+    preset = 'luasnip',
+  },
+
+  appearance = { nerd_font_variant = 'mono' },
+  signature = { enabled = true, window = { border = 'rounded' } },
+
   -- stylua: ignore
   -- sets <tab> to enter snippet and navigate
   keymap = {
@@ -81,13 +89,13 @@ require('blink.cmp').setup({
   cmdline = {
     enabled = true,
     -- stylua: ignore
- keymap = {
-      preset     = 'none',
-      ['<Up>']   = { 'select_prev', 'fallback' },
-      ['<Down>'] = { 'select_next', 'fallback' },
-      -- Add Tab here if you want to use it to accept cmdline completions
-      ['<Tab>']  = { 'accept', 'fallback' },
-    },
+    keymap = {
+          preset     = 'none',
+          ['<Up>']   = { 'select_prev', 'fallback' },
+          ['<Down>'] = { 'select_next', 'fallback' },
+          -- set tab to accept cmdline completions
+          ['<Tab>']  = { 'accept', 'fallback' },
+        },
     completion = {
       menu = { auto_show = true },
       ghost_text = { enabled = true },
@@ -103,13 +111,6 @@ require('blink.cmp').setup({
       return {}
     end,
   },
-
-  snippets = {
-    preset = 'luasnip',
-  },
-
-  appearance = { nerd_font_variant = 'mono' },
-  signature = { enabled = true, window = { border = 'rounded' } },
 
   completion = {
     menu = {
@@ -155,33 +156,34 @@ require('blink.cmp').setup({
 
   --  ──────────────────────────────────────────────────────────────────
 
+  -- stylua: ignore 
   sources = {
     default = { 'lsp', 'snippets', 'buffer', 'path', 'spell' },
 
     -- all offsets set tne same so order below controls
     providers = {
-      lsp = { name = 'LSP', module = 'blink.cmp.sources.lsp', score_offset = 80 },
+      lsp      = { name = 'LSP', module      = 'blink.cmp.sources.lsp', score_offset      = 80 },
       snippets = { name = 'Snippets', module = 'blink.cmp.sources.snippets', score_offset = 80 },
-      buffer = {
-        name = 'Buffer',
-        module = 'blink.cmp.sources.buffer',
-        score_offset = 80,
+      buffer   = {
+        name               = 'Buffer',
+        module             = 'blink.cmp.sources.buffer',
+        score_offset       = 80,
         min_keyword_length = 2,
       },
       spell = {
-        name = 'Spell',
-        module = 'blink-cmp-spell',
+        name         = 'Spell',
+        module       = 'blink-cmp-spell',
         score_offset = 80,
-        opts = { enable_in_context = enable_spell_context },
+        opts         = { enable_in_context = enable_spell_context },
       },
       path = { name = 'Path', module = 'blink.cmp.sources.path', score_offset = 80 },
     },
 
     -- stylua: ignore 
     per_filetype = {
-      markdown = { 'spell', 'buffer', 'snippets', 'path' },
-      lua      = { 'snippets', 'buffer', 'lsp', 'path' },
-      bash     = { 'lsp', 'snippets', 'path', 'buffer' },
+      markdown = { 'spell',    'buffer',   'snippets', 'path' },
+      lua      = { 'snippets', 'buffer',   'lsp',      'path' },
+      bash     = { 'lsp',      'snippets', 'path',     'buffer' },
     },
   },
 })
@@ -193,19 +195,20 @@ local spellfile_path = vim.fs.normalize(vim.fn.stdpath('config') .. '/spell/en.u
 vim.opt.spellfile = spellfile_path
 
 -- setup for text files
+-- stylua: ignore 
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = { 'markdown', 'text', 'gitcommit', 'rst', 'latex' },
+  pattern  = { 'markdown', 'text', 'gitcommit', 'rst', 'latex' },
   callback = function()
-    vim.opt_local.spell = true
-    vim.opt_local.spelllang = SPELL_LANGS
-    vim.opt_local.spellfile = spellfile_path
+    vim.opt_local.spell        = true
+    vim.opt_local.spelllang    = SPELL_LANGS
+    vim.opt_local.spellfile    = spellfile_path
     vim.opt_local.conceallevel = 2
-    vim.opt_local.wrap = true
-    vim.opt_local.linebreak = true
+    vim.opt_local.wrap         = true
+    vim.opt_local.linebreak    = true
   end,
 })
 
--- setup for coding languages
+-- disable spellcheck for coding languages
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'bash', 'lua', 'python', 'sh', 'ps1' },
   callback = function()

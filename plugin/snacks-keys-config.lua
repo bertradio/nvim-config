@@ -27,7 +27,8 @@ Myfn.map(
 
 Myfn.map(
   'n',
-  '<Leader>se',
+  -- '<Leader>se',
+  '<Leader>a',
   '<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
   { desc = 'explorer' }
 )
