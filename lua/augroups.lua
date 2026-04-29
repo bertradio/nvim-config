@@ -79,7 +79,7 @@ autocmd({ 'WinLeave' }, {
   end,
 })
 
--- set up templates
+--  ──────── set up templates ────────
 
 local skeleton_path = vim.fn.stdpath('config') .. '/skeletons/'
 
@@ -121,7 +121,6 @@ vim.api.nvim_create_autocmd('BufNewFile', {
 })
 
 ---------- >> Open buffers at last location (protected) << ---------------
-
 vim.api.nvim_create_autocmd('BufReadPost', {
   pattern = { '*' },
   desc = 'When editing a file, always jump to the last known cursor position',
@@ -144,7 +143,6 @@ vim.api.nvim_create_autocmd('BufReadPost', {
 })
 
 ---------- >> Remove Windows newlines in Windows << ---------------
-
 vim.api.nvim_create_autocmd('BufWritePre', {
   pattern = { '*' },
   callback = function()

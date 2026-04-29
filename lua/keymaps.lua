@@ -14,8 +14,6 @@ Myfn.map('n', 'G', 'G$', { desc = 'Move to last char of file' })
 
 Myfn.map({ 'n' }, '<Leader>bc', '<cmd>CopyBufferName<cr>', { desc = 'path copy' })
 Myfn.map({ 'n' }, '<Leader>bk', '<cmd>bd!<cr>', { desc = 'kill buffer' })
--- Myfn.map({ 'n' }, ']b', '<cmd>bnext<cr>', { desc = 'next buffer' })
--- Myfn.map({ 'n' }, '[b', '<cmd>bprev<cr>', { desc = 'prev buffer' })
 
 -- Go up/down one line on the screen rather than one file line at a time
 Myfn.map('i', '<down>', '<c-o>gj')
@@ -33,15 +31,11 @@ Myfn.map('n', 'j', 'gj', { desc = 'Move cursor down one line' })
 Myfn.map({ 'n', 'i' }, '<c-s>', '<esc><cmd>w<cr>', { desc = 'Write buffer' })
 
 -- Exit nvim normally
--- Myfn.map({ 'n', 'i', 'v' }, '<F10>', '<cmd>q<cr>', { desc = 'Exit nvim' })
 Myfn.map({ 'n', 'i', 'v' }, '<c-q>', '<cmd>q<cr>', { desc = 'Exit nvim' })
 
 ------------------------------------------------
 -- >>> WORKING WITH TEXT
 -------------------------------------------------
-
--- Insert current date and time
--- Myfn.map("n", "<Leader>dt", "<cmd>=strftime('%a %b %d %Y - %H.%M ')<cr>", { desc = 'Insert date and time' })
 
 -- disable s key to substitute
 Myfn.map({ 'n', 'v' }, 's', '<nop>')
@@ -50,14 +44,6 @@ Myfn.map({ 'n', 'v' }, 's', '<nop>')
 -- adds line and deletes anything that might be on it - stays in normal mode
 Myfn.map('n', '<Leader>o', 'o<esc>0"_D', { desc = 'Insert blank line bellow' })
 Myfn.map('n', '<Leader>O', 'O<esc>0"_D', { desc = 'Insert blank line above' })
-
--- Add log time at bottom of file - for log file
--- Myfn.map(
---   'n',
---   '<Leader>L',
---   "Go<C-R>=strftime('# %b %d, %Y')\n\n<cr>",
---   { desc = 'Add log date at bottom' }
--- )
 
 -- Toggle spell
 Myfn.map('n', '<Leader>S', '<cmd>set spell!<cr>', { desc = 'Spell check toggle' })

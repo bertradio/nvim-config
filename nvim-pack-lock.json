@@ -17,6 +17,10 @@
       "rev": "28c22791153a90bb61a86fbeeae0f812e048ade7",
       "src": "https://github.com/dkarter/bullets.vim"
     },
+    "canola.nvim": {
+      "rev": "b904468fc8d4f79fe4b4dbbdcccb0e4f44e64857",
+      "src": "https://github.com/barrettruth/canola.nvim"
+    },
     "colorful-winsep.nvim": {
       "rev": "6134b5cd4a38990c7b720adc90973ed32f726179",
       "src": "https://github.com/nvim-zh/colorful-winsep.nvim"
@@ -57,12 +61,16 @@
       "rev": "426dbebe06b5c69fd846ceb17b42e12f890aedf1",
       "src": "https://github.com/catppuccin/nvim"
     },
+    "nvim-autopairs": {
+      "rev": "59bce2eef357189c3305e25bc6dd2d138c1683f5",
+      "src": "https://github.com//windwp/nvim-autopairs"
+    },
     "nvim-biscuits": {
       "rev": "d93dcdee3a3dfd5101785447658e744f153957db",
       "src": "https://github.com/code-biscuits/nvim-biscuits"
     },
     "nvim-lspconfig": {
-      "rev": "bf5abe69c1874531f359a822d0cff4d73e26113f",
+      "rev": "0e25d7445ba0d7cc0ad02a39aa843cc8b9d2525e",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-web-devicons": {
@@ -84,6 +92,10 @@
     "render-markdown": {
       "rev": "3f3eea97b80839f629c951ca660ffd125bfa5b34",
       "src": "https://github.com/MeanderingProgrammer/markdown.nvim"
+    },
+    "smart-paste.nvim": {
+      "rev": "328f90f7f4535f58d5bd987edb48588836efdecc",
+      "src": "https://github.com/nemanjamalesija/smart-paste.nvim"
     },
     "snacks.nvim": {
       "rev": "ad9ede6a9cddf16cedbd31b8932d6dcdee9b716e",

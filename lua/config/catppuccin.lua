@@ -8,9 +8,6 @@
 --                  removed no_italic/no_bold (defaults), added fzf integration,
 --                  removed likely-invalid blink_indent key.
 
--- need to name it otherwise vim.pack.add assigns the name 'nvim'
--- vim.pack.add({ { src = Gh('catppuccin/nvim'), name = 'catppuccin' } })
-
 vim.pack.add({ Gh('catppuccin/nvim') })
 
 -- Set before setup and colorscheme to ensure true color is active

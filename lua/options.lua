@@ -77,7 +77,7 @@ function M.setup()
   vim.opt.backupdir = vim.fn.stdpath('data') .. '/backup//'
   vim.opt.undodir = vim.fn.stdpath('data') .. '/undo'
   vim.opt.path = '+= **'
-  -- Specific to your Linux environment
+  -- Specific to Linux environment
   vim.opt.runtimepath:append('/home/bert/.local/share/nvim/site')
 
   -- Shortmess and Fillchars
@@ -85,12 +85,17 @@ function M.setup()
   vim.opt.shortmess:append('IF')
 
   -- Provider disabling (Speed optimization)
+  -- stylua: ignore 
   if vim.g.enable_providers ~= true then
-    vim.g.loaded_node_provider = 0
-    vim.g.loaded_perl_provider = 0
-    vim.g.loaded_python3_provider = 0
-    vim.g.loaded_ruby_provider = 0
+    vim.g.loaded_node_provider    =  0
+    vim.g.loaded_perl_provider    =  0
+    vim.g.loaded_python3_provider =  0
+    vim.g.loaded_ruby_provider    =  0
   end
+
+  -- activate built-in for nvim 0.12
+  vim.cmd('packadd nvim.undotree')
+  vim.keymap.set('n', '<leader>u', require('undotree').open, { desc = 'undotree' })
 
   -- Disable Built-in Plugins
   local disabled_builtins = {

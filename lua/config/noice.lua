@@ -14,9 +14,20 @@ vim.pack.add({
 })
 
 -- make border of commandline popup orange to match command color
-vim.cmd([[
-  highlight NoiceCmdlinePopupBorder guibg=none guifg=#FFA500
-]])
+vim.api.nvim_create_autocmd('ColorScheme', {
+  pattern = '*',
+  callback = function()
+    vim.api.nvim_set_hl(0, 'NoiceCmdlinePopupBorder', { fg = '#FFA500', bg = 'none' })
+    -- You might also want the icon to match
+    vim.api.nvim_set_hl(0, 'NoiceCmdlineIcon', { fg = '#FFA500' })
+  end,
+})
+
+-- Run it once immediately in case the colorscheme is already loaded
+vim.api.nvim_set_hl(0, 'NoiceCmdlinePopupBorder', { fg = '#FFA500', bg = 'none' })
+-- vim.cmd([[
+--   highlight NoiceCmdlinePopupBorder guibg=none guifg=#FFA500
+-- ]])
 
 require('noice').setup({
   lsp = {

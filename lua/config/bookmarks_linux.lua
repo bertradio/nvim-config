@@ -15,6 +15,7 @@
 local cwd_config = {
   b = '$HOME/bin',
   c = '$HOME/.config',
+  C = '$HOME/.config/nvim/lua/config/',
   d = '$HOME/.Download',
   h = '$HOME/.config/nvim/hold/',
   H = '$HOME/',
@@ -28,7 +29,6 @@ local cwd_config = {
   v = '$HOME/Insync/bert.kleinman@gmail.com/Google Drive',
   w = '$HOME/Insync/bertkleinman@outlook.com/OneDrive/My Docs/Moving Forward/Wisteria',
   y = '$HOME/.config/yazi',
-  z = '$HOME/.cfgfiles',
 }
 
 ----------------------------------------------------------
@@ -129,5 +129,11 @@ Myfn.map('n', '<Leader>ea', '<cmd>e ' .. cfg .. '/lua/augroups.lua<cr>', { desc 
 Myfn.map('n', '<Leader>ei', '<cmd>e ' .. cfg .. '/init.lua<cr>', { desc = 'init.lua' })
 Myfn.map('n', '<Leader>ek', '<cmd>e ' .. cfg .. '/lua/keymaps.lua<cr>', { desc = 'keymaps.lua' })
 Myfn.map('n', '<Leader>em', '<cmd>e ' .. cfg .. '/lua/my_fns.lua<cr>', { desc = 'my_fns.lua' })
-Myfn.map('n', '<Leader>eo', '<cmd>e ' .. cfg .. '/lua/options.lua<cr>', { desc = 'my_fns.lua' })
+Myfn.map('n', '<Leader>eo', '<cmd>e ' .. cfg .. '/lua/options.lua<cr>', { desc = 'options.lua' })
+Myfn.map(
+  'n',
+  '<Leader>ep',
+  '<cmd>e ' .. cfg .. '/lua/plugin_setup.lua<cr>',
+  { desc = 'plugins.lua' }
+)
 Myfn.map('n', '<Leader>es', '<cmd>e ' .. cfg .. '/lua/settings.lua<cr>', { desc = 'settings.lua' })

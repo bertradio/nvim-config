@@ -20,14 +20,3 @@ for _, v in ipairs(set_iabbrevs) do
   -- This joins the command into: iabbrev bk Bert Kleinman
   vim.cmd('iabbrev ' .. v[1] .. ' ' .. v[2])
 end
-
---  ────────── command line ──────────
-
--- stylua: ignore 
-local set_cabbrevs = {
-  { 'vpd', 'lua vim.pack.del({""})' },
-}
-
-for _, v in ipairs(set_cabbrevs) do
-  vim.cmd('cabbrev ' .. v[1] .. ' ' .. v[2])
-end
