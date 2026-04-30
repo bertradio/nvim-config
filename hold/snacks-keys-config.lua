@@ -4,35 +4,37 @@
 
 -- key mappings for snacks
 
+local kset = vim.keymap.set
+
 --  ─────────── dashboard ────────────
 
-Myfn.map('n', '<Leader>]', '<cmd>lua Snacks.dashboard.open()<cr>', { desc = 'Open dashboard' })
+kset('n', '<Leader>]', '<cmd>lua Snacks.dashboard.open()<cr>', { desc = 'Open dashboard' })
 
 --  ────────── for deletes ───────────
 
-Myfn.map('n', '<Leader>bd', '<cmd>lua Snacks.bufdelete()<cr>', { desc = 'delete current' })
-Myfn.map('n', '<Leader>bo', '<cmd>lua Snacks.bufdelete.other()<cr>', { desc = 'delete other' })
-Myfn.map('n', '<Leader>ba', '<cmd>lua Snacks.bufdelete.all()<cr>', { desc = 'delete all' })
+kset('n', '<Leader>bd', '<cmd>lua Snacks.bufdelete()<cr>', { desc = 'delete current' })
+kset('n', '<Leader>bo', '<cmd>lua Snacks.bufdelete.other()<cr>', { desc = 'delete other' })
+kset('n', '<Leader>ba', '<cmd>lua Snacks.bufdelete.all()<cr>', { desc = 'delete all' })
 
 --  ──────────── pickers ─────────────
 
-Myfn.map('n', '<Leader>sb', '<cmd>lua Snacks.picker.buffers()<cr>', { desc = 'buffers' })
+kset('n', '<Leader>sb', '<cmd>lua Snacks.picker.buffers()<cr>', { desc = 'buffers' })
 
-Myfn.map(
+kset(
   'n',
   '<Leader>sd',
   '<cmd>lua Snacks.picker.diagnostics_buffer()<cr>',
   { desc = 'diagnostics - buffer' }
 )
 
-Myfn.map(
+kset(
   'n',
   '<Leader>se',
   '<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
   { desc = 'explorer' }
 )
 
-Myfn.map(
+kset(
   'n',
   '<Leader>x',
   '<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
@@ -41,7 +43,7 @@ Myfn.map(
 
 --  ───── pickers with cwd displayed - from ChatGPT ─────
 
-Snacks.keymap.set('n', '<Leader>sf', function()
+kset('n', '<Leader>sf', function()
   local snacks = require('snacks')
   snacks.picker({
     source = 'files',
@@ -49,7 +51,7 @@ Snacks.keymap.set('n', '<Leader>sf', function()
   })
 end, { desc = 'files cwd' })
 
-Snacks.keymap.set('n', '<Leader><space>', function()
+kset('n', '<Leader><space>', function()
   local snacks = require('snacks')
   snacks.picker({
     source = 'files',
@@ -59,51 +61,46 @@ end, { desc = 'files cwd' })
 
 --  ───────── other pickers ──────────
 
-Snacks.keymap.set('n', '<Leader>sj', function()
+kset('n', '<Leader>sj', function()
   local snacks = require('snacks')
   snacks.picker({
     source = 'jumps',
   })
 end, { desc = 'jumps' })
 
-Snacks.keymap.set('n', '<Leader>ss', function()
+kset('n', '<Leader>ss', function()
   local snacks = require('snacks')
   snacks.picker({
     source = 'search_history',
   })
 end, { desc = 'search history' })
 
-Myfn.map('n', '<Leader>sg', '<cmd>lua Snacks.picker.grep()<cr>', { desc = 'grep' })
-Myfn.map('n', '<Leader>sh', '<cmd>lua Snacks.picker.help()<cr>', { desc = 'help' })
-Myfn.map(
+kset('n', '<Leader>sg', '<cmd>lua Snacks.picker.grep()<cr>', { desc = 'grep' })
+kset('n', '<Leader>sh', '<cmd>lua Snacks.picker.help()<cr>', { desc = 'help' })
+kset(
   'n',
   '<Leader>sk',
   '<cmd>lua Snacks.picker.keymaps({layout = {preview = false}})<cr>',
   { desc = 'keymaps' }
 )
-Myfn.map('n', '<Leader>sl', '<cmd>lua Snacks.picker.lines()<cr>', { desc = 'buffer lines' })
-Myfn.map('n', '<Leader>sm', '<cmd>lua Snacks.picker.marks()<cr>', { desc = 'marks' })
-Myfn.map(
-  'n',
-  '<Leader>sn',
-  '<cmd>lua Snacks.picker.notifications()<cr>',
-  { desc = 'notifications' }
-)
-Myfn.map(
+kset('n', '<Leader>sl', '<cmd>lua Snacks.picker.lines()<cr>', { desc = 'buffer lines' })
+kset('n', '<Leader>sm', '<cmd>lua Snacks.picker.marks()<cr>', { desc = 'marks' })
+kset('n', '<Leader>sn', '<cmd>lua Snacks.picker.notifications()<cr>', { desc = 'notifications' })
+kset(
   'n',
   '<Leader>so',
   '<cmd>lua Snacks.picker.recent({filter = { cwd = false }})<cr>',
   { desc = 'oldfiles' }
 )
-Myfn.map('n', '<Leader>sq', '<cmd>lua Snacks.picker.qflist()<cr>', { desc = 'quick fix' })
-Myfn.map('n', '<Leader>sr', '<cmd>lua Snacks.picker.registers()<cr>', { desc = 'registers' })
-Myfn.map('n', '<Leader>su', '<cmd>lua Snacks.picker.undo()<cr>', { desc = 'undo history' })
-Myfn.map('n', '<Leader>sy', '<cmd>lua Snacks.lazygit.open(opts)<cr>', { desc = 'lazygit' })
+kset('n', '<Leader>sq', '<cmd>lua Snacks.picker.qflist()<cr>', { desc = 'quick fix' })
+kset('n', '<Leader>sr', '<cmd>lua Snacks.picker.registers()<cr>', { desc = 'registers' })
+kset('n', '<Leader>su', '<cmd>lua Snacks.picker.undo()<cr>', { desc = 'undo history' })
+kset('n', '<Leader>sy', '<cmd>lua Snacks.lazygit.open(opts)<cr>', { desc = 'lazygit' })
 
 --  ───── Snacks terminal setup ──────
 
 -- Toggle terminal in a centered floating window
-Snacks.keymap.set({ 'n', 't' }, '<Leader>st', function()
+kset({ 'n', 't' }, '<Leader>st', function()
   Snacks.terminal.toggle(nil, {
     win = {
       position = 'float',
@@ -116,24 +113,25 @@ end, { desc = 'toggle floating terminal' })
 
 --  ──────────────────────────────────
 
-Myfn.map(
+kset(
   'n',
   '<Leader>sw',
   '<cmd>lua Snacks.picker.grep_word()<cr>',
   { desc = 'grep selection or word' }
 )
-Myfn.map('n', '<Leader>sz', '<cmd>lua Snacks.zen()<cr>', { desc = 'zen mode' })
-Myfn.map('n', '<Leader>z', '<cmd>lua Snacks.picker.zoxide()<cr>', { desc = 'zoxide' })
+
+kset('n', '<Leader>sz', '<cmd>lua Snacks.zen()<cr>', { desc = 'zen mode' })
+kset('n', '<Leader>z', '<cmd>lua Snacks.picker.zoxide()<cr>', { desc = 'zoxide' })
 
 -- Spelling picker
-Snacks.keymap.set('n', 'zz', function()
+kset('n', 'zz', function()
   require('snacks').picker.spelling({
     -- layout = 'my_spelling',
   })
 end, { desc = 'Spelling Suggestions' })
 
 -- Command picker
-Snacks.keymap.set('n', '<Leader>sc', function()
+kset('n', '<Leader>sc', function()
   require('snacks').picker.command_history({
     layout = 'my_keymaps',
     preview = false, -- It doesn't have a preview window in the box, so this is safe
@@ -141,7 +139,7 @@ Snacks.keymap.set('n', '<Leader>sc', function()
 end, { desc = 'cmd history' })
 
 -- Indent toggle
-Snacks.keymap.set('n', '<leader>si', function()
+kset('n', '<leader>si', function()
   if Snacks.indent.enabled then
     Snacks.indent.disable()
   else

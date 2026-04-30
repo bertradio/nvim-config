@@ -2,56 +2,60 @@
 --    │        keymaps.lua         │
 --    ╰────────────────────────────╯
 
+-- 04/30/26 - standardized on vim.keymap.set for all mappings
+
+local kset = vim.keymap.set
+
 -------------------------------------------------
 -- >>> MOVEMENT
 -------------------------------------------------
 
 -- Move to beginning and end characters of current buffer
-Myfn.map('n', 'gg', 'gg0', { desc = 'Move to first char of file' })
-Myfn.map('n', 'G', 'G$', { desc = 'Move to last char of file' })
+kset('n', 'gg', 'gg0', { desc = 'Move to first char of file' })
+kset('n', 'G', 'G$', { desc = 'Move to last char of file' })
 
 -- Buffer manipulation - see others in Snacks.keys-config
 
-Myfn.map({ 'n' }, '<Leader>bc', '<cmd>CopyBufferName<cr>', { desc = 'path copy' })
-Myfn.map({ 'n' }, '<Leader>bk', '<cmd>bd!<cr>', { desc = 'kill buffer' })
+kset({ 'n' }, '<Leader>bc', '<cmd>CopyBufferName<cr>', { desc = 'path copy' })
+kset({ 'n' }, '<Leader>bk', '<cmd>bd!<cr>', { desc = 'kill buffer' })
 
 -- Go up/down one line on the screen rather than one file line at a time
-Myfn.map('i', '<down>', '<c-o>gj')
-Myfn.map('i', '<up>', '<c-o>gk')
-Myfn.map('n', '<up>', 'gk', { desc = 'Move cursor up one line' })
-Myfn.map('n', '<down>', 'gj', { desc = 'Move cursor down one line' })
-Myfn.map('n', 'k', 'gk', { desc = 'Move cursor up one line' })
-Myfn.map('n', 'j', 'gj', { desc = 'Move cursor down one line' })
+kset('i', '<down>', '<c-o>gj')
+kset('i', '<up>', '<c-o>gk')
+kset('n', '<up>', 'gk', { desc = 'Move cursor up one line' })
+kset('n', '<down>', 'gj', { desc = 'Move cursor down one line' })
+kset('n', 'k', 'gk', { desc = 'Move cursor up one line' })
+kset('n', 'j', 'gj', { desc = 'Move cursor down one line' })
 
 -------------------------------------------------
 -- >>> SAVE AND QUIT
 -------------------------------------------------
 
 -- Write current buffer - end in normal mode
-Myfn.map({ 'n', 'i' }, '<c-s>', '<esc><cmd>w<cr>', { desc = 'Write buffer' })
+kset({ 'n', 'i' }, '<c-s>', '<esc><cmd>w<cr>', { desc = 'Write buffer' })
 
 -- Exit nvim normally
-Myfn.map({ 'n', 'i', 'v' }, '<c-q>', '<cmd>q<cr>', { desc = 'Exit nvim' })
+kset({ 'n', 'i', 'v' }, '<c-q>', '<cmd>q<cr>', { desc = 'Exit nvim' })
 
 ------------------------------------------------
 -- >>> WORKING WITH TEXT
 -------------------------------------------------
 
 -- disable s key to substitute
-Myfn.map({ 'n', 'v' }, 's', '<nop>')
+kset({ 'n', 'v' }, 's', '<nop>')
 
 -- Insert blank lines without going into insert mode
 -- adds line and deletes anything that might be on it - stays in normal mode
-Myfn.map('n', '<Leader>o', 'o<esc>0"_D', { desc = 'Insert blank line bellow' })
-Myfn.map('n', '<Leader>O', 'O<esc>0"_D', { desc = 'Insert blank line above' })
+kset('n', '<Leader>o', 'o<esc>0"_D', { desc = 'Insert blank line bellow' })
+kset('n', '<Leader>O', 'O<esc>0"_D', { desc = 'Insert blank line above' })
 
 -- Toggle spell
-Myfn.map('n', '<Leader>S', '<cmd>set spell!<cr>', { desc = 'Spell check toggle' })
+kset('n', '<Leader>S', '<cmd>set spell!<cr>', { desc = 'Spell check toggle' })
 
-Myfn.map({ 'n', 'i' }, '<C-l>', '<cmd>set hlsearch!<cr>', { desc = 'hlsearch toggle' })
+kset({ 'n', 'i' }, '<C-l>', '<cmd>set hlsearch!<cr>', { desc = 'hlsearch toggle' })
 
 -- Select all - from ChatGPT
-Myfn.map('n', '<C-a>', function()
+kset('n', '<C-a>', function()
   vim.cmd('normal! ggVG')
 end, {
   desc = 'Select all',
@@ -59,10 +63,10 @@ end, {
 })
 
 -- Yank all
-Myfn.map('n', '<C-y>', '<cmd>%y+<cr>', { desc = 'Yank all' })
+kset('n', '<C-y>', '<cmd>%y+<cr>', { desc = 'Yank all' })
 
 -- Save current buffer and source this file
-Myfn.map(
+kset(
   'n',
   '<Leader>R',
   "<cmd>w<cr><cmd>source %  <cr><cmd>echom '** Re-sourced **' <cr>",
@@ -86,17 +90,17 @@ vim.cmd([[
 	]])
 
 -- create copy of line(s) and comment out originals
-Myfn.map('n', 'ycc', function()
+kset('n', 'ycc', function()
   vim.cmd('normal! ' .. vim.v.count1 .. 'yy')
   vim.cmd('normal ' .. vim.v.count1 .. 'gcc')
   vim.cmd("normal! ']$p")
 end, { desc = 'Duplicate and comment lines' })
 
 -- search only in selected area in visual mode
-Myfn.map('x', '/', '<Esc>/\\%V')
+kset('x', '/', '<Esc>/\\%V')
 
 -- open file in Typora
-vim.api.nvim_set_keymap(
+kset(
   'n',
   '<leader>t',
   '<cmd>lua Myfn.OpenInTypora()<CR>',
@@ -104,7 +108,7 @@ vim.api.nvim_set_keymap(
 )
 
 -- use tab in normal mode to open and close folds
-Myfn.map('n', '<tab>', function()
+kset('n', '<tab>', function()
   local linenr = vim.fn.line('.')
   -- If there's no fold to be opened/closed, do nothing.
   if vim.fn.foldlevel(linenr) == 0 then
@@ -117,7 +121,7 @@ Myfn.map('n', '<tab>', function()
 end, { silent = true, desc = 'Folds: Toggle' })
 
 -- update all plugins
-vim.keymap.set('n', '<leader>U', function()
+kset('n', '<leader>U', function()
   vim.notify('Updating plugins...', vim.log.levels.INFO)
   vim.pack.update()
 end, { desc = 'Update plugins' })
@@ -149,4 +153,4 @@ local function toggle_bool()
 end
 
 -- Keymap: Pressing <leader>T will toggle the value
-vim.keymap.set('n', '<leader>T', toggle_bool, { desc = 'Toggle boolean under cursor' })
+kset('n', '<leader>T', toggle_bool, { desc = 'Toggle boolean under cursor' })

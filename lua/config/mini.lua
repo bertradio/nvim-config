@@ -55,7 +55,7 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile', 'InsertEnter' }, {
     })
     Snacks.keymap.set(
       'n',
-      '<Leader>J',
+      '<Leader>j',
       '<cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.single_character)<CR>',
       { desc = 'Jump to character' }
     )

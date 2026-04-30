@@ -35,8 +35,8 @@ ls.add_snippets('lua', {
   ),
   s(
     'gh',
-    fmt('vim.pack.add( Gh("{}") )', {
-      i(1, 'Link'),
+    fmt('vim.pack.add({{ Gh("{}") }})', {
+      i(1, 'Repo'),
     })
   ),
   s(
