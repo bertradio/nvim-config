@@ -5,8 +5,9 @@
 -- Explorer: Removed custom copy and move actions since they did not seem stable
 -- Just using noice
 -- 04/30/26 - consolidated keymaps into this file - using vim.keymap.set
+-- 05/01/26 - set up dashboard to be default on
 
-vim.pack.add({ Gh('folke/snacks.nvim') })
+vim.pack.add({ 'https://www.github.com/folke/snacks.nvim' })
 
 local excluded_exts = require('config.file_exclude')
 
@@ -172,15 +173,17 @@ require('snacks').setup({
 
   -- dashboard config
   dashboard = {
-    enabled = false, -- start disabled
+    enabled = true,
     width = 45,
+    fullscreen = false,
     preset = {
       -- stylua: ignore 
       keys = {
         { icon = '', key = 'e', desc = 'Explorer', action  = '<Leader>se' },
         { icon = '', key = 'f', desc = 'Find file', action = '<Leader>sf' },
-        { icon = '', key = 'r', desc = 'Recent', action    = '<Leader>so' },
         { icon = '', key = 'g', desc = 'Grep', action      = '<Leader>sg' },
+        { icon = '', key = 'o', desc = 'Oil', action       = '-' },
+        { icon = '', key = 'r', desc = 'Recent', action    = '<Leader>sr' },
         { icon = '', key = 'z', desc = 'Zoxide', action    = '<Leader>z' },
       },
       header = [[]],
@@ -195,7 +198,7 @@ require('snacks').setup({
       end,
     },
     sections = {
-      { title = "\nIf it ain't broke, don't fix it", align = 'center', padding = 1 },
+      { title = "If it ain't broke, don't fix it", align = 'center', padding = 1 },
       { section = 'recent_files', align = 'left', limit = 10, padding = 1 },
       { section = 'keys', align = 'left', padding = 1 },
     },
@@ -315,14 +318,14 @@ kset(
   'n',
   '<Leader>se',
   '<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
-  { desc = 'explorer' }
+  { desc = 'Explorer' }
 )
 
 kset(
   'n',
   '<Leader>x',
   '<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
-  { desc = 'explorer' }
+  { desc = 'Explorer' }
 )
 
 kset('n', '<Leader>sj', function()
@@ -351,12 +354,12 @@ kset('n', '<Leader>sm', '<cmd>lua Snacks.picker.marks()<cr>', { desc = 'marks' }
 kset('n', '<Leader>sn', '<cmd>lua Snacks.picker.notifications()<cr>', { desc = 'notifications' })
 kset(
   'n',
-  '<Leader>so',
+  '<Leader>sr',
   '<cmd>lua Snacks.picker.recent({filter = { cwd = false }})<cr>',
-  { desc = 'oldfiles' }
+  { desc = 'recent' }
 )
 kset('n', '<Leader>sq', '<cmd>lua Snacks.picker.qflist()<cr>', { desc = 'quick fix' })
-kset('n', '<Leader>sr', '<cmd>lua Snacks.picker.registers()<cr>', { desc = 'registers' })
+kset('n', '<Leader>sR', '<cmd>lua Snacks.picker.registers()<cr>', { desc = 'registers' })
 kset('n', '<Leader>su', '<cmd>lua Snacks.picker.undo()<cr>', { desc = 'undo history' })
 kset('n', '<Leader>sy', '<cmd>lua Snacks.lazygit.open(opts)<cr>', { desc = 'lazygit' })
 
@@ -368,7 +371,7 @@ kset(
 )
 
 kset('n', '<Leader>sz', '<cmd>lua Snacks.zen()<cr>', { desc = 'zen mode' })
-kset('n', '<Leader>z', '<cmd>lua Snacks.picker.zoxide()<cr>', { desc = 'zoxide' })
+kset('n', '<Leader>z', '<cmd>lua Snacks.picker.zoxide()<cr>', { desc = 'Zoxide' })
 
 kset('n', '<Leader>]', '<cmd>lua Snacks.dashboard.open()<cr>', { desc = 'Open dashboard' })
 
@@ -423,7 +426,7 @@ kset('n', '<Leader><space>', function()
     source = 'files',
     title = Myfn.short_cwd(),
   })
-end, { desc = 'files cwd' })
+end, { desc = 'Files cwd' })
 
 --  ────────── for deletes ───────────
 

@@ -24,6 +24,7 @@ function M.setup()
     shiftround     = true,
     shiftwidth     = 2,
     showmode       = false,
+    showtabline    = 2,
     smartindent    = true,
     softtabstop    = 2,
     splitbelow     = true,
@@ -95,7 +96,7 @@ function M.setup()
 
   -- activate built-in for nvim 0.12
   vim.cmd('packadd nvim.undotree')
-  vim.keymap.set('n', '<leader>u', require('undotree').open, { desc = 'undotree' })
+  vim.keymap.set('n', '<leader>u', require('undotree').open, { desc = 'Undotree' })
 
   -- Disable Built-in Plugins
   local disabled_builtins = {
@@ -107,7 +108,7 @@ function M.setup()
     'matchit',
     'matchparen',
     'netrwPlugin',
-    'nwtrw',
+    'netrw',
     'rrhelper',
     'tar',
     'tarPlugin',
@@ -118,7 +119,7 @@ function M.setup()
     'zipPlugin',
   }
   for _, plugin in ipairs(disabled_builtins) do
-    vim.g['loaded_' .. plugin] = 1
+    vim.g['.loaded_' .. plugin] = 1
   end
 
   local signs = { Error = 'E', Warn = 'W', Hint = 'H', Info = 'I' }

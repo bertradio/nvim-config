@@ -10,6 +10,8 @@
 
 vim.pack.add({ { src = Gh('nvim-mini/mini.nvim'), branch = 'main' } })
 
+local kset = vim.keymap.set
+
 -- delay these until new typing
 vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile', 'InsertEnter' }, {
   once = true,
@@ -53,7 +55,7 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile', 'InsertEnter' }, {
     require('mini.jump2d').setup({ -- replaces flash
       view = { dim = true },
     })
-    Snacks.keymap.set(
+    kset(
       'n',
       '<Leader>j',
       '<cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.single_character)<CR>',
@@ -136,8 +138,8 @@ miniclue.setup({
     miniclue.gen_clues.windows(),
     miniclue.gen_clues.z(),
 
-    { mode = 'n', keys = '<Leader>b', desc = '+buffer' },
-    { mode = 'n', keys = '<Leader>e', desc = '+edit configs' },
-    { mode = 'n', keys = '<Leader>s', desc = '+snacks' },
+    { mode = 'n', keys = '<Leader>b', desc = '+Buffer' },
+    { mode = 'n', keys = '<Leader>e', desc = '+Edit configs' },
+    { mode = 'n', keys = '<Leader>s', desc = '+Snacks' },
   },
 })

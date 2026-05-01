@@ -17,7 +17,7 @@ kset('n', 'G', 'G$', { desc = 'Move to last char of file' })
 -- Buffer manipulation - see others in Snacks.keys-config
 
 kset({ 'n' }, '<Leader>bc', '<cmd>CopyBufferName<cr>', { desc = 'path copy' })
-kset({ 'n' }, '<Leader>bk', '<cmd>bd!<cr>', { desc = 'kill buffer' })
+kset({ 'n' }, '<Leader>k', '<cmd>bd!<cr>', { desc = 'Kill buffer' })
 
 -- Go up/down one line on the screen rather than one file line at a time
 kset('i', '<down>', '<c-o>gj')
