@@ -22,7 +22,7 @@ vim.pack.add({
 
 --  ──────── add my custom snippets ─────────
 
-require('config/my_snippets')
+require('plg_cfg/my_snippets')
 
 -- ── Helper Functions for Spell Gating ───────────────────────────────────────
 

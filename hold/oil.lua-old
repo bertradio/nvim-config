@@ -17,7 +17,7 @@ local detail = false
 -- =========================
 -- Hidden File Logic
 -- =========================
-local exclude_globs = require('config.file_exclude')
+local exclude_globs = require('plg_cfg.file_exclude')
 local hidden_patterns = {}
 
 for _, glob in ipairs(exclude_globs) do

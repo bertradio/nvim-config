@@ -16,25 +16,25 @@
 vim.api.nvim_create_autocmd('UIEnter', {
   once = true,
   callback = function()
-    require('config.catppuccin')
-    require('config.nvim-lspconfig')
-    require('config.noice')
-    require('config.lualine')
-    require('config.snacks')
-    require('config.oil')
-    require('config.winsep')
-    require('config.mini')
-    require('config.blink-spell')
-    require('config.my_abbrevs')
-    require('config.tree-sitter-manager')
-    require('config.mason')
+    require('plg_cfg.catppuccin')
+    require('plg_cfg.nvim-lspconfig')
+    require('plg_cfg.noice')
+    require('plg_cfg.lualine')
+    require('plg_cfg.snacks')
+    require('plg_cfg.oil')
+    require('plg_cfg.winsep')
+    require('plg_cfg.mini')
+    require('plg_cfg.blink-spell')
+    require('plg_cfg.my_abbrevs')
+    require('plg_cfg.tree-sitter-manager')
+    require('plg_cfg.mason')
     require('keymaps')
     require('augroups')
     -- Platform-specific bookmarks
     if Myfn.is_windows() then
-      require('config.bookmarks_win')
+      require('plg_cfg.bookmarks_win')
     else
-      require('config.bookmarks_linux')
+      require('plg_cfg.bookmarks_linux')
     end
   end,
 })
@@ -43,11 +43,11 @@ vim.api.nvim_create_autocmd('UIEnter', {
 vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
   once = true,
   callback = function()
-    require('config.rainbow')
-    require('config.pretty-comment')
-    require('config.smart-paste')
-    require('config.conform')
-    require('config.code-biscuits')
+    require('plg_cfg.rainbow')
+    require('plg_cfg.pretty-comment')
+    require('plg_cfg.smart-paste')
+    require('plg_cfg.conform')
+    require('plg_cfg.code-biscuits')
   end,
 })
 
@@ -55,7 +55,7 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
 vim.api.nvim_create_autocmd({ 'InsertEnter' }, {
   once = true,
   callback = function()
-    require('config.nvim-pairs')
+    require('plg_cfg.nvim-pairs')
   end,
 })
 
@@ -64,7 +64,7 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
   once = true,
   pattern = '*.md',
   callback = function()
-    require('config.markdown')
-    require('config.bullets')
+    require('plg_cfg.markdown')
+    require('plg_cfg.bullets')
   end,
 })

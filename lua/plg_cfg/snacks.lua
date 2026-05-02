@@ -9,7 +9,7 @@
 
 vim.pack.add({ 'https://www.github.com/folke/snacks.nvim' })
 
-local excluded_exts = require('config.file_exclude')
+local excluded_exts = require('plg_cfg.file_exclude')
 
 vim.ui.select = Snacks.picker.select
 vim.ui.input = Snacks.input.input
@@ -199,7 +199,7 @@ require('snacks').setup({
     },
     sections = {
       { title = "If it ain't broke, don't fix it", align = 'center', padding = 1 },
-      { section = 'recent_files', align = 'left', limit = 10, padding = 1 },
+      { section = 'recent_files', align = 'left', limit = 9, padding = 1 },
       { section = 'keys', align = 'left', padding = 1 },
     },
   },

@@ -18,7 +18,7 @@ vim.pack.add({
 local detail = false
 
 -- Pre-compile hidden patterns to save cycles during render
-local exclude_globs = require('config.file_exclude')
+local exclude_globs = require('plg_cfg.file_exclude')
 local hidden_patterns = {}
 for _, glob in ipairs(exclude_globs) do
   local p = glob:lower():gsub('%.', '%%.'):gsub('%-', '%%-'):gsub('%*', '.*')

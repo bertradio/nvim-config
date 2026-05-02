@@ -152,7 +152,7 @@ end
 -- ============================================================================
 
 -- require for excluded file list
-local excluded_exts = require('config.file_exclude')
+local excluded_exts = require('plg_cfg.file_exclude')
 
 return {
   'snacks.nvim',
