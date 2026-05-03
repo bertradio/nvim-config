@@ -1,11 +1,12 @@
 --    ╭────────────────────────────╮
---    │     snacks-config.lua      │
+--    │         snacks.lua         │
 --    ╰────────────────────────────╯
 
 -- Explorer: Removed custom copy and move actions since they did not seem stable
 -- Just using noice
--- 04/30/26 - consolidated keymaps into this file - using vim.keymap.set
--- 05/01/26 - set up dashboard to be default on
+-- 05/01/26 - set up dashboard to be default on start
+-- 05/02/26 - added code per ChatGPT to ensure snacks.recent is kept up to date
+--            but may be related to nvim 13. Not a problem with 12.2
 
 vim.pack.add({ 'https://www.github.com/folke/snacks.nvim' })
 
@@ -172,23 +173,24 @@ require('snacks').setup({
   },
 
   -- dashboard config
+
   dashboard = {
-    enabled = true,
+    enabled = false,
     width = 45,
     fullscreen = false,
     preset = {
       -- stylua: ignore 
       keys = {
-        { icon = '', key = 'e', desc = 'Explorer', action  = '<Leader>se' },
-        { icon = '', key = 'f', desc = 'Find file', action = '<Leader>sf' },
-        { icon = '', key = 'g', desc = 'Grep', action      = '<Leader>sg' },
-        { icon = '', key = 'o', desc = 'Oil', action       = '-' },
-        { icon = '', key = 'r', desc = 'Recent', action    = '<Leader>sr' },
-        { icon = '', key = 'z', desc = 'Zoxide', action    = '<Leader>z' },
+        { icon = '', key = 'c', desc = 'Commands',  action = '<Leader>fc'  },
+        -- { icon = '', key = 'e', desc = 'Explorer',  action = '<Leader>fe'  },
+        { icon = '', key = 'f', desc = 'Find file', action = '<Leader>ff'  },
+        { icon = '', key = 'g', desc = 'Grep',      action = '<Leader>fg'  },
+        { icon = '', key = 'j', desc = 'Jumps',     action = '<Leader>fj'  },
+        { icon = '', key = 'r', desc = 'Recent',    action = '<Leader>fr'  },
+        { icon = '', key = 'z', desc = 'Zoxide',    action = '<Leader>z'   },
       },
-      header = [[]],
     },
-    formats = {
+  formats = {
       key = function(item)
         return {
           { '[', hl = 'special' },
@@ -199,10 +201,10 @@ require('snacks').setup({
     },
     sections = {
       { title = "If it ain't broke, don't fix it", align = 'center', padding = 1 },
-      { section = 'recent_files', align = 'left', limit = 9, padding = 1 },
+      { section = 'recent_files', current = true, cwd = false, align = 'left', limit = 9, padding = 1 },
       { section = 'keys', align = 'left', padding = 1 },
     },
-  },
+    },
 
   statuscolumn = {
     enabled = true,
@@ -228,182 +230,181 @@ require('snacks').setup({
   },
 })
 
---  ────── status column setup ───────
-
--- set up for status column to display folds with no numbers
--- and proper icons
-local function _clean_leader(s)
-  s = (s or ''):gsub('^%s*', '')
-  s = s:gsub('^([%-%*#;/%%!]+)%s*', '')
-  return s
-end
-
-function _G.MyFoldText()
-  local fs, fe = vim.v.foldstart, vim.v.foldend
-  local count = fe - fs + 1
-
-  local first = vim.fn.getline(fs)
-  local ind_cols = vim.fn.indent(fs)
-
-  local max_indent_cols = 32
-  if ind_cols > max_indent_cols then
-    ind_cols = max_indent_cols
-  end
-
-  local prefix = string.rep(' ', ind_cols)
-  local content = first:match('^%s*(.*)$') or first
-  content = _clean_leader(content)
-
-  local winw = vim.api.nvim_win_get_width(0)
-  local padding = 10
-  local avail = math.max(20, winw - padding - ind_cols)
-
-  local function clip_display(s, w)
-    if vim.fn.strdisplaywidth(s) <= w then
-      return s
-    end
-    local out, used = {}, 0
-    for _, ch in utf8.codes(s) do
-      local c = utf8.char(ch)
-      local cw = vim.fn.strdisplaywidth(c)
-      if used + cw > w then
-        break
-      end
-      table.insert(out, c)
-      used = used + cw
-    end
-    return table.concat(out) .. '…'
-  end
-
-  local preview = clip_display(content, avail)
-  return string.format('%s%s  ⋯  [%d]', prefix, preview, count)
-end
-
-vim.opt.foldenable = true
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
-vim.opt.foldlevel = 99
-vim.opt.foldtext = 'v:lua.MyFoldText()'
-vim.opt.foldcolumn = 'auto:1'
-
--- stylua: ignore 
-vim.opt.fillchars:append({
-  foldopen  = '▼',
-  foldclose = '▶',
-  -- fold   = '·',
-  fold      = ' ',
-  foldsep   = ' ',
-})
-
+-- --  ────── status column setup ───────
+--
+-- -- set up for status column to display folds with no numbers
+-- -- and proper icons
+-- local function _clean_leader(s)
+--   s = (s or ''):gsub('^%s*', '')
+--   s = s:gsub('^([%-%*#;/%%!]+)%s*', '')
+--   return s
+-- end
+--
+-- function _G.MyFoldText()
+--   local fs, fe = vim.v.foldstart, vim.v.foldend
+--   local count = fe - fs + 1
+--
+--   local first = vim.fn.getline(fs)
+--   local ind_cols = vim.fn.indent(fs)
+--
+--   local max_indent_cols = 32
+--   if ind_cols > max_indent_cols then
+--     ind_cols = max_indent_cols
+--   end
+--
+--   local prefix = string.rep(' ', ind_cols)
+--   local content = first:match('^%s*(.*)$') or first
+--   content = _clean_leader(content)
+--
+--   local winw = vim.api.nvim_win_get_width(0)
+--   local padding = 10
+--   local avail = math.max(20, winw - padding - ind_cols)
+--
+--   local function clip_display(s, w)
+--     if vim.fn.strdisplaywidth(s) <= w then
+--       return s
+--     end
+--     local out, used = {}, 0
+--     for _, ch in utf8.codes(s) do
+--       local c = utf8.char(ch)
+--       local cw = vim.fn.strdisplaywidth(c)
+--       if used + cw > w then
+--         break
+--       end
+--       table.insert(out, c)
+--       used = used + cw
+--     end
+--     return table.concat(out) .. '…'
+--   end
+--
+--   local preview = clip_display(content, avail)
+--   -- set the format of the string at the top of each fold
+--   return string.format(' >>>   %s%s  ⋯  [%d]   <<<', prefix, preview, count)
+-- end
+--
+-- vim.opt.foldenable = true
+-- vim.opt.foldmethod = 'expr'
+-- vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+-- vim.opt.foldlevel = 99
+-- vim.opt.foldtext = 'v:lua.MyFoldText()'
+-- vim.opt.foldcolumn = 'auto:1'
+--
+-- -- stylua: ignore
+-- vim.opt.fillchars:append({
+--   foldopen  = '▼',
+--   foldclose = '▶',
+--   -- fold   = '·',
+--   fold      = ' ',
+--   foldsep   = ' ',
+-- })
+--
 --  ─────────── end config ───────────
 
 --    ╭────────────────────────────╮
 --    │        key mappings        │
 --    ╰────────────────────────────╯
 
-local kset = vim.keymap.set
-
 --  ──────────── pickers ─────────────
 
-kset('n', '<Leader>sb', '<cmd>lua Snacks.picker.buffers()<cr>', { desc = 'buffers' })
-
-kset(
-  'n',
-  '<Leader>sd',
-  '<cmd>lua Snacks.picker.diagnostics_buffer()<cr>',
-  { desc = 'diagnostics - buffer' }
-)
-
-kset(
-  'n',
-  '<Leader>se',
-  '<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
-  { desc = 'Explorer' }
-)
-
-kset(
-  'n',
-  '<Leader>x',
-  '<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
-  { desc = 'Explorer' }
-)
-
-kset('n', '<Leader>sj', function()
-  local snacks = require('snacks')
-  snacks.picker({
-    source = 'jumps',
-  })
-end, { desc = 'jumps' })
-
-kset('n', '<Leader>ss', function()
-  local snacks = require('snacks')
-  snacks.picker({
-    source = 'search_history',
-  })
-end, { desc = 'search history' })
-kset('n', '<Leader>sg', '<cmd>lua Snacks.picker.grep()<cr>', { desc = 'grep' })
-kset('n', '<Leader>sh', '<cmd>lua Snacks.picker.help()<cr>', { desc = 'help' })
-kset(
-  'n',
-  '<Leader>sk',
-  '<cmd>lua Snacks.picker.keymaps({layout = {preview = false}})<cr>',
-  { desc = 'keymaps' }
-)
-kset('n', '<Leader>sl', '<cmd>lua Snacks.picker.lines()<cr>', { desc = 'buffer lines' })
-kset('n', '<Leader>sm', '<cmd>lua Snacks.picker.marks()<cr>', { desc = 'marks' })
-kset('n', '<Leader>sn', '<cmd>lua Snacks.picker.notifications()<cr>', { desc = 'notifications' })
-kset(
-  'n',
-  '<Leader>sr',
-  '<cmd>lua Snacks.picker.recent({filter = { cwd = false }})<cr>',
-  { desc = 'recent' }
-)
-kset('n', '<Leader>sq', '<cmd>lua Snacks.picker.qflist()<cr>', { desc = 'quick fix' })
-kset('n', '<Leader>sR', '<cmd>lua Snacks.picker.registers()<cr>', { desc = 'registers' })
-kset('n', '<Leader>su', '<cmd>lua Snacks.picker.undo()<cr>', { desc = 'undo history' })
-kset('n', '<Leader>sy', '<cmd>lua Snacks.lazygit.open(opts)<cr>', { desc = 'lazygit' })
-
-kset(
-  'n',
-  '<Leader>sw',
-  '<cmd>lua Snacks.picker.grep_word()<cr>',
-  { desc = 'grep selection or word' }
-)
-
-kset('n', '<Leader>sz', '<cmd>lua Snacks.zen()<cr>', { desc = 'zen mode' })
-kset('n', '<Leader>z', '<cmd>lua Snacks.picker.zoxide()<cr>', { desc = 'Zoxide' })
-
-kset('n', '<Leader>]', '<cmd>lua Snacks.dashboard.open()<cr>', { desc = 'Open dashboard' })
-
--- Toggle terminal in a centered floating window
-kset({ 'n', 't' }, '<Leader>st', function()
-  Snacks.terminal.toggle(nil, {
-    win = {
-      position = 'float',
-      border = 'rounded',
-      width = 0.9,
-      height = 0.9,
-    },
-  })
-end, { desc = 'toggle floating terminal' })
-
--- Spelling picker
-kset('n', 'zz', function()
-  require('snacks').picker.spelling({
-    -- layout = 'my_spelling',
-  })
-end, { desc = 'Spelling Suggestions' })
-
--- Command picker
-kset('n', '<Leader>sc', function()
-  require('snacks').picker.command_history({
-    layout = 'my_keymaps',
-    preview = false, -- It doesn't have a preview window in the box, so this is safe
-  })
-end, { desc = 'cmd history' })
-
+-- Kset('n', '<Leader>sb', '<cmd>lua Snacks.picker.buffers()<cr>', { desc = 'buffers' })
+--
+-- Kset(
+--   'n',
+--   '<Leader>sd',
+--   '<cmd>lua Snacks.picker.diagnostics_buffer()<cr>',
+--   { desc = 'diagnostics - buffer' }
+-- )
+--
+-- Kset(
+--   'n',
+--   '<Leader>se',
+--   '<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
+--   { desc = 'Explorer' }
+-- )
+--
+-- Kset(
+--   'n',
+--   '<Leader>x',
+--   '<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
+--   { desc = 'Explorer' }
+-- )
+--
+-- Kset('n', '<Leader>sj', function()
+--   local snacks = require('snacks')
+--   snacks.picker({
+--     source = 'jumps',
+--   })
+-- end, { desc = 'jumps' })
+--
+-- Kset('n', '<Leader>ss', function()
+--   local snacks = require('snacks')
+--   snacks.picker({
+--     source = 'search_history',
+--   })
+-- end, { desc = 'search history' })
+-- Kset('n', '<Leader>sg', '<cmd>lua Snacks.picker.grep()<cr>', { desc = 'grep' })
+-- Kset('n', '<Leader>sh', '<cmd>lua Snacks.picker.help()<cr>', { desc = 'help' })
+-- Kset(
+--   'n',
+--   '<Leader>sk',
+--   '<cmd>lua Snacks.picker.keymaps({layout = {preview = false}})<cr>',
+--   { desc = 'keymaps' }
+-- )
+-- Kset('n', '<Leader>sl', '<cmd>lua Snacks.picker.lines()<cr>', { desc = 'buffer lines' })
+-- Kset('n', '<Leader>sm', '<cmd>lua Snacks.picker.marks()<cr>', { desc = 'marks' })
+-- Kset('n', '<Leader>sn', '<cmd>lua Snacks.picker.notifications()<cr>', { desc = 'notifications' })
+-- Kset('n', '<Leader>sq', '<cmd>lua Snacks.picker.qflist()<cr>', { desc = 'quick fix' })
+-- Kset('n', '<Leader>sR', '<cmd>lua Snacks.picker.registers()<cr>', { desc = 'registers' })
+-- Kset('n', '<Leader>su', '<cmd>lua Snacks.picker.undo()<cr>', { desc = 'undo history' })
+-- Kset('n', '<Leader>sy', '<cmd>lua Snacks.lazygit.open(opts)<cr>', { desc = 'lazygit' })
+--
+-- Kset('n', '<Leader>sr', function()
+--   vim.cmd('wshada')
+--   vim.cmd('rshada!')
+--   Snacks.picker.recent({ refresh = true })
+-- end, { desc = 'Recent Files (Synced)' })
+--
+-- Kset(
+--   'n',
+--   '<Leader>sw',
+--   '<cmd>lua Snacks.picker.grep_word()<cr>',
+--   { desc = 'grep selection or word' }
+-- )
+--
+-- Kset('n', '<Leader>sz', '<cmd>lua Snacks.zen()<cr>', { desc = 'zen mode' })
+-- Kset('n', '<Leader>z', '<cmd>lua Snacks.picker.zoxide()<cr>', { desc = 'Zoxide' })
+--
+-- Kset('n', '<Leader>]', '<cmd>lua Snacks.dashboard.open()<cr>', { desc = 'Open dashboard' })
+--
+-- -- Toggle terminal in a centered floating window
+-- Kset({ 'n', 't' }, '<Leader>st', function()
+--   Snacks.terminal.toggle(nil, {
+--     win = {
+--       position = 'float',
+--       border = 'rounded',
+--       width = 0.9,
+--       height = 0.9,
+--     },
+--   })
+-- end, { desc = 'toggle floating terminal' })
+--
+-- -- Spelling picker
+-- Kset('n', 'zz', function()
+--   require('snacks').picker.spelling({
+--     -- layout = 'my_spelling',
+--   })
+-- end, { desc = 'Spelling Suggestions' })
+--
+-- -- Command picker
+-- Kset('n', '<Leader>sc', function()
+--   require('snacks').picker.command_history({
+--     layout = 'my_keymaps',
+--     preview = false, -- It doesn't have a preview window in the box, so this is safe
+--   })
+-- end, { desc = 'cmd history' })
+--
 -- Indent toggle
-kset('n', '<leader>si', function()
+Kset('n', '<leader>si', function()
   if Snacks.indent.enabled then
     Snacks.indent.disable()
   else
@@ -412,24 +413,29 @@ kset('n', '<leader>si', function()
 end, { desc = 'Toggle indent Guides' })
 --  ───── 2 pickers with cwd displayed - from ChatGPT ─────
 
-kset('n', '<Leader>sf', function()
+Kset('n', '<Leader>sf', function()
   local snacks = require('snacks')
   snacks.picker({
     source = 'files',
     title = Myfn.short_cwd(),
   })
 end, { desc = 'files cwd' })
-
-kset('n', '<Leader><space>', function()
-  local snacks = require('snacks')
-  snacks.picker({
-    source = 'files',
-    title = Myfn.short_cwd(),
-  })
-end, { desc = 'Files cwd' })
+--
+-- Kset('n', '<Leader><space>', function()
+--   local snacks = require('snacks')
+--   snacks.picker({
+--     source = 'files',
+--     title = Myfn.short_cwd(),
+--   })
+-- end, { desc = 'Files cwd' })
+--
 
 --  ────────── for deletes ───────────
 
-kset('n', '<Leader>bd', '<cmd>lua Snacks.bufdelete()<cr>', { desc = 'delete current' })
-kset('n', '<Leader>bo', '<cmd>lua Snacks.bufdelete.other()<cr>', { desc = 'delete other' })
-kset('n', '<Leader>ba', '<cmd>lua Snacks.bufdelete.all()<cr>', { desc = 'delete all' })
+Kset('n', '<Leader>bd', '<cmd>lua Snacks.bufdelete()<cr>', { desc = 'delete current' })
+Kset('n', '<Leader>bo', '<cmd>lua Snacks.bufdelete.other()<cr>', { desc = 'delete other' })
+-- Kset('n', '<Leader>ba', '<cmd>lua Snacks.bufdelete.all()<cr>', { desc = 'delete all' })
+Kset('n', '<Leader>ba', function()
+  Snacks.bufdelete.all()
+  Snacks.dashboard.open()
+end, { desc = 'delete all' })

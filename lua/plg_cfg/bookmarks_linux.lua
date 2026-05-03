@@ -7,7 +7,7 @@
 -- Keys:
 --   \x  -> jump directly
 --   \\  -> open floating picker
--- Code from ChatGPT to add picker using Dressing
+-- Code from ChatGPT to add picker using Dressing?
 
 ----------------------------------------------------------
 -- Bookmark configuration
@@ -33,6 +33,7 @@ local cwd_config = {
 ----------------------------------------------------------
 -- Utilities
 ----------------------------------------------------------
+
 local function expand_home(path)
   local home = vim.env.HOME or '~'
   path = path:gsub('^~', home)
@@ -50,7 +51,7 @@ end
 local function map_cwd(key, dir, cd_cmd)
   local lhs = '\\' .. key
   local cmd = cd_cmd or 'cd'
-  vim.keymap.set('n', lhs, function()
+  Kset('n', lhs, function()
     local target = expand_home(dir)
     if not is_dir(target) then
       vim.notify('Not a directory: ' .. target, vim.log.levels.ERROR)
@@ -118,7 +119,7 @@ local function open_cwd_picker(cd_cmd)
   end)
 end
 
-vim.keymap.set('n', '\\\\', function()
+Kset('n', '\\\\', function()
   open_cwd_picker('cd')
 end, { desc = 'Pick bookmarked directory' })
 

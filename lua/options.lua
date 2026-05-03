@@ -64,10 +64,15 @@ function M.setup()
     cmdheight      = 0, -- Set for Noice
   }
 
+  vim.opt.wildchar = 0 -- Disable the trigger key for native wildmenu
+  vim.opt.wildoptions = '' -- Clear native wildmenu UI options
+
   -- Apply basic options
   for k, v in pairs(options) do
     vim.opt[k] = v
   end
+
+  require('vim._core.ui2').enable({})
 
   -- make sure coding is right
   vim.scriptencoding = 'utf-8'
@@ -119,7 +124,7 @@ function M.setup()
     'zipPlugin',
   }
   for _, plugin in ipairs(disabled_builtins) do
-    vim.g['.loaded_' .. plugin] = 1
+    vim.g['loaded_' .. plugin] = 1
   end
 
   local signs = { Error = 'E', Warn = 'W', Hint = 'H', Info = 'I' }
@@ -131,5 +136,92 @@ function M.setup()
   -- Custom Highlights
   vim.api.nvim_set_hl(0, 'Folded', { fg = '#cccccc', bg = '#154360', italic = true })
 end
+
+-- ──────────────────────────────────────────────────────────────────────
+-- Custom Fold and Status Column Configuration (Snacks-free)
+-- ──────────────────────────────────────────────────────────────────────
+
+-- 1. Helper function
+local function clean_leader(s)
+  s = (s or ''):gsub('^%s*', '')
+  s = s:gsub('^([%-%*#;/%%!]+)%s*', '')
+  return s
+end
+
+-- 2. Global Fold Text
+_G.MyFoldText = function()
+  local fs, fe = vim.v.foldstart, vim.v.foldend
+  local count = fe - fs + 1
+  local first_line = vim.fn.getline(fs)
+  local ind_cols = math.min(vim.fn.indent(fs), 32)
+  local prefix = string.rep(' ', ind_cols)
+
+  local content = clean_leader(first_line)
+  local winw = vim.api.nvim_win_get_width(0)
+  local avail = math.max(20, winw - 15 - ind_cols)
+
+  if vim.fn.strdisplaywidth(content) > avail then
+    content = vim.fn.strcharpart(content, 0, avail) .. '…'
+  end
+
+  return string.format(' >>>   %s%s  ⋯  [%d]   <<<', prefix, content, count)
+end
+
+-- 3. Core Fold Options
+vim.opt.foldenable = true
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.opt.foldlevel = 99
+vim.opt.foldtext = 'v:lua.MyFoldText()'
+
+-- 4. THE NUMBER KILLER: fillchars + statuscolumn logic
+-- This forces the fold column to be empty unless it's an icon
+vim.opt.fillchars = {
+  foldopen = '▼',
+  foldclose = '▶',
+  fold = ' ',
+  foldsep = ' ',
+}
+
+-- We use a Lua expression in the statuscolumn.
+-- It checks if the current line is the start of a fold.
+-- If not, it returns a space. If it is, it returns the fold icon.
+function _G.MyStatusColumn()
+  local fcs = vim.opt.fillchars:get()
+  local foldlevel = vim.fn.foldlevel(vim.v.lnum)
+  local foldclosed = vim.fn.foldclosed(vim.v.lnum)
+
+  -- If fold is closed here, show the closed icon
+  if foldclosed ~= -1 and foldclosed == vim.v.lnum then
+    return fcs.foldclose .. ' '
+  end
+
+  -- If a fold starts here (open), show the open icon
+  if foldlevel > 0 and foldlevel > vim.fn.foldlevel(vim.v.lnum - 1) then
+    return fcs.foldopen .. ' '
+  end
+
+  return '%=%l '
+end
+
+-- Set the statuscolumn to use our function + the sign column (%s)
+vim.opt.statuscolumn = '%{%v:lua.MyStatusColumn()%}%s'
+
+-- Disable the native foldcolumn because we are drawing it ourselves now
+vim.opt.foldcolumn = '0'
+
+-- Disable native wildmenu so it doesn't fight with blink
+vim.opt.wildchar = 0
+vim.opt.wildoptions = ''
+
+-- Force arrows to behave in command mode
+-- These 'cmap' rules ensure that if a popup is visible, we don't trigger history
+vim.keymap.set('c', '<Down>', function()
+  return vim.fn.pumvisible() == 1 and '<C-n>' or '<Down>'
+end, { expr = true })
+
+vim.keymap.set('c', '<Up>', function()
+  return vim.fn.pumvisible() == 1 and '<C-p>' or '<Up>'
+end, { expr = true })
 
 return M

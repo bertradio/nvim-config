@@ -38,6 +38,9 @@ Gh = function(x)
   return 'https://github.com/' .. x
 end
 
+-- global keymap setting
+Kset = vim.keymap.set
+
 --  ──────────────────────────────────────────────────────
 
 -- 6. CUSTOM USER COMMANDS (Logic-heavy)

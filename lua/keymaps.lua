@@ -4,58 +4,73 @@
 
 -- 04/30/26 - standardized on vim.keymap.set for all mappings
 
-local kset = vim.keymap.set
-
 -------------------------------------------------
 -- >>> MOVEMENT
 -------------------------------------------------
 
 -- Move to beginning and end characters of current buffer
-kset('n', 'gg', 'gg0', { desc = 'Move to first char of file' })
-kset('n', 'G', 'G$', { desc = 'Move to last char of file' })
+Kset('n', 'gg', 'gg0', { desc = 'Move to first char of file' })
+Kset('n', 'G', 'G$', { desc = 'Move to last char of file' })
 
--- Buffer manipulation - see others in Snacks.keys-config
+-- Buffer manipulation
 
-kset({ 'n' }, '<Leader>bc', '<cmd>CopyBufferName<cr>', { desc = 'path copy' })
-kset({ 'n' }, '<Leader>k', '<cmd>bd!<cr>', { desc = 'Kill buffer' })
+Kset({ 'n' }, '<Leader>bc', '<cmd>CopyBufferName<cr>', { desc = 'path copy' })
+Kset({ 'n' }, '<Leader>bo', '<cmd>BufOnly<cr>', { desc = 'delete other' })
+Kset({ 'n' }, '<Leader>ba', '<cmd>bufdo bwipeout<cr>', { desc = 'delete all' })
+Kset({ 'n' }, '<Leader>k', '<cmd>bd!<cr>', { desc = 'Kill buffer' })
+-- Delete all buffers except the current one
+vim.keymap.set('n', '<leader>bo', function()
+  local current_buf = vim.api.nvim_get_current_buf()
+  local buffers = vim.api.nvim_list_bufs()
+
+  for _, buf in ipairs(buffers) do
+    if buf ~= current_buf and vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].buflisted then
+      -- Use pcall (protected call) to catch errors if a buffer is modified
+      local success, err = pcall(vim.api.nvim_buf_delete, buf, { force = false })
+      if not success then
+        print('Skipped modified buffer: ' .. vim.api.nvim_buf_get_name(buf))
+      end
+    end
+  end
+end, { desc = 'Close all buffers except current' })
 
 -- Go up/down one line on the screen rather than one file line at a time
-kset('i', '<down>', '<c-o>gj')
-kset('i', '<up>', '<c-o>gk')
-kset('n', '<up>', 'gk', { desc = 'Move cursor up one line' })
-kset('n', '<down>', 'gj', { desc = 'Move cursor down one line' })
-kset('n', 'k', 'gk', { desc = 'Move cursor up one line' })
-kset('n', 'j', 'gj', { desc = 'Move cursor down one line' })
+Kset('i', '<down>', '<c-o>gj')
+Kset('i', '<up>', '<c-o>gk')
+Kset('n', '<up>', 'gk', { desc = 'Move cursor up one line' })
+Kset('n', '<down>', 'gj', { desc = 'Move cursor down one line' })
+Kset('n', 'k', 'gk', { desc = 'Move cursor up one line' })
+Kset('n', 'j', 'gj', { desc = 'Move cursor down one line' })
 
 -------------------------------------------------
 -- >>> SAVE AND QUIT
 -------------------------------------------------
 
 -- Write current buffer - end in normal mode
-kset({ 'n', 'i' }, '<c-s>', '<esc><cmd>w<cr>', { desc = 'Write buffer' })
+Kset({ 'n', 'i' }, '<c-s>', '<esc><cmd>w<cr>', { desc = 'Write buffer' })
 
 -- Exit nvim normally
-kset({ 'n', 'i', 'v' }, '<c-q>', '<cmd>q<cr>', { desc = 'Exit nvim' })
+Kset({ 'n', 'i', 'v' }, '<c-q>', '<cmd>q<cr>', { desc = 'Exit nvim' })
 
 ------------------------------------------------
 -- >>> WORKING WITH TEXT
 -------------------------------------------------
 
 -- disable s key to substitute
-kset({ 'n', 'v' }, 's', '<nop>')
+Kset({ 'n', 'v' }, 's', '<nop>')
 
 -- Insert blank lines without going into insert mode
 -- adds line and deletes anything that might be on it - stays in normal mode
-kset('n', '<Leader>o', 'o<esc>0"_D', { desc = 'Insert blank line bellow' })
-kset('n', '<Leader>O', 'O<esc>0"_D', { desc = 'Insert blank line above' })
+Kset('n', '<Leader>o', 'o<esc>0"_D', { desc = 'Insert blank line bellow' })
+Kset('n', '<Leader>O', 'O<esc>0"_D', { desc = 'Insert blank line above' })
 
 -- Toggle spell
-kset('n', '<Leader>S', '<cmd>set spell!<cr>', { desc = 'Spell check toggle' })
+Kset('n', '<Leader>S', '<cmd>set spell!<cr>', { desc = 'Spell check toggle' })
 
-kset({ 'n', 'i' }, '<C-l>', '<cmd>set hlsearch!<cr>', { desc = 'hlsearch toggle' })
+Kset({ 'n', 'i' }, '<C-l>', '<cmd>set hlsearch!<cr>', { desc = 'hlsearch toggle' })
 
 -- Select all - from ChatGPT
-kset('n', '<C-a>', function()
+Kset('n', '<C-a>', function()
   vim.cmd('normal! ggVG')
 end, {
   desc = 'Select all',
@@ -63,10 +78,10 @@ end, {
 })
 
 -- Yank all
-kset('n', '<C-y>', '<cmd>%y+<cr>', { desc = 'Yank all' })
+Kset('n', '<C-y>', '<cmd>%y+<cr>', { desc = 'Yank all' })
 
 -- Save current buffer and source this file
-kset(
+Kset(
   'n',
   '<Leader>R',
   "<cmd>w<cr><cmd>source %  <cr><cmd>echom '** Re-sourced **' <cr>",
@@ -90,17 +105,17 @@ vim.cmd([[
 	]])
 
 -- create copy of line(s) and comment out originals
-kset('n', 'ycc', function()
+Kset('n', 'ycc', function()
   vim.cmd('normal! ' .. vim.v.count1 .. 'yy')
   vim.cmd('normal ' .. vim.v.count1 .. 'gcc')
   vim.cmd("normal! ']$p")
 end, { desc = 'Duplicate and comment lines' })
 
 -- search only in selected area in visual mode
-kset('x', '/', '<Esc>/\\%V')
+Kset('x', '/', '<Esc>/\\%V')
 
 -- open file in Typora
-kset(
+Kset(
   'n',
   '<leader>t',
   '<cmd>lua Myfn.OpenInTypora()<CR>',
@@ -108,7 +123,7 @@ kset(
 )
 
 -- use tab in normal mode to open and close folds
-kset('n', '<tab>', function()
+Kset('n', '<tab>', function()
   local linenr = vim.fn.line('.')
   -- If there's no fold to be opened/closed, do nothing.
   if vim.fn.foldlevel(linenr) == 0 then
@@ -121,7 +136,7 @@ kset('n', '<tab>', function()
 end, { silent = true, desc = 'Folds: Toggle' })
 
 -- update all plugins
-kset('n', '<leader>U', function()
+Kset('n', '<leader>U', function()
   vim.notify('Updating plugins...', vim.log.levels.INFO)
   vim.pack.update()
 end, { desc = 'Update plugins' })
@@ -153,4 +168,4 @@ local function toggle_bool()
 end
 
 -- Keymap: Pressing <leader>T will toggle the value
-kset('n', '<leader>T', toggle_bool, { desc = 'Toggle boolean under cursor' })
+Kset('n', '<leader>T', toggle_bool, { desc = 'Toggle boolean under cursor' })

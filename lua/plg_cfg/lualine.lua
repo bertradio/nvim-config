@@ -50,15 +50,15 @@ end)
 
 --  ─────── Terminal on indicator ───────
 
-local function terminal_status()
-  local bufs = vim.api.nvim_list_bufs()
-  for _, buf in ipairs(bufs) do
-    if vim.bo[buf].buftype == 'terminal' then
-      return ' ' -- Use any icon or text you like (e.g., "TERM")
-    end
-  end
-  return ''
-end
+-- local function terminal_status()
+--   local bufs = vim.api.nvim_list_bufs()
+--   for _, buf in ipairs(bufs) do
+--     if vim.bo[buf].buftype == 'terminal' then
+--       return ' ' -- Use any icon or text you like (e.g., "TERM")
+--     end
+--   end
+--   return ''
+-- end
 
 --  ───── Oil buffer tab title formatter ─────
 

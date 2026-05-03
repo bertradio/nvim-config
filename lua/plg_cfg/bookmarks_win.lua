@@ -1,3 +1,7 @@
+--    ╭────────────────────────────╮
+--    │     bookmarks_win.lua      │
+--    ╰────────────────────────────╯
+
 -- set dirs and shortcuts for windows
 
 local cwd_config = {

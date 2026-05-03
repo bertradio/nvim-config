@@ -1,11 +1,13 @@
--- nvim-window.lua
---
+--    ╭────────────────────────────╮
+--    │      nvim-window.lua       │
+--    ╰────────────────────────────╯
+
 -- Created: 04/26/26
 
 -- Jumpe easily between windows
 vim.pack.add({ Gh('yorickpeterse/nvim-window') })
 
-Snacks.keymap.set(
+vim.keymap.set(
   'n',
   '<Leader>wj',
   "<cmd>lua require('nvim-window').pick()<cr>",

@@ -33,7 +33,7 @@ require('conform').setup({
 vim.api.nvim_create_autocmd('VimEnter', {
   once = true,
   callback = function()
-    vim.keymap.set({ 'n', 'v' }, '<leader>p', function()
+    Kset({ 'n', 'v' }, '<leader>p', function()
       require('conform').format({ lsp_format = 'fallback', timeout_ms = 1500 })
     end, { desc = 'Make pretty with Conform' })
   end,

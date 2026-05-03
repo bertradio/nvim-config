@@ -8,7 +8,7 @@
 --        simplified code
 --        removed indicators of changed oil buffer - no longer worked
 --        removed float shortcut
---        Gmini optimized for full-screen and sub-50ms startup
+--        Gmini optimized for full-screen and quick startup
 
 vim.pack.add({
   'https://github.com/nvim-tree/nvim-web-devicons',
@@ -26,17 +26,17 @@ for _, glob in ipairs(exclude_globs) do
 end
 
 -- LSP rename integration (Snacks)
-vim.api.nvim_create_autocmd('User', {
-  pattern = 'OilActionsPost',
-  callback = function(event)
-    if event.data.actions.type == 'move' then
-      Snacks.rename.on_rename_file(event.data.actions.src_url, event.data.actions.dest_url)
-    end
-  end,
-})
+-- vim.api.nvim_create_autocmd('User', {
+--   pattern = 'OilActionsPost',
+--   callback = function(event)
+--     if event.data.actions.type == 'move' then
+--       Snacks.rename.on_rename_file(event.data.actions.src_url, event.data.actions.dest_url)
+--     end
+--   end,
+-- })
 
 -- Full-screen toggle oil
-vim.keymap.set('n', '-', '<cmd>Oil .<cr>', { desc = 'Oil full screen' })
+Kset('n', '-', '<cmd>Oil .<cr>', { desc = 'Oil full screen' })
 
 -- stylua: ignore
 require('oil').setup({
@@ -59,10 +59,11 @@ require('oil').setup({
 
   keymaps = {
     ['<ESC>'] = 'actions.close',
+    ['q']     = 'actions.close',
     ['<CR>']  = 'actions.select',
     ['<BS>']  = 'actions.parent',
     ['g.']    = 'actions.toggle_hidden',
-    ['<C-c>'] = '<cmd>bd!<cr>',
+    ['<C-c>'] = 'actions.close',
     ['<C-q>'] = '<cmd>bd!<cr>',
     ['gd']    = {
       desc = 'Toggle file detail view',

@@ -6,19 +6,13 @@
 -- Finalized 3-31-26: Fixed cmdline keymap hijacking and E5113 error
 -- Optimized for Nvim 0.12 native features and sub-100ms startup
 -- Added LuaSnip and friendly-snippets per Gemini 4-22-26
--- Code revised as per Gemini
+-- Revised for mini.cmdline compatibility 5-03-26
 
 vim.pack.add({
   { src = Gh('L3MON4D3/LuaSnip'), run = 'make install_jsregexp' },
   Gh('ribru17/blink-cmp-spell'),
-  -- Gh('rafamadriz/friendly-snippets'),
   { src = Gh('saghen/blink.cmp'), version = 'v1.10.2' },
 })
-
--- Load snippets from friendly-snippets and exclude filetypes
--- require('luasnip.loaders.from_vscode').lazy_load({
---   exclude = { 'markdown', 'fortran', 'java', 'cobol', 'c', 'c++', 'ruby' },
--- })
 
 --  ──────── add my custom snippets ─────────
 
@@ -70,42 +64,39 @@ require('blink.cmp').setup({
   appearance = { nerd_font_variant = 'mono' },
   signature = { enabled = true, window = { border = 'rounded' } },
 
-  -- stylua: ignore
-  -- sets <tab> to enter snippet and navigate
   keymap = {
-    preset        = 'default',
-    ['<Up>']      = { 'select_prev', 'fallback' },
-    ['<Down>']    = { 'select_next', 'fallback' },
+    preset = 'default',
+    ['<Up>'] = { 'select_prev', 'fallback' },
+    ['<Down>'] = { 'select_next', 'fallback' },
     ['<C-space>'] = { 'show', 'show_documentation', 'hide' },
-    -- 1. If snippet active, go forward.
-    -- 2. If completion menu open, accept selection.
-    ['<Tab>']     = { 'snippet_forward', 'accept', 'fallback' },
-    ['<S-Tab>']   = { 'snippet_backward', 'fallback' },
-
-  --  < CR > to fallback so it just inserts a new line
-    ['<CR>']      = { 'fallback' },
+    ['<Tab>'] = { 'snippet_forward', 'accept', 'fallback' },
+    ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
+    ['<CR>'] = { 'fallback' },
   },
 
   cmdline = {
     enabled = true,
-    -- stylua: ignore
+    -- Removed 'preset = none' to allow blink to handle navigation properly
     keymap = {
-          preset     = 'none',
-          ['<Up>']   = { 'select_prev', 'fallback' },
-          ['<Down>'] = { 'select_next', 'fallback' },
-          -- set tab to accept cmdline completions
-          ['<Tab>']  = { 'accept', 'fallback' },
-        },
+      ['<Up>'] = { 'select_prev', 'fallback' },
+      ['<Down>'] = { 'select_next', 'fallback' },
+      ['<Tab>'] = { 'accept', 'fallback' },
+      -- Added C-n/C-p as reliable alternatives for mini.cmdline
+      ['<C-n>'] = { 'select_next', 'fallback' },
+      ['<C-p>'] = { 'select_prev', 'fallback' },
+    },
     completion = {
       menu = { auto_show = true },
       ghost_text = { enabled = true },
     },
     sources = function()
       local type = vim.fn.getcmdtype()
+      -- Search mode
       if type == '/' or type == '?' then
         return { 'buffer' }
       end
-      if type == ':' or type == '@' then
+      -- Command mode: Added '>' and '=' for broader coverage
+      if type == ':' or type == '@' or type == '>' or type == '=' then
         return { 'cmdline' }
       end
       return {}
@@ -114,9 +105,8 @@ require('blink.cmp').setup({
 
   completion = {
     menu = {
-      auto_show = function(ctx)
-        return ctx.mode ~= 'cmdline'
-      end,
+      -- Set to true to ensure the menu logic initializes correctly in cmdline
+      auto_show = true,
       border = 'rounded',
       draw = {
         columns = {
@@ -127,7 +117,6 @@ require('blink.cmp').setup({
       },
     },
 
-    -- Ensure documentation shows as soon as the item is selected
     documentation = {
       auto_show = true,
       auto_show_delay_ms = 150,
@@ -139,51 +128,44 @@ require('blink.cmp').setup({
       show_on_keyword = true,
     },
 
-    -- This enables ghost text globally for all buffers
     ghost_text = {
       enabled = true,
-      -- Optional: show ghost text even when the menu is hidden
       show_without_selection = true,
     },
 
     list = {
       selection = {
-        preselect = true, -- Required for ghost text to know what to preview
+        preselect = true,
         auto_insert = false,
       },
     },
   },
 
-  --  ──────────────────────────────────────────────────────────────────
-
-  -- stylua: ignore 
   sources = {
     default = { 'lsp', 'snippets', 'buffer', 'path', 'spell' },
 
-    -- all offsets set tne same so order below controls
     providers = {
-      lsp      = { name = 'LSP', module      = 'blink.cmp.sources.lsp', score_offset      = 80 },
+      lsp = { name = 'LSP', module = 'blink.cmp.sources.lsp', score_offset = 80 },
       snippets = { name = 'Snippets', module = 'blink.cmp.sources.snippets', score_offset = 80 },
-      buffer   = {
-        name               = 'Buffer',
-        module             = 'blink.cmp.sources.buffer',
-        score_offset       = 80,
+      buffer = {
+        name = 'Buffer',
+        module = 'blink.cmp.sources.buffer',
+        score_offset = 80,
         min_keyword_length = 2,
       },
       spell = {
-        name         = 'Spell',
-        module       = 'blink-cmp-spell',
+        name = 'Spell',
+        module = 'blink-cmp-spell',
         score_offset = 80,
-        opts         = { enable_in_context = enable_spell_context },
+        opts = { enable_in_context = enable_spell_context },
       },
       path = { name = 'Path', module = 'blink.cmp.sources.path', score_offset = 80 },
     },
 
-    -- stylua: ignore 
     per_filetype = {
-      markdown = { 'spell',    'buffer',   'snippets', 'path' },
-      lua      = { 'snippets', 'buffer',   'lsp',      'path' },
-      bash     = { 'lsp',      'snippets', 'path',     'buffer' },
+      markdown = { 'spell', 'buffer', 'snippets', 'path' },
+      lua = { 'snippets', 'buffer', 'lsp', 'path' },
+      bash = { 'lsp', 'snippets', 'path', 'buffer' },
     },
   },
 })
@@ -194,21 +176,18 @@ local SPELL_LANGS = { 'en' }
 local spellfile_path = vim.fs.normalize(vim.fn.stdpath('config') .. '/spell/en.utf-8.add')
 vim.opt.spellfile = spellfile_path
 
--- setup for text files
--- stylua: ignore 
 vim.api.nvim_create_autocmd('FileType', {
-  pattern  = { 'markdown', 'text', 'gitcommit', 'rst', 'latex' },
+  pattern = { 'markdown', 'text', 'gitcommit', 'rst', 'latex' },
   callback = function()
-    vim.opt_local.spell        = true
-    vim.opt_local.spelllang    = SPELL_LANGS
-    vim.opt_local.spellfile    = spellfile_path
+    vim.opt_local.spell = true
+    vim.opt_local.spelllang = SPELL_LANGS
+    vim.opt_local.spellfile = spellfile_path
     vim.opt_local.conceallevel = 2
-    vim.opt_local.wrap         = true
-    vim.opt_local.linebreak    = true
+    vim.opt_local.wrap = true
+    vim.opt_local.linebreak = true
   end,
 })
 
--- disable spellcheck for coding languages
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'bash', 'lua', 'python', 'sh', 'ps1' },
   callback = function()

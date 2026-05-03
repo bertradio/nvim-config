@@ -7,10 +7,9 @@
 -- put everything in one file for convenience
 -- 04/28/26 - lazy loaded based on Gemini advice - from augroups.lua
 -- 04/29/26 - add autocmd to delay most require until typing
+-- 05/03/26 - configured menu to replace Snacks - code from Gemini - consolidated and tuned shortcuts
 
-vim.pack.add({ { src = Gh('nvim-mini/mini.nvim'), branch = 'main' } })
-
-local kset = vim.keymap.set
+vim.pack.add({ { src = 'http://github.com/nvim-mini/mini.nvim', branch = 'main' } })
 
 -- delay these until new typing
 vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile', 'InsertEnter' }, {
@@ -55,15 +54,17 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile', 'InsertEnter' }, {
     require('mini.jump2d').setup({ -- replaces flash
       view = { dim = true },
     })
-    kset(
+    Kset(
       'n',
       '<Leader>j',
       '<cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.single_character)<CR>',
       { desc = 'Jump to character' }
     )
 
+    require('mini.indentscope').setup()
+
+    -- stylua: ignore
     require('mini.move').setup({
-  -- stylua: ignore
       mappings = {
         left       = '<C-left>',
         right      = '<C-right>',
@@ -140,6 +141,99 @@ miniclue.setup({
 
     { mode = 'n', keys = '<Leader>b', desc = '+Buffer' },
     { mode = 'n', keys = '<Leader>e', desc = '+Edit configs' },
+    { mode = 'n', keys = '<Leader>f', desc = '+Fzf' },
     { mode = 'n', keys = '<Leader>s', desc = '+Snacks' },
   },
+})
+
+--  ──────── mini.starter setup ─────────
+
+local starter = require('mini.starter')
+
+local function open_dashboard()
+  -- Use pcall to ensure it doesn't crash if called too early
+  pcall(function()
+    vim.cmd('silent! lua MiniStarter.open()')
+    -- FORCE UI HIDING: Apply these every time it opens
+    vim.api.nvim_set_hl(0, 'MiniStarterQuery', { link = 'Normal' })
+    vim.api.nvim_set_hl(0, 'MiniStarterFooter', { link = 'Normal' })
+    vim.cmd('redraw')
+  end)
+end
+
+starter.setup({
+  auto_setup = true,
+  show_usage = false,
+  query_line_prefix = '',
+  footer = function()
+    return ''
+  end,
+  header = "If it ain't broke, don't fix it!",
+  items = {
+    starter.sections.recent_files(5, false),
+    {
+      name = 'Find Files',
+      action = function()
+        vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>ff', true, true, true))
+      end,
+      section = '',
+    },
+    {
+      name = 'Grep',
+      action = function()
+        vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>fg', true, true, true))
+      end,
+      section = '',
+    },
+    {
+      name = 'Jumps',
+      action = function()
+        vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>fj', true, true, true))
+      end,
+      section = '',
+    },
+    {
+      name = 'Recent Files',
+      action = function()
+        vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>fr', true, true, true))
+      end,
+      section = '',
+    },
+    {
+      name = 'Zoxide',
+      action = function()
+        vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>z', true, true, true))
+      end,
+      section = '',
+    },
+    { name = 'Close Menu', action = 'bwipeout', section = '' },
+  },
+  content_hooks = {
+    starter.gen_hook.adding_bullet('░ '),
+    starter.gen_hook.aligning('center', 'center'),
+  },
+  silent = true,
+})
+
+vim.keymap.set('n', '<space>]', open_dashboard, { desc = 'Dashboard', silent = true })
+
+vim.api.nvim_create_autocmd('VimEnter', {
+  callback = function()
+    if vim.fn.argc() == 0 and vim.api.nvim_buf_get_name(0) == '' then
+      open_dashboard()
+    end
+  end,
+})
+
+-- This autocmd forces the dashboard to hide the query line text every time it gains focus
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'starter',
+  callback = function()
+    vim.api.nvim_set_hl(0, 'MiniStarterQuery', { link = 'Normal' })
+    vim.api.nvim_set_hl(0, 'MiniStarterFooter', { link = 'Normal' })
+    -- Force 'q' and 'esc' for this buffer
+    local opts = { buffer = true, silent = true }
+    vim.keymap.set('n', 'q', '<cmd>bwipeout<cr>', opts)
+    vim.keymap.set('n', '<esc>', '<cmd>bwipeout<cr>', opts)
+  end,
 })

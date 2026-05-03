@@ -2,12 +2,9 @@
 --    │         noice.lua          │
 --    ╰────────────────────────────╯
 
--- Updated for Snacks Hybrid Setup - 4-16-26
-
 -- disable lazyredraw - recommended in docs
 -- vim.opt.lazyredraw = false
 
--- Load required UI plugins (Snacks is in snacks-config.lua)
 vim.pack.add({
   Gh('MunifTanjim/nui.nvim'),
   Gh('folke/noice.nvim'),

@@ -1,0 +1,111 @@
+--- Startup times for process: Primary (or UI client) ---
+
+times in msec
+ clock   self+sourced   self:  sourced script
+ clock   elapsed:              other lines
+
+000.001  000.001: --- NVIM STARTING ---
+002.419  002.418: event init
+004.070  001.651: early init
+004.107  000.037: locale set
+005.425  001.317: init first window
+010.296  004.871: inits 1
+010.706  000.410: window checked
+010.708  000.003: parsing arguments
+011.932  000.036  000.036: require('vim._core.shared')
+012.001  000.004  000.004: require('string.buffer')
+012.020  000.036  000.032: require('vim.inspect')
+012.062  000.035  000.035: require('vim._core.options')
+012.064  000.118  000.047: require('vim._core.editor')
+012.111  000.046  000.046: require('vim._core.system')
+012.112  000.233  000.032: require('vim._init_packages')
+012.113  001.172: init lua interpreter
+014.415  002.302: nvim_ui_attach
+014.601  000.186: nvim_set_client_info
+014.602  000.001: --- NVIM STARTED ---
+
+--- Startup times for process: Embedded ---
+
+times in msec
+ clock   self+sourced   self:  sourced script
+ clock   elapsed:              other lines
+
+000.002  000.002: --- NVIM STARTING ---
+000.102  000.100: event init
+000.150  000.049: early init
+000.191  000.040: locale set
+000.226  000.035: init first window
+000.565  000.340: inits 1
+000.573  000.008: window checked
+000.575  000.002: parsing arguments
+000.972  000.039  000.039: require('vim._core.shared')
+001.038  000.004  000.004: require('string.buffer')
+001.060  000.040  000.036: require('vim.inspect')
+001.105  000.036  000.036: require('vim._core.options')
+001.107  000.132  000.057: require('vim._core.editor')
+001.134  000.027  000.027: require('vim._core.system')
+001.136  000.222  000.024: require('vim._init_packages')
+001.137  000.339: init lua interpreter
+001.192  000.055: expanding arguments
+001.303  000.112: inits 2
+001.550  000.247: init highlight
+001.551  000.001: waiting for UI
+001.917  000.366: done waiting for UI
+001.920  000.003: clear screen
+002.203  000.013  000.013: require('vim.keymap')
+003.514  000.088  000.088: sourcing nvim_exec2()
+003.757  000.005  000.005: require('vim._core.log')
+004.191  002.269  002.163: require('vim._core.defaults')
+004.192  000.003: init default mappings & autocommands
+005.198  000.547  000.547: sourcing /tmp/.mount_nvimeINIfm/usr/share/nvim/runtime/ftplugin.vim
+005.396  000.151  000.151: sourcing /tmp/.mount_nvimeINIfm/usr/share/nvim/runtime/indent.vim
+006.646  000.217  000.217: require('vim._async')
+006.655  001.037  000.819: require('vim.pack')
+006.679  000.018  000.018: require('vim.fs')
+006.726  000.004  000.004: require('vim.F')
+007.993  000.998  000.998: require('mini.clue')
+009.034  000.794  000.794: require('mini.starter')
+009.108  003.634  000.784: require('plg_cfg.mini')
+009.149  000.041  000.041: require('plugin_setup')
+009.423  000.234  000.234: require('vim.uri')
+009.433  000.259  000.024: require('vim.loader')
+009.608  000.163  000.163: require('options')
+010.215  000.032  000.032: sourcing /tmp/.mount_nvimeINIfm/usr/share/nvim/runtime/pack/dist/opt/nvim.undotree/plugin/undotree.lua
+010.246  000.384  000.352: sourcing nvim_exec2() called at /home/bert/.config/nvim/init.lua:0
+011.092  000.845  000.845: require('undotree')
+011.285  000.149  000.149: require('my_fns')
+011.288  002.137  000.338: require('settings')
+011.289  005.853  000.041: sourcing /home/bert/.config/nvim/init.lua
+011.293  000.550: sourcing vimrc file(s)
+011.662  000.015  000.015: sourcing /usr/share/nvim/site/ftdetect/ghostty.vim
+011.825  000.220  000.205: sourcing nvim_exec2() called at /tmp/.mount_nvimeINIfm/usr/share/nvim/runtime/filetype.lua:0
+011.827  000.265  000.046: sourcing /tmp/.mount_nvimeINIfm/usr/share/nvim/runtime/filetype.lua
+012.231  000.060  000.060: sourcing /tmp/.mount_nvimeINIfm/usr/share/nvim/runtime/syntax/synload.vim
+012.289  000.340  000.279: sourcing /tmp/.mount_nvimeINIfm/usr/share/nvim/runtime/syntax/syntax.vim
+013.023  000.272  000.272: sourcing /tmp/.mount_nvimeINIfm/usr/share/nvim/runtime/plugin/gzip.vim
+013.607  000.276  000.276: sourcing /tmp/.mount_nvimeINIfm/usr/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
+013.647  000.606  000.330: sourcing /tmp/.mount_nvimeINIfm/usr/share/nvim/runtime/plugin/matchit.vim
+013.742  000.081  000.081: sourcing /tmp/.mount_nvimeINIfm/usr/share/nvim/runtime/plugin/matchparen.vim
+014.176  000.133  000.133: sourcing /tmp/.mount_nvimeINIfm/usr/share/nvim/runtime/pack/dist/opt/netrw/plugin/netrwPlugin.vim
+014.214  000.456  000.323: sourcing /tmp/.mount_nvimeINIfm/usr/share/nvim/runtime/plugin/netrwPlugin.vim
+014.333  000.102  000.102: sourcing /tmp/.mount_nvimeINIfm/usr/share/nvim/runtime/plugin/rplugin.vim
+014.409  000.057  000.057: sourcing /tmp/.mount_nvimeINIfm/usr/share/nvim/runtime/plugin/tarPlugin.vim
+014.446  000.015  000.015: sourcing /tmp/.mount_nvimeINIfm/usr/share/nvim/runtime/plugin/tutor.vim
+014.543  000.079  000.079: sourcing /tmp/.mount_nvimeINIfm/usr/share/nvim/runtime/plugin/zipPlugin.vim
+014.620  000.058  000.058: sourcing /tmp/.mount_nvimeINIfm/usr/share/nvim/runtime/plugin/editorconfig.lua
+014.680  000.038  000.038: sourcing /tmp/.mount_nvimeINIfm/usr/share/nvim/runtime/plugin/man.lua
+014.731  000.035  000.035: sourcing /tmp/.mount_nvimeINIfm/usr/share/nvim/runtime/plugin/net.lua
+014.862  000.115  000.115: sourcing /tmp/.mount_nvimeINIfm/usr/share/nvim/runtime/plugin/osc52.lua
+014.957  000.076  000.076: sourcing /tmp/.mount_nvimeINIfm/usr/share/nvim/runtime/plugin/shada.lua
+014.996  000.018  000.018: sourcing /tmp/.mount_nvimeINIfm/usr/share/nvim/runtime/plugin/spellfile.lua
+015.131  000.043  000.043: sourcing /tmp/.mount_nvimeINIfm/usr/share/nvim/runtime/pack/dist/opt/nvim.undotree/plugin/undotree.lua
+015.146  001.197: loading rtp plugins
+015.261  000.116: loading packages
+015.262  000.001: loading after plugins
+015.273  000.010: inits 3
+016.200  000.927: reading ShaDa
+016.279  000.080: opening buffers
+016.297  000.017: BufEnter autocommands
+016.298  000.001: editing files in windows
+016.302  000.005: --- NVIM STARTED ---
+

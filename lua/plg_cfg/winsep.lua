@@ -1,5 +1,7 @@
--- winsep.lua
---
+--    ╭────────────────────────────╮
+--    │         winsep.lua         │
+--    ╰────────────────────────────╯
+
 -- Created: 04/26/26
 
 -- To color the edges of windows

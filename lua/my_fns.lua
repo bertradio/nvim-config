@@ -21,11 +21,11 @@ function M.add_to_vim_path(dir, opts)
 end
 
 -- Wrapper for mapping custom keybindings to make mapping code easier and cleaner - from internet
--- changed from vim.keymap to Snacks.keymap 4-20-26
+-- changed from vim.keymap to vim.keymap 4-20-26
 function M.map(mode, lhs, rhs, opts)
   local options = { noremap = true, silent = true } -- sets defaults
   options = opts and vim.tbl_extend('force', options, opts)
-  Snacks.keymap.set(mode, lhs, rhs, options) -- maps key
+  vim.keymap.set(mode, lhs, rhs, options) -- maps key
 end
 
 -- simplify setting up maps to change cwd
@@ -33,7 +33,7 @@ end
 -- dir is the dir to change to
 -- suggestion for simplicity from Perplexity
 function M.map_cwd(k, dir)
-  Snacks.keymap.set(
+  vim.keymap.set(
     'n',
     '\\' .. k,
     '<cmd>cd! ' .. dir .. '<cr><cmd>lua vim.notify(vim.fn.getcwd(), "info", { title = "" })<cr>',
@@ -224,48 +224,6 @@ function M.OpenInTypora()
 
   print('Opening in Typora: ' .. file_path)
 end
-
--- to set up simple centered selection menu
--- see telescope.lua for example
-
--- function M.menu(prompt, options_table)
--- 	--@field prompt
--- 	--@field options_table
--- 	-- Given the table of options, populate a list with option display names
--- 	-- needs dressing.lua for proper display - dependency of telescope
--- 	local option_names = {}
--- 	local n = 0
--- 	for i, _ in pairs(options_table) do
--- 		n = n + 1
--- 		option_names[n] = i
--- 	end
--- 	table.sort(option_names)
--- 	-- Return the prompt function. These global function var will be used when assigning keybindings
--- 	local menu = function()
--- 		vim.ui.select(
--- 			option_names,      --> the list we populated above
--- 			{
--- 				prompt = prompt, --> Prompt passed as the argument
--- 				-- Remove this variable if you want to keep the numbering in front of option names
--- 				format_item = function(item)
--- 					return item:gsub('%d. ', '')
--- 				end,
--- 			},
--- 			function(choice)
--- 				local action = options_table[choice]
--- 				-- When user inputs ESC or q, don't take any actions
--- 				if action ~= nil then
--- 					if type(action) == 'string' then
--- 						vim.cmd(action)
--- 					elseif type(action) == 'function' then
--- 						action()
--- 					end
--- 				end
--- 			end
--- 		)
--- 	end
--- 	return menu
--- end
 
 -- create command CopyBufferName  to copy buffer path to clipboard
 -- bound to <Leader>cb in keymaps.lua

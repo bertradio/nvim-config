@@ -56,5 +56,5 @@ vim.api.nvim_create_autocmd('FileType', {
 
 -- 2. NATIVE INCREMENTAL SELECTION
 -- 0.12 includes native keymaps: 'v an' (outer) and 'v in' (inner).
-vim.keymap.set('x', '<C-space>', 'an', { remap = true, desc = 'Increment selection (Native)' })
-vim.keymap.set('x', '<BS>', 'in', { remap = true, desc = 'Decrement selection (Native)' })
+Kset('x', '<C-space>', 'an', { remap = true, desc = 'Increment selection (Native)' })
+Kset('x', '<BS>', 'in', { remap = true, desc = 'Decrement selection (Native)' })

@@ -47,7 +47,7 @@ ls.add_snippets('lua', {
   ),
   s(
     'map',
-    fmt([[Snacks.keymap.set("{}", "<Leader>{}", "{}", {{ desc = "{}" }})]], {
+    fmt([[Kset("{}", "<Leader>{}", "{}", {{ desc = "{}" }})]], {
       i(1, 'n'),
       i(2, 'key'),
       i(3, 'command'),
