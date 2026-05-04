@@ -150,17 +150,6 @@ miniclue.setup({
 
 local starter = require('mini.starter')
 
-local function open_dashboard()
-  -- Use pcall to ensure it doesn't crash if called too early
-  pcall(function()
-    vim.cmd('silent! lua MiniStarter.open()')
-    -- FORCE UI HIDING: Apply these every time it opens
-    vim.api.nvim_set_hl(0, 'MiniStarterQuery', { link = 'Normal' })
-    vim.api.nvim_set_hl(0, 'MiniStarterFooter', { link = 'Normal' })
-    vim.cmd('redraw')
-  end)
-end
-
 starter.setup({
   auto_setup = true,
   show_usage = false,
@@ -214,6 +203,17 @@ starter.setup({
   },
   silent = true,
 })
+
+local function open_dashboard()
+  -- Use pcall to ensure it doesn't crash if called too early
+  pcall(function()
+    vim.cmd('silent! lua MiniStarter.open()')
+    -- FORCE UI HIDING: Apply these every time it opens
+    vim.api.nvim_set_hl(0, 'MiniStarterQuery', { link = 'Normal' })
+    vim.api.nvim_set_hl(0, 'MiniStarterFooter', { link = 'Normal' })
+    vim.cmd('redraw')
+  end)
+end
 
 vim.keymap.set('n', '<space>]', open_dashboard, { desc = 'Dashboard', silent = true })
 

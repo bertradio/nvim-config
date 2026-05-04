@@ -67,19 +67,6 @@ Kset('n', '<Leader>O', 'O<esc>0"_D', { desc = 'Insert blank line above' })
 -- Toggle spell
 Kset('n', '<Leader>S', '<cmd>set spell!<cr>', { desc = 'Spell check toggle' })
 
-Kset({ 'n', 'i' }, '<C-l>', '<cmd>set hlsearch!<cr>', { desc = 'hlsearch toggle' })
-
--- Select all - from ChatGPT
-Kset('n', '<C-a>', function()
-  vim.cmd('normal! ggVG')
-end, {
-  desc = 'Select all',
-  silent = true,
-})
-
--- Yank all
-Kset('n', '<C-y>', '<cmd>%y+<cr>', { desc = 'Yank all' })
-
 -- Save current buffer and source this file
 Kset(
   'n',
@@ -169,3 +156,62 @@ end
 
 -- Keymap: Pressing <leader>T will toggle the value
 Kset('n', '<leader>T', toggle_bool, { desc = 'Toggle boolean under cursor' })
+
+--  ───────────── code for search indicators and kepmaps ─────────────
+
+local ns = vim.api.nvim_create_namespace('search_count')
+
+-- Define a custom highlight group for light blue
+-- guifg sets the text color. #add8e6 is a classic Light Blue.
+vim.api.nvim_set_hl(0, 'SearchLensBlue', { fg = '#add8e4', bold = true })
+
+local function update_search_lens()
+  if vim.v.hlsearch == 0 then
+    vim.api.nvim_buf_clear_namespace(0, ns, 0, -1)
+    return
+  end
+
+  local ok, stats = pcall(vim.fn.searchcount, { recompute = 1, maxcount = 0 })
+
+  if ok and stats and stats.total > 0 then
+    local line = vim.api.nvim_win_get_cursor(0)[1] - 1
+    local text = string.format('[%d/%d]', stats.current, stats.total)
+
+    vim.api.nvim_buf_clear_namespace(0, ns, 0, -1)
+    vim.api.nvim_buf_set_extmark(0, ns, line, 0, {
+      -- CHANGED: Use our new light blue group here
+      virt_text = { { text, 'SearchLensBlue' } },
+      virt_text_pos = 'eol',
+    })
+  end
+end
+
+-- 1. Create an autogroup to handle the cursor movement
+local search_group = vim.api.nvim_create_augroup('SearchLens', { clear = true })
+
+vim.api.nvim_create_autocmd('CursorMoved', {
+  group = search_group,
+  callback = update_search_lens,
+})
+
+-- 2. Keep your n/N mappings simple (just move and center)
+vim.keymap.set('n', 'n', 'nzz', { silent = true })
+vim.keymap.set('n', 'N', 'Nzz', { silent = true })
+
+-- 3. Update the Ctrl-L Toggle to clean up immediately
+vim.keymap.set('n', '<C-l>', function()
+  vim.cmd('set hlsearch!')
+  if vim.v.hlsearch == 0 then
+    vim.api.nvim_buf_clear_namespace(0, ns, 0, -1)
+  else
+    update_search_lens()
+  end
+end, { silent = true })
+
+-- make sure ghost text is cleared on next search
+vim.keymap.set('n', '/', function()
+  vim.api.nvim_buf_clear_namespace(0, ns, 0, -1)
+  return '/'
+end, { expr = true })
+
+--  ────── end code for search ───────

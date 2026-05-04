@@ -44,7 +44,6 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
   callback = function()
     require('plg_cfg.rainbow')
     require('plg_cfg.pretty-comment')
-    require('plg_cfg.smart-paste')
     require('plg_cfg.conform')
     require('plg_cfg.code-biscuits')
   end,

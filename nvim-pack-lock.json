@@ -33,10 +33,6 @@
       "rev": "64590411e6cf3d603d1e1bdad3a3d051f2f5a91a",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
-    "lazydev.nvim": {
-      "rev": "ff2cbcba459b637ec3fd165a2be59b7bbaeedf0d",
-      "src": "https://github.com/folke/lazydev.nvim"
-    },
     "lualine.nvim": {
       "rev": "131a558e13f9f28b15cd235557150ccb23f89286",
       "src": "https://github.com/nvim-lualine/lualine.nvim"
@@ -50,7 +46,7 @@
       "src": "https://github.com/williamboman/mason.nvim"
     },
     "mini.nvim": {
-      "rev": "0f339bf5c93f392dc5d2417d47d7b9edc5f96fe8",
+      "rev": "48555f1615f08c6318150aacb52bf7d61a5af798",
       "src": "http://github.com/nvim-mini/mini.nvim"
     },
     "nvim": {
@@ -64,6 +60,10 @@
     "nvim-biscuits": {
       "rev": "d93dcdee3a3dfd5101785447658e744f153957db",
       "src": "https://github.com/code-biscuits/nvim-biscuits"
+    },
+    "nvim-hlslens": {
+      "rev": "be2d7b2be01860b5445a007ff2bc72b29896db6b",
+      "src": "https://github.com/kevinhwang91/nvim-hlslens"
     },
     "nvim-lspconfig": {
       "rev": "31026a13eefb20681124706a79fc1df6bf11ab27",
@@ -88,10 +88,6 @@
     "render-markdown": {
       "rev": "3f3eea97b80839f629c951ca660ffd125bfa5b34",
       "src": "https://github.com/MeanderingProgrammer/markdown.nvim"
-    },
-    "smart-paste.nvim": {
-      "rev": "328f90f7f4535f58d5bd987edb48588836efdecc",
-      "src": "https://github.com/nemanjamalesija/smart-paste.nvim"
     },
     "tree-sitter-manager.nvim": {
       "rev": "33a94d022e3a5a500d878b784ba7fec61559c70a",

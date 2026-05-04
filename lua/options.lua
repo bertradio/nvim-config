@@ -44,7 +44,7 @@ function M.setup()
     ignorecase     = true,
     incsearch      = true,
     smartcase      = true,
-    hlsearch       = false,
+    hlsearch       = true,
 
     -- SYSTEM
     backup         = true,
@@ -89,6 +89,7 @@ function M.setup()
   -- Shortmess and Fillchars
   vim.opt.fillchars:append({ eob = ' ' })
   vim.opt.shortmess:append('IF')
+
 
   -- Provider disabling (Speed optimization)
   -- stylua: ignore 

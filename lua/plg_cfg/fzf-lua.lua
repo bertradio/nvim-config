@@ -228,6 +228,10 @@ fzf.setup({
     stat_file = true,
   },
 
+  jumps = {
+    winopts = { preview = { layout = 'vertical' } },
+  },
+
   buffers = {
     prompt = 'Buffers❯ ',
     file_icons = true,
