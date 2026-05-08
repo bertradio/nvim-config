@@ -3,7 +3,7 @@
 --    ╰────────────────────────────╯
 
 -- changed from lazy to vim.pack 3-30-26
---
+
 -- Created: 03/09/24
 --
 -- highlight matching delimiters with different colors

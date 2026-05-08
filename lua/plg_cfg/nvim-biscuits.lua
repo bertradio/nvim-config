@@ -1,5 +1,5 @@
 --    ╭────────────────────────────╮
---    │     code-biscuits.lua      │
+--    │     nvim-biscuits.lua      │
 --    ╰────────────────────────────╯
 
 -- changed from lazy to vim.pack 3-30-26
@@ -12,7 +12,7 @@ vim.pack.add({ Gh('code-biscuits/nvim-biscuits') })
 require('nvim-biscuits').setup({
   default_config = {
     trim_by_words = true,
-    max_length    = 5, -- max number of words to display
+    max_length    = 4, -- max number of words to display
     min_distance  = 3, -- won't display less than these number of lines
   },
   -- disable for languages

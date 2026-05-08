@@ -90,8 +90,7 @@ function M.setup()
   vim.opt.fillchars:append({ eob = ' ' })
   vim.opt.shortmess:append('IF')
 
-
-  -- Provider disabling (Speed optimization)
+-- Provider disabling (Speed optimization)
   -- stylua: ignore 
   if vim.g.enable_providers ~= true then
     vim.g.loaded_node_provider    =  0
@@ -187,26 +186,43 @@ vim.opt.fillchars = {
 -- We use a Lua expression in the statuscolumn.
 -- It checks if the current line is the start of a fold.
 -- If not, it returns a space. If it is, it returns the fold icon.
+-- 4. Optimized StatusColumn Function
 function _G.MyStatusColumn()
   local fcs = vim.opt.fillchars:get()
-  local foldlevel = vim.fn.foldlevel(vim.v.lnum)
-  local foldclosed = vim.fn.foldclosed(vim.v.lnum)
+  local lnum = vim.v.lnum
 
-  -- If fold is closed here, show the closed icon
-  if foldclosed ~= -1 and foldclosed == vim.v.lnum then
-    return fcs.foldclose .. ' '
+  -- 1. Check for a mark on this line
+  local mark_char = ''
+  -- Look for lowercase marks (a-z)
+  for i = 97, 122 do
+    local char = string.char(i)
+    local mark = vim.api.nvim_buf_get_mark(0, char)
+    if mark[1] == lnum then
+      mark_char = char
+      break
+    end
   end
 
-  -- If a fold starts here (open), show the open icon
-  if foldlevel > 0 and foldlevel > vim.fn.foldlevel(vim.v.lnum - 1) then
-    return fcs.foldopen .. ' '
+  -- 2. Fold Logic
+  local foldlevel = vim.fn.foldlevel(lnum)
+  local foldclosed = vim.fn.foldclosed(lnum)
+  local fold_str = '  '
+  if foldclosed ~= -1 and foldclosed == lnum then
+    fold_str = fcs.foldclose .. ' '
+  elseif foldlevel > 0 and foldlevel > vim.fn.foldlevel(lnum - 1) then
+    fold_str = fcs.foldopen .. ' '
   end
 
-  return '%=%l '
+  -- 3. Combine: Mark (if exists) + Fold + Line Number
+  -- If there's a mark, we show it; otherwise, we show a space
+  local mark_display = mark_char ~= '' and mark_char or ' '
+
+  return mark_display .. ' ' .. fold_str .. '%=%l '
 end
 
--- Set the statuscolumn to use our function + the sign column (%s)
-vim.opt.statuscolumn = '%{%v:lua.MyStatusColumn()%}%s'
+-- Apply the statuscolumn
+-- Note: Putting %s at the beginning often helps visibility in minimalist setups
+vim.opt.statuscolumn = '%s%{%v:lua.MyStatusColumn()%}'
 
 -- Disable the native foldcolumn because we are drawing it ourselves now
 vim.opt.foldcolumn = '0'

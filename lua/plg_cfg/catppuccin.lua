@@ -39,44 +39,48 @@ require('catppuccin').setup({
         FoldColumn          = { bg = '#262626', fg        = colors.sapphire },
         FzfLuaSearch        = { fg = colors.yellow, style = { 'bold' } },
         FzfLuaGrep          = { fg = colors.yellow, style = { 'bold' } },
-        FzfLuaGrepHighlight = { fg = colors.sky,    style = { 'bold' } },
+        -- FzfLuaGrepHighlight = { fg = colors.sky,    style = { 'bold' } },
+        FzfLuaGrepHighlight = { fg = colors.red,    style = { 'bold' } },
         Search              = { fg = colors.base,   bg    = colors.yellow },  -- general search matches
-        CurSearch           = { fg = colors.base,   bg    = colors.red }, -- currently selected match
-      }
+        CurSearch           = { fg = colors.blue,   bg    = colors.white }, -- currently selected match
+    }
     end,
   },
 
-  -- stylua: ignore
+ -- stylua: ignore
   integrations = {
     blink_cmp          = { style = 'bordered' },
+    flash              = true,
     fzf                = true,   -- base FzfLua theming; needed for highlight_overrides above to build on
     markdown           = true,
-    noice              = true,
+    mason              = false,
+    -- noice              = false,
     rainbow_delimiters = true,
-    indent_blankline   = {
-      enabled               = true,
-      colored_indent_levels = false,
-    },
-    mini = { enabled = true, indentscope_color = '' },
-    native_lsp = {
+    render_markdown    = true,
+    mini               = { enabled = true, indentscope_color = '' },
+    colorful_winsep = {
       enabled = true,
-      virtual_text = {
-        errors      = { 'italic' },
-        hints       = { 'italic' },
-        warnings    = { 'italic' },
-        information = { 'italic' },
-        ok          = { 'italic' },
-      },
-      underlines = {
-        errors      = { 'underline' },
-        hints       = { 'underline' },
-        warnings    = { 'underline' },
-        information = { 'underline' },
-        ok          = { 'underline' },
-      },
-      inlay_hints = { background = true },
+      color = "yellow",
     },
-  },
+    native_lsp = {
+        enabled = true,
+        virtual_text = {
+          errors      = { 'italic' },
+          hints       = { 'italic' },
+          warnings    = { 'italic' },
+          information = { 'italic' },
+          ok          = { 'italic' },
+        },
+        underlines = {
+          errors      = { 'underline' },
+          hints       = { 'underline' },
+          warnings    = { 'underline' },
+          information = { 'underline' },
+          ok          = { 'underline' },
+        },
+        inlay_hints = { background = true },
+      },
+  }
 })
 
 vim.cmd.colorscheme('catppuccin-nvim')

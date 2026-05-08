@@ -3,6 +3,7 @@
 --    ╰────────────────────────────╯
 
 -- 04/30/26 - standardized on vim.keymap.set for all mappings
+-- 05/06/26 - use Kset for all mappings - defined in init.lua
 
 -------------------------------------------------
 -- >>> MOVEMENT
@@ -18,11 +19,11 @@ Kset({ 'n' }, '<Leader>bc', '<cmd>CopyBufferName<cr>', { desc = 'path copy' })
 Kset({ 'n' }, '<Leader>bo', '<cmd>BufOnly<cr>', { desc = 'delete other' })
 Kset({ 'n' }, '<Leader>ba', '<cmd>bufdo bwipeout<cr>', { desc = 'delete all' })
 Kset({ 'n' }, '<Leader>k', '<cmd>bd!<cr>', { desc = 'Kill buffer' })
+
 -- Delete all buffers except the current one
 vim.keymap.set('n', '<leader>bo', function()
   local current_buf = vim.api.nvim_get_current_buf()
   local buffers = vim.api.nvim_list_bufs()
-
   for _, buf in ipairs(buffers) do
     if buf ~= current_buf and vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].buflisted then
       -- Use pcall (protected call) to catch errors if a buffer is modified
@@ -58,6 +59,9 @@ Kset({ 'n', 'i', 'v' }, '<c-q>', '<cmd>q<cr>', { desc = 'Exit nvim' })
 
 -- disable s key to substitute
 Kset({ 'n', 'v' }, 's', '<nop>')
+
+-- Select all text in the current buffer
+Kset('n', '<C-a>', 'ggVG', { desc = 'Select all' })
 
 -- Insert blank lines without going into insert mode
 -- adds line and deletes anything that might be on it - stays in normal mode
@@ -157,7 +161,7 @@ end
 -- Keymap: Pressing <leader>T will toggle the value
 Kset('n', '<leader>T', toggle_bool, { desc = 'Toggle boolean under cursor' })
 
---  ───────────── code for search indicators and kepmaps ─────────────
+--  ───────────── code for search indicators [] and kepmaps ─────────────
 
 local ns = vim.api.nvim_create_namespace('search_count')
 
@@ -186,7 +190,7 @@ local function update_search_lens()
   end
 end
 
--- 1. Create an autogroup to handle the cursor movement
+-- 1. Create autogroup to handle the cursor movement
 local search_group = vim.api.nvim_create_augroup('SearchLens', { clear = true })
 
 vim.api.nvim_create_autocmd('CursorMoved', {

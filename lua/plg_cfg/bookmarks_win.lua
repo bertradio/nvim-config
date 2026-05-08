@@ -2,7 +2,8 @@
 --    │     bookmarks_win.lua      │
 --    ╰────────────────────────────╯
 
--- set dirs and shortcuts for windows
+-- set dirs and shortcuts for windows - may need to be revised
+-- because directories have changed
 
 local cwd_config = {
   d = 'C:/Users/bertk/Home/Downloads/',

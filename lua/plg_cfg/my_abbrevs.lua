@@ -5,6 +5,7 @@
 -- list of my abbreviations - called by options.lua
 -- Created: 04/27/26
 
+
 --  ────────── insert mode ───────────
 
 -- stylua: ignore 

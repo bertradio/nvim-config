@@ -35,7 +35,10 @@ vim.api.nvim_create_autocmd('User', {
     vim.cmd('setlocal showtabline=2')
     -- Tell lualine to wake up and look at the new buffer
     if package.loaded['lualine'] then
-      require('lualine').refresh()
+      local lualine_mod = package.loaded['plg_cfg.lualine']
+      if lualine_mod and type(lualine_mod) == 'table' then
+        lualine_mod.refresh()
+      end
     end
   end,
 })
@@ -52,7 +55,10 @@ vim.api.nvim_create_autocmd('VimEnter', {
   end,
 })
 
+-- for all keymaps
+Kset = vim.keymap.set
+
 -- initialization file
-require('plg_cfg.mini')
+require('plg_cfg.mini') -- need to do this first so dashboard displays
 require('plugin_setup') -- autocmds to set order of lazy loading
-require('settings')
+require('settings') -- calls options.lua

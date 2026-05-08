@@ -2,6 +2,7 @@
 --    │     pretty-comment.lua     │
 --    ╰────────────────────────────╯
 
+-- various shortcuts for nice comments
 -- Created: 04/14/26
 
 vim.pack.add({ Gh('/Cartoone9/pretty-comment.nvim') })

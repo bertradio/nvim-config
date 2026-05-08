@@ -8,10 +8,11 @@
 -- 04/28/26 - lazy loaded based on Gemini advice - from augroups.lua
 -- 04/29/26 - add autocmd to delay most require until typing
 -- 05/03/26 - configured menu to replace Snacks - code from Gemini - consolidated and tuned shortcuts
+-- 05/04/26 - fixed issue with recent not updating by adding rshada! to shortcut
 
 vim.pack.add({ { src = 'http://github.com/nvim-mini/mini.nvim', branch = 'main' } })
 
--- delay these until new typing
+-- delay these mappings until new typing
 vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile', 'InsertEnter' }, {
   once = true,
   callback = function()
@@ -43,23 +44,13 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile', 'InsertEnter' }, {
 
     vim.api.nvim_create_autocmd('BufWritePost', {
       callback = function(args)
-        -- Disable and re-enable refreshes the 'save' source baseline
+        -- Disable and re-enable refreshes the 'save' source baselineS
         require('mini.diff').disable(args.buf)
         require('mini.diff').enable(args.buf)
       end,
     })
 
-    require('mini.jump').setup()
-
-    require('mini.jump2d').setup({ -- replaces flash
-      view = { dim = true },
-    })
-    Kset(
-      'n',
-      '<Leader>j',
-      '<cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.single_character)<CR>',
-      { desc = 'Jump to character' }
-    )
+    --  ────── end mini.diff setup ───────
 
     require('mini.indentscope').setup()
 
@@ -74,6 +65,29 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile', 'InsertEnter' }, {
         line_right = '<C-right>',
         line_down  = '<C-down>',
         line_up    = '<C-up>',
+      },
+    })
+
+    require('mini.operators').setup()
+
+    require('mini.pairs').setup({
+      mappings = {
+        -- pair < >
+        ['<'] = { action = 'open', pair = '<>', neigh_pattern = '^[^\\]' },
+        ['>'] = { action = 'close', pair = '<>', neigh_pattern = '^[^\\]' },
+        -- do not double quote before words
+        ["'"] = {
+          action = 'closeopen',
+          pair = "''",
+          neigh_pattern = '[^%w][^%w]',
+          register = { cr = false },
+        },
+        ['"'] = {
+          action = 'closeopen',
+          pair = '""',
+          neigh_pattern = '[^%w][^%w]',
+          register = { cr = false },
+        },
       },
     })
 
@@ -96,13 +110,14 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile', 'InsertEnter' }, {
 --  ──────── mini.clue setup ─────────
 
 local miniclue = require('mini.clue')
+
 -- stylua: ignore
 miniclue.setup({
 
   window = {
     delay       = 500,
     config      = {
-      width = 'auto',
+      width  = 'auto',
       border = 'rounded',
     },
     scroll_down = '<Down>',
@@ -146,20 +161,28 @@ miniclue.setup({
   },
 })
 
---  ──────── mini.starter setup ─────────
+--  ──────────────────── end mini.clue setup ────────────────────
+
+--  ───── ───── mini.starter setup - code from Gemini ───── ─────
 
 local starter = require('mini.starter')
 
 starter.setup({
-  auto_setup = true,
-  show_usage = false,
+  auto_setup = false,
+  evaluate_single = true,
   query_line_prefix = '',
+  show_usage = false,
   footer = function()
     return ''
   end,
   header = "If it ain't broke, don't fix it!",
   items = {
-    starter.sections.recent_files(5, false),
+    starter.sections.recent_files(6, false, false),
+    {
+      name = 'New file',
+      action = 'enew | startinsert',
+      section = '',
+    },
     {
       name = 'Find Files',
       action = function()
@@ -195,45 +218,33 @@ starter.setup({
       end,
       section = '',
     },
-    { name = 'Close Menu', action = 'bwipeout', section = '' },
+    { name = 'Quit Menu', action = 'bwipeout', section = '' },
   },
+
   content_hooks = {
-    starter.gen_hook.adding_bullet('░ '),
+    starter.gen_hook.adding_bullet(),
     starter.gen_hook.aligning('center', 'center'),
   },
   silent = true,
+
+  vim.api.nvim_set_hl(0, 'MiniStarterQuery', { link = 'Normal' }),
+  vim.api.nvim_set_hl(0, 'MiniStarterFooter', { link = 'Normal' }),
 })
 
+-- open dashboard
 local function open_dashboard()
-  -- Use pcall to ensure it doesn't crash if called too early
   pcall(function()
-    vim.cmd('silent! lua MiniStarter.open()')
-    -- FORCE UI HIDING: Apply these every time it opens
+    require('mini.starter').open()
+    -- Maintain your clean, mid-century modern aesthetic
     vim.api.nvim_set_hl(0, 'MiniStarterQuery', { link = 'Normal' })
     vim.api.nvim_set_hl(0, 'MiniStarterFooter', { link = 'Normal' })
     vim.cmd('redraw')
   end)
 end
 
-vim.keymap.set('n', '<space>]', open_dashboard, { desc = 'Dashboard', silent = true })
-
-vim.api.nvim_create_autocmd('VimEnter', {
-  callback = function()
-    if vim.fn.argc() == 0 and vim.api.nvim_buf_get_name(0) == '' then
-      open_dashboard()
-    end
-  end,
-})
-
--- This autocmd forces the dashboard to hide the query line text every time it gains focus
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'starter',
-  callback = function()
-    vim.api.nvim_set_hl(0, 'MiniStarterQuery', { link = 'Normal' })
-    vim.api.nvim_set_hl(0, 'MiniStarterFooter', { link = 'Normal' })
-    -- Force 'q' and 'esc' for this buffer
-    local opts = { buffer = true, silent = true }
-    vim.keymap.set('n', 'q', '<cmd>bwipeout<cr>', opts)
-    vim.keymap.set('n', '<esc>', '<cmd>bwipeout<cr>', opts)
-  end,
-})
+-- open dashboard shortcut
+Kset('n', '<space>]', function()
+  -- rshada! necessary to make sure recent list is up to date
+  vim.cmd('rshada!')
+  open_dashboard()
+end, { desc = 'Dashboard', silent = true })

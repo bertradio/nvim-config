@@ -18,25 +18,16 @@ vim.pack.add({
 local detail = false
 
 -- Pre-compile hidden patterns to save cycles during render
-local exclude_globs = require('plg_cfg.file_exclude')
+-- local exclude_globs = require('plg_cfg.file_exclude')
+local exclude_globs = {}
 local hidden_patterns = {}
 for _, glob in ipairs(exclude_globs) do
   local p = glob:lower():gsub('%.', '%%.'):gsub('%-', '%%-'):gsub('%*', '.*')
   table.insert(hidden_patterns, p .. '$')
 end
 
--- LSP rename integration (Snacks)
--- vim.api.nvim_create_autocmd('User', {
---   pattern = 'OilActionsPost',
---   callback = function(event)
---     if event.data.actions.type == 'move' then
---       Snacks.rename.on_rename_file(event.data.actions.src_url, event.data.actions.dest_url)
---     end
---   end,
--- })
-
--- Full-screen toggle oil
-Kset('n', '-', '<cmd>Oil .<cr>', { desc = 'Oil full screen' })
+-- Start oil
+Kset('n', '=', '<cmd>Oil .<cr>', { desc = 'Oil full screen' })
 
 -- stylua: ignore
 require('oil').setup({
@@ -53,7 +44,7 @@ require('oil').setup({
 
   win_options = {
     conceallevel = 3,
-    signcolumn   = 'no',
+    signcolumn   = 'yes',
     wrap         = true,
   },
 
@@ -98,5 +89,27 @@ vim.api.nvim_create_autocmd('DirChanged', {
         end
       end
     end)
+  end,
+})
+
+-- Create an autocmd to apply the wrap-around mapping only in Oil buffers
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'oil',
+  callback = function()
+    Kset('n', '<Down>', function()
+      if vim.fn.line('.') == vim.fn.line('$') then
+        vim.cmd('normal! gg')
+      else
+        vim.cmd('normal! j')
+      end
+    end, { buffer = true })
+
+    Kset('n', '<Up>', function()
+      if vim.fn.line('.') == 1 then
+        vim.cmd('normal! G')
+      else
+        vim.cmd('normal! k')
+      end
+    end, { buffer = true })
   end,
 })

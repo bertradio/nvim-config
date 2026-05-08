@@ -16,7 +16,7 @@ vim.pack.add({
 
 --  ──────── add my custom snippets ─────────
 
-require('plg_cfg/my_snippets')
+require('plg_cfg.my_snippets')
 
 -- ── Helper Functions for Spell Gating ───────────────────────────────────────
 
@@ -64,30 +64,32 @@ require('blink.cmp').setup({
   appearance = { nerd_font_variant = 'mono' },
   signature = { enabled = true, window = { border = 'rounded' } },
 
+  -- stylua: ignore 
   keymap = {
-    preset = 'default',
-    ['<Up>'] = { 'select_prev', 'fallback' },
-    ['<Down>'] = { 'select_next', 'fallback' },
+    preset        = 'default',
+    ['<Up>']      = { 'select_prev', 'fallback' },
+    ['<Down>']    = { 'select_next', 'fallback' },
     ['<C-space>'] = { 'show', 'show_documentation', 'hide' },
-    ['<Tab>'] = { 'snippet_forward', 'accept', 'fallback' },
-    ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
-    ['<CR>'] = { 'fallback' },
+    ['<Tab>']     = { 'snippet_forward', 'accept', 'fallback' },
+    ['<S-Tab>']   = { 'snippet_backward', 'fallback' },
+    ['<CR>']      = { 'fallback' },
   },
 
+  -- stylua: ignore 
   cmdline = {
     enabled = true,
     -- Removed 'preset = none' to allow blink to handle navigation properly
     keymap = {
-      ['<Up>'] = { 'select_prev', 'fallback' },
+      ['<Up>']   = { 'select_prev', 'fallback' },
       ['<Down>'] = { 'select_next', 'fallback' },
-      ['<Tab>'] = { 'accept', 'fallback' },
+      ['<Tab>']  = { 'accept', 'fallback' },
       -- Added C-n/C-p as reliable alternatives for mini.cmdline
-      ['<C-n>'] = { 'select_next', 'fallback' },
-      ['<C-p>'] = { 'select_prev', 'fallback' },
+      ['<C-n>']  = { 'select_next', 'fallback' },
+      ['<C-p>']  = { 'select_prev', 'fallback' },
     },
     completion = {
-      menu = { auto_show = true },
-      ghost_text = { enabled = true },
+      menu       = { auto_show = true },
+      ghost_text = { enabled   = true },
     },
     sources = function()
       local type = vim.fn.getcmdtype()
@@ -117,10 +119,11 @@ require('blink.cmp').setup({
       },
     },
 
+    -- stylua: ignore 
     documentation = {
-      auto_show = true,
+      auto_show          = true,
       auto_show_delay_ms = 150,
-      window = { border = 'rounded' },
+      window             = { border = 'rounded' },
     },
 
     trigger = {
@@ -144,28 +147,30 @@ require('blink.cmp').setup({
   sources = {
     default = { 'lsp', 'snippets', 'buffer', 'path', 'spell' },
 
+    -- stylua: ignore 
     providers = {
       lsp = { name = 'LSP', module = 'blink.cmp.sources.lsp', score_offset = 80 },
       snippets = { name = 'Snippets', module = 'blink.cmp.sources.snippets', score_offset = 80 },
       buffer = {
-        name = 'Buffer',
-        module = 'blink.cmp.sources.buffer',
-        score_offset = 80,
+        name               = 'Buffer',
+        module             = 'blink.cmp.sources.buffer',
+        score_offset       = 80,
         min_keyword_length = 2,
       },
       spell = {
-        name = 'Spell',
-        module = 'blink-cmp-spell',
+        name         = 'Spell',
+        module       = 'blink-cmp-spell',
         score_offset = 80,
-        opts = { enable_in_context = enable_spell_context },
+        opts         = { enable_in_context = enable_spell_context },
       },
       path = { name = 'Path', module = 'blink.cmp.sources.path', score_offset = 80 },
     },
 
+    -- stylua: ignore
     per_filetype = {
       markdown = { 'spell', 'buffer', 'snippets', 'path' },
-      lua = { 'snippets', 'buffer', 'lsp', 'path' },
-      bash = { 'lsp', 'snippets', 'path', 'buffer' },
+      lua      = { 'snippets', 'buffer', 'lsp', 'path' },
+      bash     = { 'lsp', 'snippets', 'path', 'buffer' },
     },
   },
 })
@@ -176,15 +181,16 @@ local SPELL_LANGS = { 'en' }
 local spellfile_path = vim.fs.normalize(vim.fn.stdpath('config') .. '/spell/en.utf-8.add')
 vim.opt.spellfile = spellfile_path
 
+-- stylua: ignore 
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'markdown', 'text', 'gitcommit', 'rst', 'latex' },
   callback = function()
-    vim.opt_local.spell = true
-    vim.opt_local.spelllang = SPELL_LANGS
-    vim.opt_local.spellfile = spellfile_path
+    vim.opt_local.spell        = true
+    vim.opt_local.spelllang    = SPELL_LANGS
+    vim.opt_local.spellfile    = spellfile_path
     vim.opt_local.conceallevel = 2
-    vim.opt_local.wrap = true
-    vim.opt_local.linebreak = true
+    vim.opt_local.wrap         = true
+    vim.opt_local.linebreak    = true
   end,
 })
 

@@ -9,7 +9,7 @@ local s = ls.snippet
 local t = ls.text_node
 local i = ls.insert_node
 local f = ls.function_node
--- uncomment to use
+-- uncomment to use - not sure what this does
 -- local d = ls.dynamic_node
 local fmt = require('luasnip.extras.fmt').fmt
 

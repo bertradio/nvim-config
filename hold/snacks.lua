@@ -374,7 +374,7 @@ require('snacks').setup({
 -- Kset('n', '<Leader>sz', '<cmd>lua Snacks.zen()<cr>', { desc = 'zen mode' })
 -- Kset('n', '<Leader>z', '<cmd>lua Snacks.picker.zoxide()<cr>', { desc = 'Zoxide' })
 --
--- Kset('n', '<Leader>]', '<cmd>lua Snacks.dashboard.open()<cr>', { desc = 'Open dashboard' })
+Kset('n', '<Leader>[', '<cmd>lua Snacks.dashboard.open()<cr>', { desc = 'Open dashboard' })
 --
 -- -- Toggle terminal in a centered floating window
 -- Kset({ 'n', 't' }, '<Leader>st', function()

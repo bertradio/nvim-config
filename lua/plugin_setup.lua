@@ -9,27 +9,22 @@
 
 --  ────────── lazy loading ──────────
 
--- from Gemini to speed up load
--- startup 04/28/26 0.13!
--- load when UI starts -sets load order
-
+-- load when UI starts - sets load order
 vim.api.nvim_create_autocmd('UIEnter', {
   once = true,
   callback = function()
     require('plg_cfg.catppuccin')
-    require('plg_cfg.nvim-lspconfig')
     require('plg_cfg.lualine')
+    require('plg_cfg.nvim-lspconfig')
     require('plg_cfg.oil')
     require('plg_cfg.fzf-lua')
+    require('plg_cfg.tree-sitter-manager')
     require('plg_cfg.winsep')
     require('plg_cfg.blink-spell')
-    require('plg_cfg.my_abbrevs')
-    require('plg_cfg.tree-sitter-manager')
     require('plg_cfg.mason')
     require('keymaps')
     require('augroups')
     require('plg_cfg.dressing')
-    -- Platform-specific bookmarks
     if Myfn.is_windows() then
       require('plg_cfg.bookmarks_win')
     else
@@ -45,7 +40,7 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
     require('plg_cfg.rainbow')
     require('plg_cfg.pretty-comment')
     require('plg_cfg.conform')
-    require('plg_cfg.code-biscuits')
+    require('plg_cfg.nvim-biscuits')
   end,
 })
 
@@ -53,7 +48,8 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
 vim.api.nvim_create_autocmd({ 'InsertEnter' }, {
   once = true,
   callback = function()
-    require('plg_cfg.nvim-pairs')
+    require('plg_cfg.flash')
+    require('plg_cfg.my_abbrevs')
   end,
 })
 
@@ -62,7 +58,6 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
   once = true,
   pattern = '*.md',
   callback = function()
-    require('plg_cfg.markdown')
     require('plg_cfg.bullets')
   end,
 })

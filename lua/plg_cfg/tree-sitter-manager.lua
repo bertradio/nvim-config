@@ -4,7 +4,7 @@
 
 -- Optimized for Neovim 0.12 + Native Package Management
 -- Replaced archived nvim-treesitter with tree-sitter-manager.nvim
--- Revisions by Gemini 04/25/26
+-- 05/04/26 - Revisions by Gemini
 
 vim.pack.add({
   Gh('romus204/tree-sitter-manager.nvim'),
