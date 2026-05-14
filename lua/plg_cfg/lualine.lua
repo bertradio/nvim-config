@@ -101,8 +101,8 @@ vim.pack.add({
   Gh('nvim-lualine/lualine.nvim'),
 })
 
+-- stylua: ignore 
 require('lualine').setup({
-  -- stylua: ignore 
   options = {
     theme                = 'catppuccin-nvim', -- need to use this since lualine loaded before catppuccin
     icons_enabled        = true,
@@ -129,7 +129,7 @@ require('lualine').setup({
       {
         'searchcount',
         maxcount = 999,
-        timeout = 500,
+        timeout  = 500,
       },
       -- {
       --   terminal_status,
@@ -141,7 +141,6 @@ require('lualine').setup({
   },
 
   tabline = {
-    -- stylua: ignore 
     lualine_a = {
       {
         'buffers',

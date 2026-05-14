@@ -110,101 +110,6 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile', 'InsertEnter' }, {
   end,
 })
 
---  ──────── mini.clue setup ─────────
-
--- local miniclue = require('mini.clue')
---
--- -- stylua: ignore
--- miniclue.setup({
---
---   window = {
---     delay       = 500,
---     config      = {
---       width  = 'auto',
---       border = 'rounded',
---     },
---     scroll_down = '<Down>',
---     scroll_up   = '<Up>',
---   },
---
---   triggers = {
---     { mode = 'c', keys = '<C-r>' },
---     { mode = 'i', keys = '<C-r>' },
---     { mode = 'i', keys = '<C-x>' },
---     { mode = 'n', keys = "'" },
---     { mode = 'n', keys = '"' },
---     { mode = 'n', keys = '<C-w>' },
---     { mode = 'n', keys = '<Leader>' },
---     { mode = 'n', keys = '`' },
---     { mode = 'n', keys = 'g' },
---     { mode = 'n', keys = 'z' },
---     { mode = 'n', keys = ']' },
---     { mode = 'n', keys = '[' },
---     { mode = 'n', keys = '\\' },
---     { mode = 'x', keys = "'" },
---     { mode = 'x', keys = '"' },
---     { mode = 'x', keys = '<Leader>' },
---     { mode = 'x', keys = '`' },
---     { mode = 'x', keys = 'g' },
---     { mode = 'x', keys = 'z' },
---   },
---
---   clues = {
---     miniclue.gen_clues.builtin_completion(),
---     miniclue.gen_clues.g(),
---     miniclue.gen_clues.marks(),
---     miniclue.gen_clues.registers(),
---     miniclue.gen_clues.windows(),
---     miniclue.gen_clues.z(),
---
---     { mode = 'n', keys = '<Leader>b', desc = '+Buffer' },
---     { mode = 'n', keys = '<Leader>e', desc = '+Edit configs' },
---     { mode = 'n', keys = '<Leader>f', desc = '+Fzf' },
---     { mode = 'n', keys = '<Leader>s', desc = '+Snacks' },
---   },
--- })
---
---  ──────────────────── end mini.clue setup ────────────────────
-
--- -- mini.completion setup - code from Gemini
---
--- -- Helper function for expression mappings
--- local imap_expr = function(lhs, rhs)
---   vim.keymap.set('i', lhs, rhs, { expr = true })
--- end
---
--- -- Replicate a "clean" look with background colors
--- vim.api.nvim_set_hl(0, 'Pmenu', { bg = '#1d2021', fg = '#ebdbb2' }) -- Main background
--- vim.api.nvim_set_hl(0, 'PmenuSel', { bg = '#458588', fg = '#000000', bold = true }) -- Selection
---
--- -- Tab: If menu is visible, go to next item. If not, trigger normal Tab.
--- imap_expr('<Tab>', [[pumvisible() ? "\<C-n>" : "\<Tab>"]])
--- imap_expr('<S-Tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]])
---
--- -- Arrow Keys: Map to navigate the completion menu
--- imap_expr('<Down>', [[pumvisible() ? "\<C-n>" : "\<Down>"]])
--- imap_expr('<Up>', [[pumvisible() ? "\<C-p>" : "\<Up>"]])
---
--- -- CR (Enter): Accept selected item if menu is visible
--- imap_expr('<CR>', [[pumvisible() ? "\<C-y>" : "\<CR>"]])
---
--- require('mini.completion').setup({
---   window = {
---     -- Border for the extra information window (documentation)
---     info = { border = 'rounded' },
---     -- Border for the signature help window
---     signature = { border = 'rounded' },
---   },
---   lsp_completion = {
---     source_func = 'omnifunc',
---     auto_setup = true,
---   },
--- })
---
--- -- Keep your LuaSnip <Tab> keymap from the previous step!
---
--- -- --  ─────────────────────── end mini.completion setup ───────────────────────
-
 --  ───── ───── ───── mini.starter setup - code from Gemini ───── ───── ─────
 
 local starter = require('mini.starter')
@@ -227,30 +132,16 @@ starter.setup({
       section = '',
     },
     {
-      name = 'Find Files',
+      name = 'Explorer',
       action = function()
-        vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>sf', true, true, true))
+        vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>x', true, true, true))
       end,
       section = '',
     },
-    -- {
-    --   name = 'Grep',
-    --   action = function()
-    --     vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>sg', true, true, true))
-    --   end,
-    --   section = '',
-    -- },
-    -- {
-    --   name = 'Jumps',
-    --   action = function()
-    --     vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>fj', true, true, true))
-    --   end,
-    --   section = '',
-    -- },
     {
-      name = 'Oil',
+      name = 'Find Files',
       action = function()
-        vim.api.nvim_input(vim.api.nvim_replace_termcodes('=', true, true, true))
+        vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>sf', true, true, true))
       end,
       section = '',
     },
@@ -261,13 +152,13 @@ starter.setup({
       end,
       section = '',
     },
-    -- {
-    --   name = 'Zoxide',
-    --   action = function()
-    --     vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>z', true, true, true))
-    --   end,
-    --   section = '',
-    -- },
+    {
+      name = 'Yazi',
+      action = function()
+  vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>y', true, true, true))
+      end,
+      section = '',
+    },
     { name = 'Quit Menu', action = 'bwipeout', section = '' },
   },
 

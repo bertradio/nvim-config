@@ -122,21 +122,21 @@ fzf.setup({
   },
 
   files = {
-    color_icons = true,
-    cwd_header = true,
-    cwd_prompt = true,
+    color_icons            = true,
+    cwd_header             = true,
+    cwd_prompt             = true,
     cwd_prompt_shorten_len = 32,
     cwd_prompt_shorten_val = 1,
-    fd_opts = [[--color=never --type f --hidden --follow --exclude .git]] .. get_exclude_args(),
-    file_icons = true,
-    formatter = 'path.filename_first',
-    git_icons = true,
-    header = false,
-    hidden = false,
-    multiprocess = true,
-    prompt = 'Files ❯ ',
-    toggle_ignore_flag = '--no-ignore',
-    winopts = { preview = { layout = 'horizontal' } },
+    fd_opts                = [[--color = never --type f --hidden --follow --exclude .git]] .. get_exclude_args(),
+    file_icons             = true,
+    formatter              = 'path.filename_first',
+    git_icons              = true,
+    header                 = false,
+    hidden                 = false,
+    multiprocess           = true,
+    prompt                 = 'Files ❯ ',
+    toggle_ignore_flag     = '--no-ignore',
+    winopts                = { preview = { layout = 'horizontal' } },
     -- Define the highlight colors
     highlights = {
       -- set up to dim directory
@@ -263,6 +263,7 @@ local function maps()
   Kset('n', '<Leader>fs',      '<cmd>FzfLua search_history<cr>',       { desc = 'search history' })
   Kset('n', '<Leader>fu',      '<cmd>FzfLua builtin<cr>',              { desc = 'builtin fzf' })
   Kset('n', 'zz',              '<cmd>FzfLua spell_suggest<cr>',        { desc = 'spell suggest' })
+
   -- Kset('n', '<Leader>z', function()
   --   require('fzf-lua').zoxide({
   --     winopts = {

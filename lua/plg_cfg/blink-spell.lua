@@ -40,13 +40,14 @@ local function in_comment_or_string()
   return false
 end
 
+-- stylua: ignore
 local prose_fts_set = {
-  text = true,
+  ['']      = true,
   gitcommit = true,
-  rst = true,
-  latex = true,
-  markdown = true,
-  [''] = true,
+  latex     = true,
+  markdown  = true,
+  rst       = true,
+  text      = true,
 }
 
 local function enable_spell_context()
@@ -55,6 +56,7 @@ end
 
 -- ── blink.cmp config ──────────────────────────────────────────────────────────
 
+-- stylua: ignore 
 require('blink.cmp').setup({
 
   snippets = {
@@ -64,7 +66,6 @@ require('blink.cmp').setup({
   appearance = { nerd_font_variant = 'mono' },
   signature = { enabled = true, window = { border = 'rounded' } },
 
-  -- stylua: ignore 
   keymap = {
     preset        = 'default',
     ['<Up>']      = { 'select_prev', 'fallback' },
@@ -75,7 +76,6 @@ require('blink.cmp').setup({
     ['<CR>']      = { 'fallback' },
   },
 
-  -- stylua: ignore 
   cmdline = {
     enabled = true,
     -- Removed 'preset = none' to allow blink to handle navigation properly
@@ -109,8 +109,8 @@ require('blink.cmp').setup({
     menu = {
       -- Set to true to ensure the menu logic initializes correctly in cmdline
       auto_show = true,
-      border = 'rounded',
-      draw = {
+      border    = 'rounded',
+      draw      = {
         columns = {
           { 'label', 'label_description', gap = 1 },
           { 'kind_icon' },
@@ -119,7 +119,6 @@ require('blink.cmp').setup({
       },
     },
 
-    -- stylua: ignore 
     documentation = {
       auto_show          = true,
       auto_show_delay_ms = 150,
@@ -132,14 +131,14 @@ require('blink.cmp').setup({
     },
 
     ghost_text = {
-      enabled = true,
+      enabled                = true,
       show_without_selection = true,
     },
 
     list = {
       selection = {
-        preselect = true,
         auto_insert = false,
+        preselect   = true,
       },
     },
   },
@@ -147,11 +146,10 @@ require('blink.cmp').setup({
   sources = {
     default = { 'lsp', 'snippets', 'buffer', 'path', 'spell' },
 
-    -- stylua: ignore 
     providers = {
-      lsp = { name = 'LSP', module = 'blink.cmp.sources.lsp', score_offset = 80 },
+      lsp      = { name = 'LSP', module      = 'blink.cmp.sources.lsp', score_offset      = 80 },
       snippets = { name = 'Snippets', module = 'blink.cmp.sources.snippets', score_offset = 80 },
-      buffer = {
+      buffer   = {
         name               = 'Buffer',
         module             = 'blink.cmp.sources.buffer',
         score_offset       = 80,
@@ -166,11 +164,10 @@ require('blink.cmp').setup({
       path = { name = 'Path', module = 'blink.cmp.sources.path', score_offset = 80 },
     },
 
-    -- stylua: ignore
     per_filetype = {
-      markdown = { 'spell', 'buffer', 'snippets', 'path' },
-      lua      = { 'snippets', 'buffer', 'lsp', 'path' },
       bash     = { 'lsp', 'snippets', 'path', 'buffer' },
+      lua      = { 'snippets', 'buffer', 'lsp', 'path' },
+      markdown = { 'spell', 'buffer', 'snippets', 'path' },
     },
   },
 })
@@ -183,7 +180,7 @@ vim.opt.spellfile = spellfile_path
 
 -- stylua: ignore 
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = { 'markdown', 'text', 'gitcommit', 'rst', 'latex' },
+  pattern  = { 'markdown', 'text', 'gitcommit', 'rst', 'latex' },
   callback = function()
     vim.opt_local.spell        = true
     vim.opt_local.spelllang    = SPELL_LANGS
@@ -194,8 +191,9 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
+-- stylua: ignore 
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = { 'bash', 'lua', 'python', 'sh', 'ps1' },
+  pattern  = { 'bash', 'lua', 'python', 'sh', 'ps1' },
   callback = function()
     vim.opt_local.spell = false
   end,

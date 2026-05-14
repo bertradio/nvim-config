@@ -8,7 +8,7 @@
 -- 05/02/26 - added code per ChatGPT to ensure snacks.recent is kept up to date
 --            but may be related to nvim 13. Not a problem with 12.2
 
-vim.pack.add({ 'https://www.github.com/folke/snacks.nvim' })
+vim.pack.add({ Gh('folke/snacks.nvim'), Gh('stevearc/dressing.nvim') })
 
 local excluded_exts = require('plg_cfg.file_exclude')
 
@@ -127,7 +127,7 @@ require('snacks').setup({
       },
       registers       = { layout = { preset = 'my_default' } },
       search_history  = { layout = { preset = 'my_spelling' } },
-      spelling        = { layout = { preset = 'my_spelling' } },
+      -- spelling        = { layout = { preset = 'my_spelling' } },
       undo            = { layout = { preset = 'my_default' } },
       zoxide          = { layout = { preset = 'my_keymaps' } },
 
@@ -172,40 +172,6 @@ require('snacks').setup({
     },
   },
 
-  -- dashboard config
-
-  -- dashboard = {
-  --   enabled = false,
-  --   width = 45,
-  --   fullscreen = false,
-  --   preset = {
-  --     -- stylua: ignore 
-  --     keys = {
-  --       { icon = '', key = 'c', desc = 'Commands',  action = '<Leader>sc'  },
-  --       -- { icon = '', key = 'e', desc = 'Explorer',  action = '<Leader>se'  },
-  --       { icon = '', key = 'f', desc = 'Find file', action = '<Leader>sf'  },
-  --       { icon = '', key = 'g', desc = 'Grep',      action = '<Leader>sg'  },
-  --       { icon = '', key = 'j', desc = 'Jumps',     action = '<Leader>sj'  },
-  --       { icon = '', key = 'r', desc = 'Recent',    action = '<Leader>sr'  },
-  --       { icon = '', key = 'z', desc = 'Zoxide',    action = '<Leader>z'   },
-  --     },
-  --   },
-  -- formats = {
-  --     key = function(item)
-  --       return {
-  --         { '[', hl = 'special' },
-  --         { item.key, hl = 'key' },
-  --         { ']', hl = 'special' },
-  --       }
-  --     end,
-  --   },
-  --   sections = {
-  --     { title = "If it ain't broke, don't fix it", align = 'center', padding = 1 },
-  --     { section = 'recent_files', current = true, cwd = false, align = 'left', limit = 9, padding = 1 },
-  --     { section = 'keys', align = 'left', padding = 1 },
-  --   },
-  --   },
-
   statuscolumn = {
     enabled = true,
     segments = {
@@ -230,74 +196,6 @@ require('snacks').setup({
   },
 })
 
--- --  ────── status column setup ───────
---
--- -- set up for status column to display folds with no numbers
--- -- and proper icons
--- local function _clean_leader(s)
---   s = (s or ''):gsub('^%s*', '')
---   s = s:gsub('^([%-%*#;/%%!]+)%s*', '')
---   return s
--- end
---
--- function _G.MyFoldText()
---   local fs, fe = vim.v.foldstart, vim.v.foldend
---   local count = fe - fs + 1
---
---   local first = vim.fn.getline(fs)
---   local ind_cols = vim.fn.indent(fs)
---
---   local max_indent_cols = 32
---   if ind_cols > max_indent_cols then
---     ind_cols = max_indent_cols
---   end
---
---   local prefix = string.rep(' ', ind_cols)
---   local content = first:match('^%s*(.*)$') or first
---   content = _clean_leader(content)
---
---   local winw = vim.api.nvim_win_get_width(0)
---   local padding = 10
---   local avail = math.max(20, winw - padding - ind_cols)
---
---   local function clip_display(s, w)
---     if vim.fn.strdisplaywidth(s) <= w then
---       return s
---     end
---     local out, used = {}, 0
---     for _, ch in utf8.codes(s) do
---       local c = utf8.char(ch)
---       local cw = vim.fn.strdisplaywidth(c)
---       if used + cw > w then
---         break
---       end
---       table.insert(out, c)
---       used = used + cw
---     end
---     return table.concat(out) .. '…'
---   end
---
---   local preview = clip_display(content, avail)
---   -- set the format of the string at the top of each fold
---   return string.format(' >>>   %s%s  ⋯  [%d]   <<<', prefix, preview, count)
--- end
---
--- vim.opt.foldenable = true
--- vim.opt.foldmethod = 'expr'
--- vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
--- vim.opt.foldlevel = 99
--- vim.opt.foldtext = 'v:lua.MyFoldText()'
--- vim.opt.foldcolumn = 'auto:1'
---
--- -- stylua: ignore
--- vim.opt.fillchars:append({
---   foldopen  = '▼',
---   foldclose = '▶',
---   -- fold   = '·',
---   fold      = ' ',
---   foldsep   = ' ',
--- })
---
 --  ─────────── end config ───────────
 
 --    ╭────────────────────────────╮
@@ -306,7 +204,19 @@ require('snacks').setup({
 
 --  ──────────── pickers ─────────────
 
+Kset('n', '<Leader>bd', '<cmd>lua Snacks.bufdelete()<cr>', { desc = 'delete current' })
+Kset('n', '<Leader>sR', '<cmd>lua Snacks.picker.registers()<cr>', { desc = 'registers' })
 Kset('n', '<Leader>sb', '<cmd>lua Snacks.picker.buffers()<cr>', { desc = 'buffers' })
+Kset('n', '<Leader>sg', '<cmd>lua Snacks.picker.grep()<cr>', { desc = 'grep' })
+Kset('n', '<Leader>sh', '<cmd>lua Snacks.picker.help()<cr>', { desc = 'help' })
+Kset('n', '<Leader>sl', '<cmd>lua Snacks.picker.lines()<cr>', { desc = 'buffer lines' })
+Kset('n', '<Leader>sm', '<cmd>lua Snacks.picker.marks()<cr>', { desc = 'marks' })
+Kset('n', '<Leader>sn', '<cmd>lua Snacks.picker.notifications()<cr>', { desc = 'notifications' })
+Kset('n', '<Leader>sq', '<cmd>lua Snacks.picker.qflist()<cr>', { desc = 'quick fix' })
+Kset('n', '<Leader>su', '<cmd>lua Snacks.picker.undo()<cr>', { desc = 'undo history' })
+Kset('n', '<Leader>sy', '<cmd>lua Snacks.lazygit.open(opts)<cr>', { desc = 'lazygit' })
+Kset('n', '<Leader>sz', '<cmd>lua Snacks.zen()<cr>', { desc = 'zen mode' })
+Kset('n', '<Leader>z', '<cmd>lua Snacks.picker.zoxide()<cr>', { desc = 'Zoxide' })
 
 Kset(
   'n',
@@ -315,12 +225,12 @@ Kset(
   { desc = 'diagnostics - buffer' }
 )
 
-Kset(
-  'n',
-  '<Leader>se',
-  '<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
-  { desc = 'Explorer' }
-)
+-- Kset(
+--   'n',
+--   '<Leader>sx',
+--   '<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
+--   { desc = 'Explorer' }
+-- )
 
 Kset(
   'n',
@@ -342,21 +252,13 @@ Kset('n', '<Leader>ss', function()
     source = 'search_history',
   })
 end, { desc = 'search history' })
-Kset('n', '<Leader>sg', '<cmd>lua Snacks.picker.grep()<cr>', { desc = 'grep' })
-Kset('n', '<Leader>sh', '<cmd>lua Snacks.picker.help()<cr>', { desc = 'help' })
+
 Kset(
   'n',
   '<Leader>sk',
   '<cmd>lua Snacks.picker.keymaps({layout = {preview = false}})<cr>',
   { desc = 'keymaps' }
 )
-Kset('n', '<Leader>sl', '<cmd>lua Snacks.picker.lines()<cr>', { desc = 'buffer lines' })
-Kset('n', '<Leader>sm', '<cmd>lua Snacks.picker.marks()<cr>', { desc = 'marks' })
-Kset('n', '<Leader>sn', '<cmd>lua Snacks.picker.notifications()<cr>', { desc = 'notifications' })
-Kset('n', '<Leader>sq', '<cmd>lua Snacks.picker.qflist()<cr>', { desc = 'quick fix' })
-Kset('n', '<Leader>sR', '<cmd>lua Snacks.picker.registers()<cr>', { desc = 'registers' })
-Kset('n', '<Leader>su', '<cmd>lua Snacks.picker.undo()<cr>', { desc = 'undo history' })
-Kset('n', '<Leader>sy', '<cmd>lua Snacks.lazygit.open(opts)<cr>', { desc = 'lazygit' })
 
 Kset('n', '<Leader>sr', function()
   vim.cmd('wshada')
@@ -371,38 +273,6 @@ Kset(
   { desc = 'grep selection or word' }
 )
 
-Kset('n', '<Leader>sz', '<cmd>lua Snacks.zen()<cr>', { desc = 'zen mode' })
-Kset('n', '<Leader>z', '<cmd>lua Snacks.picker.zoxide()<cr>', { desc = 'Zoxide' })
-
--- Kset('n', '<Leader>[', '<cmd>lua Snacks.dashboard.open()<cr>', { desc = 'Open dashboard' })
---
--- -- Toggle terminal in a centered floating window
--- Kset({ 'n', 't' }, '<Leader>st', function()
---   Snacks.terminal.toggle(nil, {
---     win = {
---       position = 'float',
---       border = 'rounded',
---       width = 0.9,
---       height = 0.9,
---     },
---   })
--- end, { desc = 'toggle floating terminal' })
---
--- -- Spelling picker
--- Kset('n', 'zz', function()
---   require('snacks').picker.spelling({
---     -- layout = 'my_spelling',
---   })
--- end, { desc = 'Spelling Suggestions' })
---
--- -- Command picker
--- Kset('n', '<Leader>sc', function()
---   require('snacks').picker.command_history({
---     layout = 'my_keymaps',
---     preview = false, -- It doesn't have a preview window in the box, so this is safe
---   })
--- end, { desc = 'cmd history' })
---
 -- Indent toggle
 Kset('n', '<leader>i', function()
   if Snacks.indent.enabled then
@@ -411,7 +281,6 @@ Kset('n', '<leader>i', function()
     Snacks.indent.enable()
   end
 end, { desc = 'Toggle indent Guides' })
---  ───── 2 pickers with cwd displayed - from ChatGPT ─────
 
 Kset('n', '<Leader>sf', function()
   local snacks = require('snacks')
@@ -429,11 +298,6 @@ Kset('n', '<Leader><space>', function()
   })
 end, { desc = 'Files cwd' })
 
---  ────────── for deletes ───────────
-
-Kset('n', '<Leader>bd', '<cmd>lua Snacks.bufdelete()<cr>', { desc = 'delete current' })
-Kset('n', '<Leader>bo', '<cmd>lua Snacks.bufdelete.other()<cr>', { desc = 'delete other' })
--- Kset('n', '<Leader>ba', '<cmd>lua Snacks.bufdelete.all()<cr>', { desc = 'delete all' })
 Kset('n', '<Leader>ba', function()
   Snacks.bufdelete.all()
   Snacks.dashboard.open()

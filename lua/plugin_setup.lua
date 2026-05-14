@@ -15,23 +15,24 @@ vim.api.nvim_create_autocmd('UIEnter', {
   callback = function()
     require('plg_cfg.catppuccin')
     require('plg_cfg.mini')
+    require('aucmds')
+    require('keymaps')
     require('plg_cfg.lualine')
     require('plg_cfg.nvim-lspconfig')
-    require('plg_cfg.oil')
     require('plg_cfg.fzf-lua')
     require('plg_cfg.tree-sitter-manager')
     require('plg_cfg.winsep')
+    require('plg_cfg.dressing')
+    require('plg_cfg.snacks')
+    require('plg_cfg.blink-spell')
     require('plg_cfg.mason')
     require('plg_cfg.which-key')
-    require('plg_cfg.dressing')
+    require('plg_cfg.yazi')
     if Myfn.is_windows() then
       require('plg_cfg.bookmarks_win')
     else
       require('plg_cfg.bookmarks_linux')
     end
-    require('keymaps')
-    require('aucmds')
-    require('plg_cfg.snacks')
   end,
 })
 
@@ -50,7 +51,6 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
 vim.api.nvim_create_autocmd({ 'InsertEnter' }, {
   once = true,
   callback = function()
-    require('plg_cfg.blink-spell')
     require('plg_cfg.flash')
     require('plg_cfg.my_abbrevs')
   end,

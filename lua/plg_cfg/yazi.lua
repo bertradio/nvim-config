@@ -46,13 +46,13 @@ require('yazi').setup({
 
   -- stylua: ignore
   keymaps = {
-    show_help                            = '<f1>',
-    open_file_in_vertical_split          = '<c-v>',
-    open_file_in_horizontal_split        = '<c-x>',
-    grep_in_directory                    = '<c-g>',
-    replace_in_directory                 = 'false',
-    cycle_open_buffers                   = '<tab>',
     copy_relative_path_to_selected_files = '<c-y>',
+    cycle_open_buffers                   = '<tab>',
+    grep_in_directory                    = '<c-g>',
+    open_file_in_horizontal_split        = '<c-x>',
+    open_file_in_vertical_split          = '<c-v>',
+    replace_in_directory                 = 'false',
     send_to_quickfix_list                = '<c-q>',
+    show_help                            = '<f1>',
   },
 })
