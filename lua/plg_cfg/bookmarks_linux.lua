@@ -125,7 +125,7 @@ end, { desc = 'Pick bookmarked directory' })
 
 -- edit nvim config files
 local cfg = vim.fn.stdpath('config')
-Myfn.map('n', '<Leader>ea', '<cmd>e ' .. cfg .. '/lua/augroups.lua<cr>', { desc = 'augroups.lua' })
+Myfn.map('n', '<Leader>ea', '<cmd>e ' .. cfg .. '/lua/aucmds.lua<cr>', { desc = 'aucmds.lua' })
 Myfn.map('n', '<Leader>ei', '<cmd>e ' .. cfg .. '/init.lua<cr>', { desc = 'init.lua' })
 Myfn.map('n', '<Leader>ek', '<cmd>e ' .. cfg .. '/lua/keymaps.lua<cr>', { desc = 'keymaps.lua' })
 Myfn.map('n', '<Leader>em', '<cmd>e ' .. cfg .. '/lua/my_fns.lua<cr>', { desc = 'my_fns.lua' })

@@ -62,8 +62,8 @@ require('snacks').setup({
       my_default = { -- 2 pane standard
         layout = {
           box    = 'horizontal',
-          width  = 0.95,
-          height = 0.8,
+          width  = 0.85,
+          height = 0.85,
           {
             box       = 'vertical',
             border    = 'rounded',
@@ -174,37 +174,37 @@ require('snacks').setup({
 
   -- dashboard config
 
-  dashboard = {
-    enabled = false,
-    width = 45,
-    fullscreen = false,
-    preset = {
-      -- stylua: ignore 
-      keys = {
-        { icon = '', key = 'c', desc = 'Commands',  action = '<Leader>fc'  },
-        -- { icon = '', key = 'e', desc = 'Explorer',  action = '<Leader>fe'  },
-        { icon = '', key = 'f', desc = 'Find file', action = '<Leader>ff'  },
-        { icon = '', key = 'g', desc = 'Grep',      action = '<Leader>fg'  },
-        { icon = '', key = 'j', desc = 'Jumps',     action = '<Leader>fj'  },
-        { icon = '', key = 'r', desc = 'Recent',    action = '<Leader>fr'  },
-        { icon = '', key = 'z', desc = 'Zoxide',    action = '<Leader>z'   },
-      },
-    },
-  formats = {
-      key = function(item)
-        return {
-          { '[', hl = 'special' },
-          { item.key, hl = 'key' },
-          { ']', hl = 'special' },
-        }
-      end,
-    },
-    sections = {
-      { title = "If it ain't broke, don't fix it", align = 'center', padding = 1 },
-      { section = 'recent_files', current = true, cwd = false, align = 'left', limit = 9, padding = 1 },
-      { section = 'keys', align = 'left', padding = 1 },
-    },
-    },
+  -- dashboard = {
+  --   enabled = false,
+  --   width = 45,
+  --   fullscreen = false,
+  --   preset = {
+  --     -- stylua: ignore 
+  --     keys = {
+  --       { icon = '', key = 'c', desc = 'Commands',  action = '<Leader>sc'  },
+  --       -- { icon = '', key = 'e', desc = 'Explorer',  action = '<Leader>se'  },
+  --       { icon = '', key = 'f', desc = 'Find file', action = '<Leader>sf'  },
+  --       { icon = '', key = 'g', desc = 'Grep',      action = '<Leader>sg'  },
+  --       { icon = '', key = 'j', desc = 'Jumps',     action = '<Leader>sj'  },
+  --       { icon = '', key = 'r', desc = 'Recent',    action = '<Leader>sr'  },
+  --       { icon = '', key = 'z', desc = 'Zoxide',    action = '<Leader>z'   },
+  --     },
+  --   },
+  -- formats = {
+  --     key = function(item)
+  --       return {
+  --         { '[', hl = 'special' },
+  --         { item.key, hl = 'key' },
+  --         { ']', hl = 'special' },
+  --       }
+  --     end,
+  --   },
+  --   sections = {
+  --     { title = "If it ain't broke, don't fix it", align = 'center', padding = 1 },
+  --     { section = 'recent_files', current = true, cwd = false, align = 'left', limit = 9, padding = 1 },
+  --     { section = 'keys', align = 'left', padding = 1 },
+  --   },
+  --   },
 
   statuscolumn = {
     enabled = true,
@@ -306,75 +306,75 @@ require('snacks').setup({
 
 --  ──────────── pickers ─────────────
 
--- Kset('n', '<Leader>sb', '<cmd>lua Snacks.picker.buffers()<cr>', { desc = 'buffers' })
---
--- Kset(
---   'n',
---   '<Leader>sd',
---   '<cmd>lua Snacks.picker.diagnostics_buffer()<cr>',
---   { desc = 'diagnostics - buffer' }
--- )
---
--- Kset(
---   'n',
---   '<Leader>se',
---   '<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
---   { desc = 'Explorer' }
--- )
---
--- Kset(
---   'n',
---   '<Leader>x',
---   '<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
---   { desc = 'Explorer' }
--- )
---
--- Kset('n', '<Leader>sj', function()
---   local snacks = require('snacks')
---   snacks.picker({
---     source = 'jumps',
---   })
--- end, { desc = 'jumps' })
---
--- Kset('n', '<Leader>ss', function()
---   local snacks = require('snacks')
---   snacks.picker({
---     source = 'search_history',
---   })
--- end, { desc = 'search history' })
--- Kset('n', '<Leader>sg', '<cmd>lua Snacks.picker.grep()<cr>', { desc = 'grep' })
--- Kset('n', '<Leader>sh', '<cmd>lua Snacks.picker.help()<cr>', { desc = 'help' })
--- Kset(
---   'n',
---   '<Leader>sk',
---   '<cmd>lua Snacks.picker.keymaps({layout = {preview = false}})<cr>',
---   { desc = 'keymaps' }
--- )
--- Kset('n', '<Leader>sl', '<cmd>lua Snacks.picker.lines()<cr>', { desc = 'buffer lines' })
--- Kset('n', '<Leader>sm', '<cmd>lua Snacks.picker.marks()<cr>', { desc = 'marks' })
--- Kset('n', '<Leader>sn', '<cmd>lua Snacks.picker.notifications()<cr>', { desc = 'notifications' })
--- Kset('n', '<Leader>sq', '<cmd>lua Snacks.picker.qflist()<cr>', { desc = 'quick fix' })
--- Kset('n', '<Leader>sR', '<cmd>lua Snacks.picker.registers()<cr>', { desc = 'registers' })
--- Kset('n', '<Leader>su', '<cmd>lua Snacks.picker.undo()<cr>', { desc = 'undo history' })
--- Kset('n', '<Leader>sy', '<cmd>lua Snacks.lazygit.open(opts)<cr>', { desc = 'lazygit' })
---
--- Kset('n', '<Leader>sr', function()
---   vim.cmd('wshada')
---   vim.cmd('rshada!')
---   Snacks.picker.recent({ refresh = true })
--- end, { desc = 'Recent Files (Synced)' })
---
--- Kset(
---   'n',
---   '<Leader>sw',
---   '<cmd>lua Snacks.picker.grep_word()<cr>',
---   { desc = 'grep selection or word' }
--- )
---
--- Kset('n', '<Leader>sz', '<cmd>lua Snacks.zen()<cr>', { desc = 'zen mode' })
--- Kset('n', '<Leader>z', '<cmd>lua Snacks.picker.zoxide()<cr>', { desc = 'Zoxide' })
---
-Kset('n', '<Leader>[', '<cmd>lua Snacks.dashboard.open()<cr>', { desc = 'Open dashboard' })
+Kset('n', '<Leader>sb', '<cmd>lua Snacks.picker.buffers()<cr>', { desc = 'buffers' })
+
+Kset(
+  'n',
+  '<Leader>sd',
+  '<cmd>lua Snacks.picker.diagnostics_buffer()<cr>',
+  { desc = 'diagnostics - buffer' }
+)
+
+Kset(
+  'n',
+  '<Leader>se',
+  '<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
+  { desc = 'Explorer' }
+)
+
+Kset(
+  'n',
+  '<Leader>x',
+  '<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
+  { desc = 'Explorer' }
+)
+
+Kset('n', '<Leader>sj', function()
+  local snacks = require('snacks')
+  snacks.picker({
+    source = 'jumps',
+  })
+end, { desc = 'jumps' })
+
+Kset('n', '<Leader>ss', function()
+  local snacks = require('snacks')
+  snacks.picker({
+    source = 'search_history',
+  })
+end, { desc = 'search history' })
+Kset('n', '<Leader>sg', '<cmd>lua Snacks.picker.grep()<cr>', { desc = 'grep' })
+Kset('n', '<Leader>sh', '<cmd>lua Snacks.picker.help()<cr>', { desc = 'help' })
+Kset(
+  'n',
+  '<Leader>sk',
+  '<cmd>lua Snacks.picker.keymaps({layout = {preview = false}})<cr>',
+  { desc = 'keymaps' }
+)
+Kset('n', '<Leader>sl', '<cmd>lua Snacks.picker.lines()<cr>', { desc = 'buffer lines' })
+Kset('n', '<Leader>sm', '<cmd>lua Snacks.picker.marks()<cr>', { desc = 'marks' })
+Kset('n', '<Leader>sn', '<cmd>lua Snacks.picker.notifications()<cr>', { desc = 'notifications' })
+Kset('n', '<Leader>sq', '<cmd>lua Snacks.picker.qflist()<cr>', { desc = 'quick fix' })
+Kset('n', '<Leader>sR', '<cmd>lua Snacks.picker.registers()<cr>', { desc = 'registers' })
+Kset('n', '<Leader>su', '<cmd>lua Snacks.picker.undo()<cr>', { desc = 'undo history' })
+Kset('n', '<Leader>sy', '<cmd>lua Snacks.lazygit.open(opts)<cr>', { desc = 'lazygit' })
+
+Kset('n', '<Leader>sr', function()
+  vim.cmd('wshada')
+  vim.cmd('rshada!')
+  Snacks.picker.recent({ refresh = true })
+end, { desc = 'Recent Files (Synced)' })
+
+Kset(
+  'n',
+  '<Leader>sw',
+  '<cmd>lua Snacks.picker.grep_word()<cr>',
+  { desc = 'grep selection or word' }
+)
+
+Kset('n', '<Leader>sz', '<cmd>lua Snacks.zen()<cr>', { desc = 'zen mode' })
+Kset('n', '<Leader>z', '<cmd>lua Snacks.picker.zoxide()<cr>', { desc = 'Zoxide' })
+
+-- Kset('n', '<Leader>[', '<cmd>lua Snacks.dashboard.open()<cr>', { desc = 'Open dashboard' })
 --
 -- -- Toggle terminal in a centered floating window
 -- Kset({ 'n', 't' }, '<Leader>st', function()
@@ -404,7 +404,7 @@ Kset('n', '<Leader>[', '<cmd>lua Snacks.dashboard.open()<cr>', { desc = 'Open da
 -- end, { desc = 'cmd history' })
 --
 -- Indent toggle
-Kset('n', '<leader>si', function()
+Kset('n', '<leader>i', function()
   if Snacks.indent.enabled then
     Snacks.indent.disable()
   else
@@ -421,14 +421,13 @@ Kset('n', '<Leader>sf', function()
   })
 end, { desc = 'files cwd' })
 --
--- Kset('n', '<Leader><space>', function()
---   local snacks = require('snacks')
---   snacks.picker({
---     source = 'files',
---     title = Myfn.short_cwd(),
---   })
--- end, { desc = 'Files cwd' })
---
+Kset('n', '<Leader><space>', function()
+  local snacks = require('snacks')
+  snacks.picker({
+    source = 'files',
+    title = Myfn.short_cwd(),
+  })
+end, { desc = 'Files cwd' })
 
 --  ────────── for deletes ───────────
 

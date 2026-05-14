@@ -26,9 +26,10 @@ for _, glob in ipairs(exclude_globs) do
   table.insert(hidden_patterns, p .. '$')
 end
 
--- Start oil
+-- Keymap to Start oil
 Kset('n', '=', '<cmd>Oil .<cr>', { desc = 'Oil full screen' })
 
+-- set up oil
 -- stylua: ignore
 require('oil').setup({
   buf_options                   = { buflisted = false, bufhidden = 'hide' },
@@ -44,7 +45,7 @@ require('oil').setup({
 
   win_options = {
     conceallevel = 3,
-    signcolumn   = 'yes',
+    signcolumn   = 'no',
     wrap         = true,
   },
 
@@ -92,7 +93,7 @@ vim.api.nvim_create_autocmd('DirChanged', {
   end,
 })
 
--- Create an autocmd to apply the wrap-around mapping only in Oil buffers
+-- Apply the wrap-around mapping only in Oil buffers
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'oil',
   callback = function()

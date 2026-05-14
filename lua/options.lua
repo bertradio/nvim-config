@@ -231,14 +231,4 @@ vim.opt.foldcolumn = '0'
 vim.opt.wildchar = 0
 vim.opt.wildoptions = ''
 
--- Force arrows to behave in command mode
--- These 'cmap' rules ensure that if a popup is visible, we don't trigger history
-vim.keymap.set('c', '<Down>', function()
-  return vim.fn.pumvisible() == 1 and '<C-n>' or '<Down>'
-end, { expr = true })
-
-vim.keymap.set('c', '<Up>', function()
-  return vim.fn.pumvisible() == 1 and '<C-p>' or '<Up>'
-end, { expr = true })
-
 return M

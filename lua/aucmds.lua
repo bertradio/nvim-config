@@ -1,9 +1,10 @@
 --    ╭────────────────────────────╮
---    │        autroups.lua        │
+--    │        autcmds.lua         │
 --    ╰────────────────────────────╯
 
 -- code modified by Perplexity for more robustness - 7/8/25
 -- adding callbacks and pcall for error trapping
+-- 05/10/26 - changed name from autogroups to aucmds
 
 ---------- >> Definitions to make code clearer << ---------------
 

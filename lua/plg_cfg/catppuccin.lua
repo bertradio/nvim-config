@@ -8,7 +8,7 @@
 --                  removed no_italic/no_bold (defaults), added fzf integration,
 --                  removed likely-invalid blink_indent key.
 
-vim.pack.add({ Gh('catppuccin/nvim') })
+vim.pack.add({ { src = Gh('catppuccin/nvim'), name = 'catppuccin' } })
 
 -- Set before setup and colorscheme to ensure true color is active
 vim.opt.termguicolors = true

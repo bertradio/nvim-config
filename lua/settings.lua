@@ -5,7 +5,7 @@
 -- Optimized for Neovim 0.12
 -- General settings and global logic
 -- From Gemini. Options moved to options.lua
--- 04/30/26 moved keymaps and augroups to plugin_setup.lua to load on UI entry
+-- 04/30/26 moved keymaps and aucmds to plugin_setup.lua to load on UI entry
 
 -- 1. PERFORMANCE FIRST
 if vim.loader then

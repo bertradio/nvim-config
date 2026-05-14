@@ -153,9 +153,9 @@ fzf.setup({
       ['ctrl-q']  = actions.file_sel_to_qf,
       ['alt-l']   = actions.file_sel_to_ll,
       ['ctrl-h']  = function(_, opts)
-                        opts.hidden = not opts.hidden
-                        vim.notify('Hidden files: ' .. (opts.hidden and 'ON' or 'OFF'), vim.log.levels.INFO)
-                        require('fzf-lua').files(opts)
+                      opts.hidden = not opts.hidden
+                      vim.notify('Hidden files: ' .. (opts.hidden and 'ON' or 'OFF'), vim.log.levels.INFO)
+                      require('fzf-lua').files(opts)
                     end,
     },
   },
@@ -231,7 +231,7 @@ fzf.setup({
   },
 
   jumps = {
-    winopts = { preview = { layout = 'vertical' } },
+    winopts = { preview = { layout = 'horizontal' } },
   },
 
   buffers = {
@@ -245,8 +245,9 @@ fzf.setup({
 })
 
 -- stylua: ignore
+-- set keymaps
 local function maps()
-  Kset('n', '<Leader><space>', '<cmd>FzfLua files<cr>',                { desc = 'find files' })
+  -- Kset('n', '<Leader><space>', '<cmd>FzfLua files<cr>',                { desc = 'find files' })
   Kset('n', '<Leader>fb',      '<cmd>FzfLua buffers<cr>',              { desc = 'buffers' })
   Kset('n', '<Leader>fc',      '<cmd>FzfLua command_history<cr>',      { desc = 'command history' })
   Kset('n', '<Leader>fd',      '<cmd>FzfLua diagnostics_document<cr>', { desc = 'diagnostics' })
@@ -262,18 +263,18 @@ local function maps()
   Kset('n', '<Leader>fs',      '<cmd>FzfLua search_history<cr>',       { desc = 'search history' })
   Kset('n', '<Leader>fu',      '<cmd>FzfLua builtin<cr>',              { desc = 'builtin fzf' })
   Kset('n', 'zz',              '<cmd>FzfLua spell_suggest<cr>',        { desc = 'spell suggest' })
-  Kset('n', '<Leader>z', function()
-    require('fzf-lua').zoxide({
-      winopts = {
-        height = 0.9,      -- Adjust for a shorter horizontal "strip"
-        width  = 0.9,       -- Full width
-        preview = {
-          layout = 'horizontal',
-          hidden = 'hidden', -- This forces the preview to be tucked away
-        },
-      },
-    })
-  end, { desc = 'zoxide (no preview)' })
+  -- Kset('n', '<Leader>z', function()
+  --   require('fzf-lua').zoxide({
+  --     winopts = {
+  --       height = 0.9,      -- Adjust for a shorter horizontal "strip"
+  --       width  = 0.9,       -- Full width
+  --       preview = {
+  --         layout = 'horizontal',
+  --         hidden = 'hidden', -- This forces the preview to be tucked away
+  --       },
+  --     },
+  --   })
+  -- end, { desc = 'zoxide (no preview)' })
 
 end
 

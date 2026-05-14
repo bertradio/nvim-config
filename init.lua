@@ -44,21 +44,20 @@ vim.api.nvim_create_autocmd('User', {
 })
 
 -- Open the dashboard if Neovim is started with no arguments
-vim.api.nvim_create_autocmd('VimEnter', {
-  callback = function()
-    if vim.fn.argc() == 0 and vim.api.nvim_buf_get_name(0) == '' then
-      -- 'redraw' clears any potential startup messages
-      -- 'silent!' prevents the plugin from echoing its own status
-      vim.cmd('silent! lua MiniStarter.open()')
-      vim.cmd('redraw')
-    end
-  end,
-})
+-- vim.api.nvim_create_autocmd('VimEnter', {
+--   callback = function()
+--     if vim.fn.argc() == 0 and vim.api.nvim_buf_get_name(0) == '' then
+--       -- 'redraw' clears any potential startup messages
+--       -- 'silent!' prevents the plugin from echoing its own status
+--       vim.cmd('silent! lua MiniStarter.open()')
+--       vim.cmd('redraw')
+--     end
+--   end,
+-- })
 
 -- for all keymaps
 Kset = vim.keymap.set
 
--- initialization file
-require('plg_cfg.mini') -- need to do this first so dashboard displays
+-- initialization files
 require('plugin_setup') -- autocmds to set order of lazy loading
 require('settings') -- calls options.lua

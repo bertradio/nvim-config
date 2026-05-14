@@ -21,7 +21,7 @@ Kset({ 'n' }, '<Leader>ba', '<cmd>bufdo bwipeout<cr>', { desc = 'delete all' })
 Kset({ 'n' }, '<Leader>k', '<cmd>bd!<cr>', { desc = 'Kill buffer' })
 
 -- Delete all buffers except the current one
-vim.keymap.set('n', '<leader>bo', function()
+Kset('n', '<leader>bo', function()
   local current_buf = vim.api.nvim_get_current_buf()
   local buffers = vim.api.nvim_list_bufs()
   for _, buf in ipairs(buffers) do
@@ -219,3 +219,5 @@ vim.keymap.set('n', '/', function()
 end, { expr = true })
 
 --  ────── end code for search ───────
+
+Kset('n', 'fd', ':find', { desc = 'find' })

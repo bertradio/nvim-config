@@ -16,7 +16,7 @@ vim.api.nvim_create_autocmd('DirChanged', {
   end,
 })
 
-kset('n', '<Leader>f', function()
+Kset('n', '<Leader>[', function()
   require('mini.files').open()
 end, { desc = 'mini files' })
 
@@ -61,15 +61,15 @@ require('mini.files').setup({
   windows = {
     -- Maximum number of windows to show side by side
     -- max_number = math.huge,
-    max_number = 2,
+    max_number = 1,
     -- Whether to show preview of file/directory under cursor
     preview = false,
     -- Width of focused window
-    width_focus = 50,
+    width_focus = 60,
     -- Width of non-focused window
     width_nofocus = 15,
     -- Width of preview window
-    width_preview = 25,
+    width_preview = 35,
   },
 })
 
@@ -100,8 +100,8 @@ vim.api.nvim_create_autocmd('User', {
   callback = function(args)
     local buf_id = args.data.buf_id
     -- Tweak left-hand side of mapping to your liking
-    kset('n', 'g.', toggle_dotfiles, { buffer = buf_id })
-    kset('n', '-', require('mini.files').close, { buffer = buf_id })
-    -- kset('n', 'o', gio_open, { buffer = buf_id })
+    Kset('n', 'g.', toggle_dotfiles, { buffer = buf_id })
+    Kset('n', '<Leade>[', require('mini.files').close, { buffer = buf_id })
+    -- Kset('n', 'o', gio_open, { buffer = buf_id })
   end,
 })

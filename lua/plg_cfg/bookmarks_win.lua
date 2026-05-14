@@ -28,8 +28,8 @@ end
 Myfn.map(
   'n',
   '<Leader>ea',
-  '<cmd>e C:/Users/bertk/AppData/Local/nvim/lua/augroups.lua<cr>',
-  { desc = 'augroups.lua' }
+  '<cmd>e C:/Users/bertk/AppData/Local/nvim/lua/aucmds.lua<cr>',
+  { desc = 'aucmds.lua' }
 )
 Myfn.map(
   'n',
