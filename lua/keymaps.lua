@@ -129,7 +129,7 @@ end, { silent = true, desc = 'Folds: Toggle' })
 -- update all plugins
 Kset('n', '<leader>U', function()
   vim.notify('Updating plugins...', vim.log.levels.INFO)
-  vim.pack.update()
+  vim.cmd('packupdate')
 end, { desc = 'Update plugins' })
 
 -- toggle boolean

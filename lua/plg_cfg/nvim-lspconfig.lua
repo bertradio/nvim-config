@@ -28,6 +28,10 @@ end
 -- server configurations
 local servers = {
   lua_ls = {
+    bashls = {
+      cmd = { 'bash-language-server', 'start' },
+      settings = { bashIde = { globPattern = '**/*@(.sh|.inc|.bash|.command)' } },
+    },
     cmd = { 'lua-language-server' },
     settings = {
       Lua = {
@@ -35,18 +39,14 @@ local servers = {
         diagnostics = {
           globals = { 'Snacks', 'Status', 'cx', 'ui', 'ya', 'vim', 'MiniFiles' },
         },
-        workspace = { checkThirdParty = false },
         telemetry = { enable = false },
+        workspace = { checkThirdParty = false },
       },
     },
   },
   marksman = { filetypes = { 'markdown' } },
   taplo = {},
   vimls = {},
-  bashls = {
-    cmd = { 'bash-language-server', 'start' },
-    settings = { bashIde = { globPattern = '**/*@(.sh|.inc|.bash|.command)' } },
-  },
 }
 
 for name, conf in pairs(servers) do
@@ -63,10 +63,11 @@ for name, conf in pairs(servers) do
 end
 
 -- Diagnostic UI Customization
+-- stylua: ignore 
 vim.diagnostic.config({
-  underline = true,
+  float            = { border  = 'rounded' }, -- Matches your aesthetic
+  severity_sort    = true,
+  underline        = true,
   update_in_insert = false,
-  severity_sort = true,
-  float = { border = 'rounded' }, -- Matches your aesthetic
-  virtual_text = { spacing = 4, prefix = '●' },
+  virtual_text     = { spacing = 4, prefix = '●' },
 })

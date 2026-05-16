@@ -64,32 +64,30 @@ require('blink.cmp').setup({
   },
 
   appearance = { nerd_font_variant = 'mono' },
-  signature = { enabled = true, window = { border = 'rounded' } },
+  signature  = { enabled = true, window = { border = 'rounded' } },
 
   keymap = {
-    preset        = 'default',
-    ['<Up>']      = { 'select_prev', 'fallback' },
-    ['<Down>']    = { 'select_next', 'fallback' },
     ['<C-space>'] = { 'show', 'show_documentation', 'hide' },
-    ['<Tab>']     = { 'snippet_forward', 'accept', 'fallback' },
-    ['<S-Tab>']   = { 'snippet_backward', 'fallback' },
     ['<CR>']      = { 'fallback' },
+    ['<Down>']    = { 'select_next', 'fallback' },
+    ['<S-Tab>']   = { 'snippet_backward', 'fallback' },
+    ['<Tab>']     = { 'snippet_forward', 'accept', 'fallback' },
+    ['<Up>']      = { 'select_prev', 'fallback' },
+    preset        = 'default',
   },
 
   cmdline = {
     enabled = true,
-    -- Removed 'preset = none' to allow blink to handle navigation properly
     keymap = {
-      ['<Up>']   = { 'select_prev', 'fallback' },
-      ['<Down>'] = { 'select_next', 'fallback' },
-      ['<Tab>']  = { 'accept', 'fallback' },
-      -- Added C-n/C-p as reliable alternatives for mini.cmdline
       ['<C-n>']  = { 'select_next', 'fallback' },
       ['<C-p>']  = { 'select_prev', 'fallback' },
+      ['<Down>'] = { 'select_next', 'fallback' },
+      ['<Tab>']  = { 'accept', 'fallback' },
+      ['<Up>']   = { 'select_prev', 'fallback' },
     },
     completion = {
-      menu       = { auto_show = true },
       ghost_text = { enabled   = true },
+      menu       = { auto_show = true },
     },
     sources = function()
       local type = vim.fn.getcmdtype()
@@ -147,14 +145,14 @@ require('blink.cmp').setup({
     default = { 'lsp', 'snippets', 'buffer', 'path', 'spell' },
 
     providers = {
-      lsp      = { name = 'LSP', module      = 'blink.cmp.sources.lsp', score_offset      = 80 },
-      snippets = { name = 'Snippets', module = 'blink.cmp.sources.snippets', score_offset = 80 },
       buffer   = {
         name               = 'Buffer',
         module             = 'blink.cmp.sources.buffer',
         score_offset       = 80,
         min_keyword_length = 2,
       },
+      lsp      = { name = 'LSP', module      = 'blink.cmp.sources.lsp', score_offset      = 80 },
+      snippets = { name = 'Snippets', module = 'blink.cmp.sources.snippets', score_offset = 80 },
       spell = {
         name         = 'Spell',
         module       = 'blink-cmp-spell',
@@ -182,12 +180,12 @@ vim.opt.spellfile = spellfile_path
 vim.api.nvim_create_autocmd('FileType', {
   pattern  = { 'markdown', 'text', 'gitcommit', 'rst', 'latex' },
   callback = function()
-    vim.opt_local.spell        = true
-    vim.opt_local.spelllang    = SPELL_LANGS
-    vim.opt_local.spellfile    = spellfile_path
     vim.opt_local.conceallevel = 2
-    vim.opt_local.wrap         = true
     vim.opt_local.linebreak    = true
+    vim.opt_local.spell        = true
+    vim.opt_local.spellfile    = spellfile_path
+    vim.opt_local.spelllang    = SPELL_LANGS
+    vim.opt_local.wrap         = true
   end,
 })
 

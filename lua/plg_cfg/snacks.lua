@@ -133,7 +133,8 @@ require('snacks').setup({
 
       -- stylua: ignore 
       explorer = {
-       replace_netrw = true, -- Replace netrw with the snacks explorer
+        exclude = {}, -- don't exclude any files
+        replace_netrw = true, -- Replace netrw with the snacks explorer
         layout = {
           { preview = true },
           layout = {
@@ -141,14 +142,14 @@ require('snacks').setup({
             height = 0.85,
             width  = 0.90,
             {
-              border    = 'rounded',
+              border    = 'double',
               box       = 'vertical',
               title     = '{source} {live} {flags}',
               title_pos = 'center',
               { win     = 'input', height = 1, border = 'bottom' },
               { win     = 'list', border  = 'none' },
             },
-            { win = 'preview', border = 'rounded', width = 0.65, title = '{preview}' },
+            { win = 'preview', border = 'double', width = 0.65, title = '{preview}' },
           },
         },
         win = {
@@ -209,6 +210,7 @@ Kset('n', '<Leader>sR', '<cmd>lua Snacks.picker.registers()<cr>', { desc = 'regi
 Kset('n', '<Leader>sb', '<cmd>lua Snacks.picker.buffers()<cr>', { desc = 'buffers' })
 Kset('n', '<Leader>sg', '<cmd>lua Snacks.picker.grep()<cr>', { desc = 'grep' })
 Kset('n', '<Leader>sh', '<cmd>lua Snacks.picker.help()<cr>', { desc = 'help' })
+Kset('n', '<Leader>sj', '<cmd>lua Snacks.picker.jumps()<cr>', { desc = 'jumps' })
 Kset('n', '<Leader>sl', '<cmd>lua Snacks.picker.lines()<cr>', { desc = 'buffer lines' })
 Kset('n', '<Leader>sm', '<cmd>lua Snacks.picker.marks()<cr>', { desc = 'marks' })
 Kset('n', '<Leader>sn', '<cmd>lua Snacks.picker.notifications()<cr>', { desc = 'notifications' })
@@ -238,13 +240,6 @@ Kset(
   '<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
   { desc = 'Explorer' }
 )
-
-Kset('n', '<Leader>sj', function()
-  local snacks = require('snacks')
-  snacks.picker({
-    source = 'jumps',
-  })
-end, { desc = 'jumps' })
 
 Kset('n', '<Leader>ss', function()
   local snacks = require('snacks')

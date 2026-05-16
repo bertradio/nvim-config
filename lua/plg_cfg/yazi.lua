@@ -33,7 +33,7 @@ require('yazi').setup({
   yazi_floating_window_border = 'double',
 
   -- floating window scaling factor. 1 means 100%, 0.9 means 90%, etc.
-  floating_window_scaling_factor = 1,
+  floating_window_scaling_factor = 0.85,
 
   hooks = {
     -- if yazi not opening file, change cwd to one in yazi

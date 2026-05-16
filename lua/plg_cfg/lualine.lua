@@ -6,6 +6,11 @@
 -- (Merged: Oil buffers in tabline show current directory as their label)
 -- Rewrite to optimize from Gemini
 
+vim.pack.add({
+  Gh('nvim-tree/nvim-web-devicons'),
+  Gh('nvim-lualine/lualine.nvim'),
+})
+
 --  ━━━━━ display functions for use on status line ━━━━━
 
 --  ───── number of words in buffer ─────
@@ -95,11 +100,6 @@ local function oil_tab_fmt(name, context)
 end
 
 --  ━━━━━━ end helper functions ━━━━━━
-
-vim.pack.add({
-  Gh('nvim-tree/nvim-web-devicons'),
-  Gh('nvim-lualine/lualine.nvim'),
-})
 
 -- stylua: ignore 
 require('lualine').setup({

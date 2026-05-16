@@ -13,12 +13,13 @@
 -- Bookmark configuration
 ----------------------------------------------------------
 local cwd_config = {
-  H = '$HOME/',
   b = '$HOME/bin',
   c = '$HOME/.config',
   d = '$HOME/.Download',
   h = '$HOME/.config/nvim/hold/',
+  H = '$HOME/',
   l = '$HOME/.local/bin',
+  L = '$HOME/.config/nvim/lua',
   m = '$HOME/Insync/bertkleinman@outlook.com/OneDrive/My Docs/Moving Forward/',
   n = '$HOME/.config/nvim',
   o = '$HOME/Insync/bertkleinman@outlook.com/OneDrive/My Docs/',

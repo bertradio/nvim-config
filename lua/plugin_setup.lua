@@ -13,20 +13,23 @@
 vim.api.nvim_create_autocmd('UIEnter', {
   once = true,
   callback = function()
+    -- 1. Load the Theme and Layout structures first
     require('plg_cfg.catppuccin')
+    require('plg_cfg.which-key') -- Load WK early so it captures everything following it
+    require('keymaps') -- Load global core maps
+    -- 2. Load the Statuslines / UI wrappers
     require('plg_cfg.mini')
-    require('aucmds')
-    require('keymaps')
     require('plg_cfg.lualine')
+    require('plg_cfg.dressing')
+    -- 3. Load the heavy toolchains (they will instantly hook into WK)
     require('plg_cfg.nvim-lspconfig')
     require('plg_cfg.fzf-lua')
-    require('plg_cfg.tree-sitter-manager')
-    require('plg_cfg.winsep')
-    require('plg_cfg.dressing')
     require('plg_cfg.snacks')
+    -- 4 Others
+    require('plg_cfg.tree-sitter-manager')
     require('plg_cfg.blink-spell')
+    require('aucmds')
     require('plg_cfg.mason')
-    require('plg_cfg.which-key')
     require('plg_cfg.yazi')
     if Myfn.is_windows() then
       require('plg_cfg.bookmarks_win')
@@ -36,7 +39,7 @@ vim.api.nvim_create_autocmd('UIEnter', {
   end,
 })
 
--- load on entering buffer
+-- load on entering first buffer
 vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
   once = true,
   callback = function()
@@ -44,10 +47,11 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
     require('plg_cfg.rainbow')
     require('plg_cfg.conform')
     require('plg_cfg.pretty-comment')
+    require('plg_cfg.winsep')
   end,
 })
 
---load on enter insert mode
+--load on first enter into insert mode
 vim.api.nvim_create_autocmd({ 'InsertEnter' }, {
   once = true,
   callback = function()

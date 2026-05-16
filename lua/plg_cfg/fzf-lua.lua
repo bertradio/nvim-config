@@ -34,19 +34,19 @@ fzf.setup({
   'fzf-vim',
   global_python_bin = 'python3',
   defaults = {
-    git_icons   = true,
-    file_icons  = true,
     color_icons = true,
+    file_icons  = true,
+    git_icons   = true,
     silent      = true,
   },
 
   winopts = {
-    height     = 0.90,
-    width      = 0.9,
-    row        = 0.58,
-    col        = 0.50,
     border     = 'rounded',
+    col        = 0.50,
     fullscreen = false,
+    height     = 0.90,
+    row        = 0.58,
+    width      = 0.9,
     preview = {
       border           = 'border',
       delay            = 100,
@@ -63,16 +63,16 @@ fzf.setup({
       vertical         = 'down:45%',
       wrap             = 'wrap',
       winopts = {
-        number         = false,
-        relativenumber = false,
+        cursorcolumn   = false,
         cursorline     = true,
         cursorlineopt  = 'both',
-        cursorcolumn   = false,
-        signcolumn     = 'yes',
-        list           = false,
+        delay          = 0,
         foldenable     = true,
         foldmethod     = 'expr',
-        delay          = 0,
+        list           = false,
+        number         = false,
+        relativenumber = false,
+        signcolumn     = 'yes',
       },
     },
   },
@@ -106,19 +106,19 @@ fzf.setup({
 
   actions = {
     buffers = {
-      ['default'] = actions.buf_edit,
       ['ctrl-s']  = actions.buf_split,
-      ['ctrl-v']  = actions.buf_vsplit,
       ['ctrl-t']  = actions.buf_tabedit,
+      ['ctrl-v']  = actions.buf_vsplit,
+      ['default'] = actions.buf_edit,
     },
   },
 
   fzf_opts = {
-    ['--info']   = 'inline',
-    ['--height'] = '100%',
-    ['--layout'] = 'reverse',
     ['--border'] = 'none',
     ['--exact']  = '',
+    ['--height'] = '100%',
+    ['--info']   = 'inline',
+    ['--layout'] = 'reverse',
   },
 
   files = {
@@ -127,8 +127,8 @@ fzf.setup({
     cwd_prompt             = true,
     cwd_prompt_shorten_len = 32,
     cwd_prompt_shorten_val = 1,
-    fd_opts                = [[--color = never --type f --hidden --follow --exclude .git]] .. get_exclude_args(),
-    file_icons             = true,
+    -- fd_opts                = [[--color = never --type f --hidden --follow --exclude .git]] .. get_exclude_args(),
+ fd_opts = '--color=never --type f --follow --exclude .git' .. ' ' .. get_exclude_args(),   file_icons             = true,
     formatter              = 'path.filename_first',
     git_icons              = true,
     header                 = false,
@@ -145,13 +145,13 @@ fzf.setup({
       ['FzfLuaFileName'] = { fg   = 'white' }, -- Keeps the filename bright
     },
     actions = {
-      ['default'] = actions.file_edit,
-      ['ctrl-s']  = actions.file_split,
-      ['ctrl-v']  = actions.file_vsplit,
-      ['ctrl-t']  = actions.file_tabedit,
+      ['alt-l']   = actions.file_sel_to_ll,
       ['alt-q']   = actions.file_sel_to_qf,
       ['ctrl-q']  = actions.file_sel_to_qf,
-      ['alt-l']   = actions.file_sel_to_ll,
+      ['ctrl-s']  = actions.file_split,
+      ['ctrl-t']  = actions.file_tabedit,
+      ['ctrl-v']  = actions.file_vsplit,
+      ['default'] = actions.file_edit,
       ['ctrl-h']  = function(_, opts)
                       opts.hidden = not opts.hidden
                       vim.notify('Hidden files: ' .. (opts.hidden and 'ON' or 'OFF'), vim.log.levels.INFO)
@@ -207,13 +207,13 @@ fzf.setup({
     rg_opts = '--column --line-number --no-heading --color=never --smart-case --max-columns=4096 -e',
     winopts = { preview = { layout = 'horizontal' } },
     actions = {
-      ['default'] = actions.file_edit,
-      ['ctrl-s']  = actions.file_split,
-      ['ctrl-v']  = actions.file_vsplit,
-      ['ctrl-t']  = actions.file_tabedit,
+      ['alt-l']   = actions.file_sel_to_ll,
       ['alt-q']   = actions.file_sel_to_qf,
       ['ctrl-q']  = actions.file_sel_to_qf,
-      ['alt-l']   = actions.file_sel_to_ll,
+      ['ctrl-s']  = actions.file_split,
+      ['ctrl-t']  = actions.file_tabedit,
+      ['ctrl-v']  = actions.file_vsplit,
+      ['default'] = actions.file_edit,
       ['ctrl-h']  = function(_, opts)
                       opts.hidden = not opts.hidden
                       vim.notify('Hidden files: ' .. (opts.hidden and 'ON' or 'OFF'), vim.log.levels.INFO)
@@ -223,11 +223,11 @@ fzf.setup({
   },
 
   oldfiles = {
-    prompt                  = 'Recent ❯ ',
     cwd_only                = false,
-    winopts                 = { preview = { layout = 'horizontal' } },
     include_current_session = true,
+    prompt                  = 'Recent ❯ ',
     stat_file               = true,
+    winopts                 = { preview = { layout = 'horizontal' } },
   },
 
   jumps = {
@@ -263,19 +263,6 @@ local function maps()
   Kset('n', '<Leader>fs',      '<cmd>FzfLua search_history<cr>',       { desc = 'search history' })
   Kset('n', '<Leader>fu',      '<cmd>FzfLua builtin<cr>',              { desc = 'builtin fzf' })
   Kset('n', 'zz',              '<cmd>FzfLua spell_suggest<cr>',        { desc = 'spell suggest' })
-
-  -- Kset('n', '<Leader>z', function()
-  --   require('fzf-lua').zoxide({
-  --     winopts = {
-  --       height = 0.9,      -- Adjust for a shorter horizontal "strip"
-  --       width  = 0.9,       -- Full width
-  --       preview = {
-  --         layout = 'horizontal',
-  --         hidden = 'hidden', -- This forces the preview to be tucked away
-  --       },
-  --     },
-  --   })
-  -- end, { desc = 'zoxide (no preview)' })
 
 end
 

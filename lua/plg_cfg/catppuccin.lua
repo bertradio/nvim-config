@@ -16,11 +16,10 @@ vim.opt.termguicolors = true
 -- stylua: ignore
 require('catppuccin').setup({
   flavour                = 'mocha',
-  transparent_background = false,
   show_end_of_buffer     = false,
   styles                 = { comments = { 'italic' } },
+  transparent_background = false,
 
-  -- stylua: ignore
   highlight_overrides = {
     all = function(colors)
       return {
@@ -32,44 +31,43 @@ require('catppuccin').setup({
     mocha = function(colors)
       return {
         Comment             = { bg = '#1f1f1f', style     = { 'italic' } },
+        CurSearch           = { fg = colors.blue,   bg    = colors.white }, -- currently selected match
         Cursor              = { bg = '#a8a8a8' },
         CursorLine          = { bg = '#273746' },
-        LineNr              = { bg = '#262626', fg        = 'Grey' },
-        Folded              = { bg = '#262626', fg        = '#ffffff' },
         FoldColumn          = { bg = '#262626', fg        = colors.sapphire },
-        FzfLuaSearch        = { fg = colors.yellow, style = { 'bold' } },
+        Folded              = { bg = '#262626', fg        = '#ffffff' },
         FzfLuaGrep          = { fg = colors.yellow, style = { 'bold' } },
-        -- FzfLuaGrepHighlight = { fg = colors.sky,    style = { 'bold' } },
         FzfLuaGrepHighlight = { fg = colors.red,    style = { 'bold' } },
+        FzfLuaSearch        = { fg = colors.yellow, style = { 'bold' } },
+        LineNr              = { bg = '#262626', fg        = 'Grey' },
         Search              = { fg = colors.base,   bg    = colors.yellow },  -- general search matches
-        CurSearch           = { fg = colors.blue,   bg    = colors.white }, -- currently selected match
     }
     end,
   },
 
- -- stylua: ignore
   integrations = {
     blink_cmp          = { style = 'bordered' },
     flash              = true,
     fzf                = true,   -- base FzfLua theming; needed for highlight_overrides above to build on
     markdown           = true,
     mason              = false,
-    -- noice              = false,
+    mini               = { enabled = true, indentscope_color = '' },
     rainbow_delimiters = true,
     render_markdown    = true,
-    mini               = { enabled = true, indentscope_color = '' },
+
     colorful_winsep = {
       enabled = true,
       color = "yellow",
     },
+
     native_lsp = {
         enabled = true,
         virtual_text = {
           errors      = { 'italic' },
           hints       = { 'italic' },
-          warnings    = { 'italic' },
           information = { 'italic' },
           ok          = { 'italic' },
+          warnings    = { 'italic' },
         },
         underlines = {
           errors      = { 'underline' },

@@ -11,7 +11,7 @@
 -- 05/04/26 - fixed issue with recent not updating by adding rshada! to shortcut
 -- 05/08/26 - cleaned up and optimized starter
 
-vim.pack.add({ { src = 'http://github.com/nvim-mini/mini.nvim', branch = 'main' } })
+vim.pack.add({ { src = Gh('nvim-mini/mini.nvim'), branch = 'main' } })
 
 -- delay some mini.ai mapping
 vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile', 'InsertEnter' }, {
@@ -58,14 +58,14 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile', 'InsertEnter' }, {
     -- stylua: ignore
     require('mini.move').setup({
       mappings = {
-        left       = '<C-left>',
-        right      = '<C-right>',
         down       = '<C-down>',
-        up         = '<C-up>',
+        left       = '<C-left>',
+        line_down  = '<C-down>',
         line_left  = '<C-left>',
         line_right = '<C-right>',
-        line_down  = '<C-down>',
         line_up    = '<C-up>',
+        right      = '<C-right>',
+        up         = '<C-up>',
       },
     })
 
@@ -81,14 +81,14 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile', 'InsertEnter' }, {
         -- do not double quote before words
         ["'"] = {
           action = 'closeopen',
-          pair = "''",
           neigh_pattern = '[^%w][^%w]',
+          pair = "''",
           register = { cr = false },
         },
         ['"'] = {
           action = 'closeopen',
-          pair = '""',
           neigh_pattern = '[^%w][^%w]',
+          pair = '""',
           register = { cr = false },
         },
       },
@@ -99,10 +99,10 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile', 'InsertEnter' }, {
     mappings = {
       add            = 'gza',     -- Add surround
       delete         = 'gzd',     -- Delete surround
-      replace        = 'gzr',     -- Replace surround
       find           = 'gzf',     -- Find to the right
       find_left      = 'gzF',     -- Find to the left
       highlight      = 'gzh',     -- Highlight surrounding
+      replace        = 'gzr',     -- Replace surround
       update_n_lines = 'gzn',     -- Update n_lines
     },
     n_lines = 50,                 -- search window for surroundings
@@ -113,24 +113,23 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile', 'InsertEnter' }, {
 --  ───── ───── ───── mini.starter setup - code from Gemini ───── ───── ─────
 
 local starter = require('mini.starter')
+local num_of_recent = 6 -- number of recent files to display
 
+-- stylua: ignore 
 starter.setup({
   autoopen = false,
   auto_setup = false,
   evaluate_single = true,
   query_line_prefix = '',
   show_usage = false,
+
+  header = "If it ain't broke, don't fix it!",
   footer = function()
     return ''
   end,
-  header = "If it ain't broke, don't fix it!",
+
   items = {
-    starter.sections.recent_files(7, false, false),
-    {
-      name = 'New file',
-      action = 'enew',
-      section = '',
-    },
+    starter.sections.recent_files(num_of_recent, false, false),
     {
       name = 'Explorer',
       action = function()
@@ -146,6 +145,18 @@ starter.setup({
       section = '',
     },
     {
+      name = 'Grep',
+      action = function()
+        vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>sg', true, true, true))
+      end,
+      section = '',
+    },
+    {
+      name = 'New file',
+      action = 'enew',
+      section = '',
+    },
+    {
       name = 'Recent Files',
       action = function()
         vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>sr', true, true, true))
@@ -155,7 +166,7 @@ starter.setup({
     {
       name = 'Yazi',
       action = function()
-  vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>y', true, true, true))
+        vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>y', true, true, true))
       end,
       section = '',
     },
@@ -174,8 +185,8 @@ local function open_dashboard()
   pcall(function()
     require('mini.starter').open()
     -- Maintain your clean, mid-century modern aesthetic
-    vim.api.nvim_set_hl(0, 'MiniStarterQuery', { link = 'Normal' })
     vim.api.nvim_set_hl(0, 'MiniStarterFooter', { link = 'Normal' })
+    vim.api.nvim_set_hl(0, 'MiniStarterQuery', { link = 'Normal' })
     vim.cmd('redraw')
   end)
 end

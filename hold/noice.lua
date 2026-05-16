@@ -85,7 +85,7 @@ require('noice').setup({
   views = {
     cmdline_popup = {
       -- position = { row   = 12, col    = '50%' },
-      position = { row   = 20, col    = '50%' },
+      position = { row   = 21, col    = '50%' },
       size     = { width = 60, height = 'auto' },
     },
     popupmenu = {
