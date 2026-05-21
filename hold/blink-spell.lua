@@ -14,6 +14,8 @@ vim.pack.add({
   { src = Gh('saghen/blink.cmp'), version = 'v1.10.2' },
 })
 
+local blink = require('blink.cmp')
+
 --  ──────── add my custom snippets ─────────
 
 require('plg_cfg.my_snippets')
@@ -56,17 +58,17 @@ end
 
 -- ── blink.cmp config ──────────────────────────────────────────────────────────
 
--- stylua: ignore 
-require('blink.cmp').setup({
+-- stylua: ignore
+blink.setup({
 
-  snippets = {
+  snippets   = {
     preset = 'luasnip',
   },
 
   appearance = { nerd_font_variant = 'mono' },
   signature  = { enabled = true, window = { border = 'rounded' } },
 
-  keymap = {
+  keymap     = {
     ['<C-space>'] = { 'show', 'show_documentation', 'hide' },
     ['<CR>']      = { 'fallback' },
     ['<Down>']    = { 'select_next', 'fallback' },
@@ -76,7 +78,7 @@ require('blink.cmp').setup({
     preset        = 'default',
   },
 
-  cmdline = {
+  cmdline    = {
     enabled = true,
     keymap = {
       ['<C-n>']  = { 'select_next', 'fallback' },
@@ -86,7 +88,7 @@ require('blink.cmp').setup({
       ['<Up>']   = { 'select_prev', 'fallback' },
     },
     completion = {
-      ghost_text = { enabled   = true },
+      ghost_text = { enabled = true },
       menu       = { auto_show = true },
     },
     sources = function()
@@ -110,7 +112,7 @@ require('blink.cmp').setup({
       border    = 'rounded',
       draw      = {
         columns = {
-          { 'label', 'label_description', gap = 1 },
+          { 'label',      'label_description', gap = 1 },
           { 'kind_icon' },
           { 'source_name' },
         },
@@ -141,7 +143,7 @@ require('blink.cmp').setup({
     },
   },
 
-  sources = {
+  sources    = {
     default = { 'lsp', 'snippets', 'buffer', 'path', 'spell' },
 
     providers = {
@@ -151,15 +153,15 @@ require('blink.cmp').setup({
         score_offset       = 80,
         min_keyword_length = 2,
       },
-      lsp      = { name = 'LSP', module      = 'blink.cmp.sources.lsp', score_offset      = 80 },
+      lsp      = { name = 'LSP', module = 'blink.cmp.sources.lsp', score_offset = 80 },
       snippets = { name = 'Snippets', module = 'blink.cmp.sources.snippets', score_offset = 80 },
-      spell = {
+      spell    = {
         name         = 'Spell',
         module       = 'blink-cmp-spell',
         score_offset = 80,
         opts         = { enable_in_context = enable_spell_context },
       },
-      path = { name = 'Path', module = 'blink.cmp.sources.path', score_offset = 80 },
+      path     = { name = 'Path', module = 'blink.cmp.sources.path', score_offset = 80 },
     },
 
     per_filetype = {
@@ -176,7 +178,7 @@ local SPELL_LANGS = { 'en' }
 local spellfile_path = vim.fs.normalize(vim.fn.stdpath('config') .. '/spell/en.utf-8.add')
 vim.opt.spellfile = spellfile_path
 
--- stylua: ignore 
+-- stylua: ignore
 vim.api.nvim_create_autocmd('FileType', {
   pattern  = { 'markdown', 'text', 'gitcommit', 'rst', 'latex' },
   callback = function()
@@ -189,7 +191,7 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
--- stylua: ignore 
+-- stylua: ignore
 vim.api.nvim_create_autocmd('FileType', {
   pattern  = { 'bash', 'lua', 'python', 'sh', 'ps1' },
   callback = function()

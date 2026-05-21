@@ -26,11 +26,11 @@ vim.pack.add({
   { src = Gh('nvim-treesitter/nvim-treesitter'), version = 'main', build = ':TSUpdate' },
 })
 
+local ts = require('nvim-treesitter')
+
 -- Wrapped in vim.schedule to avoid potential race with parser availability
 -- on the main branch when loading at pack time
 vim.schedule(function()
-  local ts = require('nvim-treesitter')
-
   ts.setup({
     ensure_installed = {
       'awk',
@@ -67,14 +67,14 @@ vim.schedule(function()
     },
 
     -- Allows expanding/shrinking selections by treesitter node boundaries
-    -- incremental_selection = {
-    --   enable = true,
-    --   keymaps = {
-    --     init_selection = '<C-space>',
-    --     node_incremental = '<C-space>',
-    --     node_decremental = '<bs>',
-    --   },
-    -- },
+    incremental_selection = {
+      enable = true,
+      keymaps = {
+        init_selection = '<C-space>',
+        node_incremental = '<C-space>',
+        node_decremental = '<bs>',
+      },
+    },
 
     -- Treesitter-based indentation; particularly useful for Lua and Python
     indent = { enable = true },

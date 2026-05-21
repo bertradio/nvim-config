@@ -10,14 +10,16 @@
 
 local M = {}
 
+local platform = require('platform')
+
 -- detect if running on Windows or Linux
 function M.is_windows()
-  return require('platform').is_windows()
+  return platform.is_windows()
 end
 
 -- Add a directory to PATH (cross-platform, idempotent)
 function M.add_to_vim_path(dir, opts)
-  return require('platform').add_to_vim_path(dir, opts)
+  return platform.add_to_vim_path(dir, opts)
 end
 
 -- Wrapper for mapping custom keybindings to make mapping code easier and cleaner - from internet

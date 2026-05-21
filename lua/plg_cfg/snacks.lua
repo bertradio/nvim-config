@@ -10,18 +10,19 @@
 
 vim.pack.add({ Gh('folke/snacks.nvim'), Gh('stevearc/dressing.nvim') })
 
+local snacks = require('snacks')
+
 local excluded_exts = require('plg_cfg.file_exclude')
 
 vim.ui.select = Snacks.picker.select
 vim.ui.input = Snacks.input.input
 
 -- stylua: ignore
-require('snacks').setup({
+snacks.setup({
 
   --  ────── enable/disable modules ──────
 
   bigfile      = { enabled = true },
-  explorer     = { enabled = true },
   indent       = { enabled = true },
   input        = { enabled = true, border = 'double' },
   lazygit      = { enabled = true },
@@ -30,6 +31,7 @@ require('snacks').setup({
   scope        = { enabled = true },
   scroll       = { enabled = true },
 
+  explorer     = { enabled = false },
   image        = { enabled = false },
   notifier     = { enabled = false },
   terminal     = { enabled = false },
@@ -234,15 +236,14 @@ Kset(
 --   { desc = 'Explorer' }
 -- )
 
-Kset(
-  'n',
-  '<Leader>x',
-  '<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
-  { desc = 'Explorer' }
-)
+-- Kset(
+--   'n',
+--   '<Leader>x',
+--   '<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
+--   { desc = 'Explorer' }
+-- )
 
 Kset('n', '<Leader>ss', function()
-  local snacks = require('snacks')
   snacks.picker({
     source = 'search_history',
   })
@@ -278,7 +279,6 @@ Kset('n', '<leader>i', function()
 end, { desc = 'Toggle indent Guides' })
 
 Kset('n', '<Leader>sf', function()
-  local snacks = require('snacks')
   snacks.picker({
     source = 'files',
     title = Myfn.short_cwd(),
@@ -286,7 +286,6 @@ Kset('n', '<Leader>sf', function()
 end, { desc = 'files cwd' })
 --
 Kset('n', '<Leader><space>', function()
-  local snacks = require('snacks')
   snacks.picker({
     source = 'files',
     title = Myfn.short_cwd(),

@@ -220,4 +220,4 @@ end, { expr = true })
 
 --  ────── end code for search ───────
 
-Kset('n', 'fd', ':find', { desc = 'find' })
+Kset('n', 'fd', ':find ', { desc = 'find' })

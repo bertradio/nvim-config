@@ -6,6 +6,8 @@
 
 vim.pack.add({ Gh('folke/flash.nvim') })
 
+local flash = require('flash')
+
 -- set hl groups for flash
 vim.api.nvim_set_hl(0, 'FlashBackdrop', {
   fg = '#ACACAC', -- lighter/dimmer adjustment
@@ -23,7 +25,7 @@ vim.api.nvim_set_hl(0, 'FlashCurrent', {
   bold = true,
 })
 
-require('flash').setup({
+flash.setup({
   jump = {
     -- automatically jump when there is only one match
     autojump = true,
@@ -40,8 +42,6 @@ require('flash').setup({
     char = { jump_labels = true },
   },
 })
-
-local flash = require('flash')
 
 Kset({ 'n', 'x', 'o' }, 's', function()
   flash.jump({

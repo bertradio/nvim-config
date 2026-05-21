@@ -11,6 +11,8 @@ vim.pack.add({
   Gh('nvim-lualine/lualine.nvim'),
 })
 
+local lualine = require('lualine')
+
 --  ━━━━━ display functions for use on status line ━━━━━
 
 --  ───── number of words in buffer ─────
@@ -47,7 +49,7 @@ vim.schedule(function()
   vim.api.nvim_create_autocmd({ 'RecordingEnter', 'RecordingLeave' }, {
     group = grp,
     callback = function()
-      require('lualine').refresh({ place = { 'statusline' } })
+      lualine.refresh({ place = { 'statusline' } })
     end,
   })
 end)
@@ -102,7 +104,7 @@ end
 --  ━━━━━━ end helper functions ━━━━━━
 
 -- stylua: ignore 
-require('lualine').setup({
+lualine.setup({
   options = {
     theme                = 'catppuccin-nvim', -- need to use this since lualine loaded before catppuccin
     icons_enabled        = true,

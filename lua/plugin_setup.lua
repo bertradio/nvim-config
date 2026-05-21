@@ -6,6 +6,13 @@
 -- use audtocmds to require plugins in order
 -- called by init.lua
 -- 04/30/26 added keymaps and aucmds to load on UIEnter
+-- 05/20/26 added function to make code clearer
+
+-- function to make plg_cfg plugin requires simpler
+local function req(plug)
+  local pl = 'plg_cfg.' .. plug
+  require(pl)
+end
 
 --  ────────── lazy loading ──────────
 
@@ -14,27 +21,29 @@ vim.api.nvim_create_autocmd('UIEnter', {
   once = true,
   callback = function()
     -- 1. Load the Theme and Layout structures first
-    require('plg_cfg.catppuccin')
-    require('plg_cfg.which-key') -- Load WK early so it captures everything following it
+    req('catppuccin')
+    req('which-key') -- Load WK early so it captures everything following it
     require('keymaps') -- Load global core maps
     -- 2. Load the Statuslines / UI wrappers
-    require('plg_cfg.mini')
-    require('plg_cfg.lualine')
-    require('plg_cfg.dressing')
+    req('mini')
+    req('lualine')
+    req('dressing')
     -- 3. Load the heavy toolchains (they will instantly hook into WK)
-    require('plg_cfg.nvim-lspconfig')
-    require('plg_cfg.fzf-lua')
-    require('plg_cfg.snacks')
+    req('nvim-lspconfig')
+    req('fzf-lua')
+    req('snacks')
     -- 4 Others
-    require('plg_cfg.tree-sitter-manager')
-    require('plg_cfg.blink-spell')
+    req('tree-sitter-manager')
+    -- req('blink-spell')
+    req('blink')
     require('aucmds')
-    require('plg_cfg.mason')
-    require('plg_cfg.yazi')
+    req('mason')
+    req('oil')
+    req('yazi')
     if Myfn.is_windows() then
-      require('plg_cfg.bookmarks_win')
+      req('bookmarks_win')
     else
-      require('plg_cfg.bookmarks_linux')
+      req('bookmarks_linux')
     end
   end,
 })
@@ -43,11 +52,10 @@ vim.api.nvim_create_autocmd('UIEnter', {
 vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
   once = true,
   callback = function()
-    require('plg_cfg.nvim-biscuits')
-    require('plg_cfg.rainbow')
-    require('plg_cfg.conform')
-    require('plg_cfg.pretty-comment')
-    require('plg_cfg.winsep')
+    req('nvim-biscuits')
+    req('rainbow')
+    req('conform')
+    req('pretty-comment')
   end,
 })
 
@@ -55,8 +63,8 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
 vim.api.nvim_create_autocmd({ 'InsertEnter' }, {
   once = true,
   callback = function()
-    require('plg_cfg.flash')
-    require('plg_cfg.my_abbrevs')
+    req('flash')
+    req('my_abbrevs')
   end,
 })
 
@@ -65,6 +73,6 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
   once = true,
   pattern = '*.md',
   callback = function()
-    require('plg_cfg.bullets')
+    req('autolist')
   end,
 })

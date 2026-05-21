@@ -11,20 +11,22 @@ vim.pack.add({
   Gh('nvim-lua/plenary.nvim'),
 })
 
+local yazi = require('yazi')
+
 Myfn.map('n', '<Leader>y', function()
-  require('yazi').yazi(nil, vim.fn.getcwd())
+  yazi.yazi(nil, vim.fn.getcwd())
 end, { desc = 'Yazi' })
 
 vim.api.nvim_create_user_command('Yazi', function()
-  require('yazi').yazi()
+  yazi.yazi()
 end, {})
 
 vim.api.nvim_create_user_command('YaziHere', function()
-  require('yazi').yazi(nil, vim.fn.getcwd())
+  yazi.yazi(nil, vim.fn.getcwd())
 end, {})
 
 -- stylua: ignore 
-require('yazi').setup({
+yazi.setup({
   open_for_directories    = true,
   use_yazi_client_id_flag = true,
   enable_mouse_support    = true,

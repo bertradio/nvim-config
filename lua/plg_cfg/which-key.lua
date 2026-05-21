@@ -26,6 +26,7 @@ require('which-key').setup({
   -- stylua: ignore
   spec = {
     { "<leader>b",  group = "Buffer" },
+    { "<leader>c",  group = "Cycle md list type" },
     { "<leader>d",  group = "Diff" },
     { "<leader>e",  group = "Edit config" },
     { "<leader>f",  group = "Fzf-lua" },

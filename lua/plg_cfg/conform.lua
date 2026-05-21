@@ -9,8 +9,10 @@
 
 vim.pack.add({ Gh('stevearc/conform.nvim') })
 
+local conform = require('conform')
+
 -- stylua: ignore 
-require('conform').setup({
+conform.setup({
   formatters_by_ft = {
     lua        = { 'stylua' },
     javascript = { 'prettierd', stop_after_first = true },
@@ -35,7 +37,7 @@ vim.api.nvim_create_autocmd('VimEnter', {
   once = true,
   callback = function()
     Kset({ 'n', 'v' }, '<leader>p', function()
-      require('conform').format({ lsp_format = 'fallback', timeout_ms = 1500 })
+      conform.format({ lsp_format = 'fallback', timeout_ms = 1500 })
     end, { desc = 'Make pretty with Conform' })
   end,
 })
