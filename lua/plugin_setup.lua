@@ -33,8 +33,7 @@ vim.api.nvim_create_autocmd('UIEnter', {
     req('fzf-lua')
     req('snacks')
     -- 4 Others
-    req('tree-sitter-manager')
-    -- req('blink-spell')
+    req('arborist')
     req('blink')
     require('aucmds')
     req('mason')
@@ -52,10 +51,12 @@ vim.api.nvim_create_autocmd('UIEnter', {
 vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
   once = true,
   callback = function()
+    req('flash')
     req('nvim-biscuits')
     req('rainbow')
     req('conform')
     req('pretty-comment')
+    req('tiny-comment')
   end,
 })
 
@@ -63,7 +64,6 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
 vim.api.nvim_create_autocmd({ 'InsertEnter' }, {
   once = true,
   callback = function()
-    req('flash')
     req('my_abbrevs')
   end,
 })

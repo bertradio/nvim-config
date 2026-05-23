@@ -27,7 +27,7 @@ end
 function M.map(mode, lhs, rhs, opts)
   local options = { noremap = true, silent = true } -- sets defaults
   options = opts and vim.tbl_extend('force', options, opts)
-  vim.keymap.set(mode, lhs, rhs, options) -- maps key
+  Kset(mode, lhs, rhs, options) -- maps key
 end
 
 -- simplify setting up maps to change cwd
@@ -35,7 +35,7 @@ end
 -- dir is the dir to change to
 -- suggestion for simplicity from Perplexity
 function M.map_cwd(k, dir)
-  vim.keymap.set(
+  Kset(
     'n',
     '\\' .. k,
     '<cmd>cd! ' .. dir .. '<cr><cmd>lua vim.notify(vim.fn.getcwd(), "info", { title = "" })<cr>',

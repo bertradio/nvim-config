@@ -108,6 +108,7 @@ end
 
 local grp = vim.api.nvim_create_augroup('template_replace', { clear = true })
 
+-- setup sh template
 vim.api.nvim_create_autocmd('BufNewFile', {
   group = grp,
   pattern = '*.sh',
@@ -116,6 +117,7 @@ vim.api.nvim_create_autocmd('BufNewFile', {
   end,
 })
 
+-- setup awk template
 vim.api.nvim_create_autocmd('BufNewFile', {
   group = grp,
   pattern = '*.awk',
@@ -124,6 +126,7 @@ vim.api.nvim_create_autocmd('BufNewFile', {
   end,
 })
 
+-- setup lua template
 vim.api.nvim_create_autocmd('BufNewFile', {
   group = grp,
   pattern = '*.lua',
@@ -150,6 +153,17 @@ vim.api.nvim_create_autocmd('BufReadPost', {
     end)
     if not ok then
       vim.notify('Error restoring last cursor position: ' .. tostring(err), vim.log.levels.WARN)
+    end
+  end,
+})
+
+-- start treesitter
+vim.api.nvim_create_autocmd('FileType', {
+  callback = function(event)
+    local parser = vim.treesitter.language.get_lang(vim.bo[event.buf].filetype)
+
+    if parser and vim.treesitter.language.add(parser) == true then
+      vim.treesitter.start(event.buf, parser)
     end
   end,
 })

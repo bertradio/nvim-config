@@ -31,7 +31,7 @@ blink.setup({
   signature  = { enabled = true, window = { border = 'rounded' } },
 
   keymap     = {
-    ['<C-space>'] = { 'show', 'show_documentation', 'hide' },
+    -- ['<C-space>'] = { 'show', 'show_documentation', 'hide' },
     ['<CR>']      = { 'fallback' },
     ['<Down>']    = { 'select_next', 'fallback' },
     ['<S-Tab>']   = { 'snippet_backward', 'fallback' },
@@ -50,7 +50,7 @@ blink.setup({
       ['<Up>']   = { 'select_prev', 'fallback' },
     },
     completion = {
-      ghost_text = { enabled = true },
+      ghost_text = { enabled = false },
       menu       = { auto_show = true },
     },
     sources = function()

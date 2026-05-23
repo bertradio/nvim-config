@@ -101,7 +101,7 @@ function M.setup()
 
   -- activate built-in for nvim 0.12
   vim.cmd('packadd nvim.undotree')
-  vim.keymap.set('n', '<leader>u', require('undotree').open, { desc = 'Undotree' })
+  Kset('n', '<leader>u', require('undotree').open, { desc = 'Undotree' })
 
   -- Disable Built-in Plugins
   local disabled_builtins = {

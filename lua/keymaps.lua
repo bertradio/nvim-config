@@ -199,11 +199,11 @@ vim.api.nvim_create_autocmd('CursorMoved', {
 })
 
 -- 2. Keep your n/N mappings simple (just move and center)
-vim.keymap.set('n', 'n', 'nzz', { silent = true })
-vim.keymap.set('n', 'N', 'Nzz', { silent = true })
+Kset('n', 'n', 'nzz', { silent = true })
+Kset('n', 'N', 'Nzz', { silent = true })
 
 -- 3. Update the Ctrl-L Toggle to clean up immediately
-vim.keymap.set('n', '<C-l>', function()
+Kset('n', '<C-l>', function()
   vim.cmd('set hlsearch!')
   if vim.v.hlsearch == 0 then
     vim.api.nvim_buf_clear_namespace(0, ns, 0, -1)
@@ -213,7 +213,7 @@ vim.keymap.set('n', '<C-l>', function()
 end, { silent = true })
 
 -- make sure ghost text is cleared on next search
-vim.keymap.set('n', '/', function()
+Kset('n', '/', function()
   vim.api.nvim_buf_clear_namespace(0, ns, 0, -1)
   return '/'
 end, { expr = true })

@@ -25,6 +25,7 @@ local cwd_config = {
   o = '$HOME/Insync/bertkleinman@outlook.com/OneDrive/My Docs/',
   p = '$HOME/.config/nvim/lua/plg_cfg/',
   s = '$HOME/Insync/bertkleinman@outlook.com/OneDrive/My Docs/Share/',
+  S = '$HOME/.Download/Shavuot/',
   t = '$HOME/.Temp/',
   v = '$HOME/Insync/bert.kleinman@gmail.com/Google Drive',
   w = '$HOME/Insync/bertkleinman@outlook.com/OneDrive/My Docs/Moving Forward/Wisteria',

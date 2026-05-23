@@ -51,8 +51,6 @@ vim.schedule(function()
       'vimdoc',
     },
 
-    -- auto_install is convenient on a personal machine; disable if you're
-    -- ever in a restricted environment (no network / read-only fs)
     auto_install = true,
 
     highlight = {

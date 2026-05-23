@@ -65,6 +65,7 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 
 --  ────── end mini.diff setup ───────
 
+
 -- stylua: ignore
 move.setup({
   mappings = {
@@ -124,67 +125,67 @@ local num_of_recent = 6 -- number of recent files to display
 
 -- stylua: ignore 
 starter.setup({
-  autoopen          = false,
-  auto_setup        = false,
-  evaluate_single   = true,
-  query_line_prefix = '',
-  show_usage        = false,
+autoopen = false,
+auto_setup = false,
+evaluate_single = true,
+query_line_prefix = '',
+show_usage = false,
 
-  header = "If it ain't broke, don't fix it!",
-  footer = function()
-    return ''
-  end,
+header = "If it ain't broke, don't fix it!",
+footer = function()
+  return ''
+end,
 
-  items = {
-    starter.sections.recent_files(num_of_recent, false, false),
-    -- {
-    --   name = 'Explorer',
-    --   action = function()
-    --     vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>x', true, true, true))
-    --   end,
-    --   section = '',
-    -- },
-    {
-      name = 'Find Files',
-      action = function()
-        vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>sf', true, true, true))
-      end,
-      section = '',
-    },
-    {
-      name = 'Grep',
-      action = function()
-        vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>sg', true, true, true))
-      end,
-      section = '',
-    },
-    {
-      name = 'New file',
-      action = 'enew',
-      section = '',
-    },
-    {
-      name = 'Recent Files',
-      action = function()
-        vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>sr', true, true, true))
-      end,
-      section = '',
-    },
-    {
-      name = 'Yazi',
-      action = function()
-        vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>y', true, true, true))
-      end,
-      section = '',
-    },
-    { name = 'Quit Menu', action = 'bwipeout', section = '' },
+items = {
+  starter.sections.recent_files(num_of_recent, false, false),
+  -- {
+  --   name = 'Explorer',
+  --   action = function()
+  --     vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>x', true, true, true))
+  --   end,
+  --   section = '',
+  -- },
+  {
+    name = 'Find Files',
+    action = function()
+      vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>sf', true, true, true))
+    end,
+    section = '',
   },
-
-  content_hooks = {
-    starter.gen_hook.adding_bullet(),
-    starter.gen_hook.aligning('center', 'center'),
+  {
+    name = 'Grep',
+    action = function()
+      vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>sg', true, true, true))
+    end,
+    section = '',
   },
-  silent = true,
+  {
+    name = 'New file',
+    action = 'enew',
+    section = '',
+  },
+  {
+    name = 'Recent Files',
+    action = function()
+      vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>sr', true, true, true))
+    end,
+    section = '',
+  },
+  {
+    name = 'Yazi',
+    action = function()
+      vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>y', true, true, true))
+    end,
+    section = '',
+  },
+  { name = 'Quit Menu', action = 'bwipeout', section = '' },
+},
+
+content_hooks = {
+  starter.gen_hook.adding_bullet(),
+  starter.gen_hook.aligning('center', 'center'),
+},
+silent = true,
 })
 
 -- open dashboard

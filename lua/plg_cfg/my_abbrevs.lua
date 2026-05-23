@@ -5,7 +5,6 @@
 -- list of my abbreviations - called by options.lua
 -- Created: 04/27/26
 
-
 --  ────────── insert mode ───────────
 
 -- stylua: ignore 
@@ -14,6 +13,8 @@ local set_iabbrevs = {
   { 'bk',   'Bert Kleinman' },
   { 'ki',   'Kehillat Israel' },
   { 'ph',   '310 405-5210' },
+  -- page break in pdf for printing
+  { 'pgbk', '<div style ="page-break-after:always"></div>' },
   { 'stig', '-- stylua: ignore' },
 }
 

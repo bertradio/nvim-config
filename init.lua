@@ -47,5 +47,5 @@ vim.api.nvim_create_autocmd('User', {
 Kset = vim.keymap.set
 
 -- initialization files
-require('plugin_setup') -- autocmds to set order of lazy loading
 require('settings') -- calls options.lua
+require('plugin_setup') -- autocmds to set order of lazy loading
