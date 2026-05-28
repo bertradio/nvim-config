@@ -39,6 +39,7 @@ vim.api.nvim_create_autocmd('UIEnter', {
     req('mason')
     req('oil')
     req('yazi')
+    req('noice')
     if Myfn.is_windows() then
       req('bookmarks_win')
     else

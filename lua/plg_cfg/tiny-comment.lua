@@ -1,5 +1,6 @@
--- tiny-comment.lua
-
+--    ╭────────────────────────────╮
+--    │      tiny-comment.lua      │
+--    ╰────────────────────────────╯
 -- Created: 05/24/26
 
 vim.pack.add({ Gh('so1ve/tiny-comment.nvim') })

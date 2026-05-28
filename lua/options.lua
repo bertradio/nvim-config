@@ -44,7 +44,7 @@ function M.setup()
     ignorecase     = true,
     incsearch      = true,
     smartcase      = true,
-    hlsearch       = true,
+    hlsearch       = false,
 
     -- SYSTEM
     backup         = true,
@@ -72,7 +72,13 @@ function M.setup()
     vim.opt[k] = v
   end
 
-  require('vim._core.ui2').enable({})
+  -- had to disable to prevent double display with noice
+  -- it is experimental in nvim 0.12 and I don't use it
+  -- require('vim._core.ui2').enable({})
+
+  -- Avoid showing extra message prompts and truncating long texts - for Noice
+  vim.opt.cmdheight = 0
+  vim.opt.shortmess:append('cIWsFtO')
 
   -- make sure coding is right
   vim.scriptencoding = 'utf-8'
