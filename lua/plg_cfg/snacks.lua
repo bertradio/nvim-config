@@ -23,17 +23,17 @@ snacks.setup({
   --  ────── enable/disable modules ──────
 
   bigfile      = { enabled = true },
+  explorer     = { enabled = true },
   indent       = { enabled = true },
   input        = { enabled = true, border = 'double' },
   lazygit      = { enabled = true },
+  -- notifier     = { enabled = true },
   quickfile    = { enabled = true },
   rename       = { enabled = true },
   scope        = { enabled = true },
   scroll       = { enabled = true },
 
-  explorer     = { enabled = false },
   image        = { enabled = false },
-  notifier     = { enabled = false },
   terminal     = { enabled = false },
   words        = { enabled = false },
 
@@ -197,6 +197,17 @@ snacks.setup({
       },
     },
   },
+
+  notifier = {
+    enabled = true,
+    -- Custom window options to adjust position
+    win = {
+      position = "top", -- "top", "bottom", "left", or "right"
+      row = 2,          -- Offset from the top edge (increase this to push it down)
+      col = -2,         -- Offset from the right edge (negative moves it left)
+      backdrop = false,
+    }
+  }
 })
 
 --  ─────────── end config ───────────
@@ -236,12 +247,12 @@ Kset(
 --   { desc = 'Explorer' }
 -- )
 
--- Kset(
---   'n',
---   '<Leader>x',
---   '<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
---   { desc = 'Explorer' }
--- )
+Kset(
+  'n',
+  '<Leader>x',
+  '<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
+  { desc = 'Explorer' }
+)
 
 Kset('n', '<Leader>ss', function()
   snacks.picker({

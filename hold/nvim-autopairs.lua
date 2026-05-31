@@ -3,7 +3,6 @@
 --    ╰────────────────────────────╯
 
 -- changed from lazy to vim.pack 3-30-26
--- better than mini.pairs since it handles quotes before and after text well
 -- Created: 03/30/25
 
 vim.pack.add({ Gh('/windwp/nvim-autopairs') })

@@ -128,11 +128,11 @@ lualine.setup({
     lualine_x = {
       { show_macro_recording, color = { fg = '#FFA500' } },
       { spellOn },
-      -- {
-      --   'searchcount',
-      --   maxcount = 999,
-      --   timeout  = 500,
-      -- },
+      {
+        'searchcount',
+        maxcount = 999,
+        timeout  = 500,
+      },
       -- {
       --   terminal_status,
       --   color = { fg = '#ff3e54' },

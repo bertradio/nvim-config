@@ -93,7 +93,7 @@ blink.setup({
     },
 
     ghost_text = {
-      enabled                = true,
+      enabled                = false,
       show_without_selection = true,
     },
 

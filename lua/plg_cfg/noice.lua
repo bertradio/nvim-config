@@ -47,9 +47,11 @@ require('noice').setup({
           { find = 'undo' },
           { find = 'redo' },
           { find = 'change' },
+          { find = 'written' },
         },
       },
-      view = 'mini',
+      -- view = 'mini',
+      view = 'notify',
       opts = { stop = true }, -- Strictly prevents it from dropping down to the native bar
     },
     { -- Redirect shell commands to a split
