@@ -30,8 +30,8 @@ vim.api.nvim_create_autocmd('UIEnter', {
     req('dressing')
     -- 3. Load the heavy toolchains (they will instantly hook into WK)
     req('nvim-lspconfig')
-    req('fzf-lua')
     req('snacks')
+    req('fzf-lua')
     -- 4 Others
     req('arborist')
     req('blink')

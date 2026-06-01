@@ -11,6 +11,7 @@
 -- 05/04/26 - fixed issue with recent not updating by adding rshada! to shortcut
 -- 05/08/26 - cleaned up and optimized starter
 -- 05/20/26 - added local requires
+-- 06/01/26 - replaced starter with Snacks.dashboard
 
 vim.pack.add({ { src = Gh('nvim-mini/mini.nvim'), branch = 'main' } })
 
@@ -22,7 +23,6 @@ local move = require('mini.move')
 local operators = require('mini.operators')
 local pairs = require('mini.pairs')
 local surround = require('mini.surround')
-local starter = require('mini.starter')
 
 -- delay some mini.ai mapping
 vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile', 'InsertEnter' }, {
@@ -118,90 +118,3 @@ surround.setup({
   },
   n_lines = 50,                 -- search window for surroundings
 })
-
---  ───── ───── ───── mini.starter setup - code from Gemini ───── ───── ─────
-
-local num_of_recent = 6 -- number of recent files to display
-
--- stylua: ignore 
-starter.setup({
-autoopen = false,
-auto_setup = false,
-evaluate_single = true,
-query_line_prefix = '',
-show_usage = false,
-
-header = "If it ain't broke, don't fix it!",
-footer = function()
-  return ''
-end,
-
-items = {
-  starter.sections.recent_files(num_of_recent, false, false),
-  -- {
-  --   name = 'Explorer',
-  --   action = function()
-  --     vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>x', true, true, true))
-  --   end,
-  --   section = '',
-  -- },
-  {
-    name = 'Find Files',
-    action = function()
-      vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>sf', true, true, true))
-    end,
-    section = '',
-  },
-  {
-    name = 'Grep',
-    action = function()
-      vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>sg', true, true, true))
-    end,
-    section = '',
-  },
-  {
-    name = 'New file',
-    action = 'enew',
-    section = '',
-  },
-  {
-    name = 'Recent Files',
-    action = function()
-      vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>sr', true, true, true))
-    end,
-    section = '',
-  },
-  {
-    name = 'Yazi',
-    action = function()
-      vim.api.nvim_input(vim.api.nvim_replace_termcodes('<Leader>y', true, true, true))
-    end,
-    section = '',
-  },
-  { name = 'Quit Menu', action = 'bwipeout', section = '' },
-},
-
-content_hooks = {
-  starter.gen_hook.adding_bullet(),
-  starter.gen_hook.aligning('center', 'center'),
-},
-silent = true,
-})
-
--- open dashboard
-local function open_dashboard()
-  pcall(function()
-    starter.open()
-    -- Maintain your clean, mid-century modern aesthetic
-    vim.api.nvim_set_hl(0, 'MiniStarterFooter', { link = 'Normal' })
-    vim.api.nvim_set_hl(0, 'MiniStarterQuery', { link = 'Normal' })
-    vim.cmd('redraw')
-  end)
-end
-
--- open dashboard shortcut - force reread of saved data
-Kset('n', '<space>]', function()
-  -- rshada! necessary to make sure recent list is up to date
-  vim.cmd('rshada!')
-  open_dashboard()
-end, { desc = 'Dashboard', silent = true })

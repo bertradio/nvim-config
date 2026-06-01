@@ -34,7 +34,7 @@
       "src": "https://github.com/folke/flash.nvim"
     },
     "fzf-lua": {
-      "rev": "e3a71496027f2e3c4a60340170c04d66053d5c4c",
+      "rev": "988416cc782dfe28bff3f0da9b8c943b236cd86a",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "lualine.nvim": {
@@ -50,7 +50,7 @@
       "src": "https://github.com/williamboman/mason.nvim"
     },
     "mini.nvim": {
-      "rev": "8b63dc6caf94f6580e371f9b339548848f72e489",
+      "rev": "232ceeb14f7f7e849056309b85cb2fed712db46f",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "noice.nvim": {
@@ -106,7 +106,7 @@
       "src": "https://github.com/folke/which-key.nvim"
     },
     "yazi.nvim": {
-      "rev": "8a26074568790bb5c73e56eb871a74709a13dd43",
+      "rev": "bba3e1867e159b7b4e1b44abbd345c91ab5db2ee",
       "src": "https://github.com/mikavilpas/yazi.nvim"
     }
   }

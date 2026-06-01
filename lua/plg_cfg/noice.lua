@@ -4,6 +4,7 @@
 
 -- 05/28/26 - Optimized as per Gemini
 -- had to disable ui2 in options.lua to prevent double display
+-- 05/31/26 - MOdified to send all notifications through snacks.notify
 
 vim.pack.add({
   Gh('MunifTanjim/nui.nvim'),
@@ -47,11 +48,11 @@ require('noice').setup({
           { find = 'undo' },
           { find = 'redo' },
           { find = 'change' },
-          { find = 'written' },
+          { find = 'written' }, -- trap for save messages
         },
       },
       -- view = 'mini',
-      view = 'notify',
+      view = 'notify', -- sned all notifications through Snacks.notify
       opts = { stop = true }, -- Strictly prevents it from dropping down to the native bar
     },
     { -- Redirect shell commands to a split
