@@ -13,7 +13,7 @@
 -- 05/20/26 - added local requires
 -- 06/01/26 - replaced starter with Snacks.dashboard
 
-vim.pack.add({ { src = Gh('nvim-mini/mini.nvim'), branch = 'main' } })
+vim.pack.add({ Gh('nvim-mini/mini.nvim') })
 
 local ai = require('mini.ai')
 local align = require('mini.align')

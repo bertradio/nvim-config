@@ -28,6 +28,7 @@ vim.api.nvim_create_autocmd('UIEnter', {
     req('mini')
     req('lualine')
     req('dressing')
+    req('noice')
     -- 3. Load the heavy toolchains (they will instantly hook into WK)
     req('nvim-lspconfig')
     req('snacks')
@@ -39,7 +40,6 @@ vim.api.nvim_create_autocmd('UIEnter', {
     req('mason')
     req('oil')
     req('yazi')
-    req('noice')
     if Myfn.is_windows() then
       req('bookmarks_win')
     else

@@ -6,7 +6,7 @@
 
 vim.pack.add({
   Gh('neovim/nvim-lspconfig'),
-  -- { src = Gh('folke/lazydev.nvim'), data = { ft = 'lua' } },
+  { src = Gh('folke/lazydev.nvim'), data = { ft = 'lua' } },
 })
 
 -- Provide :LspInfo even if nvim-lspconfig doesn't define it yet.
@@ -41,14 +41,14 @@ local servers = {
       Lua = {
         completion = { callSnippet = 'Replace' },
         diagnostics = {
-          globals = { 'Snacks', 'Status', 'cx', 'ui', 'ya', 'vim', 'MiniFiles' },
+          globals = { 'Snacks', 'Status', 'cx', 'ui', 'ya', 'vim' },
         },
         telemetry = { enable = false },
         workspace = { checkThirdParty = false },
       },
     },
   },
-  marksman = { filetypes = { 'markdown' } },
+  marksman = {},
   taplo = {},
   vimls = {},
 }

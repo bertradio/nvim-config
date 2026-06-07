@@ -113,7 +113,7 @@ lualine.setup({
     always_divide_middle = true,
     globalstatus         = true,
     disabled_filetypes = {
-      statusline = {},
+      statusline = {'snacks_dashboard'},
     },
     refresh = {
       statusline = 500,
@@ -148,7 +148,7 @@ lualine.setup({
         'buffers',
         mode                 = 0,
         tab_max_length       = 40,
-        max_length           = 100,
+        max_length           = vim.o.columns,
         show_modified_status = true,
         symbols              = { modified = ' ●' },
         use_mode_colors      = true,

@@ -34,7 +34,8 @@ require('noice').setup({
     },
   },
   routes = {
-    { -- Catch standard text changes, undo/redo, and add/delete echoes
+    {
+      -- Catch standard text changes, undo/redo, and add/delete echoes
       filter = {
         event = 'msg_show',
         any = {
@@ -47,12 +48,12 @@ require('noice').setup({
           { find = 'Line %d+' },
           { find = 'undo' },
           { find = 'redo' },
-          { find = 'change' },
+          -- { find = 'change' }, - permit display of changed file msg
           { find = 'written' }, -- trap for save messages
         },
       },
-      -- view = 'mini',
-      view = 'notify', -- sned all notifications through Snacks.notify
+      view = 'mini',
+      -- view = 'notify', -- send all notifications through Snacks.notify
       opts = { stop = true }, -- Strictly prevents it from dropping down to the native bar
     },
     { -- Redirect shell commands to a split

@@ -5,6 +5,7 @@
 -- updated to allow searching AllWords.txt without previewing it
 -- changed from lazy to vim.pack 3-30-26
 -- replaced snacks because of constant updates
+-- 06/05/26 - small tweaks from claude
 
 vim.pack.add({
   Gh('nvim-tree/nvim-web-devicons'),
@@ -29,10 +30,9 @@ local function get_exclude_args()
   return args
 end
 
--- stylua: ignore 
+-- stylua: ignore
 fzf.setup({
   'fzf-vim',
-  global_python_bin = 'python3',
   defaults = {
     color_icons = true,
     file_icons  = true,
@@ -54,7 +54,6 @@ fzf.setup({
       hidden           = 'nohidden',
       horizontal       = 'right:65%',
       layout           = 'horizontal',
-      preview_max_size = 0.2, -- 200KB limit
       scrollbar        = false,
       scrollchars      = { '█', '' },
       scrolloff        = '-2',
@@ -127,7 +126,8 @@ fzf.setup({
     cwd_prompt             = true,
     cwd_prompt_shorten_len = 32,
     cwd_prompt_shorten_val = 1,
-    fd_opts = '--color=never --type f --follow --exclude .git' .. ' ' .. get_exclude_args(),   file_icons             = true,
+    fd_opts                = '--color=never --type f --follow --exclude .git' .. ' ' .. get_exclude_args(),
+    file_icons             = true,
     formatter              = 'path.filename_first',
     git_icons              = true,
     header                 = false,
@@ -136,12 +136,9 @@ fzf.setup({
     prompt                 = 'Files ❯ ',
     toggle_ignore_flag     = '--no-ignore',
     winopts                = { preview = { layout = 'horizontal' } },
-    -- Define the highlight colors
     highlights = {
-      -- set up to dim directory
-      -- "FzfLuaDirPart" is the specific group for the directory path
-      ['FzfLuaDirPart']  = { link = 'Comment' }, -- Links to 'Comment' (usually dimmed/grey)
-      ['FzfLuaFileName'] = { fg   = 'white' }, -- Keeps the filename bright
+      ['FzfLuaDirPart']  = { link = 'Comment' },
+      ['FzfLuaFileName'] = { fg   = 'white' },
     },
     actions = {
       ['alt-l']   = actions.file_sel_to_ll,
@@ -160,8 +157,9 @@ fzf.setup({
   },
 
   previewers = {
-    cat     = { cmd = 'cat', args  = '--number' },
-    bat     = { cmd = 'bat', args  = '--color = always --style = numbers,changes' },
+    -- FIX: removed spaces around '=' in bat args
+    cat     = { cmd = 'cat',  args = '--number' },
+    bat     = { cmd = 'bat',  args = '--color=always --style=numbers,changes' },
     head    = { cmd = 'head', args = nil },
     man     = { cmd = 'man -c %s | col -bx' },
     builtin = {
@@ -176,7 +174,6 @@ fzf.setup({
     },
   },
 
-  -- Restoration of your full Git, Grep, and LSP blocks
   git = {
     files = {
       cmd         = 'git ls-files --exclude-standard --cached --others',
@@ -193,7 +190,8 @@ fzf.setup({
       prompt     = 'GitStatus❯ ',
     },
     commits = {
-      cmd     = 'git log --color --pretty = format:"%C(yellow)%h%Creset %C(green)%ad%Creset %s %C(bold blue)<%an>%Creset"',
+      -- FIX: removed spaces around '=' in --pretty=format:
+      cmd     = 'git log --color --pretty=format:"%C(yellow)%h%Creset %C(green)%ad%Creset %s %C(bold blue)<%an>%Creset"',
       preview = 'git show --pretty --stat --color {1}',
       prompt  = 'Commits❯ ',
     },
@@ -202,9 +200,9 @@ fzf.setup({
   grep = {
     input_prompt = 'Grep for ❯ ',
     multiprocess = true,
-    prompt = 'grep > ',
-    rg_opts = '--column --line-number --no-heading --color=never --smart-case --max-columns=4096 -e',
-    winopts = { preview = { layout = 'horizontal' } },
+    prompt       = 'Grep ❯ ',
+    rg_opts      = '--column --line-number --no-heading --color=never --smart-case --max-columns=4096 -e',
+    winopts      = { preview = { layout = 'horizontal' } },
     actions = {
       ['alt-l']   = actions.file_sel_to_ll,
       ['alt-q']   = actions.file_sel_to_qf,
@@ -213,10 +211,11 @@ fzf.setup({
       ['ctrl-t']  = actions.file_tabedit,
       ['ctrl-v']  = actions.file_vsplit,
       ['default'] = actions.file_edit,
+      -- FIX: was calling fzf.files() instead of fzf.grep()
       ['ctrl-h']  = function(_, opts)
                       opts.hidden = not opts.hidden
                       vim.notify('Hidden files: ' .. (opts.hidden and 'ON' or 'OFF'), vim.log.levels.INFO)
-                      fzf.files(opts)
+                      fzf.grep(opts)
                     end,
     },
   },
@@ -246,23 +245,32 @@ fzf.setup({
 -- stylua: ignore
 -- set keymaps
 local function maps()
-  -- Kset('n', '<Leader><space>', '<cmd>FzfLua files<cr>',                { desc = 'find files' })
-  Kset('n', '<Leader>fb',      '<cmd>FzfLua buffers<cr>',              { desc = 'buffers' })
-  Kset('n', '<Leader>fc',      '<cmd>FzfLua command_history<cr>',      { desc = 'command history' })
-  Kset('n', '<Leader>fd',      '<cmd>FzfLua diagnostics_document<cr>', { desc = 'diagnostics' })
-  Kset('n', '<Leader>ff',      '<cmd>FzfLua files<cr>',                { desc = 'find files' })
-  Kset('n', '<Leader>fg',      '<cmd>FzfLua grep<cr>',                 { desc = 'grep' })
-  Kset('n', '<Leader>fh',      '<cmd>FzfLua helptags<cr>',             { desc = 'helptags' })
-  Kset('n', '<Leader>fj',      '<cmd>FzfLua jumps<cr>',                { desc = 'jumps' })
-  Kset('n', '<Leader>fk',      '<cmd>FzfLua keymaps<cr>',              { desc = 'keymaps' })
-  Kset('n', '<Leader>fl',      '<cmd>FzfLua lines<cr>',                { desc = 'line changes' })
-  Kset('n', '<Leader>fm',      '<cmd>FzfLua marks<cr>',                { desc = 'marks' })
-  Kset('n', '<Leader>fq',      '<cmd>FzfLua quickfix<cr>',             { desc = 'quickfix' })
-  Kset('n', '<Leader>fr',      '<cmd>FzfLua oldfiles<cr>',             { desc = 'recent' })
-  Kset('n', '<Leader>fs',      '<cmd>FzfLua search_history<cr>',       { desc = 'search history' })
-  Kset('n', '<Leader>fu',      '<cmd>FzfLua builtin<cr>',              { desc = 'builtin fzf' })
-  Kset('n', 'zz',              '<cmd>FzfLua spell_suggest<cr>',        { desc = 'spell suggest' })
+  Kset('n', '<Leader>fb',  '<cmd>FzfLua buffers<cr>',            { desc = 'buffers' })
+  Kset('n', '<Leader>fc',  '<cmd>FzfLua command_history<cr>',    { desc = 'command history' })
+  Kset('n', '<Leader>fd',  '<cmd>FzfLua diagnostics_document<cr>',{ desc = 'diagnostics' })
+  Kset('n', '<Leader>ff',  '<cmd>FzfLua files<cr>',              { desc = 'find files' })
+  Kset('n', '<Leader>fg',  '<cmd>FzfLua grep<cr>',               { desc = 'grep' })
+  Kset('n', '<Leader>fG',  '<cmd>FzfLua live_grep<cr>',          { desc = 'live grep' })
+  Kset('n', '<Leader>fh',  '<cmd>FzfLua helptags<cr>',           { desc = 'helptags' })
+  Kset('n', '<Leader>fi',  '<cmd>FzfLua lsp_implementations<cr>',{ desc = 'lsp implementations' })
+  Kset('n', '<Leader>fj',  '<cmd>FzfLua jumps<cr>',              { desc = 'jumps' })
+  Kset('n', '<Leader>fk',  '<cmd>FzfLua keymaps<cr>',            { desc = 'keymaps' })
+  Kset('n', '<Leader>fl',  '<cmd>FzfLua lines<cr>',              { desc = 'lines' })
+  Kset('n', '<Leader>fm',  '<cmd>FzfLua marks<cr>',              { desc = 'marks' })
+  Kset('n', '<Leader>fq',  '<cmd>FzfLua quickfix<cr>',           { desc = 'quickfix' })
+  Kset('n', '<Leader>fR',  '<cmd>FzfLua lsp_references<cr>',     { desc = 'lsp references' })
+  Kset('n', '<Leader>fs',  '<cmd>FzfLua search_history<cr>',     { desc = 'search history' })
+  Kset('n', '<Leader>fu',  '<cmd>FzfLua builtin<cr>',            { desc = 'builtin fzf' })
+  Kset('n', '<Leader>fw',  '<cmd>FzfLua grep_cword<cr>',         { desc = 'grep word under cursor' })
+  Kset('n', '<Leader>fW',  '<cmd>FzfLua grep_cWORD<cr>',         { desc = 'grep WORD under cursor' })
+  Kset('n', '<Leader>f.',  '<cmd>FzfLua resume<cr>',             { desc = 'resume last picker' })
+  Kset('n', 'zz',          '<cmd>FzfLua spell_suggest<cr>',      { desc = 'spell suggest' })
 
+  Kset('n', '<Leader>fr', function()
+    vim.cmd('wshada')
+    vim.cmd('rshada!')
+    vim.cmd('FzfLua oldfiles')
+  end, { desc = 'recent' })
 end
 
 -- run keymaps

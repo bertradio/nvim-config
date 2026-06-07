@@ -9,8 +9,8 @@ require('tiny-comment').setup({
   -- Add these along side mini.comment
   -- adds comment and goes into insert mode
   mappings = {
-    below = 'gco',
-    above = 'gcO',
-    eol = 'gcA',
+    below = 'gco', -- insert comment on line below
+    above = 'gcO', -- insert commnt on line above`
+    eol = 'gcA', -- insert comment at end of line
   },
 })
