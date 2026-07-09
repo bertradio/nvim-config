@@ -16,6 +16,10 @@ local set_iabbrevs = {
   -- page break in pdf for printing
   { 'pgbk', '<div style ="page-break-after:always"></div>' },
   { 'stig', '-- stylua: ignore' },
+  { 'h1', '#'},
+  { 'h2', '##'},
+  { 'h3', '###'},
+  { 'h4', '####'},
 }
 
 for _, v in ipairs(set_iabbrevs) do

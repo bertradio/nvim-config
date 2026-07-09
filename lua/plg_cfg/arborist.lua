@@ -1,4 +1,6 @@
--- arborist.lua
+--    ╭────────────────────────────╮
+--    │        arborist.lua        │
+--    ╰────────────────────────────╯
 
 -- Created: 05/22/26
 -- replacement for tree-sitter.nvim
@@ -13,7 +15,7 @@ require('arborist').setup({
     'diff',
     'json',
     'luadoc',
-    'powershell',
+    -- 'powershell',
     'python',
     'query',
     'toml',

@@ -34,7 +34,7 @@ flash.setup({
     -- add pattern to search history
     history = true,
     -- clear highlight after jump
-    nohlsearch = true,
+    nohlsearch = false,
   },
 
   modes = {
@@ -65,6 +65,6 @@ Kset('o', 'r', function()
   flash.remote()
 end, { desc = 'Remote Flash' })
 
-Kset('c', '<C-s>', function()
-  flash.toggle()
-end, { desc = 'Toggle Flash Search' })
+-- Kset('c', '<c-s>', function()
+--   flash.toggle()
+-- end, { desc = 'Toggle Flash Search' })

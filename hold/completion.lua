@@ -3,9 +3,9 @@
 -- Optimized for Nvim 0.12
 
 -- ── Plugin ───────────────────────────────────────────────────────────
-vim.pack.add({
-  { src = 'https://github.com/echasnovski/mini.completion' },
-})
+-- vim.pack.add({
+--   { src = 'https://github.com/echasnovski/mini.completion' },
+-- })
 
 -- ── Native Snippet Jumps (unchanged) ─────────────────────────────────
 vim.keymap.set({ 'i', 's' }, '<C-j>', function()

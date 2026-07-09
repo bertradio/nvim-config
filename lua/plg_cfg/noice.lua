@@ -48,12 +48,11 @@ require('noice').setup({
           { find = 'Line %d+' },
           { find = 'undo' },
           { find = 'redo' },
-          -- { find = 'change' }, - permit display of changed file msg
           { find = 'written' }, -- trap for save messages
         },
       },
       view = 'mini',
-      -- view = 'notify', -- send all notifications through Snacks.notify
+      -- view = 'notify',
       opts = { stop = true }, -- Strictly prevents it from dropping down to the native bar
     },
     { -- Redirect shell commands to a split
@@ -81,7 +80,8 @@ require('noice').setup({
   },
   views = {
     cmdline_popup = {
-      position = { row = 12, col = '50%' },
+      -- position = { row = 12, col = '50%' }, -- middle of screen
+      position = { row = 16, col = '50%' }, -- row of command line box
       size = { width = 60, height = 'auto' },
       border = { style = 'rounded' },
     },
@@ -90,7 +90,7 @@ require('noice').setup({
       relative = 'editor',
       align = 'message-left',
       timeout = 2000,
-      position = { row = 1, col = '95%' },
+      position = { row = 2, col = '95%' }, -- place box upper right
       border = { style = 'rounded' },
       win_options = {
         wrap = true,

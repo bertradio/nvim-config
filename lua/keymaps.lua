@@ -18,7 +18,8 @@ Kset('n', 'G', 'G$', { desc = 'Move to last char of file' })
 Kset({ 'n' }, '<Leader>bc', '<cmd>CopyBufferName<cr>', { desc = 'path copy' })
 Kset({ 'n' }, '<Leader>bo', '<cmd>BufOnly<cr>', { desc = 'delete other' })
 Kset({ 'n' }, '<Leader>ba', '<cmd>bufdo bwipeout<cr>', { desc = 'delete all' })
-Kset({ 'n' }, '<Leader>k', '<cmd>bd!<cr>', { desc = 'Kill buffer' })
+-- Kset({ 'n' }, '<Leader>bb', '<cmd>bd!<cr>', { desc = 'kill buffer' })
+Kset({ 'n' }, '<Leader>bb', '<cmd>lua Snacks.bufdelete()<cr>', { desc = 'snacks delete buffer' })
 
 -- Delete all buffers except the current one
 Kset('n', '<leader>bo', function()
@@ -33,7 +34,7 @@ Kset('n', '<leader>bo', function()
       end
     end
   end
-end, { desc = 'Close all buffers except current' })
+end, { desc = 'close all buffers except current' })
 
 -- Go up/down one line on the screen rather than one file line at a time
 Kset('i', '<down>', '<c-o>gj')
@@ -126,7 +127,7 @@ Kset('n', '<tab>', function()
   vim.cmd('normal! ' .. cmd)
 end, { silent = true, desc = 'Folds: Toggle' })
 
--- update all plugins
+-- update all plugins - replaced by pack-ui
 Kset('n', '<leader>U', function()
   vim.notify('Updating plugins...', vim.log.levels.INFO)
   vim.cmd('packupdate')

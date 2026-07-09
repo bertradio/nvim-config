@@ -13,7 +13,7 @@ vim.pack.add({
 
 local yazi = require('yazi')
 
-Myfn.map('n', '<Leader>y', function()
+Myfn.map('n', '<Leader>x', function()
   yazi.yazi(nil, vim.fn.getcwd())
 end, { desc = 'Yazi' })
 

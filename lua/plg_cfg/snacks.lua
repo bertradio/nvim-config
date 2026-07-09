@@ -20,6 +20,7 @@ local excluded_exts = require('plg_cfg.file_exclude')
 vim.ui.select = Snacks.picker.select
 vim.ui.input = Snacks.input.input
 
+
 -- stylua: ignore
 snacks.setup({
 
@@ -27,7 +28,7 @@ snacks.setup({
   -- only include those not defined elsewhere
 
   bigfile      = { enabled = true },
-  explorer     = { enabled = true },
+  explorer     = { enabled = false },
   indent       = { enabled = true },
   input        = { enabled = true, border = 'double' },
   lazygit      = { enabled = true },
@@ -43,10 +44,10 @@ snacks.setup({
   --  ──────── dashboard config ────────
 
   dashboard    = {
-    enabled  = true,
+    enabled  = false,
     autokeys = "123456789abcdefghijklmnopqrstuvwxyz",
     width    = 50,
-    row      = 3,
+    row      = 4,
 
     sections = {
       {
@@ -75,9 +76,13 @@ snacks.setup({
       header = "",
 
       keys = {
-        { key = "f", desc = "Find Files", action = function() Snacks.picker.files({ title = Myfn.short_cwd() }) end },
+        { key = "f", desc = "Find Files",
+          action = function()
+            Snacks.picker.files({ title = Myfn.short_cwd() })
+          end },
         { key = "g", desc = "Grep",       action = function() Snacks.picker.grep() end },
-        { key = "o", desc = "Oil",        action = ":Oil" },
+        -- { key = "o", desc = "Oil",        action = ":Oil" },
+        { key = "y", desc = "Yazi",        action = "<Leader>x" },
         { key = "r",
           desc = "Recent Files",
           action = function()
@@ -85,6 +90,7 @@ snacks.setup({
             vim.cmd('rshada!')
             snacks.picker.recent({ refresh = true, file_pos = "main" })
           end },
+        { key = "s", desc = "Sessions", action = "<Leader>q"},
         { key = "q", desc = "Quit Menu", action = ":bwipeout" },
       },
     },
@@ -186,46 +192,46 @@ snacks.setup({
       undo            = { layout = { preset = 'my_default' } },
       zoxide          = { layout = { preset = 'my_keymaps' } },
 
-      --  ──────── Explorer config ─────────
-
-      explorer        = {
-        exclude       = {},   -- don't exclude any files
-        -- replace_netrw = true, -- Replace netrw with the snacks explorer
-        layout        = {
-          { preview = true },
-          layout = {
-            box    = 'horizontal',
-            height = 0.85,
-            width  = 0.90,
-            {
-              border    = 'double',
-              box       = 'vertical',
-              title     = '{source} {live} {flags}',
-              title_pos = 'center',
-              { win = 'input',     height = 1,      border = 'bottom' },
-              { win = 'list',      border = 'none' },
-            },
-            { win = 'preview', border = 'double', width = 0.65, title = '{preview}' },
-          },
-        },
-        win           = {
-          list = {
-            keys = {
-              ['<left>']     = 'explorer_up',
-              ['g.']         = 'toggle_hidden',
-              ['<PageUp>']   = { 'list_scroll_up', mode = { 'i', 'n' } },
-              ['<PageDown>'] = { 'list_scroll_down', mode = { 'i', 'n' } },
-            },
-          },
-        },
-        auto_close    = true,
-        diagnostics   = true,
-        follow_file   = true,
-        formatters    = {
-          file = { filename_only = true },
-          tree = true,
-        },
-      },
+      -- --  ──────── Explorer config ─────────
+      --
+      -- explorer        = {
+      --   exclude       = {},   -- don't exclude any files
+      --   -- replace_netrw = true, -- Replace netrw with the snacks explorer
+      --   layout        = {
+      --     { preview = true },
+      --     layout = {
+      --       box    = 'horizontal',
+      --       height = 0.85,
+      --       width  = 0.90,
+      --       {
+      --         border    = 'double',
+      --         box       = 'vertical',
+      --         title     = '{source} {live} {flags}',
+      --         title_pos = 'center',
+      --         { win = 'input',     height = 1,      border = 'bottom' },
+      --         { win = 'list',      border = 'none' },
+      --       },
+      --       { win = 'preview', border = 'double', width = 0.65, title = '{preview}' },
+      --     },
+      --   },
+      --   win           = {
+      --     list = {
+      --       keys = {
+      --         ['<left>']     = 'explorer_up',
+      --         ['g.']         = 'toggle_hidden',
+      --         ['<PageUp>']   = { 'list_scroll_up', mode = { 'i', 'n' } },
+      --         ['<PageDown>'] = { 'list_scroll_down', mode = { 'i', 'n' } },
+      --       },
+      --     },
+      --   },
+      --   auto_close    = true,
+      --   diagnostics   = true,
+      --   follow_file   = true,
+      --   formatters    = {
+      --     file = { filename_only = true },
+      --     tree = true,
+      --   },
+      -- },
     },
   },
 
@@ -310,12 +316,12 @@ local function maps()
     Snacks.picker.keymaps()
   end, { desc = 'keymaps' })
 
-  Kset(
-    'n',
-    '<Leader>x',
-    '<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
-    { desc = 'Explorer' }
-  )
+  -- Kset(
+  --   'n',
+  --   '<Leader>x',
+  --   '<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
+  --   { desc = 'Explorer' }
+  -- )
 
   Kset('n', '<Leader>ss', function()
     Snacks.picker({

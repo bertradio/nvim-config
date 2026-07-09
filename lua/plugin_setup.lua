@@ -25,21 +25,17 @@ vim.api.nvim_create_autocmd('UIEnter', {
     req('which-key') -- Load WK early so it captures everything following it
     require('keymaps') -- Load global core maps
     -- 2. Load the Statuslines / UI wrappers
-    req('mini')
     req('lualine')
     req('dressing')
     req('noice')
     -- 3. Load the heavy toolchains (they will instantly hook into WK)
-    req('nvim-lspconfig')
     req('snacks')
-    req('fzf-lua')
+    req('blink-spell')
     -- 4 Others
-    req('arborist')
-    req('blink')
     require('aucmds')
-    req('mason')
-    req('oil')
     req('yazi')
+    req('mason')
+    req('pack-ui')
     if Myfn.is_windows() then
       req('bookmarks_win')
     else
@@ -52,12 +48,16 @@ vim.api.nvim_create_autocmd('UIEnter', {
 vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
   once = true,
   callback = function()
+    req('mini')
+    req('arborist')
     req('flash')
     req('nvim-biscuits')
     req('rainbow')
     req('conform')
     req('pretty-comment')
     req('tiny-comment')
+    req('native-lsp')
+    -- req('quicker')
   end,
 })
 
@@ -75,5 +75,6 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
   pattern = '*.md',
   callback = function()
     req('autolist')
+    req('render-markdown')
   end,
 })
