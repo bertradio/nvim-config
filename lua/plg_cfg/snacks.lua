@@ -178,7 +178,7 @@ snacks.setup({
       help            = { layout = { preset = 'my_default' } },
       jumps           = { layout = { preset = 'my_default' } },
       keymaps         = { layout = { preset = 'my_keymaps' } },
-      lines           = { layout = { preset = 'my_keymaps' } },
+      lines           = { layout = { preset = 'my_default' } },
       lsp_symbols     = { layout = { preset = "my_default" } },
       marks           = { layout = { preset = 'default' } },
       qflist          = { layout = { preset = 'my_default' } },
@@ -258,18 +258,18 @@ snacks.setup({
     },
   },
 
-  -- commented out because it seems to cause problems with noice
-  -- notifier     = {
-  --   enabled = true,
-  --   -- top_down = false, -- put notifier at bottom of the screen
-  --   margin = {
-  --     right = 1,
-  --     bottom = 1,
-  --   },
-  -- },
-})
-
--- force display of message when file saved
+-- -- commented out because it seems to cause problems with noice
+--   notifier     = {
+--     enabled = true,
+--     -- top_down = false, -- put notifier at bottom of the screen
+--     margin = {
+--       right = 1,
+--       bottom = 1,
+--     },
+--   },
+-- })
+--
+-- -- force display of message when file saved
 -- vim.api.nvim_create_autocmd('BufWritePost', {
 --   group = vim.api.nvim_create_augroup('SnacksSaveNotify', { clear = true }),
 --   callback = function(args)
@@ -281,8 +281,82 @@ snacks.setup({
 --   end,
 -- })
 
+})
+
 --  ─────────── end snacks configs ───────────
 
+--    ╭────────────────────────────╮
+--    │       custom pickers       │
+--    ╰────────────────────────────╯
+
+-- Show Neovim's raw oldfiles list in its existing order.
+local function oldfiles_picker()
+  local items = {}
+  local seen = {}
+
+  for _, file in ipairs(vim.v.oldfiles) do
+    file = vim.fn.fnamemodify(file, ':p')
+
+    if not seen[file] and vim.fn.filereadable(file) == 1 then
+      seen[file] = true
+      items[#items + 1] = {
+        idx = #items + 1,
+        file = file,
+        text = file,
+      }
+    end
+  end
+
+  Snacks.picker.pick({
+    title = 'Old Files',
+    items = items,
+    format = 'file',
+    preview = 'file',
+    layout = { preset = 'my_default' },
+    matcher = { sort_empty = false },
+  })
+end
+
+-- Commented out because prefer built-in command
+-- Show listed, named buffers ordered by Neovim's last-used time.
+-- local function buffers_lastused_picker()
+--   local buffers = vim.fn.getbufinfo({ buflisted = 1 })
+--   local items = {}
+--
+--   table.sort(buffers, function(a, b)
+--     return a.lastused > b.lastused
+--   end)
+--
+--   for _, buffer in ipairs(buffers) do
+--     if buffer.name ~= '' and vim.api.nvim_buf_is_valid(buffer.bufnr) then
+--       local file = vim.fn.fnamemodify(buffer.name, ':p')
+--
+--       items[#items + 1] = {
+--         idx = #items + 1,
+--         buf = buffer.bufnr,
+--         file = file,
+--         text = file,
+--       }
+--     end
+--   end
+--
+--   Snacks.picker.pick({
+--     title = 'Buffers: Last Used',
+--     items = items,
+--     format = 'file',
+--     preview = 'file',
+--     layout = { preset = 'my_default' },
+--     matcher = { sort_empty = false },
+--     confirm = function(picker, item)
+--       picker:close()
+--
+--       if item and vim.api.nvim_buf_is_valid(item.buf) then
+--         vim.api.nvim_set_current_buf(item.buf)
+--       end
+--     end,
+--   })
+-- end
+--
 --    ╭────────────────────────────╮
 --    │        key mappings        │
 --    ╰────────────────────────────╯
@@ -292,7 +366,8 @@ local function maps()
 
   Kset('n', '<Leader>bd', '<cmd>lua Snacks.bufdelete()<cr>',            { desc = 'delete current' })
   Kset('n', '<Leader>sR', '<cmd>lua Snacks.picker.registers()<cr>',     { desc = 'registers' })
-  Kset('n', '<Leader>sb', '<cmd>lua Snacks.picker.buffers()<cr>',       { desc = 'buffers' })
+  -- Kset('n', '<Leader>sb', buffers_lastused_picker,                      { desc = 'buffers - last used' })
+  Kset('n', '<Leader>sb', '<cmd>lua Snacks.picker.buffers()<cr>',             { desc = 'buffers'})
   Kset('n', '<Leader>sg', '<cmd>lua Snacks.picker.grep()<cr>',          { desc = 'grep' })
   Kset('n', '<Leader>sh', '<cmd>lua Snacks.picker.help()<cr>',          { desc = 'help' })
   Kset('n', '<Leader>sj', '<cmd>lua Snacks.picker.jumps()<cr>',         { desc = 'jumps' })
@@ -335,15 +410,11 @@ local function maps()
     Snacks.dashboard.open()
   end, { desc = 'Dashboard (Synced)', silent = true })
 
-  local function open_clean_recent_picker()
-    Snacks.picker.recent({ file_pos = 'main' })
-  end
-
   Kset('n', '<Leader>sr', function()
     vim.cmd('wshada')
     vim.cmd('rshada!')
-    open_clean_recent_picker()
-  end, { desc = 'Recent Files (Synced)' })
+    oldfiles_picker()
+  end, { desc = 'Old Files (Synced)' })
 
   Kset(
     'n',
@@ -378,6 +449,10 @@ local function maps()
     Snacks.bufdelete.all()
     Snacks.dashboard.open()
   end, { desc = 'delete all' })
+
+  Kset('n', '<Leader>ss', function()
+    Snacks.picker.lsp_symbols()
+  end, { desc = 'Search document symbols' })
 
 end
 

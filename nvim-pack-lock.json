@@ -4,6 +4,10 @@
       "rev": "0abc8f390b278c3b4aabc4c004ac8a088b65cf24",
       "src": "https://github.com/L3MON4D3/LuaSnip"
     },
+    "aerial.nvim": {
+      "rev": "28fe6e822ae344544c379d60fcb13c9519a1f08a",
+      "src": "https://github.com/stevearc/aerial.nvim"
+    },
     "arborist.nvim": {
       "rev": "fdeef56c2840c6772b9f68c5774ed87e9340ec7d",
       "src": "https://github.com/arborist-ts/arborist.nvim"
@@ -34,7 +38,7 @@
       "src": "https://github.com/stevearc/dressing.nvim"
     },
     "flash.nvim": {
-      "rev": "fcea7ff883235d9024dc41e638f164a450c14ca2",
+      "rev": "b6346946d10d07998efee029fb0f7a593806d0cd",
       "src": "https://github.com/folke/flash.nvim"
     },
     "lazydev.nvim": {
@@ -54,8 +58,12 @@
       "src": "https://github.com/williamboman/mason.nvim"
     },
     "mini.nvim": {
-      "rev": "928971c3cfe99ddf29659acc31214cfa836fabe4",
+      "rev": "4171fba613b64ade9a28e198bd5b4fea5ba45e22",
       "src": "https://github.com/nvim-mini/mini.nvim"
+    },
+    "neominimap.nvim": {
+      "rev": "0676085d898019f06044923934e38663f5efa290",
+      "src": "https://github.com/Isrothy/neominimap.nvim"
     },
     "noice.nvim": {
       "rev": "7bfd942445fb63089b59f97ca487d605e715f155",
@@ -74,7 +82,7 @@
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
     "pack-ui.nvim": {
-      "rev": "370f1806ff4e757058c76d3bec5df08b6fb7d39c",
+      "rev": "de6ebc6c883079983420f8d6a23317c6febc1ac8",
       "src": "https://github.com/jtprogru/pack-ui.nvim"
     },
     "persistence.nvim": {
@@ -105,6 +113,10 @@
       "rev": "882c996cf28183f4d63640de0b4c02ec886d01f2",
       "src": "https://github.com/folke/snacks.nvim"
     },
+    "tiny-cmdline.nvim": {
+      "rev": "e247d9ee4c980734f8f8bf616d31e0ab7c27485d",
+      "src": "https://github.com/rachartier/tiny-cmdline.nvim"
+    },
     "tiny-comment.nvim": {
       "rev": "9466b3b95dbc517956f32a943223bf3cfa572c37",
       "src": "https://github.com/so1ve/tiny-comment.nvim"
@@ -114,7 +126,7 @@
       "src": "https://github.com/folke/which-key.nvim"
     },
     "yazi.nvim": {
-      "rev": "668cd1f1045c4b929b6292bafc084d5c699770e6",
+      "rev": "bba4c0579e4247729bf71b4104471eb131516922",
       "src": "https://github.com/mikavilpas/yazi.nvim"
     }
   }

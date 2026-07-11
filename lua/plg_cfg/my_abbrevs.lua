@@ -20,6 +20,8 @@ local set_iabbrevs = {
   { 'h2', '##'},
   { 'h3', '###'},
   { 'h4', '####'},
+  -- for misspellings
+  { 'ot', 'to'},
 }
 
 for _, v in ipairs(set_iabbrevs) do

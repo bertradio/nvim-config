@@ -3,78 +3,93 @@
 --    ╰────────────────────────────╯
 
 -- Created: 04/29/26
--- use audtocmds to require plugins in order
--- called by init.lua
+-- Use autocmds to require plugins in order
+-- Called by init.lua
 -- 04/30/26 added keymaps and aucmds to load on UIEnter
 -- 05/20/26 added function to make code clearer
+-- 07/09/26 replaced anonymous autocmd callbacks with named functions
 
--- function to make plg_cfg plugin requires simpler
-local function req(plug)
-  local pl = 'plg_cfg.' .. plug
-  require(pl)
+-- Make plg_cfg plugin requires simpler
+local function req(plugin)
+  require('plg_cfg.' .. plugin)
 end
 
---  ────────── lazy loading ──────────
+-- ────────── lazy loading set up all functions ──────────
 
--- load when UI starts - sets load order
+local function load_ui_plugins()
+  -- 1. Load the theme and layout structures first
+  req('catppuccin')
+  req('which-key') -- Load WK early so it captures everything following it
+  require('keymaps') -- Load global core maps
+
+  -- 2. Load the statuslines and UI wrappers
+  req('lualine')
+  req('dressing')
+  req('noice')
+
+  -- 3. Load the heavier toolchains
+  req('snacks')
+  req('blink-spell')
+
+  -- 4. Load the remaining UI-related plugins
+  require('aucmds')
+  req('yazi')
+  req('mason')
+  req('pack-ui')
+
+  if Myfn.is_windows() then
+    req('bookmarks_win')
+  else
+    req('bookmarks_linux')
+  end
+end
+
+local function load_buffer_plugins()
+  req('mini')
+  -- req('neominimap')
+  req('arborist')
+  req('flash')
+  req('nvim-biscuits')
+  req('rainbow')
+  req('conform')
+  req('pretty-comment')
+  req('tiny-comment')
+  req('native-lsp')
+  -- req('quicker')
+end
+
+local function load_insert_plugins()
+  req('my_abbrevs')
+end
+
+local function load_markdown_plugins()
+  req('autolist')
+  req('render-markdown')
+end
+
+--  ───── autocmds to run functions once ─────
+
+-- Load when the UI starts; this also sets the load order
 vim.api.nvim_create_autocmd('UIEnter', {
   once = true,
-  callback = function()
-    -- 1. Load the Theme and Layout structures first
-    req('catppuccin')
-    req('which-key') -- Load WK early so it captures everything following it
-    require('keymaps') -- Load global core maps
-    -- 2. Load the Statuslines / UI wrappers
-    req('lualine')
-    req('dressing')
-    req('noice')
-    -- 3. Load the heavy toolchains (they will instantly hook into WK)
-    req('snacks')
-    req('blink-spell')
-    -- 4 Others
-    require('aucmds')
-    req('yazi')
-    req('mason')
-    req('pack-ui')
-    if Myfn.is_windows() then
-      req('bookmarks_win')
-    else
-      req('bookmarks_linux')
-    end
-  end,
+  callback = load_ui_plugins,
 })
 
--- load on entering first buffer
+-- Load when entering the first buffer
 vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
   once = true,
-  callback = function()
-    req('mini')
-    req('arborist')
-    req('flash')
-    req('nvim-biscuits')
-    req('rainbow')
-    req('conform')
-    req('pretty-comment')
-    req('tiny-comment')
-    req('native-lsp')
-    -- req('quicker')
-  end,
+  callback = load_buffer_plugins,
 })
 
---load on first enter into insert mode
-vim.api.nvim_create_autocmd({ 'InsertEnter' }, {
+-- Load on the first entry into Insert mode
+vim.api.nvim_create_autocmd('InsertEnter', {
   once = true,
-  callback = function()
-    req('my_abbrevs')
-  end,
+  callback = load_insert_plugins,
 })
 
--- load only for markdown buffers
+-- Load only for the first Markdown buffer
 vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
   once = true,
   pattern = '*.md',
-  callback = function()
-    req('autolist')
-    req('render-markdown')
-  end,
+  callback = load_markdown_plugins,
 })
