@@ -191,7 +191,7 @@ vim.api.nvim_create_autocmd('FileType', {
     if vim.fn.has('nvim-0.10') == 1 then
       vim.opt_local.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
     else
-      vim.opt_local.foldexpr = 'nvim_treesitter#foldexpr()'
+      vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
     end
     vim.opt_local.foldenable = true
     vim.opt_local.foldlevel = 99

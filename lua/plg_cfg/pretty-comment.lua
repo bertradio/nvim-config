@@ -5,7 +5,7 @@
 -- various shortcuts for nice comments
 -- Created: 04/14/26
 
-vim.pack.add({ Gh('/Cartoone9/pretty-comment.nvim') })
+vim.pack.add({ Gh('Cartoone9/pretty-comment.nvim') })
 
 require('pretty-comment').setup({
   default_width = 50,

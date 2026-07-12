@@ -17,8 +17,8 @@ local snacks = require('snacks')
 
 local excluded_exts = require('plg_cfg.file_exclude')
 
-vim.ui.select = Snacks.picker.select
-vim.ui.input = Snacks.input.input
+vim.ui.select = snacks.picker.select
+vim.ui.input = snacks.input.input
 
 
 -- stylua: ignore
@@ -36,9 +36,9 @@ snacks.setup({
   rename       = { enabled = true },
   scope        = { enabled = true },
   scroll       = { enabled = true },
+  terminal     = { enabled = true },
 
   image        = { enabled = false },
-  terminal     = { enabled = true },
   words        = { enabled = false },
 
   --  ──────── dashboard config ────────

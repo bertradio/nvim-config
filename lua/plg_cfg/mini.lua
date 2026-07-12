@@ -24,21 +24,16 @@ local operators = require('mini.operators')
 local mpairs = require('mini.pairs')
 local surround = require('mini.surround')
 
--- delay some mini.ai mapping
-vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile', 'InsertEnter' }, {
-  once = true,
-  callback = function()
-    ai.setup({
-      -- disable these so builtin c-space and bs work
-      -- for internal visual mode
-      mappings = {
-        around_next = '',
-        inside_next = '',
-        around_last = '',
-        inside_last = '',
-      },
-    })
-  end,
+-- mini.ai mapping
+ai.setup({
+  -- disable these so builtin c-space and bs work
+  -- for internal visual mode
+  mappings = {
+    around_next = '',
+    inside_next = '',
+    around_last = '',
+    inside_last = '',
+  },
 })
 
 align.setup({ mappings = { start = 'ga' } })

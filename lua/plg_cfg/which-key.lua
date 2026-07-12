@@ -60,7 +60,7 @@ require('which-key').setup({
     marks     = true,
     registers = true,
     spelling  = {
-        enabled = true,
+        enabled = false,
     },
     presets = {
       operators    = true,

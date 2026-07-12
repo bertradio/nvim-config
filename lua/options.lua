@@ -77,7 +77,6 @@ function M.setup()
   -- require('vim._core.ui2').enable({})
 
   -- Avoid showing extra message prompts and truncating long texts - for Noice
-  vim.opt.cmdheight = 0
   vim.opt.shortmess:append('cIWsFtO')
 
   -- make sure coding is right
@@ -89,12 +88,7 @@ function M.setup()
   vim.opt.backupdir = vim.fn.stdpath('data') .. '/backup//'
   vim.opt.undodir = vim.fn.stdpath('data') .. '/undo'
   vim.opt.path = '+= **'
-  -- Specific to Linux environment
-  -- vim.opt.runtimepath:append('/home/bert/.local/share/nvim/site')
 
-  -- Shortmess and Fillchars
-  vim.opt.fillchars:append({ eob = ' ' })
-  vim.opt.shortmess:append('IF')
 
 -- Provider disabling (Speed optimization)
   -- stylua: ignore 
@@ -117,7 +111,7 @@ function M.setup()
     'gzip',
     'logipat',
     'matchit',
-    -- 'matchparen',
+    'matchparen',
     'netrwPlugin',
     'netrw',
     'rrhelper',
@@ -176,13 +170,14 @@ end
 -- 3. Core Fold Options
 vim.opt.foldenable = true
 vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.opt.foldlevel = 99
 vim.opt.foldtext = 'v:lua.MyFoldText()'
 
 -- 4. THE NUMBER KILLER: fillchars + statuscolumn logic
 -- This forces the fold column to be empty unless it's an icon
 vim.opt.fillchars = {
+  eob = ' ',
   foldopen = '▼',
   foldclose = '▶',
   fold = ' ',
@@ -232,9 +227,5 @@ vim.opt.statuscolumn = '%s%{%v:lua.MyStatusColumn()%}'
 
 -- Disable the native foldcolumn because we are drawing it ourselves now
 vim.opt.foldcolumn = '0'
-
--- Disable native wildmenu so it doesn't fight with blink
-vim.opt.wildchar = 0
-vim.opt.wildoptions = ''
 
 return M

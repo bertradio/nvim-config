@@ -17,24 +17,17 @@ end
 -- ────────── lazy loading set up all functions ──────────
 
 local function load_ui_plugins()
-  -- 1. Load the theme and layout structures first
   req('catppuccin')
-  req('which-key') -- Load WK early so it captures everything following it
-  require('keymaps') -- Load global core maps
 
-  -- 2. Load the statuslines and UI wrappers
+  require('keymaps')
+  require('aucmds')
+
+  req('which-key')
   req('lualine')
-  req('dressing')
   req('noice')
-
-  -- 3. Load the heavier toolchains
   req('snacks')
   req('blink-spell')
-
-  -- 4. Load the remaining UI-related plugins
-  require('aucmds')
   req('yazi')
-  -- req('mason')
   req('pack-ui')
 
   if Myfn.is_windows() then

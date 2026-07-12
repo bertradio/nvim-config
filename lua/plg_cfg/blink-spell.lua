@@ -84,7 +84,7 @@ blink.setup({
       ['<C-n>']  = { 'select_next', 'fallback' },
       ['<C-p>']  = { 'select_prev', 'fallback' },
       ['<Down>'] = { 'select_next', 'fallback' },
-      ['<Tab>']  = { 'accept', 'fallback' },
+      ['<Tab>']  = { 'accept',      'fallback' },
       ['<Up>']   = { 'select_prev', 'fallback' },
     },
     completion = {
@@ -112,7 +112,7 @@ blink.setup({
       border    = 'rounded',
       draw      = {
         columns = {
-          { 'label',      'label_description', gap = 1 },
+          { 'label', 'label_description', gap = 1 },
           { 'kind_icon' },
           { 'source_name' },
         },
@@ -168,7 +168,7 @@ blink.setup({
       bash     = { 'lsp', 'snippets', 'path', 'buffer' },
       lua      = { 'snippets', 'buffer', 'lsp', 'path' },
       markdown = { 'spell', 'buffer', 'snippets', 'path' },
-      text =     { 'spell', 'buffer', 'snippets', 'path' },
+      text     = { 'spell', 'buffer', 'snippets', 'path' },
     },
   },
 })
