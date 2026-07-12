@@ -90,7 +90,7 @@ function M.setup()
   vim.opt.undodir = vim.fn.stdpath('data') .. '/undo'
   vim.opt.path = '+= **'
   -- Specific to Linux environment
-  vim.opt.runtimepath:append('/home/bert/.local/share/nvim/site')
+  -- vim.opt.runtimepath:append('/home/bert/.local/share/nvim/site')
 
   -- Shortmess and Fillchars
   vim.opt.fillchars:append({ eob = ' ' })
@@ -117,7 +117,7 @@ function M.setup()
     'gzip',
     'logipat',
     'matchit',
-    'matchparen',
+    -- 'matchparen',
     'netrwPlugin',
     'netrw',
     'rrhelper',

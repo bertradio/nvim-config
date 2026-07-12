@@ -34,7 +34,7 @@ local function load_ui_plugins()
   -- 4. Load the remaining UI-related plugins
   require('aucmds')
   req('yazi')
-  req('mason')
+  -- req('mason')
   req('pack-ui')
 
   if Myfn.is_windows() then
@@ -48,7 +48,7 @@ end
 
 local function load_buffer_plugins()
   req('mini')
-  req('arborist')
+  -- req('arborist')
   req('flash')
   req('nvim-biscuits')
   req('rainbow')
