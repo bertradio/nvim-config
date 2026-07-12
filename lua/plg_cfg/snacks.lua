@@ -454,6 +454,20 @@ local function maps()
     Snacks.picker.lsp_symbols()
   end, { desc = 'Search document symbols' })
 
+  Kset('n', '<Leader>sp', function()
+    Snacks.picker.resume()
+  end, { desc = 'resume last picker' })
+
+  Kset('n', '<Leader>sB', function()
+    Snacks.picker.grep_buffers()
+  end, { desc = 'grep open buffers' })
+
+  Kset('n', '<Leader>.', function()
+    Snacks.picker.smart({
+      title = Myfn.short_cwd(),
+  })
+  end, { desc = 'Smart files' })
+
 end
 
 maps()
