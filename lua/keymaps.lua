@@ -16,7 +16,6 @@ Kset('n', 'G', 'G$', { desc = 'Move to last char of file' })
 -- Buffer manipulation
 
 Kset({ 'n' }, '<Leader>bc', '<cmd>CopyBufferName<cr>', { desc = 'path copy' })
-Kset({ 'n' }, '<Leader>bo', '<cmd>BufOnly<cr>', { desc = 'delete other' })
 Kset({ 'n' }, '<Leader>ba', '<cmd>bufdo bwipeout<cr>', { desc = 'delete all' })
 -- Kset({ 'n' }, '<Leader>bb', '<cmd>bd!<cr>', { desc = 'kill buffer' })
 Kset({ 'n' }, '<Leader>bb', '<cmd>lua Snacks.bufdelete()<cr>', { desc = 'snacks delete buffer' })

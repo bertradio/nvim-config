@@ -28,7 +28,7 @@ snacks.setup({
   -- only include those not defined elsewhere
 
   bigfile      = { enabled = true },
-  explorer     = { enabled = false },
+  explorer     = { enabled = true },
   indent       = { enabled = true },
   input        = { enabled = true, border = 'double' },
   lazygit      = { enabled = true },
@@ -82,7 +82,7 @@ snacks.setup({
           end },
         { key = "g", desc = "Grep",       action = function() Snacks.picker.grep() end },
         -- { key = "o", desc = "Oil",        action = ":Oil" },
-        { key = "y", desc = "Yazi",        action = "<Leader>x" },
+        { key = "y", desc = "Yazi",        action = "<Leader>y" },
         { key = "r",
           desc = "Recent Files",
           action = function()
@@ -193,45 +193,45 @@ snacks.setup({
       zoxide          = { layout = { preset = 'my_keymaps' } },
 
       -- --  ──────── Explorer config ─────────
-      --
-      -- explorer        = {
-      --   exclude       = {},   -- don't exclude any files
-      --   -- replace_netrw = true, -- Replace netrw with the snacks explorer
-      --   layout        = {
-      --     { preview = true },
-      --     layout = {
-      --       box    = 'horizontal',
-      --       height = 0.85,
-      --       width  = 0.90,
-      --       {
-      --         border    = 'double',
-      --         box       = 'vertical',
-      --         title     = '{source} {live} {flags}',
-      --         title_pos = 'center',
-      --         { win = 'input',     height = 1,      border = 'bottom' },
-      --         { win = 'list',      border = 'none' },
-      --       },
-      --       { win = 'preview', border = 'double', width = 0.65, title = '{preview}' },
-      --     },
-      --   },
-      --   win           = {
-      --     list = {
-      --       keys = {
-      --         ['<left>']     = 'explorer_up',
-      --         ['g.']         = 'toggle_hidden',
-      --         ['<PageUp>']   = { 'list_scroll_up', mode = { 'i', 'n' } },
-      --         ['<PageDown>'] = { 'list_scroll_down', mode = { 'i', 'n' } },
-      --       },
-      --     },
-      --   },
-      --   auto_close    = true,
-      --   diagnostics   = true,
-      --   follow_file   = true,
-      --   formatters    = {
-      --     file = { filename_only = true },
-      --     tree = true,
-      --   },
-      -- },
+
+      explorer        = {
+        exclude       = {},   -- don't exclude any files
+        -- replace_netrw = true, -- Replace netrw with the snacks explorer
+        layout        = {
+          { preview = true },
+          layout = {
+            box    = 'horizontal',
+            height = 0.85,
+            width  = 0.90,
+            {
+              border    = 'double',
+              box       = 'vertical',
+              title     = '{source} {live} {flags}',
+              title_pos = 'center',
+              { win = 'input',     height = 1,      border = 'bottom' },
+              { win = 'list',      border = 'none' },
+            },
+            { win = 'preview', border = 'double', width = 0.65, title = '{preview}' },
+          },
+        },
+        win           = {
+          list = {
+            keys = {
+              ['<left>']     = 'explorer_up',
+              ['g.']         = 'toggle_hidden',
+              ['<PageUp>']   = { 'list_scroll_up', mode = { 'i', 'n' } },
+              ['<PageDown>'] = { 'list_scroll_down', mode = { 'i', 'n' } },
+            },
+          },
+        },
+        auto_close    = true,
+        diagnostics   = true,
+        follow_file   = true,
+        formatters    = {
+          file = { filename_only = true },
+          tree = true,
+        },
+      },
     },
   },
 
@@ -391,12 +391,12 @@ local function maps()
     Snacks.picker.keymaps()
   end, { desc = 'keymaps' })
 
-  -- Kset(
-  --   'n',
-  --   '<Leader>x',
-  --   '<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
-  --   { desc = 'Explorer' }
-  -- )
+  Kset(
+    'n',
+    '<Leader>x',
+    '<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
+    { desc = 'Explorer' }
+  )
 
   Kset('n', '<Leader>ss', function()
     Snacks.picker({
@@ -450,7 +450,7 @@ local function maps()
     Snacks.dashboard.open()
   end, { desc = 'delete all' })
 
-  Kset('n', '<Leader>ss', function()
+  Kset('n', '<Leader>so', function()
     Snacks.picker.lsp_symbols()
   end, { desc = 'Search document symbols' })
 

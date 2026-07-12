@@ -44,9 +44,10 @@ local function load_ui_plugins()
   end
 end
 
+--  ─────────────────────────────────────────────
+
 local function load_buffer_plugins()
   req('mini')
-  -- req('neominimap')
   req('arborist')
   req('flash')
   req('nvim-biscuits')
@@ -55,19 +56,26 @@ local function load_buffer_plugins()
   req('pretty-comment')
   req('tiny-comment')
   req('native-lsp')
-  -- req('quicker')
 end
+
+--  ─────────────────────────────────────────────
 
 local function load_insert_plugins()
   req('my_abbrevs')
 end
+
+--  ─────────────────────────────────────────────
 
 local function load_markdown_plugins()
   req('autolist')
   req('render-markdown')
 end
 
---  ───── autocmds to run functions once ─────
+--  ────────────────────────────────────────────────────────
+
+--    ╭──────────────────────────────────────────────────╮
+--    │    ───── autocmds to run functions once ─────    │
+--    ╰──────────────────────────────────────────────────╯
 
 -- Load when the UI starts; this also sets the load order
 vim.api.nvim_create_autocmd('UIEnter', {

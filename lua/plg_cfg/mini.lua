@@ -21,7 +21,7 @@ local bracketed = require('mini.bracketed')
 local diff = require('mini.diff')
 local move = require('mini.move')
 local operators = require('mini.operators')
-local pairs = require('mini.pairs')
+local mpairs = require('mini.pairs')
 local surround = require('mini.surround')
 
 -- delay some mini.ai mapping
@@ -84,7 +84,7 @@ operators.setup()
 
 -- add <> as pair
 -- config so ' before a word does not get peired
-pairs.setup({
+mpairs.setup({
   mappings = {
     -- pair < >
     ['<'] = { action = 'open', pair = '<>', neigh_pattern = '^[^\\]' },

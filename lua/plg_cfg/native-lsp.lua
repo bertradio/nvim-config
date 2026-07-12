@@ -38,7 +38,7 @@ local servers = {
       Lua = {
         completion = { callSnippet = 'Replace' },
         diagnostics = {
-          globals = { 'Snacks', 'Status', 'cx', 'ui', 'ya', 'vim' },
+          globals = { 'Snacks', 'Status', 'cx', 'ui', 'ya', 'vim', 'Kset', 'Myfn', 'Gh' },
         },
         telemetry = { enable = false },
         workspace = { checkThirdParty = false },
