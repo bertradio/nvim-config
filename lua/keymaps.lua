@@ -121,7 +121,7 @@ Kset('n', '<tab>', function()
     return
   end
 
-  -- Open recursively if closed, close if open.
+  -- Open fold recursively if closed, close if open.
   local cmd = vim.fn.foldclosed(linenr) == -1 and 'zc' or 'zO'
   vim.cmd('normal! ' .. cmd)
 end, { silent = true, desc = 'Folds: Toggle' })
@@ -183,7 +183,7 @@ local function update_search_lens()
 
     vim.api.nvim_buf_clear_namespace(0, ns, 0, -1)
     vim.api.nvim_buf_set_extmark(0, ns, line, 0, {
-      -- CHANGED: Use our new light blue group here
+      -- CHANGED: Use new light blue group here
       virt_text = { { text, 'SearchLensBlue' } },
       virt_text_pos = 'eol',
     })

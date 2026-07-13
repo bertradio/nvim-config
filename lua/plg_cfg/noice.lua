@@ -3,8 +3,6 @@
 --    ╰────────────────────────────╯
 
 -- 05/28/26 - Optimized as per Gemini
--- had to disable ui2 in options.lua to prevent double display
--- 05/31/26 - MOdified to send all notifications through snacks.notify
 
 vim.pack.add({
   Gh('MunifTanjim/nui.nvim'),

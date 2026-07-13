@@ -29,7 +29,8 @@ local function load_ui_plugins()
   req('blink-spell')
   req('yazi')
   req('pack-ui')
-
+  req('mini')
+  req('mini-files')
   if Myfn.is_windows() then
     req('bookmarks_win')
   else
@@ -40,8 +41,6 @@ end
 --  ─────────────────────────────────────────────
 
 local function load_buffer_plugins()
-  req('mini')
-  -- req('arborist')
   req('flash')
   req('nvim-biscuits')
   req('rainbow')

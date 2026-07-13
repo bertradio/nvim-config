@@ -7,18 +7,6 @@
 -- Explicitly bring the module into local scope
 local MiniFiles = require('mini.files')
 
-vim.api.nvim_create_autocmd('DirChanged', {
-  group = vim.api.nvim_create_augroup('MiniFilesSync', { clear = true }),
-  callback = function()
-    -- Safely check if the module is even available in the package path
-    local has_mf, mf = pcall(require, 'mini.files')
-    -- Only proceed if the module is loaded AND the explorer is currently visible
-    if has_mf and mf.get_explorer_state() ~= nil then
-      mf.open(vim.fn.getcwd())
-    end
-  end,
-})
-
 Kset('n', '<Leader>[', function()
   require('mini.files').open()
 end, { desc = 'mini files' })
@@ -127,9 +115,11 @@ vim.api.nvim_create_autocmd('User', {
 })
 
 -- load bookmarks
+
 local set_mark = function(id, path, desc)
   MiniFiles.set_bookmark(id, path, { desc = desc })
 end
+
 vim.api.nvim_create_autocmd('User', {
   pattern = 'MiniFilesExplorerOpen',
   callback = function()

@@ -20,7 +20,6 @@ local excluded_exts = require('plg_cfg.file_exclude')
 vim.ui.select = snacks.picker.select
 vim.ui.input = snacks.input.input
 
-
 -- stylua: ignore
 snacks.setup({
 
@@ -258,29 +257,6 @@ snacks.setup({
     },
   },
 
--- -- commented out because it seems to cause problems with noice
---   notifier     = {
---     enabled = true,
---     -- top_down = false, -- put notifier at bottom of the screen
---     margin = {
---       right = 1,
---       bottom = 1,
---     },
---   },
--- })
---
--- -- force display of message when file saved
--- vim.api.nvim_create_autocmd('BufWritePost', {
---   group = vim.api.nvim_create_augroup('SnacksSaveNotify', { clear = true }),
---   callback = function(args)
---     -- Get just the filename, not the full system path
---     local filename = vim.fn.fnamemodify(args.file, ':t')
---
---     -- Trigger the notification via snacks
---     Snacks.notify.info(filename .. ' -> saved', { title = '' })
---   end,
--- })
-
 })
 
 --  ─────────── end snacks configs ───────────
@@ -308,7 +284,7 @@ local function oldfiles_picker()
   end
 
   Snacks.picker.pick({
-    title = 'Old Files',
+    title = 'Recent',
     items = items,
     format = 'file',
     preview = 'file',
@@ -317,45 +293,6 @@ local function oldfiles_picker()
   })
 end
 
--- Commented out because prefer built-in command
--- Show listed, named buffers ordered by Neovim's last-used time.
--- local function buffers_lastused_picker()
---   local buffers = vim.fn.getbufinfo({ buflisted = 1 })
---   local items = {}
---
---   table.sort(buffers, function(a, b)
---     return a.lastused > b.lastused
---   end)
---
---   for _, buffer in ipairs(buffers) do
---     if buffer.name ~= '' and vim.api.nvim_buf_is_valid(buffer.bufnr) then
---       local file = vim.fn.fnamemodify(buffer.name, ':p')
---
---       items[#items + 1] = {
---         idx = #items + 1,
---         buf = buffer.bufnr,
---         file = file,
---         text = file,
---       }
---     end
---   end
---
---   Snacks.picker.pick({
---     title = 'Buffers: Last Used',
---     items = items,
---     format = 'file',
---     preview = 'file',
---     layout = { preset = 'my_default' },
---     matcher = { sort_empty = false },
---     confirm = function(picker, item)
---       picker:close()
---
---       if item and vim.api.nvim_buf_is_valid(item.buf) then
---         vim.api.nvim_set_current_buf(item.buf)
---       end
---     end,
---   })
--- end
 --
 --    ╭────────────────────────────╮
 --    │        key mappings        │
@@ -464,7 +401,7 @@ local function maps()
 
   Kset('n', '<Leader>.', function()
     Snacks.picker.smart({
-      title = Myfn.short_cwd(),
+      -- title = 'Smart',
   })
   end, { desc = 'Smart files' })
 

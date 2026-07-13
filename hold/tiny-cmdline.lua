@@ -10,4 +10,10 @@ vim.pack.add({ 'https://github.com/rachartier/tiny-cmdline.nvim' })
 
 vim.o.cmdheight = 0
 
-require('tiny-cmdline').setup({})
+vim.api.nvim_set_hl(0, 'TinyCmdlineBorder', { fg = '#FFA500' })
+vim.api.nvim_set_hl(0, 'TinyCmdlineNormal', { bg = 'none' })
+
+require('tiny-cmdline').setup({
+  native_types = {}, -- use for search too
+  on_reposition = require('tiny-cmdline').adapters.blink,
+})
