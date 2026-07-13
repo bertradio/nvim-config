@@ -134,3 +134,34 @@ vim.api.nvim_create_autocmd('User', {
     set_mark('w', vim.fn.getcwd, 'cwd') -- callable
   end,
 })
+
+--  ───── set nvim cwd to current mini.files directoru ─────
+
+local function set_cwd_to_mini()
+  local fs_entry = MiniFiles.get_fs_entry()
+  if not fs_entry then
+    return
+  end
+
+  local path = fs_entry.path
+
+  -- If the cursor is on a file, use its parent directory
+  if vim.fn.isdirectory(path) == 0 then
+    path = vim.fs.dirname(path)
+  end
+
+  vim.cmd.cd(vim.fn.fnameescape(path))
+  vim.notify('cwd → ' .. path)
+end
+
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'MiniFilesBufferCreate',
+  callback = function(args)
+    local buf = args.data.buf_id
+
+    vim.keymap.set('n', 'gc', set_cwd_to_mini, {
+      buffer = buf,
+      desc = 'Set cwd to current Mini.files directory',
+    })
+  end,
+})
