@@ -32,7 +32,6 @@ snacks.setup({
   indent       = { enabled = true },
   input        = { enabled = true, border = 'double' },
   lazygit      = { enabled = true },
-  notifier     = { enabled = true },
   quickfile    = { enabled = true },
   rename       = { enabled = true },
   scope        = { enabled = true },
@@ -45,7 +44,7 @@ snacks.setup({
   --  ──────── dashboard config ────────
 
   dashboard    = {
-    enabled  = false,
+    enabled  = true,
     autokeys = "123456789abcdefghijklmnopqrstuvwxyz",
     width    = 50,
     row      = 4,
@@ -83,15 +82,16 @@ snacks.setup({
           end },
         { key = "g", desc = "Grep",       action = function() Snacks.picker.grep() end },
         -- { key = "o", desc = "Oil",        action = ":Oil" },
-        { key = "y", desc = "Yazi",        action = "<Leader>y" },
+        { key = "m", desc = "Mini-Files", action = "<Leader>["},
         { key = "r",
           desc = "Recent Files",
-          action = function()
-            vim.cmd('wshada')
-            vim.cmd('rshada!')
-            snacks.picker.recent({ refresh = true, file_pos = "main" })
-          end },
-        { key = "s", desc = "Sessions", action = "<Leader>q"},
+          action = "<leader>sr" },
+          -- action = function()
+          --   vim.cmd('wshada')
+          --   vim.cmd('rshada!')
+          --   snacks.picker.recent({ refresh = true, file_pos = "main" })
+          -- end },
+          { key = "y", desc = "Yazi",        action = "<Leader>y" },
         { key = "q", desc = "Quit Menu", action = ":bwipeout" },
       },
     },
@@ -295,7 +295,6 @@ local function oldfiles_picker()
   })
 end
 
---
 --    ╭────────────────────────────╮
 --    │        key mappings        │
 --    ╰────────────────────────────╯
@@ -411,17 +410,17 @@ end
 
 maps()
 
-vim.api.nvim_create_autocmd('BufWritePost', {
-  group = vim.api.nvim_create_augroup('SnacksSaveNotify', { clear = true }),
-  callback = function(args)
-    -- Get the name of the file just saved
-    local filename = vim.fn.fnamemodify(args.file, ':t')
-
-    -- Only notify if it's a real file, not an empty buffer
-    if filename ~= '' then
-      vim.notify('Saved "' .. filename .. '"', vim.log.levels.INFO, {
-        title = 'File System',
-      })
-    end
-  end,
-})
+-- vim.api.nvim_create_autocmd('BufWritePost', {
+--   group = vim.api.nvim_create_augroup('SnacksSaveNotify', { clear = true }),
+--   callback = function(args)
+--     -- Get the name of the file just saved
+--     local filename = vim.fn.fnamemodify(args.file, ':t')
+--
+--     -- Only notify if it's a real file, not an empty buffer
+--     if filename ~= '' then
+--       vim.notify('Saved "' .. filename .. '"', vim.log.levels.INFO, {
+--         title = 'File System',
+--       })
+--     end
+--   end,
+-- })

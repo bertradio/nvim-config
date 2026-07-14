@@ -61,7 +61,7 @@ function M.setup()
     autocomplete   = false,
     wildmenu       = false,
     wildmode       = 'longest:full,full',
-    cmdheight      = 0, -- Set for Noice
+    cmdheight      = 0, -- cmdline disappears after key is hit
   }
 
   vim.opt.wildchar = 0 -- Disable the trigger key for native wildmenu
@@ -72,12 +72,11 @@ function M.setup()
     vim.opt[k] = v
   end
 
-  -- had to disable to prevent double display with noice
-  -- it is experimental in nvim 0.12 and I don't use it
-  -- require('vim._core.ui2').enable({})
+  -- disable to prevent double display with noice
+  require('vim._core.ui2').enable({})
 
   -- Avoid showing extra message prompts and truncating long texts - for Noice
-  vim.opt.shortmess:append('cIWsFtO')
+  -- vim.opt.shortmess:append('cIWsFtO')
 
   -- make sure coding is right
   vim.scriptencoding = 'utf-8'

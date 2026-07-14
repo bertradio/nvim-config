@@ -18,17 +18,18 @@ end
 
 local function load_ui_plugins()
   req('catppuccin')
-
   require('keymaps')
   require('aucmds')
 
-  req('lualine')
-  req('snacks')
-  req('blink-spell')
-  req('pack-ui')
+  -- req('lualine')
+
   req('mini')
   req('mini-files')
   req('mini-clue')
+  req('snacks')
+  req('statusline')
+  req('blink-spell')
+  req('pack-ui')
   req('yazi')
   if Myfn.is_windows() then
     req('bookmarks_win')
