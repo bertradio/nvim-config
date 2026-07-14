@@ -11,5 +11,6 @@ vim.pack.add({ Gh('rcarriga/nvim-notify') })
 require('notify').setup({
   timeout = 150,
   render = 'compact',
+  zindex = 2000,
 })
 vim.notify = require('notify')

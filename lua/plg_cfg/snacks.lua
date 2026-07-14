@@ -10,6 +10,7 @@
 -- 05/31/26 - moved notifications to bottom
 -- 06/01/26 - set up dashboard to replace mini.starter
 -- 06/05/26 - Tweaks as per claude
+-- 07/14/26 - added notifier to replace noice in part
 
 vim.pack.add({ Gh('folke/snacks.nvim') })
 
@@ -31,6 +32,7 @@ snacks.setup({
   indent       = { enabled = true },
   input        = { enabled = true, border = 'double' },
   lazygit      = { enabled = true },
+  notifier     = { enabled = true },
   quickfile    = { enabled = true },
   rename       = { enabled = true },
   scope        = { enabled = true },
@@ -408,3 +410,18 @@ local function maps()
 end
 
 maps()
+
+vim.api.nvim_create_autocmd('BufWritePost', {
+  group = vim.api.nvim_create_augroup('SnacksSaveNotify', { clear = true }),
+  callback = function(args)
+    -- Get the name of the file just saved
+    local filename = vim.fn.fnamemodify(args.file, ':t')
+
+    -- Only notify if it's a real file, not an empty buffer
+    if filename ~= '' then
+      vim.notify('Saved "' .. filename .. '"', vim.log.levels.INFO, {
+        title = 'File System',
+      })
+    end
+  end,
+})

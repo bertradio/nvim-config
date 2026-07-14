@@ -22,15 +22,14 @@ local function load_ui_plugins()
   require('keymaps')
   require('aucmds')
 
-  req('which-key')
   req('lualine')
-  req('noice')
   req('snacks')
   req('blink-spell')
-  req('yazi')
   req('pack-ui')
   req('mini')
   req('mini-files')
+  req('mini-clue')
+  req('yazi')
   if Myfn.is_windows() then
     req('bookmarks_win')
   else
@@ -41,13 +40,13 @@ end
 --  ─────────────────────────────────────────────
 
 local function load_buffer_plugins()
+  req('native-lsp')
   req('flash')
   req('nvim-biscuits')
   req('rainbow')
   req('conform')
   req('pretty-comment')
   req('tiny-comment')
-  req('native-lsp')
 end
 
 --  ─────────────────────────────────────────────

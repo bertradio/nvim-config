@@ -17,12 +17,15 @@ vim.pack.add({ Gh('nvim-mini/mini.nvim') })
 
 local ai = require('mini.ai')
 local align = require('mini.align')
+local clue = require('mini.clue')
 local bracketed = require('mini.bracketed')
 local diff = require('mini.diff')
 local move = require('mini.move')
 local operators = require('mini.operators')
 local mpairs = require('mini.pairs')
 local surround = require('mini.surround')
+
+clue.setup()
 
 -- mini.ai mapping
 ai.setup({

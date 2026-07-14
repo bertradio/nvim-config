@@ -33,6 +33,15 @@ require('noice').setup({
   },
   routes = {
     {
+      filter = {
+        event = 'notify',
+        find = '^cwd →',
+      },
+      view = 'mini',
+      opts = { stop = true },
+    },
+
+    {
       -- Catch standard text changes, undo/redo, and add/delete echoes
       filter = {
         event = 'msg_show',
@@ -46,14 +55,14 @@ require('noice').setup({
           { find = 'Line %d+' },
           { find = 'undo' },
           { find = 'redo' },
-          { find = 'written' }, -- trap for save messages
+          { find = 'written' },
         },
       },
       view = 'mini',
-      -- view = 'notify',
-      opts = { stop = true }, -- Strictly prevents it from dropping down to the native bar
+      opts = { stop = true },
     },
-    { -- Redirect shell commands to a split
+
+    {
       filter = { event = 'msg_show', kind = 'shell_cmd' },
       view = 'split',
       opts = { stop = true },
@@ -88,12 +97,20 @@ require('noice').setup({
       relative = 'editor',
       align = 'message-left',
       timeout = 2000,
-      position = { row = 2, col = '95%' }, -- place box upper right
+      position = { row = 2, col = '95%' },
       border = { style = 'rounded' },
+
+      zindex = 1000,
+
       win_options = {
         wrap = true,
         winblend = 20,
-        winhighlight = { Normal = 'NoiceMini', IncSearch = '', CurSearch = '', Search = '' },
+        winhighlight = {
+          Normal = 'NoiceMini',
+          IncSearch = '',
+          CurSearch = '',
+          Search = '',
+        },
       },
     },
   },

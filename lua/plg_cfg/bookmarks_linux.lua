@@ -139,3 +139,5 @@ Myfn.map(
   { desc = 'plugins.lua' }
 )
 Myfn.map('n', '<Leader>es', '<cmd>e ' .. cfg .. '/lua/settings.lua<cr>', { desc = 'settings.lua' })
+
+return cwd_config -- makes the list of bookmarks available to mini-files, etc.
