@@ -214,15 +214,16 @@ local function search_status()
     return ''
   end
 
-  local total
+  -- Commented out display of search stat [x/x]
+  -- local total
+  --
+  -- if count.total > count.maxcount then
+  --   total = tostring(count.maxcount) .. '+'
+  -- else
+  --   total = tostring(count.total)
+  -- end
 
-  if count.total > count.maxcount then
-    total = tostring(count.maxcount) .. '+'
-  else
-    total = tostring(count.total)
-  end
-
-  return tostring(count.current) .. '/' .. total
+  -- return tostring(count.current) .. '/' .. total
 end
 
 local function word_status(context)
