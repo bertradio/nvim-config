@@ -183,10 +183,85 @@ miniclue.setup({
 --   - Mini.files follows external cwd changes
 --   - Bookmarks are loaded from bookmarks_linux.lua
 
--- local MiniFiles = require('mini.files')
 local cwd_config = require('plg_cfg.bookmarks_linux')
 
 local group = vim.api.nvim_create_augroup('MyMiniFiles', { clear = true })
+
+local function trash_entry()
+  local entry = minifiles.get_fs_entry()
+
+  if not entry or not entry.path then
+    vim.notify('No entry under cursor', vim.log.levels.WARN)
+    return
+  end
+
+  local choice = vim.fn.confirm('Move to system Trash?\n\n' .. entry.path .. '\n', '&Yes\n&No', 2)
+
+  if choice ~= 1 then
+    return
+  end
+
+  local result = vim.system({ 'gio', 'trash', entry.path }, { text = true }):wait()
+
+  if result.code ~= 0 then
+    vim.notify('gio trash failed:\n' .. (result.stderr or ''), vim.log.levels.ERROR)
+    return
+  end
+
+  minifiles.synchronize()
+
+  vim.notify(('Moved "%s" to Trash'):format(vim.fs.basename(entry.path)))
+end
+
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'MiniFilesBufferCreate',
+  callback = function(args)
+    vim.keymap.set('n', 'T', trash_entry, {
+      buffer = args.data.buf_id,
+      desc = 'Move to system Trash',
+    })
+  end,
+})
+
+-- Map "T" to delete directly to system trash instead of mini trash
+-- local function trash_entry()
+--   local entry = minifiles.get_fs_entry()
+--
+--   if not entry or not entry.path then
+--     vim.notify('No file or directory under cursor', vim.log.levels.WARN)
+--     return
+--   end
+--
+--   local choice = vim.fn.confirm('Move to system trash?\n' .. entry.path, '&Yes\n&No\n', 2)
+--
+--   if choice ~= 1 then
+--     return
+--   end
+--
+--   vim.system({ 'trash-put', entry.path }, { text = true }, function(result)
+--     vim.schedule(function()
+--       if result.code ~= 0 then
+--         local message = result.stderr ~= '' and result.stderr or 'trash-put failed'
+--
+--         vim.notify(message, vim.log.levels.ERROR)
+--         return
+--       end
+--
+--       minifiles.synchronize()
+--       vim.notify('Moved to system trash:\n' .. entry.path)
+--     end)
+--   end)
+-- end
+--
+-- vim.api.nvim_create_autocmd('User', {
+--   pattern = 'MiniFilesBufferCreate',
+--   callback = function(args)
+--     vim.keymap.set('n', 'T', trash_entry, {
+--       buffer = args.data.buf_id,
+--       desc = 'Move to system trash',
+--     })
+--   end,
+-- })
 
 -- ─────────── Filters ───────────
 
