@@ -48,11 +48,5 @@ miniclue.setup({
     { mode = 'n', keys = '<Leader>e', desc = '+edit configs' },
     { mode = 'n', keys = '<Leader>s', desc = '+snacks' },
     { mode = 'n', keys = '<Leader>p', desc = '+plug' },
-
-    -- { mode = 'n', keys = '<Leader>c', desc = '+md list change' },
-    -- { mode = 'n', keys = '<Leader>h', desc = '+grapple' },
-    -- { mode = 'n', keys = '<Leader>l', desc = '+snacks' },
-    -- { mode = 'n', keys = '<Leader>n', desc = '+neo-tree' },
-    -- { mode = 'n', keys = '<Leader>s', desc = '+sessions' },
   },
 })

@@ -29,6 +29,7 @@ function M.setup()
     softtabstop    = 2,
     splitbelow     = true,
     splitright     = true,
+    syntax         = 'enable',
     laststatus     = 3,
     tabstop        = 2,
     termguicolors  = true,
@@ -61,7 +62,7 @@ function M.setup()
     autocomplete   = false,
     wildmenu       = false,
     wildmode       = 'longest:full,full',
-    cmdheight      = 0, -- cmdline disappears after key is hit
+    cmdheight      = 0,
   }
 
   vim.opt.wildchar = 0 -- Disable the trigger key for native wildmenu

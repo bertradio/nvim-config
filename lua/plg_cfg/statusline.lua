@@ -4,6 +4,7 @@
 --
 -- Core Neovim statusline and buffer tabline.
 -- No lualine, bufferline, heirline, or mini.statusline required.
+-- 07/14/26 - Code from ChatGPT to emulate lualine but entirely from core
 
 local api = vim.api
 local fn = vim.fn
@@ -177,6 +178,7 @@ local function short_cwd()
   return fn.fnamemodify(fn.getcwd(), ':~')
 end
 
+-- for macro recording indicator
 local function recording_status()
   local register = fn.reg_recording()
 
@@ -187,6 +189,7 @@ local function recording_status()
   return 'Recording @' .. register
 end
 
+-- for spellcheck status if on
 local function spell_status(context)
   local ok, enabled = pcall(api.nvim_get_option_value, 'spell', {
     win = context.winid,
@@ -239,6 +242,7 @@ local function word_status(context)
     return ''
   end
 
+  -- for words indicator on right
   if count.visual_words then
     return tostring(count.visual_words) .. ' Words selected'
   end
@@ -783,9 +787,21 @@ local group = api.nvim_create_augroup('CoreStatusline', {
   clear = true,
 })
 
+-- redraw status and tabline after delete buffer
+local redraw_pending = false
+
 local function redraw()
-  vim.cmd.redrawstatus()
-  vim.cmd.redrawtabline()
+  if redraw_pending then
+    return
+  end
+
+  redraw_pending = true
+
+  vim.schedule(function()
+    redraw_pending = false
+    vim.cmd.redrawstatus()
+    vim.cmd.redrawtabline()
+  end)
 end
 
 api.nvim_create_autocmd('ColorScheme', {

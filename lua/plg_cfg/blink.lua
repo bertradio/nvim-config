@@ -1,4 +1,6 @@
--- blink.lua
+--    ╭────────────────────────────╮
+--    │         blink.lua          │
+--    ╰────────────────────────────╯
 
 -- changed from lazy to vim.pack 3-30-26
 -- Finalized 3-31-26: Fixed cmdline keymap hijacking and E5113 error

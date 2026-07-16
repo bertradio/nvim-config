@@ -12,7 +12,11 @@
 -- 06/05/26 - Tweaks as per claude
 -- 07/14/26 - added notifier to replace noice in part
 
+vim.pack.add({ Gh('nvim-tree/nvim-web-devicons') })
 vim.pack.add({ Gh('folke/snacks.nvim') })
+
+-- temporary fix for grep input
+vim.opt.virtualedit = 'all'
 
 local snacks = require('snacks')
 
@@ -44,7 +48,7 @@ snacks.setup({
   --  ──────── dashboard config ────────
 
   dashboard    = {
-    enabled  = true,
+    enabled  = false,
     autokeys = "123456789abcdefghijklmnopqrstuvwxyz",
     width    = 50,
     row      = 4,
@@ -59,7 +63,7 @@ snacks.setup({
         cwd = false,
         padding = 0,
         indent  = 2,
-        limit   = 9, -- max number of recent files to display
+        limit   = 15, -- max number of recent files to display
       },
       -- Empty text row instead of dynamic section padding
       -- inserts line between recent and keys
@@ -76,22 +80,21 @@ snacks.setup({
       header = "",
 
       keys = {
-        { key = "f", desc = "Find Files",
-          action = function()
-            Snacks.picker.files({ title = Myfn.short_cwd() })
-          end },
-        { key = "g", desc = "Grep",       action = function() Snacks.picker.grep() end },
-        -- { key = "o", desc = "Oil",        action = ":Oil" },
-        { key = "m", desc = "Mini-Files", action = "<Leader>["},
-        { key = "r",
-          desc = "Recent Files",
-          action = "<leader>sr" },
-          -- action = function()
-          --   vim.cmd('wshada')
-          --   vim.cmd('rshada!')
-          --   snacks.picker.recent({ refresh = true, file_pos = "main" })
-          -- end },
-          { key = "y", desc = "Yazi",        action = "<Leader>y" },
+        -- { key = "f", desc = "Find Files",
+        --   action = function()
+        --     Snacks.picker.files({ title = Myfn.short_cwd() })
+        --   end },
+        -- { key = "g", desc = "Grep",       action = function() Snacks.picker.grep() end },
+        -- { key = "m", desc = "Mini-Files", action = "<Leader>["},
+        -- { key = "r",
+        --   desc = "Recent Files",
+        --   action = "<leader>sr" },
+        --   -- action = function()
+        --   --   vim.cmd('wshada')
+        --   --   vim.cmd('rshada!')
+        --   --   snacks.picker.recent({ refresh = true, file_pos = "main" })
+        --   -- end },
+        --   { key = "y", desc = "Yazi",        action = "<Leader>y" },
         { key = "q", desc = "Quit Menu", action = ":bwipeout" },
       },
     },
@@ -304,8 +307,7 @@ local function maps()
 
   Kset('n', '<Leader>bd', '<cmd>lua Snacks.bufdelete()<cr>',            { desc = 'delete current' })
   Kset('n', '<Leader>sR', '<cmd>lua Snacks.picker.registers()<cr>',     { desc = 'registers' })
-  -- Kset('n', '<Leader>sb', buffers_lastused_picker,                      { desc = 'buffers - last used' })
-  Kset('n', '<Leader>sb', '<cmd>lua Snacks.picker.buffers()<cr>',             { desc = 'buffers'})
+  Kset('n', '<Leader>sb', '<cmd>lua Snacks.picker.buffers()<cr>',       { desc = 'buffers'})
   Kset('n', '<Leader>sg', '<cmd>lua Snacks.picker.grep()<cr>',          { desc = 'grep' })
   Kset('n', '<Leader>sh', '<cmd>lua Snacks.picker.help()<cr>',          { desc = 'help' })
   Kset('n', '<Leader>sj', '<cmd>lua Snacks.picker.jumps()<cr>',         { desc = 'jumps' })

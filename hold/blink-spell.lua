@@ -10,6 +10,7 @@
 
 vim.pack.add({
   { src = Gh('L3MON4D3/LuaSnip'), run = 'make install_jsregexp' },
+  { src = Gh('L3MON4D3/LuaSnip') },
   Gh('ribru17/blink-cmp-spell'),
   { src = Gh('saghen/blink.cmp'), version = 'v1' },
 })

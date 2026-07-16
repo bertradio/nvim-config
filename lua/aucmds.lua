@@ -224,6 +224,15 @@ vim.api.nvim_create_autocmd({ 'ShellCmdPost' }, {
 vim.api.nvim_create_autocmd('FileType', {
   pattern = '*',
   callback = function()
-    vim.opt_local.formatoptions:remove({ 'r', 'o' })
+    vim.opt_local.formatoptions = 'jcql'
+  end,
+})
+
+-- for zsh file proper syntax display
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'zsh',
+  callback = function(args)
+    pcall(vim.treesitter.stop, args.buf)
+    vim.bo[args.buf].syntax = 'zsh'
   end,
 })

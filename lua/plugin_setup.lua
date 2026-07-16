@@ -14,23 +14,19 @@ local function req(plugin)
   require('plg_cfg.' .. plugin)
 end
 
+require('keymaps')
+require('aucmds')
+req('snacks')
+
 -- ────────── lazy loading set up all functions ──────────
 
 local function load_ui_plugins()
   req('catppuccin')
-  require('keymaps')
-  require('aucmds')
-
-  -- req('lualine')
-
-  req('mini')
-  req('mini-files')
-  req('mini-clue')
-  req('snacks')
   req('statusline')
-  req('blink-spell')
-  req('pack-ui')
+  req('mini')
+  req('blink')
   req('yazi')
+  -- req('mason')
   if Myfn.is_windows() then
     req('bookmarks_win')
   else
@@ -61,7 +57,6 @@ end
 
 local function load_markdown_plugins()
   req('autolist')
-  req('render-markdown')
 end
 
 --  ────────────────────────────────────────────────────────

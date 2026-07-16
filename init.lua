@@ -11,6 +11,9 @@
 -- for all keymaps
 Kset = vim.keymap.set
 
+-- no splash screen
+vim.opt.shortmess:append('I')
+
 -- initialization files
 require('settings') -- calls options.lua
 require('plugin_setup') -- autocmds to set order of lazy loading

@@ -4,7 +4,7 @@
 
 -- Created: 06/22/26
 -- Optimized for Neovim 0.13+ (Zero external dependencies for configs)
--- Code from Gemeini to replace nvim-lspconfig
+-- Code from Gemini to replace nvim-lspconfig
 
 vim.pack.add({
   { src = Gh('folke/lazydev.nvim'), data = { ft = 'lua' } },
@@ -26,9 +26,9 @@ end
 local servers = {
   bashls = {
     cmd = { 'bash-language-server', 'start' },
-    filetypes = { 'sh', 'bash' },
+    filetypes = { 'sh', 'bash', 'zsh' },
     root_markers = { '.git' },
-    settings = { bashIde = { globPattern = '**/*@(.sh|.inc|.bash|.command)' } },
+    settings = { bashIde = { globPattern = '**/*@(.sh|.inc|.bash|.command|.zsh)' } },
   },
   lua_ls = {
     cmd = { 'lua-language-server' },
