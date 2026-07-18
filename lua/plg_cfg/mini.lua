@@ -21,13 +21,13 @@ local align = require('mini.align')
 local bracketed = require('mini.bracketed')
 local clue = require('mini.clue')
 local diff = require('mini.diff')
+local minifiles = require('mini.files')
 local move = require('mini.move')
 local mpairs = require('mini.pairs')
 local operators = require('mini.operators')
 local surround = require('mini.surround')
-local minifiles = require('mini.files')
 
-clue.setup()
+local file_exclude = require('file_exclude')
 
 -- mini.ai mapping
 ai.setup({
@@ -45,6 +45,8 @@ align.setup({ mappings = { start = 'ga' } })
 
 bracketed.setup()
 
+clue.setup()
+
 --  ───── mini.diff set up for change signs in gutter ─────
 
 diff.setup({
@@ -57,7 +59,7 @@ diff.setup({
 
 vim.api.nvim_create_autocmd('BufWritePost', {
   callback = function(args)
-    -- Disable and re-enable refreshes the 'save' source baselineS
+    -- Disable and re-enable refreshes the 'save' source baselines
     diff.disable(args.buf)
     diff.enable(args.buf)
   end,
@@ -65,9 +67,8 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 
 --  ────── end mini.diff setup ───────
 
-
--- stylua: ignore
 move.setup({
+  -- stylua: ignore
   mappings = {
     down       = '<C-down>',
     left       = '<C-left>',
@@ -105,8 +106,8 @@ mpairs.setup({
   },
 })
 
--- stylua: ignore
 surround.setup({
+  -- stylua: ignore
   mappings = {
     add            = 'gza',     -- Add surround
     delete         = 'gzd',     -- Delete surround
@@ -116,7 +117,7 @@ surround.setup({
     replace        = 'gzr',     -- Replace surround
     update_n_lines = 'gzn',     -- Update n_lines
   },
-  n_lines = 50,                 -- search window for surroundings
+  n_lines = 50, -- search window for surroundings
 })
 
 --  ──────── mini.clue setup ─────────
@@ -125,14 +126,15 @@ local miniclue = require('mini.clue')
 
 miniclue.setup({
 
+  -- stylua: ignore 
   window = {
-    delay = 500,
+    delay  = 500,
     config = {
-      width = 'auto',
+      width  = 'auto',
       border = 'rounded',
     },
     scroll_down = '<Down>',
-    scroll_up = '<Up>',
+    scroll_up   = '<Up>',
   },
 
   triggers = {
@@ -173,11 +175,12 @@ miniclue.setup({
   },
 })
 
+--  ──────────────────────────────────────────────────────
+
 --    ╭────────────────────────────╮
 --    │     mini.files configs     │
 --    ╰────────────────────────────╯
 
---
 -- 07/13/26 from ChatGPT:
 --   - Added gc to set Neovim cwd
 --   - Mini.files follows external cwd changes
@@ -223,46 +226,6 @@ vim.api.nvim_create_autocmd('User', {
   end,
 })
 
--- Map "T" to delete directly to system trash instead of mini trash
--- local function trash_entry()
---   local entry = minifiles.get_fs_entry()
---
---   if not entry or not entry.path then
---     vim.notify('No file or directory under cursor', vim.log.levels.WARN)
---     return
---   end
---
---   local choice = vim.fn.confirm('Move to system trash?\n' .. entry.path, '&Yes\n&No\n', 2)
---
---   if choice ~= 1 then
---     return
---   end
---
---   vim.system({ 'trash-put', entry.path }, { text = true }, function(result)
---     vim.schedule(function()
---       if result.code ~= 0 then
---         local message = result.stderr ~= '' and result.stderr or 'trash-put failed'
---
---         vim.notify(message, vim.log.levels.ERROR)
---         return
---       end
---
---       minifiles.synchronize()
---       vim.notify('Moved to system trash:\n' .. entry.path)
---     end)
---   end)
--- end
---
--- vim.api.nvim_create_autocmd('User', {
---   pattern = 'MiniFilesBufferCreate',
---   callback = function(args)
---     vim.keymap.set('n', 'T', trash_entry, {
---       buffer = args.data.buf_id,
---       desc = 'Move to system trash',
---     })
---   end,
--- })
-
 -- ─────────── Filters ───────────
 
 local show_dotfiles = false
@@ -303,8 +266,8 @@ end
 
 minifiles.setup({
   content = {
-    -- Hide dotfiles initially
-    filter = filter_hide,
+
+    filter = file_exclude.mini_files_filter,
 
     -- What prefix to show to the left of file system entries
     prefix = nil,
@@ -315,51 +278,51 @@ minifiles.setup({
 
   -- Module mappings created only inside the explorer.
   -- Use an empty string to disable a mapping.
+-- stylua: ignore 
   mappings = {
     synchronize = 'w',
-    go_in_plus = '<CR>',
-    close = '<ESC>',
-    go_in = 'l',
-    go_out = 'h',
+    go_in_plus  = '<CR>',
+    close       = '<ESC>',
+    go_in       = 'l',
+    go_out      = 'h',
     go_out_plus = 'H', -- go to prior dir
-    mark_goto = 'b', -- go to mark set
-    mark_set = 'm', -- set mark for this session - not retained
-    reset = '<BS>', -- go to dir where entered files
-    reveal_cwd = '@',
-    show_help = 'g?',
-    trim_left = '<',
-    trim_right = '>',
+    mark_goto   = "'", -- go to mark set
+    mark_set    = 'm', -- set mark for this session - not retained
+    reset       = '<BS>', -- go to dir where entered files
+    reveal_cwd  = '',
+    show_help   = 'g?',
+    trim_left   = '',
+    trim_right  = '',
   },
 
   options = {
-    -- Move deleted entries into Mini.files trash
-    permanent_delete = false,
+    -- Dom't move deleted entries with dd into Mini.files trash
+    -- Instead permanently delete - use <Leader>T to delete to system trash
+    permanent_delete = true,
 
     -- Use Mini.files when editing a directory
     use_as_default_explorer = true,
   },
-
-  windows = {
-    -- Maximum number of windows shown side by side
-    max_number = 2,
-
-    -- Show a preview of the entry under the cursor
-    preview = preview_enabled,
-
-    -- Width of focused window
-    width_focus = 40,
-
-    -- Width of non-focused window
-    width_nofocus = 15,
-
-    -- Width of preview window
-    width_preview = 55,
-  },
 })
 
-Kset('n', '<Leader>[', function()
-  minifiles.open(vim.fn.getcwd())
-end, { desc = 'Mini files cwd' })
+-- set up size of panels to adjyst based on screen size
+local function open_minifiles()
+  local available = vim.o.columns - 4
+
+  local main_width = math.max(24, math.floor(available / 4))
+  local preview_width = math.max(40, available - main_width)
+
+  minifiles.open(nil, false, {
+    windows = {
+      max_number = 2,
+      preview = true,
+      width_focus = main_width,
+      width_preview = preview_width,
+    },
+  })
+end
+
+Kset('n', '<Leader>[', open_minifiles, { desc = 'Mini files cwd' })
 
 -- ─────────── Buffer-local mappings ───────────
 
@@ -460,4 +423,19 @@ vim.api.nvim_create_autocmd('DirChanged', {
     end)
   end,
   desc = 'Make Mini.files follow Neovim cwd',
+})
+
+--  ───── toggle excluded files ──────
+
+vim.api.nvim_create_autocmd('User', {
+
+  pattern = 'MiniFilesBufferCreate',
+  callback = function(args)
+    vim.keymap.set('n', 'gE', function()
+      require('file_exclude').toggle()
+    end, {
+      buffer = args.data.buf_id,
+      desc = 'Toggle excluded files',
+    })
+  end,
 })

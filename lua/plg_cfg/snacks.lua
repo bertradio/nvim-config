@@ -15,12 +15,11 @@
 vim.pack.add({ Gh('nvim-tree/nvim-web-devicons') })
 vim.pack.add({ Gh('folke/snacks.nvim') })
 
--- temporary fix for grep input
-vim.opt.virtualedit = 'all'
-
 local snacks = require('snacks')
 
-local excluded_exts = require('plg_cfg.file_exclude')
+-- setup for excluding files from pickers
+local file_exclude = require('file_exclude')
+local excluded = file_exclude.snacks_patterns()
 
 vim.ui.select = snacks.picker.select
 vim.ui.input = snacks.input.input
@@ -107,7 +106,6 @@ snacks.setup({
     layout    = "my_default",
     prompt    = '> ',
     ui_select = true,
-    exclude   = excluded_exts,
     win       = {
       border = "double",
       preview = {
@@ -174,94 +172,151 @@ snacks.setup({
 
     --  ───── defaults for various pickers ─────
 
-    sources   = {
-      buffers         = { layout = { preset = 'my_default' } },
-      command_history = { layout = { preset = 'my_spelling' } },
-      files           = { layout = { preset = 'my_default' } },
-      grep            = { layout = { preset = 'my_default' } },
-      help            = { layout = { preset = 'my_default' } },
-      jumps           = { layout = { preset = 'my_default' } },
-      keymaps         = { layout = { preset = 'my_keymaps' } },
-      lines           = { layout = { preset = 'my_default' } },
-      lsp_symbols     = { layout = { preset = "my_default" } },
-      marks           = { layout = { preset = 'default' } },
-      qflist          = { layout = { preset = 'my_default' } },
-      recent          = {
-        layout = { preset = "my_default" },
-        filter = { cwd = false },
-        file_pos = "main",
+    sources = {
+    buffers = {
+      layout = { preset = 'my_default' },
+    },
+
+    command_history = {
+      layout = { preset = 'my_spelling' },
+    },
+
+    files = {
+      layout = { preset = 'my_default' },
+      exclude = excluded,
+    },
+
+    grep = {
+      layout = { preset = 'my_default' },
+      exclude = excluded,
+    },
+
+    help = {
+      layout = { preset = 'my_default' },
+    },
+
+    jumps = {
+      layout = { preset = 'my_default' },
+    },
+
+    keymaps = {
+      layout = { preset = 'my_keymaps' },
+    },
+
+    lines = {
+      layout = { preset = 'my_default' },
+    },
+
+    lsp_symbols = {
+      layout = { preset = 'my_default' },
+    },
+
+    marks = {
+      layout = { preset = 'default' },
+    },
+
+    qflist = {
+      layout = { preset = 'my_default' },
+    },
+
+    recent = {
+      layout = { preset = 'my_default' },
+      filter = { cwd = false },
+      file_pos = 'main',
+    },
+
+    registers = {
+      layout = { preset = 'my_default' },
+    },
+
+    search_history = {
+      layout = { preset = 'my_spelling' },
+    },
+
+    undo = {
+      layout = { preset = 'my_default' },
+    },
+
+    zoxide = {
+      layout = { preset = 'my_keymaps' },
+    },
+
+    explorer = {
+
+      layout = {
+        { preview = true },
+        layout = {
+          box = 'horizontal',
+          height = 0.85,
+          width = 0.90,
+          {
+            border = 'double',
+            box = 'vertical',
+            title = '{source} {live} {flags}',
+            title_pos = 'center',
+            { win = 'input', height = 1, border = 'bottom' },
+            { win = 'list', border = 'none' },
+          },
+          {
+            win = 'preview',
+            border = 'double',
+            width = 0.65,
+            title = '{preview}',
+          },
+        },
       },
-      registers       = { layout = { preset = 'my_default' } },
-      search_history  = { layout = { preset = 'my_spelling' } },
-      undo            = { layout = { preset = 'my_default' } },
-      zoxide          = { layout = { preset = 'my_keymaps' } },
 
-      -- --  ──────── Explorer config ─────────
-
-      explorer        = {
-        exclude       = {},   -- don't exclude any files
-        -- replace_netrw = true, -- Replace netrw with the snacks explorer
-        layout        = {
-          { preview = true },
-          layout = {
-            box    = 'horizontal',
-            height = 0.85,
-            width  = 0.90,
-            {
-              border    = 'double',
-              box       = 'vertical',
-              title     = '{source} {live} {flags}',
-              title_pos = 'center',
-              { win = 'input',     height = 1,      border = 'bottom' },
-              { win = 'list',      border = 'none' },
+      win = {
+        list = {
+          keys = {
+            ['<left>'] = 'explorer_up',
+            ['g.'] = 'toggle_hidden',
+            ['<PageUp>'] = {
+              'list_scroll_up',
+              mode = { 'i', 'n' },
             },
-            { win = 'preview', border = 'double', width = 0.65, title = '{preview}' },
-          },
-        },
-        win           = {
-          list = {
-            keys = {
-              ['<left>']     = 'explorer_up',
-              ['g.']         = 'toggle_hidden',
-              ['<PageUp>']   = { 'list_scroll_up', mode = { 'i', 'n' } },
-              ['<PageDown>'] = { 'list_scroll_down', mode = { 'i', 'n' } },
+            ['<PageDown>'] = {
+              'list_scroll_down',
+              mode = { 'i', 'n' },
             },
           },
         },
-        auto_close    = true,
-        diagnostics   = true,
-        follow_file   = true,
-        formatters    = {
-          file = { filename_only = true },
-          tree = true,
-        },
+      },
+
+      auto_close = true,
+      diagnostics = true,
+      follow_file = true,
+
+      formatters = {
+        file = { filename_only = true },
+        tree = true,
       },
     },
   },
+},
 
-  statuscolumn = {
-    enabled = true,
-    segments = {
-      { text = { '%s' }, click = 'v:lua.scsa' },
-      { text = { '%c' } },
-      {
-        text = {
-          function()
-            if vim.v.virtnum ~= 0 then
-              return ''
-            end
-            if vim.wo.relativenumber then
-              local rel = math.abs(vim.fn.line('.') - vim.v.lnum)
-              return (rel == 0 and vim.v.lnum or rel) .. ' '
-            end
-            return string.format('%d ', vim.v.lnum)
-          end,
-        },
-        click = 'v:lua.scna',
-      },
-    },
-  },
-
+  -- statuscolumn = {
+  --   enabled = true,
+  --   segments = {
+  --     { text = { '%s' }, click = 'v:lua.scsa' },
+  --     { text = { '%c' } },
+  --     {
+  --       text = {
+  --         function()
+  --           if vim.v.virtnum ~= 0 then
+  --             return ''
+  --           end
+  --           if vim.wo.relativenumber then
+  --             local rel = math.abs(vim.fn.line('.') - vim.v.lnum)
+  --             return (rel == 0 and vim.v.lnum or rel) .. ' '
+  --           end
+  --           return string.format('%d ', vim.v.lnum)
+  --         end,
+  --       },
+  --       click = 'v:lua.scna',
+  --     },
+  --  },
+  -- },
 })
 
 --  ─────────── end snacks configs ───────────
@@ -278,8 +333,9 @@ local function oldfiles_picker()
   for _, file in ipairs(vim.v.oldfiles) do
     file = vim.fn.fnamemodify(file, ':p')
 
-    if not seen[file] and vim.fn.filereadable(file) == 1 then
+    if not seen[file] and vim.fn.filereadable(file) == 1 and not file_exclude.is_excluded(file) then
       seen[file] = true
+
       items[#items + 1] = {
         idx = #items + 1,
         file = file,
@@ -411,18 +467,3 @@ local function maps()
 end
 
 maps()
-
--- vim.api.nvim_create_autocmd('BufWritePost', {
---   group = vim.api.nvim_create_augroup('SnacksSaveNotify', { clear = true }),
---   callback = function(args)
---     -- Get the name of the file just saved
---     local filename = vim.fn.fnamemodify(args.file, ':t')
---
---     -- Only notify if it's a real file, not an empty buffer
---     if filename ~= '' then
---       vim.notify('Saved "' .. filename .. '"', vim.log.levels.INFO, {
---         title = 'File System',
---       })
---     end
---   end,
--- })

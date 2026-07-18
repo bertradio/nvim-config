@@ -30,7 +30,7 @@
       "src": "https://github.com/folke/lazydev.nvim"
     },
     "mason-lspconfig.nvim": {
-      "rev": "a4068c3ebd4cb335b25239e5ea35c22ee6007962",
+      "rev": "916c29ee62699457a3ec57962781c67c6c6772f2",
       "src": "https://github.com/williamboman/mason-lspconfig.nvim"
     },
     "mason.nvim": {
@@ -48,6 +48,10 @@
     "nvim-hlslens": {
       "rev": "be2d7b2be01860b5445a007ff2bc72b29896db6b",
       "src": "https://github.com/kevinhwang91/nvim-hlslens"
+    },
+    "nvim-notify": {
+      "rev": "8701bece920b38ea289b457f902e2ad184131a5d",
+      "src": "https://github.com/rcarriga/nvim-notify"
     },
     "nvim-web-devicons": {
       "rev": "0ca28b61a04fe7426cefbdd52c2647ef0e335b5f",

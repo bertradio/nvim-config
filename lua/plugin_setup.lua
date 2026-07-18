@@ -26,6 +26,7 @@ local function load_ui_plugins()
   req('mini')
   req('blink')
   req('yazi')
+  require('file_exclude')
   -- req('mason')
   if Myfn.is_windows() then
     req('bookmarks_win')

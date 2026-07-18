@@ -18,7 +18,7 @@ local blink = require('blink.cmp')
 
 --  ──────── add my custom snippets ─────────
 
-require('my_snippets')
+require('plg_cfg.my_snippets')
 
 -- ── blink.cmp config ──────────────────────────────────────────────────────────
 
