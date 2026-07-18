@@ -293,30 +293,7 @@ snacks.setup({
       },
     },
   },
-},
-
-  -- statuscolumn = {
-  --   enabled = true,
-  --   segments = {
-  --     { text = { '%s' }, click = 'v:lua.scsa' },
-  --     { text = { '%c' } },
-  --     {
-  --       text = {
-  --         function()
-  --           if vim.v.virtnum ~= 0 then
-  --             return ''
-  --           end
-  --           if vim.wo.relativenumber then
-  --             local rel = math.abs(vim.fn.line('.') - vim.v.lnum)
-  --             return (rel == 0 and vim.v.lnum or rel) .. ' '
-  --           end
-  --           return string.format('%d ', vim.v.lnum)
-  --         end,
-  --       },
-  --       click = 'v:lua.scna',
-  --     },
-  --  },
-  -- },
+}
 })
 
 --  ─────────── end snacks configs ───────────

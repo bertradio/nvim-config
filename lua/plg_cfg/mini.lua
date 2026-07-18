@@ -21,7 +21,7 @@ local align = require('mini.align')
 local bracketed = require('mini.bracketed')
 local clue = require('mini.clue')
 local diff = require('mini.diff')
-local minifiles = require('mini.files')
+local files = require('mini.files')
 local move = require('mini.move')
 local mpairs = require('mini.pairs')
 local operators = require('mini.operators')
@@ -122,9 +122,7 @@ surround.setup({
 
 --  ──────── mini.clue setup ─────────
 
-local miniclue = require('mini.clue')
-
-miniclue.setup({
+clue.setup({
 
   -- stylua: ignore 
   window = {
@@ -149,7 +147,7 @@ miniclue.setup({
     { mode = 'n', keys = 'g' },
     { mode = 'n', keys = 'z' },
     { mode = 'n', keys = ']' },
-    -- { mode = 'n', keys = '[' },
+    { mode = 'n', keys = '[' },
     { mode = 'n', keys = '\\' },
     { mode = 'x', keys = "'" },
     { mode = 'x', keys = '"' },
@@ -161,12 +159,12 @@ miniclue.setup({
 
   clues = {
 
-    miniclue.gen_clues.builtin_completion(),
-    miniclue.gen_clues.g(),
-    miniclue.gen_clues.marks(),
-    miniclue.gen_clues.registers(),
-    miniclue.gen_clues.windows(),
-    miniclue.gen_clues.z(),
+    clue.gen_clues.builtin_completion(),
+    clue.gen_clues.g(),
+    clue.gen_clues.marks(),
+    clue.gen_clues.registers(),
+    clue.gen_clues.windows(),
+    clue.gen_clues.z(),
 
     { mode = 'n', keys = '<Leader>b', desc = '+buffer' },
     { mode = 'n', keys = '<Leader>d', desc = '+diff' },
@@ -181,17 +179,12 @@ miniclue.setup({
 --    │     mini.files configs     │
 --    ╰────────────────────────────╯
 
--- 07/13/26 from ChatGPT:
---   - Added gc to set Neovim cwd
---   - Mini.files follows external cwd changes
---   - Bookmarks are loaded from bookmarks_linux.lua
-
 local cwd_config = require('plg_cfg.bookmarks_linux')
 
 local group = vim.api.nvim_create_augroup('MyMiniFiles', { clear = true })
 
 local function trash_entry()
-  local entry = minifiles.get_fs_entry()
+  local entry = files.get_fs_entry()
 
   if not entry or not entry.path then
     vim.notify('No entry under cursor', vim.log.levels.WARN)
@@ -211,7 +204,7 @@ local function trash_entry()
     return
   end
 
-  minifiles.synchronize()
+  files.synchronize()
 
   vim.notify(('Moved "%s" to Trash'):format(vim.fs.basename(entry.path)))
 end
@@ -228,24 +221,53 @@ vim.api.nvim_create_autocmd('User', {
 
 -- ─────────── Filters ───────────
 
-local show_dotfiles = false
+-- ─────────── Filters ───────────
 
-local function filter_show(_)
+local show_dotfiles = false
+local show_excluded = false
+
+local function mini_files_filter(fs_entry)
+  local name = fs_entry.name
+
+  -- Hide dotfiles unless g. has enabled them.
+  if not show_dotfiles and vim.startswith(name, '.') then
+    return false
+  end
+
+  -- Always allow ordinary directories.
+  -- Dot-directories were already handled above.
+  if fs_entry.fs_type == 'directory' then
+    return true
+  end
+
+  -- Hide non-editable file types unless gE has enabled them.
+  if not show_excluded and file_exclude.is_excluded(name) then
+    return false
+  end
+
   return true
 end
 
-local function filter_hide(fs_entry)
-  return not vim.startswith(fs_entry.name, '.')
+local function refresh_filter()
+  files.refresh({
+    content = {
+      filter = mini_files_filter,
+    },
+  })
 end
 
 local function toggle_dotfiles()
   show_dotfiles = not show_dotfiles
+  refresh_filter()
 
-  minifiles.refresh({
-    content = {
-      filter = show_dotfiles and filter_show or filter_hide,
-    },
-  })
+  vim.notify(show_dotfiles and 'Dotfiles shown' or 'Dotfiles hidden')
+end
+
+local function toggle_excluded()
+  show_excluded = not show_excluded
+  refresh_filter()
+
+  vim.notify(show_excluded and 'Excluded files shown' or 'Excluded files hidden')
 end
 
 -- ─────────── Preview ───────────
@@ -255,7 +277,7 @@ local preview_enabled = true
 local function toggle_preview()
   preview_enabled = not preview_enabled
 
-  minifiles.refresh({
+  files.refresh({
     windows = {
       preview = preview_enabled,
     },
@@ -264,10 +286,10 @@ end
 
 -- ─────────── Setup ───────────
 
-minifiles.setup({
+files.setup({
   content = {
 
-    filter = file_exclude.mini_files_filter,
+    filter = mini_files_filter,
 
     -- What prefix to show to the left of file system entries
     prefix = nil,
@@ -312,7 +334,7 @@ local function open_minifiles()
   local main_width = math.max(24, math.floor(available / 4))
   local preview_width = math.max(40, available - main_width)
 
-  minifiles.open(nil, false, {
+  files.open(nil, false, {
     windows = {
       max_number = 2,
       preview = true,
@@ -327,7 +349,7 @@ Kset('n', '<Leader>[', open_minifiles, { desc = 'Mini files cwd' })
 -- ─────────── Buffer-local mappings ───────────
 
 local function set_cwd_to_mini()
-  local fs_entry = minifiles.get_fs_entry()
+  local fs_entry = files.get_fs_entry()
 
   if not fs_entry then
     return
@@ -355,6 +377,11 @@ vim.api.nvim_create_autocmd('User', {
     Kset('n', 'g.', toggle_dotfiles, {
       buffer = buf_id,
       desc = 'Toggle dotfiles',
+    })
+
+    Kset('n', 'gE', toggle_excluded, {
+      buffer = buf_id,
+      desc = 'Toggle excluded files',
     })
 
     Kset('n', '<C-p>', toggle_preview, {
@@ -388,14 +415,14 @@ vim.api.nvim_create_autocmd('User', {
       local expanded = expand_path(path)
 
       if vim.fn.isdirectory(expanded) == 1 then
-        minifiles.set_bookmark(id, expanded, {
+        files.set_bookmark(id, expanded, {
           desc = path,
         })
       end
     end
 
     -- Dynamic bookmark for the current working directory
-    minifiles.set_bookmark('w', function()
+    files.set_bookmark('w', function()
       return vim.fn.getcwd()
     end, {
       desc = 'Current working directory',
@@ -405,37 +432,20 @@ vim.api.nvim_create_autocmd('User', {
 
 -- ─────────── Follow cwd changes ───────────
 
-local syncing_cwd = false
-
 vim.api.nvim_create_autocmd('DirChanged', {
   group = group,
   callback = function()
-    if not minifiles.get_explorer_state() then
+    if not files.get_explorer_state() then
       return
     end
 
     local cwd = vim.fs.normalize(vim.fn.getcwd())
 
     vim.schedule(function()
-      if minifiles.get_explorer_state() then
-        minifiles.set_branch({ cwd })
+      if files.get_explorer_state() then
+        files.set_branch({ cwd })
       end
     end)
   end,
   desc = 'Make Mini.files follow Neovim cwd',
-})
-
---  ───── toggle excluded files ──────
-
-vim.api.nvim_create_autocmd('User', {
-
-  pattern = 'MiniFilesBufferCreate',
-  callback = function(args)
-    vim.keymap.set('n', 'gE', function()
-      require('file_exclude').toggle()
-    end, {
-      buffer = args.data.buf_id,
-      desc = 'Toggle excluded files',
-    })
-  end,
 })

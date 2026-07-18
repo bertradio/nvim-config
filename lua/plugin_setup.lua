@@ -39,7 +39,7 @@ end
 
 local function load_buffer_plugins()
   req('native-lsp')
-  req('flash')
+  -- req('flash') -- doesn't work with nightly - 07/18/26 - mini instead
   req('hlslens')
   req('nvim-biscuits')
   req('rainbow')

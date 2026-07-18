@@ -1,3 +1,11 @@
+--    ╭────────────────────────────╮
+--    │        hlslens.lua         │
+--    ╰────────────────────────────╯
+
+-- search display features
+-- set search colors here
+-- adds virtual text to indicate how many finds etc [ x/of y ]
+
 vim.pack.add({
   { src = 'https://github.com/kevinhwang91/nvim-hlslens' },
 })
@@ -14,15 +22,21 @@ hlslens.setup({
 })
 
 local function set_search_highlights()
+  -- Other matches
   vim.api.nvim_set_hl(0, 'Search', {
-    bg = '#45475a',
-    fg = '#f5e0dc',
-    bold = true,
+    fg = '#cdd6f4',
+    bg = '#3f4254',
   })
 
   vim.api.nvim_set_hl(0, 'CurSearch', {
-    bg = '#f9e2af',
-    fg = '#1e1e2e',
+    fg = '#11111b',
+    bg = '#89b4fa',
+    bold = true,
+  })
+
+  vim.api.nvim_set_hl(0, 'IncSearch', {
+    fg = '#11111b',
+    bg = '#89b4fa',
     bold = true,
   })
 
@@ -32,7 +46,7 @@ local function set_search_highlights()
   })
 
   vim.api.nvim_set_hl(0, 'HlSearchLensNear', {
-    fg = '#f9e2af',
+    fg = '#bac2de',
     bold = true,
   })
 end
@@ -47,9 +61,15 @@ vim.api.nvim_create_autocmd('ColorScheme', {
 vim.keymap.set('n', 'n', function()
   vim.cmd('normal! ' .. vim.v.count1 .. 'n')
   hlslens.start()
-end, { silent = true, desc = 'Next search result' })
+end, {
+  silent = true,
+  desc = 'Next search result',
+})
 
 vim.keymap.set('n', 'N', function()
   vim.cmd('normal! ' .. vim.v.count1 .. 'N')
   hlslens.start()
-end, { silent = true, desc = 'Previous search result' })
+end, {
+  silent = true,
+  desc = 'Previous search result',
+})
