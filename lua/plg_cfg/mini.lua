@@ -26,7 +26,7 @@ local move = require('mini.move')
 local mpairs = require('mini.pairs')
 local operators = require('mini.operators')
 local surround = require('mini.surround')
-
+local jump2d = require('mini.jump2d')
 local file_exclude = require('file_exclude')
 
 -- mini.ai mapping
@@ -448,4 +448,100 @@ vim.api.nvim_create_autocmd('DirChanged', {
     end)
   end,
   desc = 'Make Mini.files follow Neovim cwd',
+})
+
+--    ╭────────────────────────────╮
+--    │       jump2d config        │
+--    ╰────────────────────────────╯
+
+jump2d.setup({
+  -- Disable the default <CR> mapping. We define our own mappings below.
+  mappings = {
+    start_jumping = '',
+  },
+
+  -- Home-row-oriented labels first.
+  labels = 'asdfghjklqwertyuiopzxcvbnm',
+
+  view = {
+    -- Darken the surrounding text so the labels stand out.
+    dim = true,
+
+    -- Show only the label currently needed.
+    -- This is cleaner and closer to Flash's normal appearance.
+    n_steps_ahead = 0,
+  },
+
+  allowed_lines = {
+    blank = false,
+    cursor_before = false,
+    cursor_at = true,
+    cursor_after = true,
+    fold = true,
+  },
+
+  allowed_windows = {
+    current = true,
+
+    -- Set this to true if you want labels in all visible windows.
+    not_current = false,
+  },
+
+  silent = true,
+})
+
+-- s: Flash-like jump.
+--
+-- Type s, then the character you are looking for, followed by the displayed
+-- label. Works in Normal, Visual, and Operator-pending modes.
+vim.keymap.set({ 'n', 'x', 'o' }, 's', function()
+  jump2d.start(jump2d.builtin_opts.single_character)
+end, {
+  desc = 'Jump to character',
+})
+
+-- S: Display labels at useful locations immediately, without first typing
+-- a search character.
+vim.keymap.set({ 'n', 'x', 'o' }, 'S', function()
+  jump2d.start()
+end, {
+  desc = 'Jump to visible location',
+})
+
+-- Optional: jump directly to the beginning of a visible line.
+vim.keymap.set({ 'n', 'x', 'o' }, 'gl', function()
+  jump2d.start(jump2d.builtin_opts.line_start)
+end, {
+  desc = 'Jump to line',
+})
+
+-- Make the labels clearly visible with Catppuccin Mocha.
+local function set_jump2d_highlights()
+  vim.api.nvim_set_hl(0, 'MiniJump2dSpot', {
+    fg = '#1e1e2e',
+    bg = '#f9e2af',
+    bold = true,
+  })
+
+  vim.api.nvim_set_hl(0, 'MiniJump2dSpotUnique', {
+    fg = '#1e1e2e',
+    bg = '#a6e3a1',
+    bold = true,
+  })
+
+  vim.api.nvim_set_hl(0, 'MiniJump2dSpotAhead', {
+    fg = '#1e1e2e',
+    bg = '#89b4fa',
+  })
+
+  vim.api.nvim_set_hl(0, 'MiniJump2dDim', {
+    fg = '#6c7086',
+  })
+end
+
+set_jump2d_highlights()
+
+-- Reapply custom highlights whenever the colorscheme changes.
+vim.api.nvim_create_autocmd('ColorScheme', {
+  callback = set_jump2d_highlights,
 })
