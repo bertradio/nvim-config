@@ -19,7 +19,7 @@ conform.setup({
   },
 
   format_on_save = {
-    lsp_format = 'fallback',
+    lsp_format = 'never',
     timeout_ms = 1500,
   },
 
@@ -30,9 +30,9 @@ conform.setup({
   },
 })
 
-Kset({ 'n', 'v' }, '<leader>p', function()
+Kset({ 'n', 'v' }, '<leader>mp', function()
   conform.format({
-    lsp_format = 'fallback',
+    lsp_format = 'never',
     timeout_ms = 1500,
   })
 end, { desc = 'Make pretty with Conform' })

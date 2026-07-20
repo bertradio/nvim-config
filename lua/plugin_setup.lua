@@ -16,18 +16,19 @@ end
 
 require('keymaps')
 require('aucmds')
-req('snacks')
 
 -- ────────── lazy loading set up all functions ──────────
 
 local function load_ui_plugins()
   req('catppuccin')
   req('statusline')
-  req('mini')
+  req('fzf-lua')
   req('blink')
   req('yazi')
+  req('pack-ui')
   require('file_exclude')
-  -- req('mason')
+  req('mini')
+  req('mason')
   if Myfn.is_windows() then
     req('bookmarks_win')
   else
@@ -39,11 +40,11 @@ end
 
 local function load_buffer_plugins()
   req('native-lsp')
-  -- req('flash') -- doesn't work with nightly - 07/18/26
   req('hlslens')
   req('nvim-biscuits')
   req('rainbow')
   req('conform')
+  req('flash')
   req('pretty-comment')
   req('tiny-comment')
 end

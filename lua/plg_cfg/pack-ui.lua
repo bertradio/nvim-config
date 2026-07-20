@@ -15,9 +15,11 @@ require('pack_ui').setup({
   auto_check = false, -- on setup, check remotes and notify if updates exist
   auto_update = false, -- on setup, apply every available update automatically
   -- default keymaps
-  -- keymaps = {
-  --   prefix = '<leader>p',
-  --   status = 's', -- <leader>ps -> :PackStatus
-  --   update_all = 'U', -- <leader>pU -> :PackUpdateAll
-  -- },
+  keymaps = {
+    prefix = '<leader>p',
+    status = 's', -- <leader>ps -> :PackStatus
+    update_all = 'U', -- <leader>pU -> :PackUpdateAll
+  },
 })
+
+Kset('n', '<Leader>pu', '<cmd>PackUpdate<cr>', { desc = 'pack-ui: update' })

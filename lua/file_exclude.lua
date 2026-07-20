@@ -1,20 +1,21 @@
 -- file_exclude.lua
 
--- Extensions for files I normally would not edit in Neovim.
--- Code from ChatGPT
+-- Shared exclusions for mini.files and fzf-lua.
 --
 -- Usage:
 --   local exclude = require('file_exclude')
+--
 --   exclude.is_excluded('picture.jpg')
 --   exclude.mini_files_filter(fs_entry)
---   exclude.snacks_patterns()
+--   exclude.toggle_mini()
+--   exclude.fzf_exclude_args()
 
 local M = {}
 
 -- Store extensions in lowercase.
--- stylua: ignore 
+-- stylua: ignore
 M.extensions = {
-  -- Archives and compressed files                                                   
+  -- Archives and compressed files
   ['7z']  = true,
   ['bz2'] = true,
   ['gz']  = true,
@@ -27,10 +28,10 @@ M.extensions = {
 
   -- Applications, packages, and installers
   ['appimage'] = true,
-  ['deb'] = true,
-  ['exe'] = true,
-  ['iso'] = true,
-  ['msi'] = true,
+  ['deb']      = true,
+  ['exe']      = true,
+  ['iso']      = true,
+  ['msi']      = true,
 
   -- Microsoft Office
   ['accdb'] = true,
@@ -78,6 +79,7 @@ M.extensions = {
   ['tif']  = true,
   ['tiff'] = true,
   ['webp'] = true,
+  ['xcf'] = true,
 
   -- Audio
   ['aac']  = true,
@@ -117,11 +119,11 @@ M.extensions = {
   ['sqlite3'] = true,
 
   -- Fonts
-  ['eot']     = true,
-  ['otf']     = true,
-  ['ttf']     = true,
-  ['woff']    = true,
-  ['woff2']   = true,
+  ['eot']   = true,
+  ['otf']   = true,
+  ['ttf']   = true,
+  ['woff']  = true,
+  ['woff2'] = true,
 
   -- Compiled and binary files
   ['a']     = true,
@@ -136,14 +138,10 @@ M.extensions = {
   ['jex'] = true,
   ['lnk'] = true,
   ['max'] = true,
-}
-
---    ╭────────────────────────────╮
---    │       for mini.files       │
---    ╰────────────────────────────╯
-
--- Whether excluded files are currently visible in mini.files.
-M.show_excluded = false
+  ['mpsession'] = true,
+  ['wks'] = true,
+  ['wps'] = true,
+  }
 
 local function get_extension(path)
   if type(path) ~= 'string' then
@@ -161,6 +159,13 @@ function M.is_excluded(path)
   return extension ~= nil and M.extensions[extension] == true
 end
 
+--    ╭────────────────────────────╮
+--    │       for mini.files       │
+--    ╰────────────────────────────╯
+
+-- Whether excluded files are currently visible in mini.files.
+M.show_excluded = false
+
 function M.mini_files_filter(fs_entry)
   -- Always show directories so navigation is unaffected.
   if fs_entry.fs_type == 'directory' then
@@ -170,45 +175,56 @@ function M.mini_files_filter(fs_entry)
   return M.show_excluded or not M.is_excluded(fs_entry.name)
 end
 
-function M.toggle()
+function M.toggle_mini()
   M.show_excluded = not M.show_excluded
 
-  local MiniFiles = require('mini.files')
+  local ok, minifiles = pcall(require, 'mini.files')
+  if not ok then
+    vim.notify('mini.files is not available', vim.log.levels.WARN)
+    return
+  end
 
-  -- Update the currently open explorer.
-  MiniFiles.refresh({
+  minifiles.refresh({
     content = {
       filter = M.mini_files_filter,
     },
   })
 
-  vim.notify(M.show_excluded and 'Excluded files shown' or 'Excluded files hidden')
+  vim.notify(
+    M.show_excluded and 'Excluded files shown' or 'Excluded files hidden',
+    vim.log.levels.INFO
+  )
 end
 
+-- Backward compatibility for an existing mapping that calls exclude.toggle().
+M.toggle = M.toggle_mini
+
 --    ╭────────────────────────────╮
---    │         for snacks         │
+--    │        for fzf-lua         │
 --    ╰────────────────────────────╯
 
--- Convert an extension such as "jpeg" into:
--- [jJ][pP][eE][gG]
-
--- Convert an extension such as "jpeg" into:
--- [jJ][pP][eE][gG]
+-- Build fd/ripgrep exclusion arguments from M.extensions.
+--
+-- Produces:
+--   --exclude '*.jpg' --exclude '*.pdf' ...
+--
+-- fd and ripgrep treat these globs case-insensitively only when configured
+-- to do so, so both lowercase and uppercase variants are generated.
 local function case_insensitive_glob(extension)
   return extension:gsub('%a', function(char)
     return string.format('[%s%s]', char:lower(), char:upper())
   end)
 end
 
-function M.snacks_patterns()
-  local patterns = {}
+function M.fzf_exclude_args()
+  local args = {}
 
   for extension in pairs(M.extensions) do
-    patterns[#patterns + 1] = '*.' .. case_insensitive_glob(extension)
+    args[#args + 1] = string.format("--exclude '*.%s'", case_insensitive_glob(extension))
   end
 
-  table.sort(patterns)
-  return patterns
+  table.sort(args)
+  return table.concat(args, ' ')
 end
 
 return M

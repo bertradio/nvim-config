@@ -11,6 +11,7 @@
 -- 06/01/26 - set up dashboard to replace mini.starter
 -- 06/05/26 - Tweaks as per claude
 -- 07/14/26 - added notifier to replace noice in part
+-- 07/19/26 - removed notifier decided to go back to system notifications - all in one place
 
 vim.pack.add({ Gh('nvim-tree/nvim-web-devicons') })
 vim.pack.add({ Gh('folke/snacks.nvim') })
@@ -444,3 +445,45 @@ local function maps()
 end
 
 maps()
+
+-- Colorscheme changed
+vim.api.nvim_create_autocmd('ColorScheme', {
+  group = augroup,
+  callback = function()
+    notify(('Colorscheme: %s'):format(vim.g.colors_name or 'unknown'), vim.log.levels.INFO, {
+      title = 'Theme',
+    })
+  end,
+})
+
+-- Recording a macro
+vim.api.nvim_create_autocmd('RecordingEnter', {
+  group = augroup,
+  callback = function()
+    notify(('Recording macro @%s'):format(vim.fn.reg_recording()), vim.log.levels.INFO, {
+      title = 'Macro',
+    })
+  end,
+})
+
+vim.api.nvim_create_autocmd('RecordingLeave', {
+  group = augroup,
+  callback = function()
+    vim.defer_fn(function()
+      notify('Macro recording finished', vim.log.levels.INFO, { title = 'Macro' })
+    end, 50)
+  end,
+})
+
+-- Optionally notify when text is yanked
+vim.api.nvim_create_autocmd('TextYankPost', {
+  group = augroup,
+  callback = function()
+    local count = vim.v.event.regcontents and #vim.v.event.regcontents or 0
+    if count > 5 then
+      notify(('Yanked %d lines'):format(count), vim.log.levels.INFO, {
+        title = 'Yank',
+      })
+    end
+  end,
+})

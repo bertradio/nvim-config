@@ -15,10 +15,10 @@ Kset('n', 'G', 'G$', { desc = 'Move to last char of file' })
 
 -- Buffer manipulation
 
+Kset({ 'n' }, '<Leader>bb', '<cmd>bd!<cr>', { desc = 'kill buffer' })
 Kset({ 'n' }, '<Leader>bc', '<cmd>CopyBufferName<cr>', { desc = 'path copy' })
 Kset({ 'n' }, '<Leader>ba', '<cmd>bufdo bwipeout<cr>', { desc = 'delete all' })
--- Kset({ 'n' }, '<Leader>bb', '<cmd>bd!<cr>', { desc = 'kill buffer' })
-Kset({ 'n' }, '<Leader>bb', '<cmd>lua Snacks.bufdelete()<cr>', { desc = 'snacks delete buffer' })
+-- Kset({ 'n' }, '<Leader>bb', '<cmd>lua Snacks.bufdelete()<cr>', { desc = 'snacks delete buffer' })
 
 -- Delete all buffers except the current one
 Kset('n', '<leader>bo', function()
@@ -49,6 +49,11 @@ Kset('n', 'j', 'gj', { desc = 'Move cursor down one line' })
 
 -- Write current buffer - end in normal mode
 Kset({ 'n', 'i' }, '<c-s>', '<esc><cmd>w<cr>', { desc = 'Write buffer' })
+-- Kset({ 'n', 'i' }, '<C-s>', function()
+--   vim.cmd('silent write')
+-- end, {
+--   desc = 'Save file',
+-- })
 
 -- Exit nvim normally
 Kset({ 'n', 'i', 'v' }, '<c-q>', '<cmd>q<cr>', { desc = 'Exit nvim' })
@@ -127,10 +132,10 @@ Kset('n', '<tab>', function()
 end, { silent = true, desc = 'Folds: Toggle' })
 
 -- update all plugins - replaced by pack-ui
-Kset('n', '<leader>U', function()
-  vim.notify('Updating plugins...', vim.log.levels.INFO)
-  vim.cmd('packupdate')
-end, { desc = 'Update plugins' })
+-- Kset('n', '<leader>U', function()
+--   vim.notify('Updating plugins...', vim.log.levels.INFO)
+--   vim.cmd('packupdate')
+-- end, { desc = 'Update plugins' })
 
 -- toggle boolean
 local function toggle_bool()

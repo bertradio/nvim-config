@@ -367,9 +367,9 @@ function _G.CoreStatusline()
   local winid = current_statusline_win()
   local bufnr = api.nvim_win_get_buf(winid)
 
-  if vim.bo[bufnr].filetype == 'snacks_dashboard' then
-    return ''
-  end
+  -- if vim.bo[bufnr].filetype == 'snacks_dashboard' then
+  --   return ''
+  -- end
 
   local context = {
     winid = winid,
