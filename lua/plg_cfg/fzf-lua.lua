@@ -312,17 +312,17 @@ fzf.setup({
   },
 
   oldfiles = {
-  cwd_only                = false,
-  include_current_session = false,
-  ignore_current_buffer   = false,
-  stat_file               = false,
-  prompt                  = 'Recent ❯ ',
-  winopts                 = {
-    preview = {
-      layout = 'horizontal',
+    cwd_only                = false,
+    include_current_session = false,
+    ignore_current_buffer   = false,
+    stat_file               = true,
+    prompt                  = 'Recent ❯ ',
+    winopts                 = {
+      preview = {
+        layout = 'horizontal',
+      },
     },
   },
-},
 
   jumps = {
     winopts = { preview = { layout = 'horizontal' } },
@@ -379,10 +379,12 @@ local function maps()
       cwd = vim.fn.stdpath('config'),
       prompt = 'Neovim ❯ ',
     })
-  end, { desc = 'Neovim config files' })
+  end, { desc = 'Neovim config' })
 
- Kset('n', '<leader>]', '<cmd>FzfLua oldfiles<cr>', {
-  desc = 'fzf.recent',
-})end
+  Kset('n', '<leader>]', '<cmd>FzfLua oldfiles<cr>', {
+    desc = 'recent', }
+    )
+
+end
 
 maps()

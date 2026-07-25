@@ -135,12 +135,18 @@ M.extensions = {
   ['so']    = true,
 
   -- Other application-specific files
+  ['efx'] = true,
+  ['fxm'] = true,
+  ['glabels'] = true,
   ['jex'] = true,
   ['lnk'] = true,
   ['max'] = true,
-  ['mpsession'] = true,
+  ['mpesession'] = true,
+  ['pub'] = true,
+  ['ufo'] = true,
   ['wks'] = true,
   ['wps'] = true,
+  ['xmind'] = true,
   }
 
 local function get_extension(path)
