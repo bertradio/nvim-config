@@ -26,7 +26,7 @@ local function load_ui_plugins()
   req('fzf-lua')
   req('blink')
   req('yazi')
-  req('pack-ui')
+  -- req('pack-ui')
   require('file_exclude')
   req('mason')
   if Myfn.is_windows() then

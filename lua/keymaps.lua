@@ -132,10 +132,10 @@ Kset('n', '<tab>', function()
 end, { silent = true, desc = 'Folds: Toggle' })
 
 -- update all plugins - replaced by pack-ui
--- Kset('n', '<leader>U', function()
---   vim.notify('Updating plugins...', vim.log.levels.INFO)
---   vim.cmd('packupdate')
--- end, { desc = 'Update plugins' })
+Kset('n', '<leader>U', function()
+  vim.notify('Updating plugins...', vim.log.levels.INFO)
+  vim.cmd('packupdate')
+end, { desc = 'Update plugins' })
 
 -- toggle boolean
 local function toggle_bool()
