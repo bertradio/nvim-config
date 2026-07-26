@@ -14,15 +14,15 @@ local autocmd = vim.api.nvim_create_autocmd -- Create autocommand
 ---------- >> Autogroups and Autocommands << ---------------
 
 -- force refresh of shada after save
-vim.api.nvim_create_autocmd('BufWritePost', {
-  group = vim.api.nvim_create_augroup('RefreshOldFiles', { clear = true }),
-  callback = function()
-    -- Force Neovim to register the current file in the shada history
-    vim.cmd('wshada')
-    -- Optional: Reload the shada to update the internal v:oldfiles list
-    vim.cmd('rshada')
-  end,
-})
+-- vim.api.nvim_create_autocmd('BufWritePost', {
+--   group = vim.api.nvim_create_augroup('RefreshOldFiles', { clear = true }),
+--   callback = function()
+--     -- Force Neovim to register the current file in the shada history
+--     vim.cmd('wshada')
+--     -- Optional: Reload the shada to update the internal v:oldfiles list
+--     vim.cmd('rshada')
+--   end,
+-- })
 
 -- need different functions for file name in Win and Linux
 if Myfn.is_windows() then
@@ -158,13 +158,25 @@ vim.api.nvim_create_autocmd('BufReadPost', {
 })
 
 -- start treesitter
-vim.api.nvim_create_autocmd('FileType', {
-  callback = function(event)
-    local parser = vim.treesitter.language.get_lang(vim.bo[event.buf].filetype)
+local no_treesitter = {
+  zsh = true,
+}
 
-    if parser and vim.treesitter.language.add(parser) == true then
-      vim.treesitter.start(event.buf, parser)
+vim.api.nvim_create_autocmd('FileType', {
+  group = vim.api.nvim_create_augroup('StartTreesitter', { clear = true }),
+  callback = function(event)
+    local ft = vim.bo[event.buf].filetype
+
+    if no_treesitter[ft] then
+      return
     end
+
+    local lang = vim.treesitter.language.get_lang(ft)
+    if not lang then
+      return
+    end
+
+    pcall(vim.treesitter.start, event.buf, lang)
   end,
 })
 

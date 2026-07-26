@@ -14,8 +14,17 @@
 -- 06/01/26 - replaced starter with Snacks.dashboard
 -- 07/15/26 - added mini.clues and mini.files configs
 
-vim.pack.add({ Gh('nvim-mini/mini.nvim') })
+vim.pack.add({
+  Gh('nvim-mini/mini.nvim'),
 
+  -- Supplies Tree-sitter textobject query files used by mini.ai.
+  {
+    src = Gh('nvim-treesitter/nvim-treesitter-textobjects'),
+    version = 'main',
+  },
+})
+
+local ai = require('mini.ai')
 local align = require('mini.align')
 local bracketed = require('mini.bracketed')
 local clue = require('mini.clue')
@@ -29,7 +38,77 @@ local mjump = require('mini.jump')
 local jump2d = require('mini.jump2d')
 local file_exclude = require('file_exclude')
 
-mjump.setup()
+-- ───── mini.ai text objects ─────
+
+local ts_textobject = ai.gen_spec.treesitter
+
+ai.setup({
+  n_lines = 500,
+
+  custom_textobjects = {
+    -- Function
+    F = ts_textobject({
+      a = '@function.outer',
+      i = '@function.inner',
+    }),
+
+    -- Function call
+    c = ts_textobject({
+      a = '@call.outer',
+      i = '@call.inner',
+    }),
+
+    -- Argument or parameter
+    a = ts_textobject({
+      a = '@parameter.outer',
+      i = '@parameter.inner',
+    }),
+
+    -- Conditional or loop
+    o = ts_textobject({
+      a = {
+        '@conditional.outer',
+        '@loop.outer',
+      },
+      i = {
+        '@conditional.inner',
+        '@loop.inner',
+      },
+    }),
+
+    -- Assignment
+    A = ts_textobject({
+      a = '@assignment.outer',
+      i = {
+        '@assignment.lhs',
+        '@assignment.rhs',
+      },
+    }),
+
+    -- Comment
+    C = ts_textobject({
+      a = '@comment.outer',
+      i = '@comment.inner',
+    }),
+  },
+
+  mappings = {
+    around = 'a',
+    inside = 'i',
+
+    around_next = 'an',
+    inside_next = 'in',
+
+    around_last = 'al',
+    inside_last = 'il',
+
+    goto_left = 'g[',
+    goto_right = 'g]',
+  },
+
+  search_method = 'cover_or_next',
+  silent = false,
+})
 
 align.setup({ mappings = { start = 'ga' } })
 
@@ -55,23 +134,53 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 
 --  ────── end mini.diff setup ───────
 
---  ───── jump2d setup to emulate flash ─────
+--  ───── jump and jump2d setup to emulate flash ────
+
+-----------------------------------------------------------------------
+-- mini.jump - code from ChatGPT
+--
+-- Improved f, F, t, and T motions.
+-----------------------------------------------------------------------
+
+mjump.setup({
+  mappings = {
+    forward = 'f',
+    backward = 'F',
+    forward_till = 't',
+    backward_till = 'T',
+    repeat_jump = ';',
+  },
+
+  delay = {
+    -- Wait before highlighting additional matching characters.
+    highlight = 0,
+
+    -- Effectively disables automatic timeout.
+    idle_stop = 10000000,
+  },
+
+  silent = true,
+})
+
+-----------------------------------------------------------------------
+-- mini.jump2d - code from ChatGPT
+--
+-- Press s and choose a label at the beginning of a word.
+-----------------------------------------------------------------------
 
 jump2d.setup({
-  -- Disable the default <CR> mapping. We define our own mappings below.
+  -- Disable the module's default <CR> mapping.
   mappings = {
     start_jumping = '',
   },
 
-  -- Home-row-oriented labels first.
+  -- Most convenient labels appear first.
   labels = 'asdfghjklqwertyuiopzxcvbnm',
 
   view = {
-    -- Darken the surrounding text so the labels stand out.
     dim = true,
 
-    -- Show only the label currently needed.
-    -- This is cleaner and closer to Flash's normal appearance.
+    -- Show only the next label needed.
     n_steps_ahead = 0,
   },
 
@@ -85,32 +194,46 @@ jump2d.setup({
 
   allowed_windows = {
     current = true,
-
-    -- Set this to true if you want labels in all visible windows.
     not_current = true,
   },
 
   silent = true,
 })
 
--- s: Flash-like jump.
--- Type s, then the character you are looking for, followed by the displayed
--- label. Works in Normal, Visual, and Operator-pending modes.
+-- Flash-like jump to the beginning of a word.
+vim.keymap.set({ 'n', 'x', 'o' }, 'S', function()
+  jump2d.start(jump2d.builtin_opts.word_start)
+end, {
+  desc = 'Jump to word start',
+})
+
+-- Optional: jump to any occurrence of a typed character.
 vim.keymap.set({ 'n', 'x', 'o' }, 's', function()
   jump2d.start(jump2d.builtin_opts.single_character)
 end, {
   desc = 'Jump to character',
 })
 
--- jump directly to the beginning of a visible line.
-vim.keymap.set({ 'n', 'x', 'o' }, 'S', function()
+-- Optional: jump to the beginning of a visible line.
+vim.keymap.set({ 'n', 'x', 'o' }, 'gl', function()
   jump2d.start(jump2d.builtin_opts.line_start)
 end, {
-  desc = 'Jump to line',
+  desc = 'Jump to line start',
 })
 
--- Make the labels clearly visible with Catppuccin Mocha.
-local function set_jump2d_highlights()
+-----------------------------------------------------------------------
+-- Highlights for Catppuccin Mocha
+-----------------------------------------------------------------------
+
+local function set_jump_highlights()
+  -- mini.jump matching characters
+  vim.api.nvim_set_hl(0, 'MiniJump', {
+    fg = '#f9e2af',
+    bold = true,
+    underline = true,
+  })
+
+  -- mini.jump2d labels
   vim.api.nvim_set_hl(0, 'MiniJump2dSpot', {
     fg = '#1e1e2e',
     bg = '#f9e2af',
@@ -126,6 +249,7 @@ local function set_jump2d_highlights()
   vim.api.nvim_set_hl(0, 'MiniJump2dSpotAhead', {
     fg = '#1e1e2e',
     bg = '#89b4fa',
+    bold = true,
   })
 
   vim.api.nvim_set_hl(0, 'MiniJump2dDim', {
@@ -133,11 +257,10 @@ local function set_jump2d_highlights()
   })
 end
 
-set_jump2d_highlights()
+set_jump_highlights()
 
--- Reapply custom highlights whenever the colorscheme changes.
 vim.api.nvim_create_autocmd('ColorScheme', {
-  callback = set_jump2d_highlights,
+  callback = set_jump_highlights,
 })
 
 --  ──────── end junp2d setup ────────
@@ -255,7 +378,7 @@ clue.setup({
 --    │     mini.files configs     │
 --    ╰────────────────────────────╯
 
-local cwd_config = require('plg_cfg.bookmarks_linux')
+local cwd_config = require('plg_cfg.bookmarks_' .. (Myfn.is_windows() and 'win' or 'linux'))
 
 local group = vim.api.nvim_create_augroup('MyMiniFiles', { clear = true })
 
@@ -288,7 +411,7 @@ end
 vim.api.nvim_create_autocmd('User', {
   pattern = 'MiniFilesBufferCreate',
   callback = function(args)
-    vim.keymap.set('n', 'T', trash_entry, {
+    Kset('n', 'T', trash_entry, {
       buffer = args.data.buf_id,
       desc = 'Move to system Trash',
     })

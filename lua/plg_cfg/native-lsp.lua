@@ -7,7 +7,7 @@
 -- Code from Gemini to replace nvim-lspconfig
 
 vim.pack.add({
-  { src = Gh('folke/lazydev.nvim'), data = { ft = 'lua' } },
+  Gh('folke/lazydev.nvim'),
 })
 
 -- =============================================================================

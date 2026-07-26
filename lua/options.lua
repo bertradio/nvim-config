@@ -29,7 +29,6 @@ function M.setup()
     softtabstop    = 2,
     splitbelow     = true,
     splitright     = true,
-    syntax         = 'enable',
     laststatus     = 3,
     tabstop        = 2,
     termguicolors  = true,
@@ -63,32 +62,21 @@ function M.setup()
     wildmenu       = false,
     wildmode       = 'longest:full,full',
     cmdheight      = 0,
-  }
 
-  vim.opt.wildchar = 0 -- Disable the trigger key for native wildmenu
-  vim.opt.wildoptions = '' -- Clear native wildmenu UI options
+    wildchar       = 0, -- Disable the trigger key for native wildmenu
+    wildoptions    = '', -- Clear native wildmenu UI options
+
+  }
 
   -- Apply basic options
   for k, v in pairs(options) do
     vim.opt[k] = v
   end
 
-  -- disable to prevent double display with noice
-  require('vim._core.ui2').enable({})
-
-  -- Avoid showing extra message prompts and truncating long texts - for Noice
-  -- vim.opt.shortmess:append('cIWsFtO')
-
-  -- make sure coding is right
-  vim.scriptencoding = 'utf-8'
-  vim.opt.encoding = 'utf-8'
-  vim.opt.fileencoding = 'utf-8'
-
   -- Path and Directories
   vim.opt.backupdir = vim.fn.stdpath('data') .. '/backup//'
   vim.opt.undodir = vim.fn.stdpath('data') .. '/undo'
   vim.opt.path = '+= **'
-
 
 -- Provider disabling (Speed optimization)
   -- stylua: ignore 

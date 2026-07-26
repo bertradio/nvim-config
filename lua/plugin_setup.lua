@@ -22,13 +22,10 @@ require('aucmds')
 local function load_ui_plugins()
   req('catppuccin')
   req('statusline')
-  req('mini')
   req('fzf-lua')
-  req('blink')
+  req('mini')
   req('yazi')
-  -- req('pack-ui')
-  require('file_exclude')
-  req('mason')
+  req('blink')
   if Myfn.is_windows() then
     req('bookmarks_win')
   else
@@ -44,7 +41,7 @@ local function load_buffer_plugins()
   req('nvim-biscuits')
   req('rainbow')
   req('conform')
-  -- req('flash')
+  -- req('mason')
   req('pretty-comment')
   req('tiny-comment')
 end
@@ -91,3 +88,8 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
   pattern = '*.md',
   callback = load_markdown_plugins,
 })
+
+vim.api.nvim_create_user_command('Mason', function()
+  req('mason')
+  vim.cmd.Mason()
+end, {})

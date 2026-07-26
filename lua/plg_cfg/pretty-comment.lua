@@ -56,6 +56,6 @@ Kset('n', 'gcx', '<cmd>CommentReset<CR>', { silent = true, desc = 'Reset comment
 --    │                 in visual mode to toggle comments instantly.                  │
 --    ╰───────────────────────────────────────────────────────────────────────────────╯
 
-Kset('x', 'gcc', function()
-  return require('vim._comment').operator()
-end, { expr = true, desc = 'Comment toggle (instant, avoids gc delay)' })
+-- Kset('x', 'gcc', function()
+--   return require('vim._comment').operator()
+-- end, { expr = true, desc = 'Comment toggle (instant, avoids gc delay)' })
