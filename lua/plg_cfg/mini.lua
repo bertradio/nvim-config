@@ -17,6 +17,7 @@
 
 vim.pack.add({
   Gh('nvim-mini/mini.nvim'),
+  -- for mini.ai to use treesitter
   {
     src = Gh('nvim-treesitter/nvim-treesitter-textobjects'),
     version = 'main',
@@ -282,9 +283,9 @@ move.setup({
 
 operators.setup()
 
--- add <> as pair
--- config so ' before a word does not get peired
 mpairs.setup({
+  -- add <> as pair
+  -- config so ' before a word does not get peired
   mappings = {
     -- pair < >
     ['<'] = { action = 'open', pair = '<>', neigh_pattern = '^[^\\]' },

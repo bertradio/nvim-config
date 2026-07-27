@@ -13,17 +13,6 @@ local autocmd = vim.api.nvim_create_autocmd -- Create autocommand
 
 ---------- >> Autogroups and Autocommands << ---------------
 
--- force refresh of shada after save
--- vim.api.nvim_create_autocmd('BufWritePost', {
---   group = vim.api.nvim_create_augroup('RefreshOldFiles', { clear = true }),
---   callback = function()
---     -- Force Neovim to register the current file in the shada history
---     vim.cmd('wshada')
---     -- Optional: Reload the shada to update the internal v:oldfiles list
---     vim.cmd('rshada')
---   end,
--- })
-
 -- need different functions for file name in Win and Linux
 if Myfn.is_windows() then
   -- Make new meaningful backup name, such as filename@2015-04-05_14:59:25i

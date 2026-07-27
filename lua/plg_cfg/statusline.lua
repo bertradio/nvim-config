@@ -216,17 +216,6 @@ local function search_status()
   if not ok or not count or count.total == 0 then
     return ''
   end
-
-  -- Commented out display of search stat [x/x]
-  -- local total
-  --
-  -- if count.total > count.maxcount then
-  --   total = tostring(count.maxcount) .. '+'
-  -- else
-  --   total = tostring(count.total)
-  -- end
-
-  -- return tostring(count.current) .. '/' .. total
 end
 
 local function word_status(context)
@@ -366,10 +355,6 @@ end
 function _G.CoreStatusline()
   local winid = current_statusline_win()
   local bufnr = api.nvim_win_get_buf(winid)
-
-  -- if vim.bo[bufnr].filetype == 'snacks_dashboard' then
-  --   return ''
-  -- end
 
   local context = {
     winid = winid,
