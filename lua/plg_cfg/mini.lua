@@ -13,11 +13,10 @@
 -- 05/20/26 - added local requires
 -- 06/01/26 - replaced starter with Snacks.dashboard
 -- 07/15/26 - added mini.clues and mini.files configs
+-- 07/26/26 - added mini.ai - code as per ChatGPT
 
 vim.pack.add({
   Gh('nvim-mini/mini.nvim'),
-
-  -- Supplies Tree-sitter textobject query files used by mini.ai.
   {
     src = Gh('nvim-treesitter/nvim-treesitter-textobjects'),
     version = 'main',
@@ -30,13 +29,13 @@ local bracketed = require('mini.bracketed')
 local clue = require('mini.clue')
 local diff = require('mini.diff')
 local files = require('mini.files')
+local file_exclude = require('file_exclude')
 local move = require('mini.move')
 local mpairs = require('mini.pairs')
 local operators = require('mini.operators')
 local surround = require('mini.surround')
 local mjump = require('mini.jump')
 local jump2d = require('mini.jump2d')
-local file_exclude = require('file_exclude')
 
 -- ───── mini.ai text objects ─────
 
@@ -114,7 +113,9 @@ align.setup({ mappings = { start = 'ga' } })
 
 bracketed.setup()
 
---  ───── mini.diff set up for change signs in gutter ─────
+--  ──────────────────────── end mini.ai setup ────────────────────────
+
+--  ───── ───── mini.diff set up for change signs in gutter ───── ─────
 
 diff.setup({
   source = diff.gen_source.save(),
@@ -133,8 +134,6 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 })
 
 --  ────── end mini.diff setup ───────
-
---  ───── jump and jump2d setup to emulate flash ────
 
 -----------------------------------------------------------------------
 -- mini.jump - code from ChatGPT
@@ -166,6 +165,8 @@ mjump.setup({
 -- mini.jump2d - code from ChatGPT
 --
 -- Press s and choose a label at the beginning of a word.
+-- S to select beginning of words
+-- gl for beginning of lines
 -----------------------------------------------------------------------
 
 jump2d.setup({

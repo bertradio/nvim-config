@@ -6,7 +6,7 @@
 
 vim.pack.add({
   Gh('neovim/nvim-lspconfig'),
-  { src = Gh('folke/lazydev.nvim'), data = { ft = 'lua' } },
+  -- { src = Gh('folke/lazydev.nvim'), data = { ft = 'lua' } },
 })
 
 -- Provide :LspInfo even if nvim-lspconfig doesn't define it yet.

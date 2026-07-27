@@ -16,6 +16,7 @@ end
 
 require('keymaps')
 require('aucmds')
+req('native-lsp')
 
 -- ────────── lazy loading set up all functions ──────────
 
@@ -36,7 +37,6 @@ end
 --  ─────────────────────────────────────────────
 
 local function load_buffer_plugins()
-  req('native-lsp')
   req('hlslens')
   req('nvim-biscuits')
   req('rainbow')

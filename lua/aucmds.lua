@@ -157,29 +157,6 @@ vim.api.nvim_create_autocmd('BufReadPost', {
   end,
 })
 
--- start treesitter
-local no_treesitter = {
-  zsh = true,
-}
-
-vim.api.nvim_create_autocmd('FileType', {
-  group = vim.api.nvim_create_augroup('StartTreesitter', { clear = true }),
-  callback = function(event)
-    local ft = vim.bo[event.buf].filetype
-
-    if no_treesitter[ft] then
-      return
-    end
-
-    local lang = vim.treesitter.language.get_lang(ft)
-    if not lang then
-      return
-    end
-
-    pcall(vim.treesitter.start, event.buf, lang)
-  end,
-})
-
 ---------- >> Remove Windows newlines in Windows << ---------------
 vim.api.nvim_create_autocmd('BufWritePre', {
   pattern = { '*' },
