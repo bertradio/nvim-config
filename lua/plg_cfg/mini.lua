@@ -38,8 +38,11 @@ local mpairs = require('mini.pairs')
 local notify = require('mini.notify')
 local operators = require('mini.operators')
 local surround = require('mini.surround')
+local bufremove = require('mini.bufremove')
 
 require('mini.visits').setup()
+
+bufremove.setup()
 
 -- ───── mini.ai text objects ─────
 
