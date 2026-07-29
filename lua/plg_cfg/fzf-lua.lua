@@ -11,7 +11,6 @@ local fzf = require('fzf-lua')
 local actions = require('fzf-lua.actions')
 
 -- Shared extension exclusions used by mini.files and fzf-lua.
--- This expects file_exclude.lua to be somewhere in Neovim's Lua path,
 -- normally ~/.config/nvim/lua/file_exclude.lua.
 local ok, exclude = pcall(require, 'file_exclude')
 if not ok then

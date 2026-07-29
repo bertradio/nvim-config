@@ -29,13 +29,13 @@ ls.add_snippets('all', {
 ls.add_snippets('lua', {
   s(
     'cmd',
-    fmt('<cmd>{}<cr>', {
+    fmt("'<cmd>{}<cr>'", {
       i(1, 'command'),
     })
   ),
   s(
     'gh',
-    fmt('vim.pack.add({{ Gh("{}") }})', {
+    fmt("vim.pack.add({{ Gh('{}') }})", {
       i(1, 'Repo'),
     })
   ),
@@ -47,7 +47,7 @@ ls.add_snippets('lua', {
   ),
   s(
     'map',
-    fmt([[Kset("{}", "<Leader>{}", "{}", {{ desc = "{}" }})]], {
+    fmt([[Kset('{}', '<Leader>{}', '{}', {{ desc = '{}' }})]], {
       i(1, 'n'),
       i(2, 'key'),
       i(3, 'command'),

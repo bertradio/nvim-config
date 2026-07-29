@@ -29,14 +29,15 @@ local align = require('mini.align')
 local bracketed = require('mini.bracketed')
 local clue = require('mini.clue')
 local diff = require('mini.diff')
-local files = require('mini.files')
 local file_exclude = require('file_exclude')
+local files = require('mini.files')
+local jump2d = require('mini.jump2d')
+local mjump = require('mini.jump')
 local move = require('mini.move')
 local mpairs = require('mini.pairs')
+local notify = require('mini.notify')
 local operators = require('mini.operators')
 local surround = require('mini.surround')
-local mjump = require('mini.jump')
-local jump2d = require('mini.jump2d')
 
 -- ───── mini.ai text objects ─────
 
@@ -113,6 +114,60 @@ ai.setup({
 align.setup({ mappings = { start = 'ga' } })
 
 bracketed.setup()
+
+--  ──────── mini.clue setup ─────────
+
+clue.setup({
+
+  -- stylua: ignore 
+  window = {
+    delay  = 500,
+    config = {
+      width  = 'auto',
+      border = 'rounded',
+    },
+    scroll_down = '<Down>',
+    scroll_up   = '<Up>',
+  },
+
+  triggers = {
+    { mode = 'c', keys = '<C-r>' },
+    { mode = 'i', keys = '<C-r>' },
+    { mode = 'i', keys = '<C-x>' },
+    { mode = 'n', keys = "'" },
+    { mode = 'n', keys = '"' },
+    { mode = 'n', keys = '<C-w>' },
+    { mode = 'n', keys = '<Leader>' },
+    { mode = 'n', keys = '`' },
+    { mode = 'n', keys = 'g' },
+    { mode = 'n', keys = 'z' },
+    { mode = 'n', keys = ']' },
+    { mode = 'n', keys = '[' },
+    { mode = 'n', keys = '\\' },
+    { mode = 'x', keys = "'" },
+    { mode = 'x', keys = '"' },
+    { mode = 'x', keys = '<Leader>' },
+    { mode = 'x', keys = '`' },
+    { mode = 'x', keys = 'g' },
+    { mode = 'x', keys = 'z' },
+  },
+
+  clues = {
+
+    clue.gen_clues.builtin_completion(),
+    clue.gen_clues.g(),
+    clue.gen_clues.marks(),
+    clue.gen_clues.registers(),
+    clue.gen_clues.windows(),
+    clue.gen_clues.z(),
+
+    { mode = 'n', keys = '<Leader>b', desc = '+buffer' },
+    { mode = 'n', keys = '<Leader>e', desc = '+edit configs' },
+    { mode = 'n', keys = '<Leader>f', desc = '+fzf' },
+    { mode = 'n', keys = '<Leader>m', desc = '+pretty' },
+    { mode = 'n', keys = '<Leader>p', desc = '+pack-ui' },
+  },
+})
 
 --  ──────────────────────── end mini.ai setup ────────────────────────
 
@@ -281,8 +336,6 @@ move.setup({
   },
 })
 
-operators.setup()
-
 mpairs.setup({
   -- add <> as pair
   -- config so ' before a word does not get peired
@@ -306,6 +359,36 @@ mpairs.setup({
   },
 })
 
+--  ───────── notify setup ──────────
+
+notify.setup({
+  -- remove time, add space before msg
+  content = {
+    format = function(notif)
+      return ' ' .. tostring(notif.msg)
+    end,
+  },
+  window = {
+    config = {
+      title = '',
+      width = 40,
+      border = 'rounded',
+    },
+  },
+})
+vim.opt.cmdheight = 0
+vim.notify = notify.make_notify({
+  INFO = { duration = 2500 }, -- duration 1000 = 1 second
+  WARN = { duration = 5000 },
+  ERROR = { duration = 8000 },
+})
+
+--  ──────────────────────────────────────────────────────
+
+operators.setup()
+
+--  ──────────────────────────────────────────────────────
+
 surround.setup({
   -- stylua: ignore
   mappings = {
@@ -318,60 +401,6 @@ surround.setup({
     update_n_lines = 'gzn',     -- Update n_lines
   },
   n_lines = 50, -- search window for surroundings
-})
-
---  ──────── mini.clue setup ─────────
-
-clue.setup({
-
-  -- stylua: ignore 
-  window = {
-    delay  = 500,
-    config = {
-      width  = 'auto',
-      border = 'rounded',
-    },
-    scroll_down = '<Down>',
-    scroll_up   = '<Up>',
-  },
-
-  triggers = {
-    { mode = 'c', keys = '<C-r>' },
-    { mode = 'i', keys = '<C-r>' },
-    { mode = 'i', keys = '<C-x>' },
-    { mode = 'n', keys = "'" },
-    { mode = 'n', keys = '"' },
-    { mode = 'n', keys = '<C-w>' },
-    { mode = 'n', keys = '<Leader>' },
-    { mode = 'n', keys = '`' },
-    { mode = 'n', keys = 'g' },
-    { mode = 'n', keys = 'z' },
-    { mode = 'n', keys = ']' },
-    { mode = 'n', keys = '[' },
-    { mode = 'n', keys = '\\' },
-    { mode = 'x', keys = "'" },
-    { mode = 'x', keys = '"' },
-    { mode = 'x', keys = '<Leader>' },
-    { mode = 'x', keys = '`' },
-    { mode = 'x', keys = 'g' },
-    { mode = 'x', keys = 'z' },
-  },
-
-  clues = {
-
-    clue.gen_clues.builtin_completion(),
-    clue.gen_clues.g(),
-    clue.gen_clues.marks(),
-    clue.gen_clues.registers(),
-    clue.gen_clues.windows(),
-    clue.gen_clues.z(),
-
-    { mode = 'n', keys = '<Leader>b', desc = '+buffer' },
-    { mode = 'n', keys = '<Leader>e', desc = '+edit configs' },
-    { mode = 'n', keys = '<Leader>f', desc = '+fzf' },
-    { mode = 'n', keys = '<Leader>m', desc = '+pretty' },
-    { mode = 'n', keys = '<Leader>p', desc = '+pack-ui' },
-  },
 })
 
 --  ──────────────────────────────────────────────────────

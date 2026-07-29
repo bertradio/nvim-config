@@ -61,7 +61,7 @@ function M.setup()
     autocomplete   = false,
     wildmenu       = false,
     wildmode       = 'longest:full,full',
-    cmdheight      = 0,
+    cmdheight      = 1,
 
     wildchar       = 0, -- Disable the trigger key for native wildmenu
     wildoptions    = '', -- Clear native wildmenu UI options

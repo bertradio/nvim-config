@@ -12,5 +12,6 @@ require('notify').setup({
   timeout = 150,
   render = 'compact',
   zindex = 2000,
+  animation = 'fade_in_slide_out',
 })
 vim.notify = require('notify')

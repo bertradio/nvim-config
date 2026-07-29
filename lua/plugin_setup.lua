@@ -16,17 +16,18 @@ end
 
 require('keymaps')
 require('aucmds')
-req('native-lsp')
 
 -- ────────── lazy loading set up all functions ──────────
 
 local function load_ui_plugins()
+  req('native-lsp')
   req('catppuccin')
   req('statusline')
-  req('fzf-lua')
   req('mini')
-  req('yazi')
   req('blink')
+  -- req('nvim-notify')
+  req('fzf-lua')
+  req('yazi')
   if Myfn.is_windows() then
     req('bookmarks_win')
   else

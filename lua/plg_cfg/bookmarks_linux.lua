@@ -25,7 +25,6 @@ local cwd_config = {
   o = '$HOME/Insync/bertkleinman@outlook.com/OneDrive/My Docs/',
   p = '$HOME/.config/nvim/lua/plg_cfg/',
   s = '$HOME/Insync/bertkleinman@outlook.com/OneDrive/My Docs/Share/',
-  S = '$HOME/.Download/Shavuot/',
   t = '$HOME/.Temp/',
   v = '$HOME/Insync/bert.kleinman@gmail.com/Google Drive',
   w = '$HOME/Insync/bertkleinman@outlook.com/OneDrive/My Docs/Moving Forward/Wisteria',
@@ -60,7 +59,8 @@ local function map_cwd(key, dir, cd_cmd)
       return
     end
     vim.cmd(string.format('%s %s', cmd, vim.fn.fnameescape(target)))
-    vim.notify('cwd → ' .. target)
+    target = Myfn.center_string(('cwd → ' .. Myfn.short_cwd()), 41)
+    vim.notify(target)
   end, { desc = ('cd → %s'):format(dir) })
 end
 
