@@ -25,7 +25,6 @@ local function load_ui_plugins()
   req('statusline')
   req('mini')
   req('blink')
-  -- req('nvim-notify')
   req('fzf-lua')
   req('yazi')
   if Myfn.is_windows() then

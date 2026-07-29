@@ -39,6 +39,8 @@ local notify = require('mini.notify')
 local operators = require('mini.operators')
 local surround = require('mini.surround')
 
+require('mini.visits').setup()
+
 -- ───── mini.ai text objects ─────
 
 local ts_textobject = ai.gen_spec.treesitter

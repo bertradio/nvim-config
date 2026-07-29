@@ -380,10 +380,40 @@ local function maps()
     })
   end, { desc = 'Neovim config' })
 
-  Kset('n', '<leader>]', '<cmd>FzfLua oldfiles<cr>', {
-    desc = 'recent', }
-    )
+  -- recent with no preview - to see paths
+  Kset('n', '<leader>]', function()
+    fzf.oldfiles({
+      winopts = {
+            preview = {
+              hidden = true,
+            },
+      },
+    })
+  end, {desc = 'recent',})
 
 end
 
 maps()
+
+--  ───────────────────── mini.visitfiles picker ─────────────────────
+
+local function visit_files()
+  fzf.fzf_exec(require('mini.visits').list_paths(), {
+    prompt = 'Visits> ',
+    winopts = {
+      preview = {
+        hidden = true,
+      },
+    },
+    actions = {
+      ['default'] = fzf.actions.file_edit,
+      ['ctrl-s'] = fzf.actions.file_split,
+      ['ctrl-v'] = fzf.actions.file_vsplit,
+      ['ctrl-t'] = fzf.actions.file_tabedit,
+    },
+  })
+end
+
+vim.keymap.set('n', '<leader>fv', visit_files, {
+  desc = 'Visited files',
+})
