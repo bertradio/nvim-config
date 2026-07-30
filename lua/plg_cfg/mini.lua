@@ -27,6 +27,7 @@ vim.pack.add({
 local ai = require('mini.ai')
 local align = require('mini.align')
 local bracketed = require('mini.bracketed')
+local bufremove = require('mini.bufremove')
 local clue = require('mini.clue')
 local diff = require('mini.diff')
 local file_exclude = require('file_exclude')
@@ -38,11 +39,6 @@ local mpairs = require('mini.pairs')
 local notify = require('mini.notify')
 local operators = require('mini.operators')
 local surround = require('mini.surround')
-local bufremove = require('mini.bufremove')
-
-require('mini.visits').setup()
-
-bufremove.setup()
 
 -- ───── mini.ai text objects ─────
 
@@ -119,6 +115,10 @@ ai.setup({
 align.setup({ mappings = { start = 'ga' } })
 
 bracketed.setup()
+
+--  ──────────────────────────────────────────────────────
+
+bufremove.setup()
 
 --  ──────── mini.clue setup ─────────
 

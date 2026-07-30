@@ -77,6 +77,9 @@ Kset({ 'n', 'i', 'v' }, '<c-q>', '<cmd>q<cr>', { desc = 'Exit nvim' })
 -- >>> WORKING WITH TEXT
 -------------------------------------------------
 
+-- load last file
+Kset('n', '<Leader>l', '<cmd>e#<1<cr>', { desc = 'Load last file' })
+
 -- disable s key to substitute
 Kset({ 'n', 'v' }, 's', '<nop>')
 
