@@ -41,9 +41,9 @@ local function load_buffer_plugins()
   req('nvim-biscuits')
   req('rainbow')
   req('conform')
+  req('indent-blankline')
   -- req('mason')
   req('pretty-comment')
-  req('tiny-comment')
 end
 
 --  ─────────────────────────────────────────────

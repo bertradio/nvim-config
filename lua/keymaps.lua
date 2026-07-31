@@ -149,7 +149,7 @@ Kset('n', '<tab>', function()
   vim.cmd('normal! ' .. cmd)
 end, { silent = true, desc = 'Folds: Toggle' })
 
--- update all plugins - replaced by pack-ui
+-- update all plugins
 Kset('n', '<leader>U', function()
   vim.notify('Updating plugins...', vim.log.levels.INFO)
   vim.cmd('packupdate')
@@ -313,37 +313,7 @@ Kset('n', '<leader>U', function()
   vim.cmd('packupdate')
 end, { desc = 'Update plugins' })
 
--- toggle boolean
-local function toggle_bool()
-  local word = vim.fn.expand('<cword>')
-  -- stylua: ignore
-  local bool_map = {
-    ['true']  = 'false',
-    ['false'] = 'true',
-    ['True']  = 'False',
-    ['False'] = 'True',
-    ['TRUE']  = 'FALSE',
-    ['FALSE'] = 'TRUE',
-    ['on']    = 'off',
-    ['off']   = 'on',
-    ['1']     = '0',
-    ['0']     = '1',
-    ['yes']   = 'no',
-    ['no']    = 'yes'
-  }
-
-  if bool_map[word] then
-    vim.cmd('normal! ciw' .. bool_map[word])
-  else
-    print('Not a boolean!')
-  end
-end
-
--- Keymap: Pressing <leader>T will toggle the value
-Kset('n', '<leader>T', toggle_bool, { desc = 'Toggle boolean under cursor' })
-
 -- Insert today's date
-
 vim.keymap.set('i', '<F5>', function()
   vim.api.nvim_put({ os.date('%m/%d/%y - ') }, 'c', true, true)
 end, { desc = "Insert today's date" })

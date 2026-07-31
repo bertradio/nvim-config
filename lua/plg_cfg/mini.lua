@@ -37,8 +37,19 @@ local mjump = require('mini.jump')
 local move = require('mini.move')
 local mpairs = require('mini.pairs')
 local notify = require('mini.notify')
-local operators = require('mini.operators')
 local surround = require('mini.surround')
+local animate = require('mini.animate')
+
+local indentscope = require('mini.indentscope')
+indentscope.setup({})
+
+-- set symbol color``
+vim.api.nvim_set_hl(0, 'MiniIndentscopeSymbol', {
+  -- fg = '#f38ba6', -- red
+  fg = '#ffffff', -- white
+
+  nocombine = true,
+})
 
 -- ───── mini.ai text objects ─────
 
@@ -112,7 +123,11 @@ ai.setup({
   silent = false,
 })
 
+--  ──────────────────────────────────────────────────────
+
 align.setup({ mappings = { start = 'ga' } })
+
+animate.setup({})
 
 bracketed.setup()
 
@@ -387,10 +402,6 @@ vim.notify = notify.make_notify({
   WARN = { duration = 5000 },
   ERROR = { duration = 8000 },
 })
-
---  ──────────────────────────────────────────────────────
-
-operators.setup()
 
 --  ──────────────────────────────────────────────────────
 

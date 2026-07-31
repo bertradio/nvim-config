@@ -35,7 +35,7 @@ hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
 end)
 
 require('ibl').setup({
-  enabled = true,
+  enabled = true, -- start enabled
   indent = { highlight = highlight },
   exclude = {
     filetypes = {
@@ -44,7 +44,6 @@ require('ibl').setup({
       'markdown',
       'dashboard',
       'alpha',
-      'snacks_dashboard', -- Snacks dashboard filetype
       'lazy',
       'mason',
       'notify',
