@@ -340,7 +340,7 @@ fzf.setup({
 
 -- stylua: ignore
 local function maps()
-  Kset('n', '<Leader><space>', '<cmd>FzfLua files<cr>',                { desc = 'fzf.findfiles' })
+  -- Kset('n', '<Leader><space>', '<cmd>FzfLua files<cr>',                { desc = 'fzf.findfiles' })
   Kset('n', '<Leader>f.',     '<cmd>FzfLua resume<cr>',                { desc = 'resume last picker' })
   Kset('n', '<Leader>fb',     '<cmd>FzfLua buffers<cr>',               { desc = 'buffers' })
   Kset('n', '<Leader>fc',     '<cmd>FzfLua command_history<cr>',       { desc = 'command history' })
@@ -381,15 +381,15 @@ local function maps()
   end, { desc = 'Neovim config' })
 
   -- recent with no preview - to see paths
-  Kset('n', '<leader>]', function()
-    fzf.oldfiles({
-      winopts = {
-            preview = {
-              hidden = true,
-            },
-      },
-    })
-  end, {desc = 'recent',})
+  -- Kset('n', '<leader>]', function()
+  --   fzf.oldfiles({
+  --     winopts = {
+  --           preview = {
+  --             hidden = true,
+  --           },
+  --     },
+  --   })
+  -- end, {desc = 'recent',})
 
 end
 

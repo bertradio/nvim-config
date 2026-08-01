@@ -83,7 +83,7 @@
       "src": "https://github.com/so1ve/tiny-comment.nvim"
     },
     "yazi.nvim": {
-      "rev": "840b9792a6ec97afce384f6821e64409510d6246",
+      "rev": "fb72059eec58cffae9fcfc0105c71d5fbe69a214",
       "src": "https://github.com/mikavilpas/yazi.nvim"
     }
   }

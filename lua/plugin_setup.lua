@@ -25,7 +25,7 @@ local function load_ui_plugins()
   req('statusline')
   req('mini')
   req('blink')
-  req('fzf-lua')
+  -- req('fzf-lua')
   req('yazi')
   if Myfn.is_windows() then
     req('bookmarks_win')
