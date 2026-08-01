@@ -8,6 +8,7 @@
 -- 04/30/26 added keymaps and aucmds to load on UIEnter
 -- 05/20/26 added function to make code clearer
 -- 07/09/26 replaced anonymous autocmd callbacks with named functions
+-- 08/01/26 split mini into separate files - treating each as a plugin
 
 -- Make plg_cfg plugin requires simpler
 local function req(plugin)
@@ -24,6 +25,10 @@ local function load_ui_plugins()
   req('catppuccin')
   req('statusline')
   req('mini')
+  req('mini-clue')
+  req('mini-files')
+  req('mini-notify')
+  req('mini-pick')
   req('blink')
   -- req('fzf-lua')
   req('yazi')
@@ -42,6 +47,13 @@ local function load_buffer_plugins()
   req('rainbow')
   req('conform')
   req('indent-blankline')
+  req('mini-ai')
+  req('mini-diff')
+  req('mini-identscope')
+  req('mini-jumps')
+  req('mini-move')
+  req('mini-pairs')
+  req('mini-surround')
   -- req('mason')
   req('pretty-comment')
 end
