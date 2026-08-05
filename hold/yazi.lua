@@ -27,7 +27,7 @@ end, {})
 
 -- stylua: ignore 
 yazi.setup({
-  open_for_directories    = true,
+  open_for_directories    = false,
   use_yazi_client_id_flag = true,
   enable_mouse_support    = true,
 

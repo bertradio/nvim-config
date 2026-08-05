@@ -238,4 +238,6 @@ end
 
 vim.api.nvim_create_user_command('CopyBufferName', copy_buffer_name, {})
 
+-- function to simplify using vim.add.pack
+
 return M

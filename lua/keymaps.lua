@@ -1,3 +1,7 @@
+--    ╭────────────────────────────╮
+--    │        keymaps.lua         │
+--    ╰────────────────────────────╯
+
 -- 04/30/26 - standardized on vim.keymap.set for all mappings
 -- 05/06/26 - use Kset for all mappings - defined in init.lua
 -- 07/29/26 - added mini.bufremove
@@ -77,6 +81,22 @@ Kset(
   "<cmd>w<cr><cmd>source %  <cr><cmd>echom '** Saved and Re-sourced **' <cr>",
   { desc = 'Re-source' }
 )
+
+-- map ~ to cycle through case changes in visual mode - in vimscript
+-- from https://vim.fandom.com/wiki/Switching_case_of_characters#Twiddle_case
+vim.cmd([[
+			function! TwiddleCase(str)
+					if a:str ==# toupper(a:str)
+							let result = tolower(a:str)
+					elseif a:str ==# tolower(a:str)
+							let result = substitute(a:str,'\(\<\w\+\>\)', '\u\1', 'g')
+					else
+							let result = toupper(a:str)
+					endif
+					return result
+			endfunction
+			vnoremap ~ y:call setreg('', TwiddleCase(@"), getregtype(''))<CR>gv""Pgv
+	]])
 
 -- create copy of line(s) and comment out originals
 Kset('n', 'ycc', function()
@@ -179,3 +199,8 @@ vim.cmd([[
 			endfunction
 			vnoremap ~ y:call setreg('', TwiddleCase(@"), getregtype(''))<CR>gv""Pgv
 	]])
+
+--  ───────────── code for search indicators [] and kepmaps ─────────────
+
+-- 1. Create autogroup to handle the cursor movement
+local search_group = vim.api.nvim_create_augroup('SearchLens', { clear = true })
