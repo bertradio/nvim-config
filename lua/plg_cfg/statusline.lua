@@ -4,7 +4,11 @@
 --
 -- Core Neovim statusline and buffer tabline.
 -- No lualine, bufferline, heirline, or mini.statusline required.
--- 07/14/26 - Code from ChatGPT to emulate lualine but entirely from core
+-- 07/14/26 - Code from ChatGPT to emulate lualine entirely from core
+
+--    ╭────────────────────────────────────────────────────────╮
+--    │    To make changes in components, search for Future    │
+--    ╰────────────────────────────────────────────────────────╯
 
 local api = vim.api
 local fn = vim.fn
@@ -245,9 +249,10 @@ end
 -- Future statusline additions or removals normally belong here.
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+-- Left side
 local left_components = {
   {
-    value = mode_name,
+    value = mode_name, -- NORMAL, INSERT, etc
     highlight = mode_highlight,
 
     separator_after = function()
@@ -256,29 +261,30 @@ local left_components = {
   },
 
   {
-    value = short_cwd,
+    value = short_cwd, -- current path shortened
     highlight = 'CoreStatusCwd',
   },
 }
 
+-- Right side
 local right_components = {
   {
-    value = recording_status,
+    value = recording_status, -- macro recording on
     highlight = 'CoreStatusRecording',
   },
 
   {
-    value = spell_status,
+    value = spell_status, -- spellcheck on
     highlight = 'CoreStatusInfo',
   },
 
   {
-    value = search_status,
+    value = search_status, -- not sure what this does
     highlight = 'CoreStatusInfo',
   },
 
   {
-    value = word_status,
+    value = word_status, -- number of words in buffer or selection
 
     highlight = function()
       return 'CoreStatusWords' .. mode_suffix()
@@ -703,7 +709,10 @@ local function set_highlights()
 
   local fill_bg = tabline.bg or status_bg
 
-  local tab_fg = tabline.fg or color('Comment', 'fg', status_fg)
+  -- set font color for inactive tabs font``
+  -- local tab_fg = tabline.fg or color('Comment', 'fg', status_fg)
+  -- local tab_fg = normal_fg
+  local tab_fg = status_fg
 
   api.nvim_set_hl(0, 'CoreTabOdd', {
     fg = tab_fg,

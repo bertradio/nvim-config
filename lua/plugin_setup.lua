@@ -10,11 +10,6 @@
 -- 07/09/26 replaced anonymous autocmd callbacks with named functions
 -- 08/01/26 split mini into separate files - treating each as a plugin
 
--- Make plg_cfg plugin requires simpler
-local function req(plugin)
-  require('plg_cfg.' .. plugin)
-end
-
 require('keymaps')
 require('aucmds')
 
@@ -23,6 +18,11 @@ vim.pack.add({
   Gh('nvim-mini/mini.nvim'),
   Gh('nvim-tree/nvim-web-devicons'),
 })
+
+-- Helper to make plg_cfg plugin requires simpler
+local function req(plugin)
+  require('plg_cfg.' .. plugin)
+end
 
 -- ────────── lazy loading set up all functions ──────────
 
@@ -57,6 +57,7 @@ local function load_buffer_plugins()
   req('mini-jumps')
   req('mini-move')
   req('mini-operators')
+  req('mini-pairs')
   req('mini-surround')
   -- req('mason')
   req('pretty-comment')
@@ -66,7 +67,6 @@ end
 
 local function load_insert_plugins()
   req('my_abbrevs')
-  req('mini-pairs')
 end
 
 --  ─────────────────────────────────────────────

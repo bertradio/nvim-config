@@ -2,7 +2,7 @@
 --    │     mini-surround.lua      │
 --    ╰────────────────────────────╯
 
--- 08/01/26 - split from main.lua
+-- 08/01/26 - split from main.lua - changed mappings to start with s instead of gz
 
 local surround = require('mini.surround')
 

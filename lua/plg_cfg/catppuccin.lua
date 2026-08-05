@@ -15,67 +15,69 @@ vim.opt.termguicolors = true
 
 -- stylua: ignore
 require('catppuccin').setup({
+  auto_integrations      = true,
   flavour                = 'mocha',
   show_end_of_buffer     = false,
   styles                 = { comments = { 'italic' } },
   transparent_background = false,
 
-  highlight_overrides = {
+  highlight_overrides    = {
     all = function(colors)
       return {
         -- Folded removed here — defined in mocha block below (mocha wins anyway)
         FoldColumn = { fg = colors.lavender, bg = colors.none },
-        SignColumn  = { bg = colors.none },
+        SignColumn = { bg = colors.none },
       }
     end,
     mocha = function(colors)
       return {
-        Comment             = { bg = '#1f1f1f', style     = { 'italic' } },
-        CurSearch           = { fg = colors.blue,   bg    = colors.white }, -- currently selected match
-        Cursor              = { bg = '#a8a8a8' },
-        CursorLine          = { bg = '#273746' },
-        FoldColumn          = { bg = '#262626', fg        = colors.sapphire },
+        Comment    = { bg = '#1f1f1f', style = { 'italic' } },
+        CurSearch  = { fg = colors.blue, bg = colors.white },               -- currently selected match
+        Cursor     = { bg = '#a8a8a8' },
+        CursorLine = { bg = '#273746' },
+        FoldColumn = { bg = '#262626', fg = colors.sapphire },
 
         -- FzfLuaGrepHighlight = { fg = colors.red,    style = { 'bold' } },
         -- FzfLuaSearch        = { fg = colors.yellow, style = { 'bold' } },
-        LineNr              = { bg = '#262626', fg        = 'Grey' },
-    }
+        LineNr     = { bg = '#262626', fg = 'Grey' },
+      }
     end,
   },
 
   integrations = {
     blink_cmp          = { style = 'bordered' },
     markdown           = true,
-    mason              = false,
+    mason              = true,
     mini               = { enabled = true, indentscope_color = '' },
     rainbow_delimiters = true,
     -- fzf                = true,   -- base FzfLua theming; needed for highlight_overrides above to build on
     -- render_markdown    = true,
 
-    colorful_winsep = {
+    colorful_winsep    = {
       enabled = true,
       color = "yellow",
     },
 
-    native_lsp = {
-        enabled = true,
-        virtual_text = {
-          errors      = { 'italic' },
-          hints       = { 'italic' },
-          information = { 'italic' },
-          ok          = { 'italic' },
-          warnings    = { 'italic' },
-        },
-        underlines = {
-          errors      = { 'underline' },
-          hints       = { 'underline' },
-          warnings    = { 'underline' },
-          information = { 'underline' },
-          ok          = { 'underline' },
-        },
-        inlay_hints = { background = true },
+    native_lsp         = {
+      enabled = true,
+      virtual_text = {
+        errors      = { 'italic' },
+        hints       = { 'italic' },
+        information = { 'italic' },
+        ok          = { 'italic' },
+        warnings    = { 'italic' },
       },
+      underlines = {
+        errors      = { 'underline' },
+        hints       = { 'underline' },
+        warnings    = { 'underline' },
+        information = { 'underline' },
+        ok          = { 'underline' },
+      },
+      inlay_hints = { background = true },
+    },
   }
 })
 
-vim.cmd.colorscheme('catppuccin-nvim')
+-- vim.cmd.colorscheme('catppuccin-nvim')
+vim.cmd.colorscheme('catppuccin')
