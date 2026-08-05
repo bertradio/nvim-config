@@ -58,7 +58,7 @@ vim.api.nvim_create_autocmd('ColorScheme', {
   callback = set_search_highlights,
 })
 
-vim.keymap.set('n', 'n', function()
+Kset('n', 'n', function()
   vim.cmd('normal! ' .. vim.v.count1 .. 'n')
   hlslens.start()
 end, {
@@ -66,7 +66,7 @@ end, {
   desc = 'Next search result',
 })
 
-vim.keymap.set('n', 'N', function()
+Kset('n', 'N', function()
   vim.cmd('normal! ' .. vim.v.count1 .. 'N')
   hlslens.start()
 end, {

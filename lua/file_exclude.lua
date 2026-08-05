@@ -12,6 +12,19 @@
 
 local M = {}
 
+--    ╭────────────────────────────╮
+--    │    for mini.explorer       │
+--    ╰────────────────────────────╯
+
+function M.mini_explorer_filter(item)
+  -- Always show directories.
+  if item.fs_type == 'directory' then
+    return true
+  end
+
+  return M.show_excluded or not M.is_excluded(item.path)
+end
+
 -- Store extensions in lowercase.
 -- stylua: ignore
 M.extensions = {

@@ -97,32 +97,21 @@ end
 
 local grp = vim.api.nvim_create_augroup('template_replace', { clear = true })
 
--- setup sh template
-vim.api.nvim_create_autocmd('BufNewFile', {
-  group = grp,
-  pattern = '*.sh',
-  callback = function()
-    read_template('sh.tpl')
-  end,
-})
+-- set up templates for various languages
 
--- setup awk template
-vim.api.nvim_create_autocmd('BufNewFile', {
-  group = grp,
-  pattern = '*.awk',
-  callback = function()
-    read_template('awk.tpl')
-  end,
-})
+local function init_skeleton(pattern, tpl)
+  vim.api.nvim_create_autocmd('BufNewFile', {
+    group = grp,
+    pattern = pattern,
+    callback = function()
+      read_template(tpl)
+    end,
+  })
+end
 
--- setup lua template
-vim.api.nvim_create_autocmd('BufNewFile', {
-  group = grp,
-  pattern = '*.lua',
-  callback = function()
-    read_template('lua.tpl')
-  end,
-})
+init_skeleton('*.sh', 'sh.tpl')
+init_skeleton('*.lua', 'lua.tpl')
+init_skeleton('*.awk', 'awk.tpl')
 
 ---------- >> Open buffers at last location (protected) << ---------------
 vim.api.nvim_create_autocmd('BufReadPost', {

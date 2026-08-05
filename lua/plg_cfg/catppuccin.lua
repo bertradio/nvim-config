@@ -35,10 +35,9 @@ require('catppuccin').setup({
         Cursor              = { bg = '#a8a8a8' },
         CursorLine          = { bg = '#273746' },
         FoldColumn          = { bg = '#262626', fg        = colors.sapphire },
-        Folded              = { bg = '#262626', fg        = '#ffffff' },
-        FzfLuaGrep          = { fg = colors.yellow, style = { 'bold' } },
-        FzfLuaGrepHighlight = { fg = colors.red,    style = { 'bold' } },
-        FzfLuaSearch        = { fg = colors.yellow, style = { 'bold' } },
+
+        -- FzfLuaGrepHighlight = { fg = colors.red,    style = { 'bold' } },
+        -- FzfLuaSearch        = { fg = colors.yellow, style = { 'bold' } },
         LineNr              = { bg = '#262626', fg        = 'Grey' },
     }
     end,
@@ -46,12 +45,12 @@ require('catppuccin').setup({
 
   integrations = {
     blink_cmp          = { style = 'bordered' },
-    fzf                = true,   -- base FzfLua theming; needed for highlight_overrides above to build on
     markdown           = true,
     mason              = false,
     mini               = { enabled = true, indentscope_color = '' },
     rainbow_delimiters = true,
-    render_markdown    = true,
+    -- fzf                = true,   -- base FzfLua theming; needed for highlight_overrides above to build on
+    -- render_markdown    = true,
 
     colorful_winsep = {
       enabled = true,

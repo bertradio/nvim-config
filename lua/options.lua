@@ -51,13 +51,13 @@ function M.setup()
     backupcopy     = 'yes',
     confirm        = true,
     clipboard      = 'unnamedplus',
-    history        = 500,
+    history        = 100,
     swapfile       = true,
     undofile       = true,
-    undolevels     = 500,
+    undolevels     = 100,
     spell          = false,
 
-    -- NEVOM 0.12 / BLINK.CMP OPTIMIZATIONS
+    -- neovim 0.12 / blink.cmp optimizations
     autocomplete   = false,
     wildmenu       = false,
     wildmode       = 'longest:full,full',
@@ -73,12 +73,12 @@ function M.setup()
     vim.opt[k] = v
   end
 
-  -- Path and Directories
+  -- Set up path and directories
   vim.opt.backupdir = vim.fn.stdpath('data') .. '/backup//'
   vim.opt.undodir = vim.fn.stdpath('data') .. '/undo'
   vim.opt.path = '+= **'
 
--- Provider disabling (Speed optimization)
+-- disable providers not needed (speed optimization)
   -- stylua: ignore 
   if vim.g.enable_providers ~= true then
     vim.g.loaded_node_provider    =  0
@@ -87,11 +87,11 @@ function M.setup()
     vim.g.loaded_ruby_provider    =  0
   end
 
-  -- activate built-in for nvim 0.12
+  -- activate built-in undo for nvim 0.12+
   vim.cmd('packadd nvim.undotree')
   Kset('n', '<leader>u', require('undotree').open, { desc = 'Undotree' })
 
-  -- Disable Built-in Plugins
+  -- disable built-in plugins not needed
   local disabled_builtins = {
     '2html_plugin',
     'getscript',
@@ -111,6 +111,7 @@ function M.setup()
     'zip',
     'zipPlugin',
   }
+
   for _, plugin in ipairs(disabled_builtins) do
     vim.g['loaded_' .. plugin] = 1
   end
@@ -121,22 +122,20 @@ function M.setup()
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
   end
 
-  -- Custom Highlights
+  -- ──────────────────────────────────────────────────────────────────────
+  -- Custom Fold and Status Column Configuration
+  -- ──────────────────────────────────────────────────────────────────────
+
+  -- custom Highlight for folds in statuscolumn
   vim.api.nvim_set_hl(0, 'Folded', { fg = '#cccccc', bg = '#154360', italic = true })
 end
 
--- ──────────────────────────────────────────────────────────────────────
--- Custom Fold and Status Column Configuration (Snacks-free)
--- ──────────────────────────────────────────────────────────────────────
-
--- 1. Helper function
 local function clean_leader(s)
   s = (s or ''):gsub('^%s*', '')
   s = s:gsub('^([%-%*#;/%%!]+)%s*', '')
   return s
 end
 
--- 2. Global Fold Text
 _G.MyFoldText = function()
   local fs, fe = vim.v.foldstart, vim.v.foldend
   local count = fe - fs + 1
@@ -155,15 +154,15 @@ _G.MyFoldText = function()
   return string.format(' >>>   %s%s  ⋯  [%d]   <<<', prefix, content, count)
 end
 
--- 3. Core Fold Options
+-- Core Fold Options
 vim.opt.foldenable = true
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.opt.foldlevel = 99
 vim.opt.foldtext = 'v:lua.MyFoldText()'
 
--- 4. THE NUMBER KILLER: fillchars + statuscolumn logic
--- This forces the fold column to be empty unless it's an icon
+-- fillchars + statuscolumn logic
+-- this forces the fold column to be empty unless it's an icon
 vim.opt.fillchars = {
   eob = ' ',
   foldopen = '▼',
@@ -172,15 +171,10 @@ vim.opt.fillchars = {
   foldsep = ' ',
 }
 
--- We use a Lua expression in the statuscolumn.
--- It checks if the current line is the start of a fold.
--- If not, it returns a space. If it is, it returns the fold icon.
--- 4. Optimized StatusColumn Function
 function _G.MyStatusColumn()
   local fcs = vim.opt.fillchars:get()
   local lnum = vim.v.lnum
 
-  -- 1. Check for a mark on this line
   local mark_char = ''
   -- Look for lowercase marks (a-z)
   for i = 97, 122 do
@@ -192,7 +186,6 @@ function _G.MyStatusColumn()
     end
   end
 
-  -- 2. Fold Logic
   local foldlevel = vim.fn.foldlevel(lnum)
   local foldclosed = vim.fn.foldclosed(lnum)
   local fold_str = '  '
@@ -202,15 +195,15 @@ function _G.MyStatusColumn()
     fold_str = fcs.foldopen .. ' '
   end
 
-  -- 3. Combine: Mark (if exists) + Fold + Line Number
-  -- If there's a mark, we show it; otherwise, we show a space
+  -- combine: mark (if exists) + fold + line number
+  -- if there's a mark, we show it; otherwise, we show a space
   local mark_display = mark_char ~= '' and mark_char or ' '
 
   return mark_display .. ' ' .. fold_str .. '%=%l '
 end
 
--- Apply the statuscolumn
--- Note: Putting %s at the beginning often helps visibility in minimalist setups
+-- apply the statuscolumn
+-- note: putting %s at the beginning often helps visibility in minimalist setups
 vim.opt.statuscolumn = '%s%{%v:lua.MyStatusColumn()%}'
 
 -- Disable the native foldcolumn because we are drawing it ourselves now

@@ -239,43 +239,5 @@ end
 vim.api.nvim_create_user_command('CopyBufferName', copy_buffer_name, {})
 
 -- function to simplify using vim.add.pack
--- Ensure repos is a table even if a single string is passed
-function M.add_pack(spec)
-  -- 1. Normalize input into a list of specs
-  -- If spec is a string, wrap it. If it's a table but has no numeric indices,
-  -- it's a single "advanced" spec, so wrap that too.
-  local specs = {}
-  if type(spec) == 'string' then
-    specs = { { spec } }
-  elseif type(spec) == 'table' then
-    if spec[1] or spec.src then
-      -- It's a single spec table: { "user/repo", version = "v1" }
-      specs = { spec }
-    else
-      -- It's already a list of specs: { "repo1", { "repo2", version = "v2" } }
-      specs = spec
-    end
-  end
-
-  for _, item in ipairs(specs) do
-    -- Ensure item is a table
-    local plugin = type(item) == 'string' and { item } or item
-
-    -- Extract and format the URL/Source
-    local src = plugin[1] or plugin.src
-    if src and not src:find('://') then
-      src = 'https://github.com/' .. src
-    end
-
-    -- Update the plugin table with the full URL
-    plugin[1] = src
-
-    -- Execute with error handling
-    local ok, err = pcall(vim.pack.add, plugin)
-    if not ok then
-      vim.notify('vim.pack Error: ' .. tostring(err), vim.log.levels.ERROR)
-    end
-  end
-end
 
 return M

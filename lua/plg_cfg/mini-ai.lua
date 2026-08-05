@@ -1,9 +1,10 @@
--- mini-ai.lua
+--    ╭────────────────────────────╮
+--    │        mini-ai.lua         │
+--    ╰────────────────────────────╯
 
 -- 08/01/26 -- config for mini.ai split from mini
 
 vim.pack.add({
-  Gh('nvim-mini/mini.nvim'),
   {
     src = Gh('nvim-treesitter/nvim-treesitter-textobjects'),
     version = 'main',

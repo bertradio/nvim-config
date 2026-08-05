@@ -71,21 +71,21 @@ jump2d.setup({
 })
 
 -- Flash-like jump to the beginning of a word.
-vim.keymap.set({ 'n', 'x', 'o' }, 'S', function()
+Kset({ 'n', 'x', 'o' }, 'S', function()
   jump2d.start(jump2d.builtin_opts.word_start)
 end, {
   desc = 'Jump to word start',
 })
 
 -- Optional: jump to any occurrence of a typed character.
-vim.keymap.set({ 'n', 'x', 'o' }, 's', function()
+Kset({ 'n', 'x', 'o' }, 's', function()
   jump2d.start(jump2d.builtin_opts.single_character)
 end, {
   desc = 'Jump to character',
 })
 
 -- Optional: jump to the beginning of a visible line.
-vim.keymap.set({ 'n', 'x', 'o' }, 'gl', function()
+Kset({ 'n', 'x', 'o' }, 'gl', function()
   jump2d.start(jump2d.builtin_opts.line_start)
 end, {
   desc = 'Jump to line start',

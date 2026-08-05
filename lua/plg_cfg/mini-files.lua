@@ -145,7 +145,7 @@ files.setup({
   },
 
   options = {
-    -- Dom't move deleted entries with dd into Mini.files trash
+    -- Don't move deleted entries with dd into Mini.files trash
     -- Instead permanently delete - use <Leader>T to delete to system trash
     permanent_delete = true,
 
@@ -163,8 +163,8 @@ local function open_minifiles()
 
   files.open(nil, false, {
     windows = {
-      max_number = 2,
-      preview = true,
+      max_number = 3,
+      preview = false,
       width_focus = main_width,
       width_preview = preview_width,
     },
@@ -220,6 +220,15 @@ vim.api.nvim_create_autocmd('User', {
     Kset('n', 'gc', set_cwd_to_mini, {
       buffer = buf_id,
       desc = 'Set cwd to current Mini.files directory',
+    })
+  end,
+})
+
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'MiniFilesWindowOpen',
+  callback = function(args)
+    vim.api.nvim_win_set_config(args.data.win_id, {
+      border = 'double',
     })
   end,
 })

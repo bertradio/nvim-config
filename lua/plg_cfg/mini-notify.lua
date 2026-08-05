@@ -16,9 +16,10 @@ notify.setup({
   window = {
     config = {
       title = '',
-      width = 40,
       border = 'rounded',
+      -- width = 40,
     },
+    max_width_share = 0.382,
   },
 })
 vim.opt.cmdheight = 0

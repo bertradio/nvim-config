@@ -17,21 +17,23 @@
 -- 07/31/26 - added indentscope
 -- 08/01/26 - split into separate files except for one-liners
 
-vim.pack.add({
-  Gh('nvim-mini/mini.nvim'),
-})
+--   Gh('nvim-mini/mini.nvim'),
+-- })
 
 local align = require('mini.align')
 local animate = require('mini.animate')
 local bracketed = require('mini.bracketed')
 local bufremove = require('mini.bufremove')
+local minput = require('mini.input')
 
 --  ──────────────────────────────────────────────────────
 
 align.setup({ mappings = { start = 'ga' } })
 
-animate.setup({})
+animate.setup()
 
 bracketed.setup()
 
 bufremove.setup()
+
+minput.setup()

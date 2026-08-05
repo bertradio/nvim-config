@@ -55,5 +55,6 @@ clue.setup({
     { mode = 'n', keys = '<Leader>f', desc = '+fzf' },
     { mode = 'n', keys = '<Leader>m', desc = '+pretty' },
     { mode = 'n', keys = '<Leader>p', desc = '+mini.pick' },
+    { mode = 'n', keys = '<Leader>s', desc = '+mini.surround' },
   },
 })

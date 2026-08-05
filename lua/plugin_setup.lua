@@ -18,6 +18,12 @@ end
 require('keymaps')
 require('aucmds')
 
+-- need to load mini here so modules below will work
+vim.pack.add({
+  Gh('nvim-mini/mini.nvim'),
+  Gh('nvim-tree/nvim-web-devicons'),
+})
+
 -- ────────── lazy loading set up all functions ──────────
 
 local function load_ui_plugins()
@@ -30,8 +36,6 @@ local function load_ui_plugins()
   req('mini-notify')
   req('mini-pick')
   req('blink')
-  -- req('fzf-lua')
-  req('yazi')
   if Myfn.is_windows() then
     req('bookmarks_win')
   else
@@ -42,8 +46,8 @@ end
 --  ─────────────────────────────────────────────
 
 local function load_buffer_plugins()
-  req('hlslens')
   req('nvim-biscuits')
+  req('hlslens')
   req('rainbow')
   req('conform')
   req('indent-blankline')
@@ -52,7 +56,7 @@ local function load_buffer_plugins()
   req('mini-identscope')
   req('mini-jumps')
   req('mini-move')
-  req('mini-pairs')
+  req('mini-operators')
   req('mini-surround')
   -- req('mason')
   req('pretty-comment')
@@ -62,6 +66,7 @@ end
 
 local function load_insert_plugins()
   req('my_abbrevs')
+  req('mini-pairs')
 end
 
 --  ─────────────────────────────────────────────
@@ -83,7 +88,7 @@ vim.api.nvim_create_autocmd('UIEnter', {
 })
 
 -- Load when entering the first buffer
-vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
+vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile', 'BufReadPost' }, {
   once = true,
   callback = load_buffer_plugins,
 })
