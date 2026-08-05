@@ -16,6 +16,7 @@
 -- 07/26/26 - added mini.ai - code as per ChatGPT
 -- 07/31/26 - added indentscope
 
+<<<<<<< Updated upstream
 vim.pack.add({
   Gh('nvim-mini/mini.nvim'),
   -- for mini.ai to use treesitter
@@ -24,12 +25,17 @@ vim.pack.add({
     version = 'main',
   },
 })
+=======
+--   Gh('nvim-mini/mini.nvim'),
+-- })
+>>>>>>> Stashed changes
 
 local ai = require('mini.ai')
 local align = require('mini.align')
 local animate = require('mini.animate')
 local bracketed = require('mini.bracketed')
 local bufremove = require('mini.bufremove')
+<<<<<<< Updated upstream
 local clue = require('mini.clue')
 local diff = require('mini.diff')
 local file_exclude = require('file_exclude')
@@ -115,12 +121,15 @@ ai.setup({
   search_method = 'cover_or_next',
   silent = false,
 })
+=======
+local minput = require('mini.input')
+>>>>>>> Stashed changes
 
 --  ──────────────────────────────────────────────────────
 
 align.setup({ mappings = { start = 'ga' } })
 
-animate.setup({})
+animate.setup()
 
 bracketed.setup()
 
@@ -128,6 +137,7 @@ bracketed.setup()
 
 bufremove.setup()
 
+<<<<<<< Updated upstream
 --  ──────── mini.clue setup ─────────
 
 clue.setup({
@@ -844,3 +854,6 @@ Kset('n', '<Leader>pn', function()
     },
   })
 end, { desc = 'Neovim config' })
+=======
+minput.setup()
+>>>>>>> Stashed changes

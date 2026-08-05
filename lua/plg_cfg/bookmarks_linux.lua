@@ -7,7 +7,7 @@
 -- Keys:
 --   \x  -> jump directly
 --   \\  -> open floating picker
--- Code from ChatGPT to add picker using Dressing?
+-- Code from ChatGPT to add picker
 
 ----------------------------------------------------------
 -- Bookmark configuration
@@ -59,7 +59,7 @@ local function map_cwd(key, dir, cd_cmd)
       return
     end
     vim.cmd(string.format('%s %s', cmd, vim.fn.fnameescape(target)))
-    target = Myfn.center_string(('cwd → ' .. Myfn.short_cwd()), 41)
+    target = ('cwd → ' .. Myfn.short_cwd() .. ' ')
     vim.notify(target)
   end, { desc = ('cd → %s'):format(dir) })
 end
@@ -127,7 +127,8 @@ end, { desc = 'Pick bookmarked directory' })
 
 -- edit nvim config files
 local cfg = vim.fn.stdpath('config')
-Myfn.map('n', '<Leader>ea', '<cmd>e ' .. cfg .. '/lua/aucmds.lua<cr>', { desc = 'aucmds.lua' })
+-- Myfn.map('n', '<Leader>ea', '<cmd>e ' .. cfg .. '/lua/aucmds.lua<cr>', { desc = 'aucmds.lua' })
+Kset('n', '<Leader>ea', '<cmd>e ' .. cfg .. '/lua/aucmds.lua<cr>', { desc = 'aucmds.lua' })
 Myfn.map('n', '<Leader>ei', '<cmd>e ' .. cfg .. '/init.lua<cr>', { desc = 'init.lua' })
 Myfn.map('n', '<Leader>ek', '<cmd>e ' .. cfg .. '/lua/keymaps.lua<cr>', { desc = 'keymaps.lua' })
 Myfn.map('n', '<Leader>em', '<cmd>e ' .. cfg .. '/lua/my_fns.lua<cr>', { desc = 'my_fns.lua' })

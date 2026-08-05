@@ -65,8 +65,8 @@ require('fff').setup({
     -- Multiple bindings supported
     move_up = { '<Up>', '<C-p>', '<C-k>' },
     move_down = { '<Down>', '<C-n>', '<C-j>' },
-    preview_scroll_up = '<C-u>',
-    preview_scroll_down = '<C-d>',
+    preview_scroll_up = '<PageUp>',
+    preview_scroll_down = '<PageDown>',
   },
   git = {
     status_text_color = true, -- Enable git status colors on filename text
