@@ -4,13 +4,6 @@
 
 -- 08/01/26 -- config for mini.ai split from mini
 
-vim.pack.add({
-  {
-    src = Gh('nvim-treesitter/nvim-treesitter-textobjects'),
-    version = 'main',
-  },
-})
-
 local ai = require('mini.ai')
 
 -- ───── mini.ai text objects ─────

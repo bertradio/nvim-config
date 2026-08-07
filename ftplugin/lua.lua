@@ -18,9 +18,9 @@ local options = {
   ft = 'lua',
 }
 
--- use vim.opt to execute settings from options array defined above
+-- use vim.opt_local to execute settings from options array defined above
 for k, v in pairs(options) do
-  vim.opt[k] = v
+  vim.opt_local[k] = v
 end
 
 vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'

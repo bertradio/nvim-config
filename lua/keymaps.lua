@@ -181,22 +181,3 @@ Kset('n', 'n', 'nzz', { silent = true })
 Kset('n', 'N', 'Nzz', { silent = true })
 
 Kset('n', 'fd', ':find ', { desc = 'find' })
-
-------------------------------------------------
--- >>> WORKING WITH TEXT
--------------------------------------------------
-
--- from https://vim.fandom.com/wiki/Switching_case_of_characters#Twiddle_case
-vim.cmd([[
-			function! TwiddleCase(str)
-					if a:str ==# toupper(a:str)
-							let result = tolower(a:str)
-					elseif a:str ==# tolower(a:str)
-							let result = substitute(a:str,'\(\<\w\+\>\)', '\u\1', 'g')
-					else
-							let result = toupper(a:str)
-					endif
-					return result
-			endfunction
-			vnoremap ~ y:call setreg('', TwiddleCase(@"), getregtype(''))<CR>gv""Pgv
-	]])

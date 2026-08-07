@@ -34,7 +34,7 @@ mjump.setup({
 --  ────────── mini.jump2d ───────────
 
 -- code from ChatGPT
--- Press s and choose a label at the beginning of a word.
+-- Press s and choose a label
 -- S to select beginning of words
 -- gl for beginning of lines
 
@@ -51,13 +51,13 @@ jump2d.setup({
     dim = true,
 
     -- Show only the next label needed.
-    n_steps_ahead = 0,
+    n_steps_ahead = 10,
   },
 
   allowed_lines = {
     blank = false,
-    cursor_before = true,
-    cursor_at = true,
+    cursor_before = false,
+    cursor_at = false,
     cursor_after = true,
     fold = true,
   },

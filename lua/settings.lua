@@ -7,10 +7,6 @@
 -- From Gemini. Options moved to options.lua
 -- 04/30/26 moved keymaps and aucmds to plugin_setup.lua to load on UI entry
 
-if vim.loader then
-  vim.loader.enable()
-end
-
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 

@@ -1,9 +1,5 @@
 {
   "plugins": {
-    "LuaSnip": {
-      "rev": "0abc8f390b278c3b4aabc4c004ac8a088b65cf24",
-      "src": "https://github.com/L3MON4D3/LuaSnip"
-    },
     "autolist.nvim": {
       "rev": "339499695d3be8c44aefef1d2516464758957004",
       "src": "https://github.com/gaoDean/autolist.nvim"
@@ -38,7 +34,7 @@
       "src": "https://github.com/williamboman/mason.nvim"
     },
     "mini.nvim": {
-      "rev": "8cef23520832134c05e4524e49f0468623501053",
+      "rev": "3e47ec3709716177bf28e2d17e35c7ab39db126e",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "nvim-biscuits": {
@@ -58,10 +54,6 @@
       "rev": "2ae6958df7ced50baac5035cec0c15799eedfbf7",
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
-    "plenary.nvim": {
-      "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
-      "src": "https://github.com/nvim-lua/plenary.nvim"
-    },
     "pretty-comment.nvim": {
       "rev": "f0d030edcf908dab73aaab273c39e6c154a4daee",
       "src": "https://github.com/Cartoone9/pretty-comment.nvim"
@@ -69,10 +61,6 @@
     "rainbow-delimiters.nvim": {
       "rev": "012f1480cd9a5fc99fce7678e0a536421a53fc46",
       "src": "https://github.com/HiPhish/rainbow-delimiters.nvim"
-    },
-    "tiny-comment.nvim": {
-      "rev": "9466b3b95dbc517956f32a943223bf3cfa572c37",
-      "src": "https://github.com/so1ve/tiny-comment.nvim"
     }
   }
 }

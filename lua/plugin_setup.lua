@@ -59,8 +59,8 @@ local function load_buffer_plugins()
   req('mini-operators')
   req('mini-pairs')
   req('mini-surround')
-  -- req('mason')
   req('pretty-comment')
+  require('my_snippets').setup() -- snippts from core
 end
 
 --  ─────────────────────────────────────────────

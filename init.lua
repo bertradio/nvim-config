@@ -23,6 +23,11 @@ vim.g.clipboard = {
   cache_enabled = 1,
 }
 
+-- cache for speed
+if vim.loader then
+  vim.loader.enable()
+end
+
 -- for all keymaps
 -- to check for dupes comment this out and uncomment the code below
 Kset = vim.keymap.set

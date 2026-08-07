@@ -8,17 +8,13 @@
 -- Added LuaSnip and friendly-snippets per Gemini 4-22-26
 -- Revised for mini.cmdline compatibility 5-03-26
 -- 05/20/26 - Removed spelling since never used
+-- 08/06/26 - removed Luasnip and my_snippets - moved to core
 
 vim.pack.add({
-  { src = Gh('L3MON4D3/LuaSnip'), run = 'make install_jsregexp' },
   { src = Gh('saghen/blink.cmp'), version = 'v1' },
 })
 
 local blink = require('blink.cmp')
-
---  ──────── add my custom snippets ─────────
-
-require('plg_cfg.my_snippets')
 
 -- ── blink.cmp config ──────────────────────────────────────────────────────────
 
@@ -26,7 +22,7 @@ require('plg_cfg.my_snippets')
 blink.setup({
 
   snippets   = {
-    preset = 'luasnip',
+    preset = 'default',
   },
 
   appearance = { nerd_font_variant = 'mono' },
