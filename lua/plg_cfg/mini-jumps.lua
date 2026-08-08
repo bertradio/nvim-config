@@ -41,14 +41,14 @@ mjump.setup({
 jump2d.setup({
   -- Disable the module's default <CR> mapping.
   mappings = {
-    start_jumping = '',
+    start_jumping = '', -- disable start_jumping
   },
 
   -- Most convenient labels appear first.
   labels = 'asdfghjklqwertyuiopzxcvbnm',
 
   view = {
-    dim = true,
+    dim = false,
 
     -- Show only the next label needed.
     n_steps_ahead = 10,
@@ -57,9 +57,9 @@ jump2d.setup({
   allowed_lines = {
     blank = false,
     cursor_before = false,
-    cursor_at = false,
+    cursor_at = true,
     cursor_after = true,
-    fold = true,
+    fold = false,
   },
 
   allowed_windows = {
@@ -70,21 +70,14 @@ jump2d.setup({
   silent = true,
 })
 
--- Flash-like jump to the beginning of a word.
-Kset({ 'n', 'x', 'o' }, 'S', function()
-  jump2d.start(jump2d.builtin_opts.word_start)
-end, {
-  desc = 'Jump to word start',
-})
-
--- Optional: jump to any occurrence of a typed character.
+-- Jump to any occurrence of a typed character.
 Kset({ 'n', 'x', 'o' }, 's', function()
   jump2d.start(jump2d.builtin_opts.single_character)
 end, {
   desc = 'Jump to character',
 })
 
--- Optional: jump to the beginning of a visible line.
+-- Jump to the beginning of a visible line.
 Kset({ 'n', 'x', 'o' }, 'gl', function()
   jump2d.start(jump2d.builtin_opts.line_start)
 end, {
@@ -97,6 +90,7 @@ local function set_jump_highlights()
   -- mini.jump matching characters
   vim.api.nvim_set_hl(0, 'MiniJump', {
     fg = '#f9e2af',
+    -- fg = '#1e1e2e',
     bold = true,
     underline = true,
   })

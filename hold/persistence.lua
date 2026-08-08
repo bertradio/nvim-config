@@ -8,7 +8,7 @@
 
 vim.pack.add({ Gh('folke/persistence.nvim') })
 
-persistence = require('persistence')
+local persistence = require('persistence')
 
 persistence.setup({
   dir = vim.fn.stdpath('data') .. '/sessions/', -- directory where session files are saved

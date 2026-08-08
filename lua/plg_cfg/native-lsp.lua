@@ -6,18 +6,9 @@
 -- Optimized for Neovim 0.13+ (Zero external dependencies for configs)
 -- Code from Gemini to replace nvim-lspconfig
 
--- vim.pack.add({
---   Gh('folke/lazydev.nvim'),
--- })
-
--- =============================================================================
--- BLINK CAPABILITY PROXY
--- =============================================================================
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-local ok, blink = pcall(require, 'blink.cmp')
-if ok then
-  capabilities = blink.get_lsp_capabilities(capabilities)
-end
+vim.pack.add({
+  Gh('folke/lazydev.nvim'),
+})
 
 -- =============================================================================
 -- NATIVE SERVER CONFIGURATIONS (v0.13 Core)
@@ -64,14 +55,7 @@ local servers = {
 
 -- Native loop for Core registration and auto-activation
 for name, conf in pairs(servers) do
-  -- Merge capabilities and inject filetypes/root_markers into the base config
-  local final_config = vim.tbl_deep_extend('force', {
-    capabilities = capabilities,
-  }, conf)
-
-  -- Register the configuration schema to core
-  vim.lsp.config(name, final_config)
-
+  vim.lsp.config(name, conf)
   -- Check if binary is present. If yes, enable auto-starting for matching filetypes
   local bin = conf.cmd[1]
   if vim.fn.executable(bin) == 1 then

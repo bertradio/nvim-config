@@ -29,6 +29,16 @@ local snippets = {
     map = [[Kset('${1:n}', '<Leader>${2:key}', '${3:command}', { desc = '${4:desc}' })$0]],
 
     rset = [[require('${1:module}').setup()$0]],
+
+    req = [[local ${1:name} = require('${2:module}')$0]],
+
+    lfun = [[ local function ${1:name}(${2}) $0 end ]],
+
+    auc = [[ vim.api.nvim_create_autocmd('${1:event}', { pattern = '${2:*}', callback = function() $0 end, }) ]],
+
+    aug = [[local ${1:grp} = vim.api.nvim_create_augroup('${2:name}', { clear = true })$0]],
+
+    opt = [[vim.opt.${1:option} = ${2:value}$0]],
   },
 }
 

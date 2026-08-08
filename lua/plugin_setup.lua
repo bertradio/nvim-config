@@ -34,6 +34,7 @@ local function load_ui_plugins()
   req('mini-clue')
   req('mini-files')
   req('mini-notify')
+  req('mini-sessions')
   req('mini-pick')
   req('blink')
   if Myfn.is_windows() then
