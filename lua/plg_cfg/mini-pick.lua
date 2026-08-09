@@ -11,7 +11,7 @@ local exclude = require('file_exclude')
 pick.setup()
 extra.setup()
 
-vim.ui.select = pick.ui_select
+-- vim.ui.select = pick.ui_select
 
 pick.config = {
   -- Delays (in ms; should be at least 1)

@@ -21,19 +21,34 @@
 -- })
 
 local align = require('mini.align')
-local animate = require('mini.animate')
 local bracketed = require('mini.bracketed')
 local bufremove = require('mini.bufremove')
 local minput = require('mini.input')
+local misc = require('mini.misc')
+
+local pick = require('mini.pick')
+vim.ui.select = pick.ui_select -- use pick instead of system select
 
 --  ──────────────────────────────────────────────────────
 
 align.setup({ mappings = { start = 'ga' } })
-
-animate.setup()
 
 bracketed.setup()
 
 bufremove.setup()
 
 minput.setup()
+
+--  ────── misc setup and code ───────
+
+misc.setup()
+
+-- restore cursor position when opening files
+misc.setup_restore_cursor({
+  center = false,
+  ignore_filetype = { 'commit', 'gitcommit', 'gitrebase', 'xxd' },
+})
+
+Kset('n', '<Leader>C', '<cmd>lua require("mini.misc").zoom()<CR>', { desc = 'clean screen toggle' })
+
+--  ──────────────────────────────────

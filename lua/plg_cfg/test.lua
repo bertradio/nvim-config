@@ -1,3 +1,3 @@
 -- test.lua
 
-require('mini.sessions').setup()
+vim.opt.cmdheight = 1

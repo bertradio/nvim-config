@@ -37,7 +37,7 @@ end, { desc = 'new named session' })
 
 -- Choose a session to delete
 Kset('n', '<Leader>qd', function()
-  sessions.select('delete')
+  sessions.select('delete', { force = true })
 end, { desc = 'delete session' })
 
 -- Restart Neovim and restore the current session

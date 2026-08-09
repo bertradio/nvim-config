@@ -17,7 +17,6 @@ notify.setup({
     config = {
       title = '',
       border = 'rounded',
-      -- width = 40,
     },
     max_width_share = 0.382,
   },

@@ -10,14 +10,21 @@
 -- 07/09/26 replaced anonymous autocmd callbacks with named functions
 -- 08/01/26 split mini into separate files - treating each as a plugin
 
-require('keymaps')
-require('aucmds')
-
 -- need to load mini here so modules below will work
 vim.pack.add({
   Gh('nvim-mini/mini.nvim'),
   Gh('nvim-tree/nvim-web-devicons'),
 })
+
+local misc = require('mini.misc')
+
+-- load safely with error message
+misc.safely('now', function()
+  require('keymaps')
+end)
+misc.safely('now', function()
+  require('aucmds')
+end)
 
 -- Helper to make plg_cfg plugin requires simpler
 local function req(plugin)

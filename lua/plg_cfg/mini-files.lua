@@ -140,8 +140,8 @@ files.setup({
     reset       = '<BS>', -- go to dir where entered files
     reveal_cwd  = '',
     show_help   = 'g?',
-    trim_left   = '',
-    trim_right  = '',
+    trim_left   = '<',
+    trim_right  = '>',
   },
 
   options = {
@@ -163,7 +163,7 @@ local function open_minifiles()
 
   files.open(nil, false, {
     windows = {
-      max_number = 3,
+      max_number = 5,
       preview = false,
       width_focus = main_width,
       width_preview = preview_width,

@@ -113,28 +113,6 @@ init_skeleton('*.sh', 'sh.tpl')
 init_skeleton('*.lua', 'lua.tpl')
 init_skeleton('*.awk', 'awk.tpl')
 
----------- >> Open buffers at last location (protected) << ---------------
-vim.api.nvim_create_autocmd('BufReadPost', {
-  pattern = { '*' },
-  desc = 'When editing a file, always jump to the last known cursor position',
-  callback = function()
-    local ok, err = pcall(function()
-      local line = vim.fn.line('\'"')
-      if
-        line >= 1
-        and line <= vim.fn.line('$')
-        and vim.bo.filetype ~= 'commit'
-        and vim.fn.index({ 'xxd', 'gitrebase' }, vim.bo.filetype) == -1
-      then
-        vim.cmd('normal! g`"')
-      end
-    end)
-    if not ok then
-      vim.notify('Error restoring last cursor position: ' .. tostring(err), vim.log.levels.WARN)
-    end
-  end,
-})
-
 ---------- >> Remove Windows newlines in Windows << ---------------
 vim.api.nvim_create_autocmd('BufWritePre', {
   pattern = { '*' },
