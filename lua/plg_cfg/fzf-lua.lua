@@ -207,7 +207,7 @@ fzf.setup({
   actions = {
     buffers = {
       ['ctrl-s']  = actions.buf_split,
-      ['ctrl-t']  = actions.buf_tabedit,
+      -- ['ctrl-t']  = actions.buf_tabedit,
       ['ctrl-v']  = actions.buf_vsplit,
       ['default'] = actions.buf_edit,
     },
@@ -338,9 +338,11 @@ fzf.setup({
   },
 })
 
+--  ──────────── mappings ────────────
+
 -- stylua: ignore
 local function maps()
-  -- Kset('n', '<Leader><space>', '<cmd>FzfLua files<cr>',                { desc = 'fzf.findfiles' })
+  Kset('n', '<Leader>ff', '<cmd>FzfLua files<cr>',                { desc = 'fzf.findfiles' })
   Kset('n', '<Leader>f.',     '<cmd>FzfLua resume<cr>',                { desc = 'resume last picker' })
   Kset('n', '<Leader>fb',     '<cmd>FzfLua buffers<cr>',               { desc = 'buffers' })
   Kset('n', '<Leader>fc',     '<cmd>FzfLua command_history<cr>',       { desc = 'command history' })
@@ -371,7 +373,7 @@ local function maps()
   Kset('n', '<Leader>fw',     '<cmd>FzfLua grep_cword<cr>',            { desc = 'grep word under cursor' })
   Kset('n', '<Leader>fW',     '<cmd>FzfLua grep_cWORD<cr>',            { desc = 'grep WORD under cursor' })
   Kset('n', '<Leader>fx',     '<cmd>FzfLua changes<cr>',               { desc = 'changes' })
-  Kset('n', 'zz',             '<cmd>FzfLua spell_suggest<cr>',         { desc = 'spell suggest' })
+  -- Kset('n', 'zz',             '<cmd>FzfLua spell_suggest<cr>',         { desc = 'spell suggest' })
 
   Kset('n', '<Leader>fn', function()
     fzf.files({

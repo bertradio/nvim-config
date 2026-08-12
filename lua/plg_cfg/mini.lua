@@ -17,8 +17,6 @@
 -- 07/31/26 - added indentscope
 -- 08/01/26 - split into separate files except for one-liners
 
---   Gh('nvim-mini/mini.nvim'),
--- })
 
 local align = require('mini.align')
 local bracketed = require('mini.bracketed')

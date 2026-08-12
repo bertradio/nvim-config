@@ -34,7 +34,6 @@ end
 -- ────────── lazy loading set up all functions ──────────
 
 local function load_ui_plugins()
-  req('native-lsp')
   req('catppuccin')
   req('statusline')
   req('mini')
@@ -43,6 +42,7 @@ local function load_ui_plugins()
   req('mini-notify')
   req('mini-sessions')
   req('mini-pick')
+  req('fzf-lua')
   req('blink')
   if Myfn.is_windows() then
     req('bookmarks_win')
@@ -54,6 +54,7 @@ end
 --  ─────────────────────────────────────────────
 
 local function load_buffer_plugins()
+  req('native-lsp')
   req('nvim-biscuits')
   req('hlslens')
   req('rainbow')

@@ -8,6 +8,8 @@
 
 --   Gh('folke/lazydev.nvim'),
 -- })
+--
+-- require('lazydev').setup()
 
 -- =============================================================================
 -- NATIVE SERVER CONFIGURATIONS (v0.13 Core)

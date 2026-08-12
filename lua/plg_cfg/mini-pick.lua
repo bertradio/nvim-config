@@ -11,8 +11,6 @@ local exclude = require('file_exclude')
 pick.setup()
 extra.setup()
 
--- vim.ui.select = pick.ui_select
-
 pick.config = {
   -- Delays (in ms; should be at least 1)
   delay = {
@@ -194,17 +192,13 @@ Kset('n', '<Leader>pG', function()
   pick.builtin.grep_live()
 end, { desc = 'live grep' })
 
-Kset('n', '<Leader>ph', function()
-  pick.builtin.help()
-end, { desc = 'helptags' })
+-- Kset('n', '<Leader>ph', function()
+--   pick.builtin.help()
+-- end, { desc = 'helptags' })
 
 Kset('n', '<Leader>pH', function()
   extra.pickers.hl_groups()
 end, { desc = 'highlights' })
-
-Kset('n', '<Leader>pi', function()
-  extra.pickers.lsp({ scope = 'implementation' })
-end, { desc = 'lsp implementations' })
 
 Kset('n', '<Leader>pj', function()
   extra.pickers.list({ scope = 'jump' })
@@ -222,13 +216,11 @@ Kset('n', '<Leader>pm', function()
   extra.pickers.marks()
 end, { desc = 'marks' })
 
-Kset('n', '<Leader>po', function()
-  extra.pickers.lsp({ scope = 'document_symbol' })
-end, { desc = 'document symbols' })
+-- end, { desc = 'document symbols' })
 
-Kset('n', '<Leader>pO', function()
-  extra.pickers.lsp({ scope = 'workspace_symbol' })
-end, { desc = 'workspace symbols' })
+-- Kset('n', '<Leader>pO', function()
+--   extra.pickers.lsp({ scope = 'workspace_symbol' })
+-- end, { desc = 'workspace symbols' })
 
 Kset('n', '<Leader>pq', function()
   extra.pickers.list({ scope = 'quickfix' })
@@ -238,17 +230,15 @@ Kset('n', '<Leader>pr', function()
   extra.pickers.registers()
 end, { desc = 'registers' })
 
-Kset('n', '<Leader>pR', function()
-  extra.pickers.lsp({ scope = 'references' })
-end, { desc = 'lsp references' })
+-- Kset('n', '<Leader>pR', function()
+--   extra.pickers.lsp({ scope = 'references' })
+-- end, { desc = 'lsp references' })
 
 Kset('n', '<Leader>ps', function()
   extra.pickers.history({ scope = '/' })
 end, { desc = 'search history' })
 
-Kset('n', '<Leader>pu', function()
-  extra.pickers.commands()
-end, { desc = 'commands' })
+-- end, { desc = 'cmdline cocmmands' })
 
 Kset('n', '<Leader>pv', function()
   local visits = require('mini.visits')

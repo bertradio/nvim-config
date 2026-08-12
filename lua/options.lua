@@ -89,7 +89,8 @@ function M.setup()
 
   -- activate built-in undo for nvim 0.12+
   vim.cmd('packadd nvim.undotree')
-  Kset('n', '<leader>u', require('undotree').open, { desc = 'Undotree' })
+  -- Kset('n', '<leader>u', require('undotree').open, { desc = 'Undotree' })
+  Kset('n', '<leader>u', '<cmd>Undotree<cr>', { desc = 'toggle undotree' })
 
   -- disable built-in plugins not needed
   local disabled_builtins = {

@@ -11,10 +11,11 @@ vim.pack.add({ Gh('stevearc/conform.nvim') })
 
 local conform = require('conform')
 
+-- stylua: ignore 
 conform.setup({
   formatters_by_ft = {
-    lua = { 'stylua' },
-    sh = { 'shfmt' },
+    lua  = { 'stylua' },
+    sh   = { 'shfmt' },
     bash = { 'shfmt' },
   },
 

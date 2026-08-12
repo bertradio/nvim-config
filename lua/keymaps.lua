@@ -62,7 +62,7 @@ Kset({ 'n', 'i', 'v' }, '<c-q>', '<cmd>q<cr>', { desc = 'Exit nvim' })
 Kset('n', '<Leader>l', '<cmd>e#<1<cr>', { desc = 'Load last file' })
 
 -- disable s key to substitute
-Kset({ 'n', 'v' }, 's', '<nop>')
+-- Kset({ 'n', 'v' }, 's', '<nop>')
 
 -- Select all text in the current buffer
 Kset('n', '<C-a>', 'ggVG', { desc = 'Select all' })
@@ -177,7 +177,7 @@ end, { desc = "Insert today's date" })
 local search_group = vim.api.nvim_create_augroup('SearchLens', { clear = true })
 
 -- 2. Keep your n/N mappings simple (just move and center)
-Kset('n', 'n', 'nzz', { silent = true })
-Kset('n', 'N', 'Nzz', { silent = true })
+-- Kset('n', 'n', 'nzz', { silent = true })
+-- Kset('n', 'N', 'Nzz', { silent = true })
 
 Kset('n', 'fd', ':find ', { desc = 'find' })
