@@ -181,3 +181,51 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.bo[args.buf].syntax = 'zsh'
   end,
 })
+
+--  ───── highlight and blink on yank - from ChatFPT ─────
+
+local yank_timeout = 800
+
+local grp1 = vim.api.nvim_create_augroup('YankHighlight', {
+  clear = true,
+})
+
+local function set_yank_highlight()
+  vim.api.nvim_set_hl(0, 'YankHighlight', {
+    fg = '#1e1e2e',
+    bg = '#a6e3a1', -- Catppuccin Mocha green
+    bold = true,
+    nocombine = true,
+  })
+end
+
+-- Define the highlight now.
+set_yank_highlight()
+
+-- Reapply it whenever the colorscheme changes.
+vim.api.nvim_create_autocmd('ColorScheme', {
+  group = grp1,
+  desc = 'Restore yank highlight color',
+  callback = set_yank_highlight,
+})
+
+vim.api.nvim_create_autocmd('TextYankPost', {
+  group = grp,
+  desc = 'Highlight and report yanked text',
+  callback = function()
+    if vim.v.event.operator ~= 'y' then
+      return
+    end
+
+    vim.hl.hl_op({
+      higroup = 'YankHighlight',
+      timeout = yank_timeout,
+      on_visual = true,
+    })
+
+    local count = #vim.v.event.regcontents
+    local label = count == 1 and 'line' or 'lines'
+
+    vim.notify(string.format('%d %s yanked', count, label), vim.log.levels.INFO)
+  end,
+})
