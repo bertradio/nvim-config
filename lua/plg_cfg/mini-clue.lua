@@ -52,7 +52,6 @@ clue.setup({
 
     { mode = 'n', keys = '<Leader>b', desc = '+buffer' },
     { mode = 'n', keys = '<Leader>e', desc = '+edit configs' },
-    { mode = 'n', keys = '<Leader>f', desc = '+fzf' },
     { mode = 'n', keys = '<Leader>m', desc = '+pretty' },
     { mode = 'n', keys = '<Leader>p', desc = '+mini.pick' },
     { mode = 'n', keys = '<Leader>q', desc = '+sessions' },

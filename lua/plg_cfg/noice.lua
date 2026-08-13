@@ -87,8 +87,8 @@ require('noice').setup({
   },
   views = {
     cmdline_popup = {
-      -- position = { row = 12, col = '50%' }, -- middle of screen
-      position = { row = 16, col = '50%' }, -- row of command line box
+      position = { row = 12, col = '50%' }, -- middle of screen
+      -- position = { row = 16, col = '50%' }, -- row of command line box
       size = { width = 60, height = 'auto' },
       border = { style = 'rounded' },
     },
