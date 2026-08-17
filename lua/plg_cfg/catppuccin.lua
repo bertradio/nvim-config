@@ -32,7 +32,7 @@ require('catppuccin').setup({
     mocha = function(colors)
       return {
         Comment    = { bg = '#1f1f1f', style = { 'italic' } },
-        CurSearch  = { fg = colors.blue, bg = colors.white },               -- currently selected match
+        CurSearch  = { fg = colors.blue, bg = colors.white }, -- currently selected match
         Cursor     = { bg = '#a8a8a8' },
         CursorLine = { bg = '#273746' },
         FoldColumn = { bg = '#262626', fg = colors.sapphire },
@@ -79,5 +79,5 @@ require('catppuccin').setup({
   }
 })
 
-vim.cmd.colorscheme('catppuccin-nvim')
+vim.cmd.colorscheme('catppuccin-mocha')
 -- vim.cmd.colorscheme('catppuccin')

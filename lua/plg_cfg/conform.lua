@@ -20,7 +20,8 @@ conform.setup({
   },
 
   format_on_save = {
-    lsp_format = 'never',
+    -- lsp_format = 'never', -- default
+    lsp_format = 'fallback', -- fallback to lsp if no other formatter available
     timeout_ms = 1500,
   },
 
@@ -33,7 +34,7 @@ conform.setup({
 
 Kset({ 'n', 'x' }, '<leader>mp', function()
   conform.format({
-    lsp_format = 'never',
+    lsp_format = 'fallback',
     timeout_ms = 1500,
   })
 end, { desc = 'Make pretty with Conform' })

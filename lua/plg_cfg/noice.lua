@@ -34,13 +34,20 @@ require('noice').setup({
   routes = {
     {
       filter = {
+        event = 'msg_show',
+        find = 'Save changes',
+      },
+      view = 'cmdline_popup',
+      opts = { stop = true },
+    },
+    {
+      filter = {
         event = 'notify',
         find = '^cwd →',
       },
       view = 'mini',
       opts = { stop = true },
     },
-
     {
       -- Catch standard text changes, undo/redo, and add/delete echoes
       filter = {
@@ -61,7 +68,6 @@ require('noice').setup({
       view = 'mini',
       opts = { stop = true },
     },
-
     {
       filter = { event = 'msg_show', kind = 'shell_cmd' },
       view = 'split',

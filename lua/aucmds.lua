@@ -67,7 +67,7 @@ autocmd({ 'VimEnter', 'WinEnter', 'BufWinEnter' }, {
 })
 
 -- turn off cursorline in inactive windows
-autocmd({ 'WinLeave' }, {
+autocmd('WinLeave', {
   group = 'Set_Cursorline',
   pattern = '*',
   callback = function()
@@ -184,7 +184,7 @@ vim.api.nvim_create_autocmd('FileType', {
 
 --  ───── highlight and blink on yank - from ChatFPT ─────
 
-local yank_timeout = 800
+local yank_timeout = 1000
 
 local grp1 = vim.api.nvim_create_augroup('YankHighlight', {
   clear = true,
@@ -193,16 +193,14 @@ local grp1 = vim.api.nvim_create_augroup('YankHighlight', {
 local function set_yank_highlight()
   vim.api.nvim_set_hl(0, 'YankHighlight', {
     fg = '#1e1e2e',
-    bg = '#a6e3a1', -- Catppuccin Mocha green
+    bg = '#a6e3a1', -- Mocha green
     bold = true,
     nocombine = true,
   })
 end
 
--- Define the highlight now.
 set_yank_highlight()
 
--- Reapply it whenever the colorscheme changes.
 vim.api.nvim_create_autocmd('ColorScheme', {
   group = grp1,
   desc = 'Restore yank highlight color',
@@ -210,18 +208,33 @@ vim.api.nvim_create_autocmd('ColorScheme', {
 })
 
 vim.api.nvim_create_autocmd('TextYankPost', {
-  group = grp,
+  group = grp1,
   desc = 'Highlight and report yanked text',
   callback = function()
     if vim.v.event.operator ~= 'y' then
       return
     end
 
+    local win = vim.api.nvim_get_current_win()
+    local cursorline_was_enabled = vim.wo[win].cursorline
+
+    -- Remove CursorLine before applying the yank highlight.
+    vim.wo[win].cursorline = false
+    vim.cmd.redraw()
+
     vim.hl.hl_op({
       higroup = 'YankHighlight',
       timeout = yank_timeout,
       on_visual = true,
     })
+
+    -- Restore this window's previous CursorLine setting afterward.
+    vim.defer_fn(function()
+      if vim.api.nvim_win_is_valid(win) then
+        vim.wo[win].cursorline = cursorline_was_enabled
+        vim.cmd.redraw()
+      end
+    end, yank_timeout + 50)
 
     local count = #vim.v.event.regcontents
     local label = count == 1 and 'line' or 'lines'

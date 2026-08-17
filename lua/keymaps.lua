@@ -15,23 +15,63 @@
 
 -- Buffer manipulation
 
-Kset({ 'n' }, '<Leader>bb', '<cmd>bd<cr>', { desc = 'delete buffer' })
-Kset({ 'n' }, '<Leader>bc', '<cmd>CopyBufferName<cr>', { desc = 'path copy' })
-Kset({ 'n' }, '<Leader>ba', '<cmd>silent %bd<cr>', { desc = 'delete all' })
--- Delete all buffers except the current one
-Kset('n', '<leader>bo', function()
-  local current_buf = vim.api.nvim_get_current_buf()
-  local buffers = vim.api.nvim_list_bufs()
-  for _, buf in ipairs(buffers) do
-    if buf ~= current_buf and vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].buflisted then
-      -- Use pcall (protected call) to catch errors if a buffer is modified
-      local success, err = pcall(vim.api.nvim_buf_delete, buf, { force = false })
-      if not success then
-        print('Skipped modified buffer: ' .. vim.api.nvim_buf_get_name(buf))
+Kset('n', '<Leader>bb', '<cmd>lua MiniBufremove.delete()<cr>', { desc = 'delete buffer' })
+Kset('n', '<Leader>bc', '<cmd>CopyBufferName<cr>', { desc = 'path copy' })
+
+Kset('n', '<Leader>ba', function()
+  local bufremove = require('mini.bufremove')
+
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.bo[buf].buflisted then
+      local force = false
+
+      if vim.bo[buf].modified then
+        local name = vim.api.nvim_buf_get_name(buf)
+        name = name == '' and '[No Name]' or vim.fn.fnamemodify(name, ':~:.')
+
+        local choice = vim.fn.confirm(('Discard changes in %s?'):format(name), '&Yes\n&No', 2)
+
+        if choice == 1 then
+          force = true
+        else
+          goto continue
+        end
       end
+
+      bufremove.delete(buf, force)
+
+      ::continue::
     end
   end
-end, { desc = 'delete all buffers except current' })
+end, { desc = 'Delete all buffers' })
+
+Kset('n', '<Leader>bo', function()
+  local current = vim.api.nvim_get_current_buf()
+  local bufremove = require('mini.bufremove')
+
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if buf ~= current and vim.bo[buf].buflisted then
+      local force = false
+
+      if vim.bo[buf].modified then
+        local name = vim.api.nvim_buf_get_name(buf)
+        name = name == '' and '[No Name]' or vim.fn.fnamemodify(name, ':~:.')
+
+        local choice = vim.fn.confirm(('Discard changes in %s?'):format(name), '&Yes\n&No', 2)
+
+        if choice == 1 then
+          force = true
+        else
+          goto continue
+        end
+      end
+
+      bufremove.delete(buf, force)
+
+      ::continue::
+    end
+  end
+end, { desc = 'Delete other buffers' })
 
 -- Move to beginning and end characters of current buffer
 Kset('n', 'gg', 'gg0', { desc = 'Move to first char of file' })
