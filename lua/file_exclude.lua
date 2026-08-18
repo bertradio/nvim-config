@@ -1,6 +1,6 @@
 -- file_exclude.lua
 
--- Shared exclusions for mini.files and fzf-lua.
+-- Exclusions for mini.files
 --
 -- Usage:
 --   local exclude = require('file_exclude')
@@ -12,21 +12,9 @@
 
 local M = {}
 
---    ╭────────────────────────────╮
---    │    for mini.explorer       │
---    ╰────────────────────────────╯
-
-function M.mini_explorer_filter(item)
-  -- Always show directories.
-  if item.fs_type == 'directory' then
-    return true
-  end
-
-  return M.show_excluded or not M.is_excluded(item.path)
-end
-
 -- Store extensions in lowercase.
 -- stylua: ignore
+
 M.extensions = {
   -- Archives and compressed files
   ['7z']  = true,
@@ -178,72 +166,8 @@ function M.is_excluded(path)
   return extension ~= nil and M.extensions[extension] == true
 end
 
---    ╭────────────────────────────╮
---    │       for mini.files       │
---    ╰────────────────────────────╯
-
--- Whether excluded files are currently visible in mini.files.
-M.show_excluded = false
-
-function M.mini_files_filter(fs_entry)
-  -- Always show directories so navigation is unaffected.
-  if fs_entry.fs_type == 'directory' then
-    return true
-  end
-
-  return M.show_excluded or not M.is_excluded(fs_entry.name)
-end
-
-function M.toggle_mini()
-  M.show_excluded = not M.show_excluded
-
-  local ok, minifiles = pcall(require, 'mini.files')
-  if not ok then
-    vim.notify('mini.files is not available', vim.log.levels.WARN)
-    return
-  end
-
-  minifiles.refresh({
-    content = {
-      filter = M.mini_files_filter,
-    },
-  })
-
-  vim.notify(
-    M.show_excluded and 'Excluded files shown' or 'Excluded files hidden',
-    vim.log.levels.INFO
-  )
-end
-
--- Backward compatibility for an existing mapping that calls exclude.toggle().
-M.toggle = M.toggle_mini
-
---    ╭────────────────────────────╮
---    │        for fzf-lua         │
---    ╰────────────────────────────╯
-
--- Build fd/ripgrep exclusion arguments from M.extensions.
---
--- Produces:
---   --exclude '*.jpg' --exclude '*.pdf' ...
---
--- fd and ripgrep treat these globs case-insensitively only when configured
--- to do so, so both lowercase and uppercase variants are generated.
-local function case_insensitive_glob(extension)
-  return extension:gsub('%a', function(char)
-    return string.format('[%s%s]', char:lower(), char:upper())
-  end)
-end
-
-function M.fzf_exclude_args()
-  local args = {}
-
-  for extension in pairs(M.extensions) do
-    args[#args + 1] = string.format("--exclude '*.%s'", case_insensitive_glob(extension))
-  end
-
-  table.sort(args)
-  return table.concat(args, ' ')
+function M.mini_explorer_filter(item)
+  return item.fs_type == 'directory' or not M.is_excluded(item.path)
 end
 
 return M

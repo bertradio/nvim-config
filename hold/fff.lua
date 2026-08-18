@@ -1,15 +1,12 @@
---    ╭────────────────────────────╮
---    │          fff.lua           │
---    ╰────────────────────────────╯
-
-vim.pack.add({ 'https://github.com/dmtrKovalenko/fff.nvim' })
+-- Package name changed from `fff.nvim` to `fff`. If you installed fff.nvim before, clean with `:packdel fff.nvim`
+vim.pack.add({ 'https://github.com/dmtrKovalenko/fff' })
 
 vim.api.nvim_create_autocmd('PackChanged', {
   callback = function(ev)
     local name, kind = ev.data.spec.name, ev.data.kind
-    if name == 'fff.nvim' and (kind == 'install' or kind == 'update') then
+    if name == 'fff' and (kind == 'install' or kind == 'update') then
       if not ev.data.active then
-        vim.cmd.packadd('fff.nvim')
+        vim.cmd.packadd('fff')
       end
       require('fff.download').download_or_build_binary()
     end
@@ -21,8 +18,9 @@ vim.g.fff = {
   debug = { enabled = true, show_scores = true },
 }
 
--- all defaults
-require('fff').setup({
+local fff = require('fff')
+
+fff.setup({
   base_path = vim.fn.getcwd(),
   prompt = '> ',
   title = 'FFFiles',
@@ -30,19 +28,34 @@ require('fff').setup({
   max_threads = 4,
   lazy_sync = true,
   prompt_vim_mode = false,
+  follow_symlinks = false,
+  -- Allow indexing the user's $HOME directory. Enabled by default.
+  -- Disable if you strictly sure you don't want this, as it makes whole fff error hard
+  enable_home_dir_scanning = true,
+  -- Allow indexing a filesystem root (e.g. `/`, `C:\`). Disabled by default
+  enable_fs_root_scanning = false,
   layout = {
-    height = 1.0,
-    width = 0.85,
-    prompt_position = 'top', -- or 'top'
-    preview_position = 'right', -- 'left' | 'right' | 'top' | 'bottom'
-    preview_size = 0.6,
-    flex = { size = 80, wrap = 'top' },
+    height = 0.8,
+    width = 0.8,
+    prompt_position = 'top', -- top or bottom
+    preview_position = 'bottom', -- 'left' | 'right' | 'top' | 'bottom'
+    preview_size = 0.4,
+    -- Border style for the picker windows. Leave unset (nil) to follow the
+    -- global `vim.o.winborder`; set it to override fff's borders independently.
+    border = nil, -- 'single' | 'double' | 'rounded' | 'solid' | 'shadow' | 'none'
+    -- border = {
+    --   { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
+    --   { ' ', ' ', ' ', ' ', ' ' },
+    -- },
+
+    flex = { size = 130, wrap = 'top' },
+    min_list_height = 10, --  do not display anything except the list below this threshold
     show_scrollbar = true,
-    path_shorten_strategy = 'middle_number', -- 'middle_number' | 'middle' | 'end'
+    path_shorten_strategy = 'middle_number', -- 'middle_number' | 'middle' | 'end' | 'start'
     anchor = 'center',
   },
   preview = {
-    enabled = true,
+    enabled = false,
     max_size = 10 * 1024 * 1024,
     chunk_size = 8192,
     binary_file_threshold = 1024,
@@ -68,6 +81,10 @@ require('fff').setup({
     preview_scroll_down = '<C-d>',
     toggle_debug = '<F2>',
     cycle_grep_modes = '<S-Tab>',
+    insert_newline_escape = '<C-CR>',
+    -- grep mode only: jump cursor to first match of next/prev file group
+    grep_jump_to_next_file = { '<C-A-n>', '<A-Down>' },
+    grep_jump_to_prev_file = { '<C-A-p>', '<A-Up>' },
     cycle_previous_query = '<C-Up>',
     toggle_select = '<Tab>',
     send_to_quickfix = '<C-q>',
@@ -75,7 +92,7 @@ require('fff').setup({
     focus_preview = '<leader>p',
   },
   frecency = {
-    enabled = true,
+    enabled = false,
     db_path = vim.fn.stdpath('cache') .. '/fff_nvim',
   },
   history = {
@@ -85,7 +102,15 @@ require('fff').setup({
     combo_boost_score_multiplier = 100,
   },
   git = {
-    status_text_color = true, -- true to color filenames by git status
+    status_text_color = false, -- true to color filenames by git status
+  },
+  file_picker = {
+    fuzzy_query_highlighting = false, -- true to highlight fuzzy query matches in file picker results
+  },
+  select = {
+    -- Return winid to open the chosen file in, or nil to open in the original window
+    select_window = function(current_buf, action) --[[ default impl ]]
+    end,
   },
   grep = {
     max_file_size = 10 * 1024 * 1024,
@@ -94,29 +119,11 @@ require('fff').setup({
     time_budget_ms = 150,
     modes = { 'plain', 'regex', 'fuzzy' },
     trim_whitespace = false,
-  },
-  debug = { enabled = false, show_scores = false },
-  logging = {
-    enabled = true,
-    log_file = vim.fn.stdpath('log') .. '/fff.log',
-    log_level = 'info',
+    enable_filename_constraint = false, -- treat filename-like tokens (e.g. `score.rs`) in a grep query as a file-path filter scoping the search; off = searched as literal text
+    location_format = ':%d:%d', -- printf format for line:col prefix in grep results, e.g. ':%d' for line-only
   },
 })
 
---  ──────────── keymaps ─────────────
-
-Kset('n', 'vf', function()
-  require('fff').find_files()
+Kset('n', 'ff', function()
+  fff.find_files()
 end, { desc = 'FFFind files' })
-
-Kset('n', '<leader>vg', function()
-  require('fff').live_grep()
-end, { desc = 'LiFFFe grep' })
-
-Kset('n', '<leader>vz', function()
-  require('fff').live_grep({ grep = { modes = { 'fuzzy', 'plain' } } })
-end, { desc = 'Live fffuzy grep' })
-
-Kset('n', '<leader>vc', function()
-  require('fff').live_grep({ query = vim.fn.expand('<cword>') })
-end, { desc = 'Search current word' })

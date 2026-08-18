@@ -14,4 +14,5 @@ require('notify').setup({
   zindex = 2000,
   animation = 'fade_in_slide_out',
 })
+
 vim.notify = require('notify')

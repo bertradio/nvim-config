@@ -79,6 +79,7 @@ require('noice').setup({
     command_palette = false, -- Kept false so the popup stays centered vertically
     long_message_to_split = true,
     inc_rename = false,
+    lsp_doc_border = false, -- add a border to hover docs and signature help
   },
   cmdline = {
     enabled = true,
@@ -93,8 +94,8 @@ require('noice').setup({
   },
   views = {
     cmdline_popup = {
-      position = { row = 12, col = '50%' }, -- middle of screen
-      -- position = { row = 16, col = '50%' }, -- row of command line box
+      -- position = { row = 12, col = '50%' }, -- middle of screen
+      position = { row = -5, col = '50%' }, -- row of command line box
       size = { width = 60, height = 'auto' },
       border = { style = 'rounded' },
     },

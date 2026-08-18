@@ -36,10 +36,10 @@ require('catppuccin').setup({
         Cursor     = { bg = '#a8a8a8' },
         CursorLine = { bg = '#273746' },
         FoldColumn = { bg = '#262626', fg = colors.sapphire },
+        LineNr     = { bg = '#262626', fg = 'Grey' },
 
         -- FzfLuaGrepHighlight = { fg = colors.red,    style = { 'bold' } },
         -- FzfLuaSearch        = { fg = colors.yellow, style = { 'bold' } },
-        LineNr     = { bg = '#262626', fg = 'Grey' },
       }
     end,
   },
@@ -53,12 +53,12 @@ require('catppuccin').setup({
     -- fzf                = true,   -- base FzfLua theming; needed for highlight_overrides above to build on
     -- render_markdown    = true,
 
-    colorful_winsep    = {
+    colorful_winsep = {
       enabled = true,
-      color = "yellow",
+      color   = "yellow",
     },
 
-    native_lsp         = {
+    native_lsp = {
       enabled = true,
       virtual_text = {
         errors      = { 'italic' },

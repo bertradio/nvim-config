@@ -17,7 +17,6 @@
 -- 07/31/26 - added indentscope
 -- 08/01/26 - split into separate files except for one-liners
 
-
 local align = require('mini.align')
 local bracketed = require('mini.bracketed')
 local bufremove = require('mini.bufremove')

@@ -8,45 +8,7 @@ local files = require('mini.files')
 
 local file_exclude = require('file_exclude')
 
-local cwd_config = require('plg_cfg.bookmarks_' .. (Myfn.is_windows() and 'win' or 'linux'))
-
 local group = vim.api.nvim_create_augroup('MyMiniFiles', { clear = true })
-
-local function trash_entry()
-  local entry = files.get_fs_entry()
-
-  if not entry or not entry.path then
-    vim.notify('No entry under cursor', vim.log.levels.WARN)
-    return
-  end
-
-  local choice = vim.fn.confirm('Move to system Trash?\n\n' .. entry.path .. '\n', '&Yes\n&No', 2)
-
-  if choice ~= 1 then
-    return
-  end
-
-  local result = vim.system({ 'gio', 'trash', entry.path }, { text = true }):wait()
-
-  if result.code ~= 0 then
-    vim.notify('gio trash failed:\n' .. (result.stderr or ''), vim.log.levels.ERROR)
-    return
-  end
-
-  files.synchronize()
-
-  vim.notify(('Moved "%s" to Trash'):format(vim.fs.basename(entry.path)))
-end
-
-vim.api.nvim_create_autocmd('User', {
-  pattern = 'MiniFilesBufferCreate',
-  callback = function(args)
-    Kset('n', 'T', trash_entry, {
-      buffer = args.data.buf_id,
-      desc = 'Move to system Trash',
-    })
-  end,
-})
 
 -- ─────────── Filters ───────────
 
@@ -67,7 +29,7 @@ local function mini_files_filter(fs_entry)
     return true
   end
 
-  -- Hide non-editable file types unless gE has enabled them.
+  -- Hide non-editable file types unless <a-e> has enabled them.
   if not show_excluded and file_exclude.is_excluded(name) then
     return false
   end
@@ -99,7 +61,7 @@ end
 
 -- ─────────── Preview ───────────
 
-local preview_enabled = true
+local preview_enabled = false
 
 local function toggle_preview()
   preview_enabled = not preview_enabled
@@ -115,55 +77,32 @@ end
 
 files.setup({
   content = {
-
     filter = mini_files_filter,
-
-    -- What prefix to show to the left of file system entries
-    prefix = nil,
-
-    -- In which order to show file system entries
-    sort = nil,
   },
-
-  -- Module mappings created only inside the explorer.
-  -- Use an empty string to disable a mapping.
--- stylua: ignore 
   mappings = {
+    close = '<Esc>',
+    go_in_plus = '<CR>',
+    reveal_cwd = '',
     synchronize = 'w',
-    go_in_plus  = '<CR>',
-    close       = '<ESC>',
-    go_in       = 'l',
-    go_out      = 'h',
-    go_out_plus = 'H', -- go to prior dir
-    mark_goto   = "'", -- go to mark set
-    mark_set    = 'm', -- set mark for this session - not retained
-    reset       = '<BS>', -- go to dir where entered files
-    reveal_cwd  = '',
-    show_help   = 'g?',
-    trim_left   = '<',
-    trim_right  = '>',
   },
-
   options = {
-    -- Don't move deleted entries with dd into Mini.files trash
-    -- Instead permanently delete - use <Leader>T to delete to system trash
-    permanent_delete = true,
-
-    -- Use Mini.files when editing a directory
+    permanent_delete = false,
     use_as_default_explorer = true,
   },
 })
 
--- set up size of panels to adjyst based on screen size
+-- set up size of panels to adjust based on screen size
 local function open_minifiles()
   local available = vim.o.columns - 4
 
   local main_width = math.max(24, math.floor(available / 3))
   local preview_width = math.max(40, available - main_width)
 
+  preview_enabled = false
+
   files.open(nil, false, {
     windows = {
-      max_number = 4,
+      max_number = 3,
       preview = false,
       width_focus = main_width,
       width_preview = preview_width,
@@ -206,7 +145,6 @@ vim.api.nvim_create_autocmd('User', {
       desc = 'Toggle dotfiles',
     })
 
-    -- Kset('n', 'gE', toggle_excluded, {
     Kset('n', '<a-e>', toggle_excluded, {
       buffer = buf_id,
       desc = 'Toggle excluded files',
@@ -225,44 +163,11 @@ vim.api.nvim_create_autocmd('User', {
 })
 
 vim.api.nvim_create_autocmd('User', {
+  group = group,
   pattern = 'MiniFilesWindowOpen',
   callback = function(args)
     vim.api.nvim_win_set_config(args.data.win_id, {
       border = 'double',
-    })
-  end,
-})
-
--- ─────────── Bookmarks ───────────
-
-local function expand_path(path)
-  path = path:gsub('^~', vim.env.HOME)
-  path = path:gsub('%$HOME', vim.env.HOME)
-
-  return vim.fs.normalize(vim.fn.expand(path))
-end
-
-vim.api.nvim_create_autocmd('User', {
-  group = group,
-  pattern = 'MiniFilesExplorerOpen',
-
-  callback = function()
-    -- Load the same bookmarks used by bookmarks_linux.lua
-    for id, path in pairs(cwd_config) do
-      local expanded = expand_path(path)
-
-      if vim.fn.isdirectory(expanded) == 1 then
-        files.set_bookmark(id, expanded, {
-          desc = path,
-        })
-      end
-    end
-
-    -- Dynamic bookmark for the current working directory
-    files.set_bookmark('w', function()
-      return vim.fn.getcwd()
-    end, {
-      desc = 'Current working directory',
     })
   end,
 })
