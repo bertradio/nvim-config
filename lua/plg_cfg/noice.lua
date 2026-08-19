@@ -25,10 +25,12 @@ vim.api.nvim_set_hl(0, 'NoiceCmdlineIcon', { fg = '#FFA500' })
 
 require('noice').setup({
   lsp = {
+    signature = {
+      enabled = false,
+    },
     override = {
       ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
       ['vim.lsp.util.stylize_markdown'] = true,
-      ['cmp.entry.get_documentation'] = false,
     },
   },
   routes = {
@@ -36,9 +38,9 @@ require('noice').setup({
       filter = {
         event = 'msg_show',
         find = 'Save changes',
+        kind = { 'confirm', 'confirm_sub' },
       },
       view = 'cmdline_popup',
-      opts = { stop = true },
     },
     {
       filter = {
@@ -46,12 +48,12 @@ require('noice').setup({
         find = '^cwd →',
       },
       view = 'mini',
-      opts = { stop = true },
     },
     {
       -- Catch standard text changes, undo/redo, and add/delete echoes
       filter = {
         event = 'msg_show',
+        kind = { '', 'echo', 'echomsg' },
         any = {
           { find = '%d+L, %d+B' },
           { find = '%d+ lines?' },
@@ -66,12 +68,10 @@ require('noice').setup({
         },
       },
       view = 'mini',
-      opts = { stop = true },
     },
     {
       filter = { event = 'msg_show', kind = 'shell_cmd' },
       view = 'split',
-      opts = { stop = true },
     },
   },
   presets = {
@@ -96,14 +96,12 @@ require('noice').setup({
     cmdline_popup = {
       -- position = { row = 12, col = '50%' }, -- middle of screen
       position = { row = -5, col = '50%' }, -- row of command line box
-      size = { width = 60, height = 'auto' },
       border = { style = 'rounded' },
+      size = { min_width = 60, width = 'auto', height = 'auto' },
     },
     mini = {
-      backend = 'mini',
-      relative = 'editor',
       align = 'message-left',
-      timeout = 2000,
+      timeout = 3000,
       position = { row = 2, col = '95%' },
       border = { style = 'rounded' },
 

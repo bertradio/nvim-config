@@ -38,8 +38,8 @@ operators.setup({
 
   -- Replace text with register
   replace = {
-    -- NOTE: Default `gr*` LSP mappings are removed
-    prefix = 'gr',
+    -- Preserve Neovim's default `gr*` LSP mappings.
+    prefix = 'gR',
 
     -- Whether to reindent new text to match previous indent
     reindent_linewise = true,

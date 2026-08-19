@@ -64,6 +64,7 @@ end
 local preview_enabled = false
 
 local function toggle_preview()
+  local was_enabled = preview_enabled
   preview_enabled = not preview_enabled
 
   files.refresh({
@@ -71,6 +72,12 @@ local function toggle_preview()
       preview = preview_enabled,
     },
   })
+
+  if was_enabled then
+    local branch = files.get_explorer_state().branch
+    table.remove(branch)
+    files.set_branch(branch)
+  end
 end
 
 -- ─────────── Setup ───────────

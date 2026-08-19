@@ -21,10 +21,6 @@
       "rev": "b6346946d10d07998efee029fb0f7a593806d0cd",
       "src": "https://github.com/folke/flash.nvim"
     },
-    "fzf-lua": {
-      "rev": "05e44d38de0a79c11fba5f7bf8138791b1dbdd1e",
-      "src": "https://github.com/ibhagwan/fzf-lua"
-    },
     "indent-blankline.nvim": {
       "rev": "d28a3f70721c79e3c5f6693057ae929f3d9c0a03",
       "src": "https://github.com/lukas-reineke/indent-blankline.nvim"
@@ -64,6 +60,10 @@
     "rainbow-delimiters.nvim": {
       "rev": "012f1480cd9a5fc99fce7678e0a536421a53fc46",
       "src": "https://github.com/HiPhish/rainbow-delimiters.nvim"
+    },
+    "undotree": {
+      "rev": "02b69aed427b848c4dca483fc5e9524b6019c296",
+      "src": "https://github.com/jiaoshijie/undotree"
     }
   }
 }

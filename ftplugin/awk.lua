@@ -21,5 +21,5 @@ local options = {
 
 -- use vim.opt_local to execute settings from options array defined above
 for k, v in pairs(options) do
-  vim.opt_local_local[k] = v
+  vim.opt_local[k] = v
 end

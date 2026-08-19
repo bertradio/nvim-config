@@ -50,7 +50,6 @@ function M.setup()
     backup         = true,
     backupcopy     = 'yes',
     confirm        = true,
-    clipboard      = 'unnamedplus',
     history        = 100,
     swapfile       = true,
     undofile       = true,
@@ -76,7 +75,7 @@ function M.setup()
   -- Set up path and directories
   vim.opt.backupdir = vim.fn.stdpath('data') .. '/backup//'
   vim.opt.undodir = vim.fn.stdpath('data') .. '/undo'
-  vim.opt.path = '+= **'
+  vim.opt.path:append('**')
 
 -- disable providers not needed (speed optimization)
   -- stylua: ignore 
@@ -88,9 +87,8 @@ function M.setup()
   end
 
   -- activate built-in undo for nvim 0.12+
-  vim.cmd('packadd nvim.undotree')
+  -- vim.cmd('packadd nvim.undotree')
   -- Kset('n', '<leader>u', require('undotree').open, { desc = 'Undotree' })
-  Kset('n', '<leader>u', '<cmd>Undotree<cr>', { desc = 'toggle undotree' })
 
   -- disable built-in plugins not needed
   local disabled_builtins = {
@@ -109,6 +107,7 @@ function M.setup()
     'tohtml',
     'tutor',
     'vimball',
+    'undotree',
     'zip',
     'zipPlugin',
   }
@@ -126,9 +125,6 @@ function M.setup()
   -- ──────────────────────────────────────────────────────────────────────
   -- Custom Fold and Status Column Configuration
   -- ──────────────────────────────────────────────────────────────────────
-
-  -- custom Highlight for folds in statuscolumn
-  vim.api.nvim_set_hl(0, 'Folded', { fg = '#cccccc', bg = '#154360', italic = true })
 end
 
 local function clean_leader(s)
@@ -177,11 +173,10 @@ function _G.MyStatusColumn()
   local lnum = vim.v.lnum
 
   local mark_char = ''
-  -- Look for lowercase marks (a-z)
-  for i = 97, 122 do
-    local char = string.char(i)
-    local mark = vim.api.nvim_buf_get_mark(0, char)
-    if mark[1] == lnum then
+  -- Fetch all local marks at once instead of making 26 API calls per screen line.
+  for _, mark in ipairs(vim.fn.getmarklist(vim.api.nvim_get_current_buf())) do
+    local char = mark.mark:match("^'([a-z])$")
+    if char and mark.pos[2] == lnum then
       mark_char = char
       break
     end

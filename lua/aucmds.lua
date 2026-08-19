@@ -46,11 +46,11 @@ end
 augroup('Set_Cursorline', { clear = true })
 
 -- set color of cursorline
-autocmd({ 'VimEnter', 'WinEnter', 'BufWinEnter' }, {
-  group = 'Set_Cursorline',
-  pattern = '*',
-  command = 'highlight CursorLine cterm=bold ctermbg=darkgrey ctermfg=white',
-})
+-- autocmd({ 'VimEnter', 'WinEnter', 'BufWinEnter' }, {
+--   group = 'Set_Cursorline',
+--   pattern = '*',
+--   command = 'highlight CursorLine cterm=bold ctermbg=darkgrey ctermfg=white',
+-- })
 
 -- turn on cursorline and set colors in active window
 autocmd({ 'VimEnter', 'WinEnter', 'BufWinEnter' }, {

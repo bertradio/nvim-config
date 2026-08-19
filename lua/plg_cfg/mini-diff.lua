@@ -13,11 +13,3 @@ diff.setup({
     signs = { add = '+', change = '~', delete = '-' },
   },
 })
-
-vim.api.nvim_create_autocmd('BufWritePost', {
-  callback = function(args)
-    -- Disable and re-enable refreshes the 'save' source baselines
-    diff.disable(args.buf)
-    diff.enable(args.buf)
-  end,
-})

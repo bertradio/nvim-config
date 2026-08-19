@@ -5,7 +5,7 @@
 vim.pack.add({ Gh('jiaoshijie/undotree') })
 
 require('undotree').setup({
-  float_diff = true, -- set this `true` will disable layout option
+  float_diff = false, -- set this `true` will disable layout option
   --- @type "left_bottom" | "left_left_bottom"
   layout = 'left_bottom', -- {left}_{bottom} {left}_{left_bottom}
   --- @type "left" | "right"
@@ -18,7 +18,7 @@ require('undotree').setup({
 
   ignore_filetype = {},
   --- @type "compact" | "legacy"
-  parser = 'compact',
+  parser = 'legacy',
 
   keymaps = {
     ['move_next'] = 'j',

@@ -68,13 +68,14 @@ local function load_buffer_plugins()
   req('mini-pairs')
   req('mini-surround')
   req('pretty-comment')
-  require('my_snippets').setup() -- snippts from core
+  req('undotree')
 end
 
 --  ─────────────────────────────────────────────
 
 local function load_insert_plugins()
   req('my_abbrevs')
+  require('my_snippets').setup()
 end
 
 --  ─────────────────────────────────────────────

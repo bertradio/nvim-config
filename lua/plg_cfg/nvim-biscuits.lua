@@ -9,16 +9,11 @@
 
 vim.pack.add({ Gh('code-biscuits/nvim-biscuits') })
 
--- keybind to toggle biscuits
-Kset(
-  'n',
-  '<Leader>B',
-  '<cmd>lua require("nvim-biscuits").toggle_biscuits()<cr>',
-  { desc = 'Bicuits toggle' }
-)
-
 -- stylua: ignore 
 require('nvim-biscuits').setup({
+  toggle_keybind = '<Leader>B',
+  show_on_start = false,
+
   default_config = {
     trim_by_words = true,
     max_length    = 4, -- max number of words to display
@@ -31,5 +26,3 @@ require('nvim-biscuits').setup({
     text     = { disabled = true },
   },
 })
-
-require('nvim-biscuits').toggle_biscuits() -- start disabled

@@ -23,9 +23,6 @@ local bufremove = require('mini.bufremove')
 local minput = require('mini.input')
 local misc = require('mini.misc')
 
-local pick = require('mini.pick')
-vim.ui.select = pick.ui_select -- use pick instead of system select
-
 --  ──────────────────────────────────────────────────────
 
 align.setup({ mappings = { start = 'ga' } })

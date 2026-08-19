@@ -12,7 +12,7 @@ local snippets = {
     end,
 
     tm = function()
-      return os.date('%m/%d/%y - %H:%m')
+      return os.date('%m/%d/%y - %H:%M')
     end,
 
     crt = function()

@@ -170,16 +170,20 @@ end
 -- Statusline component functions
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-local function short_cwd()
+local function short_cwd(context)
+  local ok_cwd, cwd = pcall(api.nvim_win_call, context.winid, fn.getcwd)
+
   if Myfn and type(Myfn.short_cwd) == 'function' then
-    local ok, result = pcall(Myfn.short_cwd)
+    local ok, result = pcall(Myfn.short_cwd, {
+      cwd = ok_cwd and cwd or nil,
+    })
 
     if ok and result and result ~= '' then
       return result
     end
   end
 
-  return fn.fnamemodify(fn.getcwd(), ':~')
+  return fn.fnamemodify(ok_cwd and cwd or fn.getcwd(), ':~')
 end
 
 -- for macro recording indicator
@@ -206,25 +210,17 @@ local function spell_status(context)
   return ''
 end
 
-local function search_status()
-  if vim.v.hlsearch == 0 then
-    return ''
-  end
-
-  local ok, count = pcall(fn.searchcount, {
-    recompute = 1,
-    maxcount = 999,
-    timeout = 50,
-  })
-
-  if not ok or not count or count.total == 0 then
-    return ''
-  end
-end
+local word_cache = {}
 
 local function word_status(context)
   if not api.nvim_win_is_valid(context.winid) then
     return ''
+  end
+
+  local mode = api.nvim_get_mode().mode:sub(1, 1)
+
+  if mode ~= 'v' and mode ~= 'V' and mode ~= '\22' and word_cache[context.bufnr] then
+    return word_cache[context.bufnr]
   end
 
   local ok, count = pcall(api.nvim_win_call, context.winid, function()
@@ -240,8 +236,34 @@ local function word_status(context)
     return tostring(count.visual_words) .. ' Words selected'
   end
 
-  return tostring(count.words or 0) .. ' Words'
+  local result = tostring(count.words or 0) .. ' Words'
+  word_cache[context.bufnr] = result
+  return result
 end
+
+local function diagnostic_count(context, severity, prefix)
+  if context.diagnostic_counts == nil then
+    local ok, counts = pcall(vim.diagnostic.count, context.bufnr)
+    context.diagnostic_counts = ok and counts or false
+  end
+
+  if not context.diagnostic_counts then
+    return ''
+  end
+
+  local count = context.diagnostic_counts[severity] or 0
+  return count > 0 and prefix .. count or ''
+end
+
+local function error_status(context)
+  return diagnostic_count(context, vim.diagnostic.severity.ERROR, 'E')
+end
+
+local function warning_status(context)
+  return diagnostic_count(context, vim.diagnostic.severity.WARN, 'W')
+end
+
+local diagnostic_gap = '%#StatusLine#  '
 
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- Statusline component configuration
@@ -279,8 +301,21 @@ local right_components = {
   },
 
   {
-    value = search_status, -- not sure what this does
-    highlight = 'CoreStatusInfo',
+    value = error_status, -- current-buffer errors
+    highlight = 'CoreStatusError',
+
+    separator_after = function(context)
+      return warning_status(context) == '' and diagnostic_gap or ''
+    end,
+  },
+
+  {
+    value = warning_status, -- current-buffer warnings
+    highlight = 'CoreStatusWarning',
+
+    separator_after = function()
+      return diagnostic_gap
+    end,
   },
 
   {
@@ -503,18 +538,78 @@ function _G.CoreTabline()
 
   local current = api.nvim_get_current_buf()
   local duplicates = duplicate_names(buffers)
+  local labels = {}
+  local widths = {}
   local result = {}
+
+  local current_index = 1
+
+  for index, bufnr in ipairs(buffers) do
+    labels[index] = buffer_label(bufnr, duplicates)
+    widths[index] = fn.strdisplaywidth(labels[index]) + 3 -- arrow and two spaces
+
+    if bufnr == current then
+      current_index = index
+    end
+  end
+
+  -- Keep a contiguous group around the active buffer within the UI width.
+  local first = current_index
+  local last = current_index
+  local max_width = math.max(vim.o.columns, 1)
+
+  local function visible_width(from, to)
+    local width = 1 -- final transition arrow
+
+    for index = from, to do
+      width = width + widths[index]
+    end
+
+    if from > 1 then
+      width = width + 2 -- leading ellipsis and space
+    end
+
+    if to < #buffers then
+      width = width + 2 -- trailing ellipsis and space
+    end
+
+    return width
+  end
+
+  local distance = 1
+
+  while first > 1 or last < #buffers do
+    local changed = false
+    local left = current_index - distance
+    local right = current_index + distance
+
+    if left >= 1 and visible_width(left, last) <= max_width then
+      first = left
+      changed = true
+    end
+
+    if right <= #buffers and visible_width(first, right) <= max_width then
+      last = right
+      changed = true
+    end
+
+    if not changed then
+      break
+    end
+
+    distance = distance + 1
+  end
 
   local previous_group = 'CoreTabFill'
 
-  for index, bufnr in ipairs(buffers) do
+  if first > 1 then
+    result[#result + 1] = '%#CoreTabFill# …'
+  end
+
+  for index = first, last do
+    local bufnr = buffers[index]
     local current_group = tab_group(index, bufnr, current)
     local transition = tab_transition_group(previous_group, current_group)
-
-    if bufnr == current then
-      -- Prefer truncating older entries before the active buffer.
-      result[#result + 1] = '%<'
-    end
 
     -- Make the leading arrow and label one click target.
     result[#result + 1] = '%' .. bufnr .. '@v:lua.CoreBufferClick@'
@@ -523,24 +618,25 @@ function _G.CoreTabline()
     result[#result + 1] = '%#' .. transition .. '#' .. sep_right
 
     -- Buffer label.
-    result[#result + 1] = '%#'
-      .. current_group
-      .. '# '
-      .. escape_statusline(buffer_label(bufnr, duplicates))
-      .. ' '
+    result[#result + 1] = '%#' .. current_group .. '# ' .. escape_statusline(labels[index]) .. ' '
 
     result[#result + 1] = '%T'
 
     previous_group = current_group
   end
 
-  local last_group = tab_group(#buffers, buffers[#buffers], current)
+  local last_group = tab_group(last, buffers[last], current)
 
   local final_transition = tab_transition_group(last_group, 'CoreTabFill')
 
   result[#result + 1] = '%#' .. final_transition .. '#' .. sep_right
 
   result[#result + 1] = '%#CoreTabFill#'
+
+  if last < #buffers then
+    result[#result + 1] = ' …'
+  end
+
   result[#result + 1] = '%='
   return table.concat(result)
 end
@@ -598,7 +694,11 @@ local function set_highlights()
 
   local cwd_bg = color('CursorLine', 'bg', status_bg)
 
-  local recording_bg = color('DiagnosticWarn', 'fg', 0xf9e2af)
+  local error_bg = color('DiagnosticError', 'fg', 0xf38ba8)
+
+  local warning_bg = color('DiagnosticWarn', 'fg', 0xf9e2af)
+
+  local recording_bg = warning_bg
 
   local info_bg = color('Type', 'fg', 0x94e2d5)
 
@@ -688,6 +788,18 @@ local function set_highlights()
     bold = true,
   })
 
+  api.nvim_set_hl(0, 'CoreStatusError', {
+    fg = normal_bg,
+    bg = error_bg,
+    bold = true,
+  })
+
+  api.nvim_set_hl(0, 'CoreStatusWarning', {
+    fg = normal_bg,
+    bg = warning_bg,
+    bold = true,
+  })
+
   -- Word count follows the current mode.
   for suffix, background in pairs(mode_colors) do
     api.nvim_set_hl(0, 'CoreWordsSep' .. suffix, {
@@ -767,9 +879,6 @@ end
 -- Options
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-vim.o.laststatus = 3
-vim.o.showtabline = 2
-
 vim.o.statusline = '%!v:lua.CoreStatusline()'
 vim.o.tabline = '%!v:lua.CoreTabline()'
 
@@ -798,6 +907,25 @@ local function redraw()
   end)
 end
 
+-- Word counting can be noticeable in large buffers. Keep the previous value
+-- while text is changing, then refresh it shortly after typing stops.
+local word_refresh_generation = {}
+
+local function schedule_word_refresh(event)
+  local bufnr = event.buf
+  local generation = (word_refresh_generation[bufnr] or 0) + 1
+  word_refresh_generation[bufnr] = generation
+
+  vim.defer_fn(function()
+    if word_refresh_generation[bufnr] ~= generation then
+      return
+    end
+
+    word_cache[bufnr] = nil
+    redraw()
+  end, 150)
+end
+
 api.nvim_create_autocmd('ColorScheme', {
   group = group,
   callback = function()
@@ -812,16 +940,28 @@ api.nvim_create_autocmd({
   'BufEnter',
   'BufFilePost',
   'BufWritePost',
+  'DiagnosticChanged',
   'DirChanged',
   'ModeChanged',
   'RecordingEnter',
   'RecordingLeave',
-  'TextChanged',
-  'TextChangedI',
   'WinEnter',
 }, {
   group = group,
   callback = redraw,
+})
+
+api.nvim_create_autocmd({ 'TextChanged', 'TextChangedI' }, {
+  group = group,
+  callback = schedule_word_refresh,
+})
+
+api.nvim_create_autocmd({ 'BufDelete', 'BufReadPost' }, {
+  group = group,
+  callback = function(event)
+    word_cache[event.buf] = nil
+    word_refresh_generation[event.buf] = nil
+  end,
 })
 
 api.nvim_create_autocmd('OptionSet', {

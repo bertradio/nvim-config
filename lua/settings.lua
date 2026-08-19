@@ -10,11 +10,6 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- Consistent border highlights
-vim.api.nvim_set_hl(0, 'FloatBorder', { link = 'Normal' })
-vim.api.nvim_set_hl(0, 'FloatTitle', { link = 'Title' })
-vim.api.nvim_set_hl(0, 'NormalFloat', { link = 'Normal' })
-
 require('options').setup()
 
 do

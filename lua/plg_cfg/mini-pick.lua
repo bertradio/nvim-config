@@ -13,9 +13,9 @@ visits.setup()
 
 pick.setup({
   mappings = {
-    choose_in_split = '',
+    choose_in_split = '<M-s>',
     choose_in_tabpage = '',
-    choose_in_vsplit = '',
+    choose_in_vsplit = '<M-v>',
     paste = '<C-v>',
     scroll_down = '<PageDown>',
     scroll_up = '<PageUp>',
@@ -200,7 +200,7 @@ end, { desc = 'visits - recent' })
 
 Kset('n', '<Leader>pw', function()
   pick.builtin.grep({
-    pattern = vim.fn.expand('<cWORD>'),
+    pattern = vim.fn.expand('<cword>'),
     method = 'fixed',
   })
 end, { desc = 'grep word under cursor' })
