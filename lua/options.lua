@@ -50,6 +50,7 @@ function M.setup()
     backup         = true,
     backupcopy     = 'yes',
     confirm        = true,
+    clipboard      = 'unnamedplus',
     history        = 100,
     swapfile       = true,
     undofile       = true,

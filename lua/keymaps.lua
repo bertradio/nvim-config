@@ -4,7 +4,6 @@
 
 -- 04/30/26 - standardized on vim.keymap.set for all mappings
 -- 05/06/26 - use Kset for all mappings - defined in init.lua
--- 07/29/26 - added mini.bufremove
 -- 08/04/26 - removed duplicates, geneeral cleanup
 
 -------------------------------------------------

@@ -4,7 +4,15 @@
 
 -- modified 05/06/26 for lighter backdrop - replaced mini.jump and jump2
 
-vim.pack.add({ Gh('folke/flash.nvim') })
+-- vim.pack.add({ Gh('folke/flash.nvim') })
+
+vim.pack.add({
+  {
+    src = 'https://github.com/pedro757/flash.nvim.git',
+    version = 'fix/neovim-0.13-search-state',
+    name = 'flash.nvim',
+  },
+})
 
 local flash = require('flash')
 
@@ -27,13 +35,11 @@ vim.api.nvim_set_hl(0, 'FlashCurrent', {
 
 flash.setup({
 
-  --   autojump = true,
-  --   -- save location in the jumplist
-  --   jumplist = true,
-  --   -- add pattern to search history
-  --   history = true,
-  --   -- clear highlight after jump
-  --   nohlsearch = false,
+  jumplist = true,
+  -- add pattern to search history
+  history = true,
+  -- clear highlight after jump
+  nohlsearch = false,
 
   modes = {
     search = { enabled = false },
@@ -41,28 +47,22 @@ flash.setup({
   },
 })
 
--- Kset({ 'n', 'x', 'o' }, 's', function()
---   flash.jump({
---     search = {
---       mode = function(str)
---         return '\\<' .. str
---       end,
---     },
---   })
--- end, { desc = 'Flash - start of word' })
---
--- Kset({ 'n', 'x', 'o' }, 'S', function()
---   flash.treesitter()
--- end, { desc = 'Flash Treesitter' })
---
--- Kset({ 'o', 'x' }, 'R', function()
---   flash.treesitter_search()
--- end, { desc = 'Treesitter Search' })
---
--- Kset('o', 'r', function()
---   flash.remote()
--- end, { desc = 'Remote Flash' })
---
+Kset({ 'n', 'x', 'o' }, 's', function()
+  flash.jump()
+end, { desc = 'Flash' })
+
+Kset({ 'n', 'x', 'o' }, 'S', function()
+  flash.treesitter()
+end, { desc = 'Flash Treesitter' })
+
+Kset({ 'o', 'x' }, 'R', function()
+  flash.treesitter_search()
+end, { desc = 'Treesitter Search' })
+
+Kset('o', 'r', function()
+  flash.remote()
+end, { desc = 'Remote Flash' })
+
 -- -- Kset('c', '<c-s>', function()
 -- --   flash.toggle()
 -- -- end, { desc = 'Toggle Flash Search' })

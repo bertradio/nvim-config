@@ -19,7 +19,6 @@
 
 local align = require('mini.align')
 local bracketed = require('mini.bracketed')
-local bufremove = require('mini.bufremove')
 local minput = require('mini.input')
 local misc = require('mini.misc')
 
@@ -28,8 +27,6 @@ local misc = require('mini.misc')
 align.setup({ mappings = { start = 'ga' } })
 
 bracketed.setup()
-
-bufremove.setup()
 
 minput.setup()
 

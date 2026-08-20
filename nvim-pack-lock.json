@@ -18,8 +18,9 @@
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "flash.nvim": {
-      "rev": "b6346946d10d07998efee029fb0f7a593806d0cd",
-      "src": "https://github.com/folke/flash.nvim"
+      "rev": "c92888d432bebeb145dad09c07ab65cc7c577184",
+      "src": "https://github.com/pedro757/flash.nvim.git",
+      "version": "'fix/neovim-0.13-search-state'"
     },
     "indent-blankline.nvim": {
       "rev": "d28a3f70721c79e3c5f6693057ae929f3d9c0a03",

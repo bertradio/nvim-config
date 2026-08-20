@@ -11,6 +11,7 @@ local autolist = require('autolist')
 
 autolist.setup({})
 
+-- Suggested by codex to make mappings local to markdown files
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'markdown',
   callback = function(args)
