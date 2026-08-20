@@ -5,8 +5,8 @@
 --  ──────────── mappings ────────────
 
 -- make mappings local to the markdown buffer with buffer = true
-Myfn.map('v', '<Leader>b', '<esc>`>a**<esc>`<i**<esc>', { buffer = true, desc = 'Make bold' })
-Myfn.map('v', '<Leader>i', '<esc>`>a*<esc>`<i*<esc>', { buffer = true, desc = 'Make italic' })
+-- Myfn.map('v', '<Leader>b', '<esc>`>a**<esc>`<i**<esc>', { buffer = true, desc = 'Make bold' })
+-- Myfn.map('v', '<Leader>i', '<esc>`>a*<esc>`<i*<esc>', { buffer = true, desc = 'Make italic' })
 
 --  ───── Other Markdown File Settings ─────
 

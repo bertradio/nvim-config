@@ -26,6 +26,10 @@
       "rev": "d28a3f70721c79e3c5f6693057ae929f3d9c0a03",
       "src": "https://github.com/lukas-reineke/indent-blankline.nvim"
     },
+    "markdown-plus.nvim": {
+      "rev": "0f63b49dfb234fb4b8ffcff7582337235174c857",
+      "src": "https://github.com/yousefhadder/markdown-plus.nvim"
+    },
     "mason.nvim": {
       "rev": "2a6940af80375532e5e9e7c1f2fc6319a1b7a69d",
       "src": "https://github.com/williamboman/mason.nvim"

@@ -81,7 +81,8 @@ end
 --  ─────────────────────────────────────────────
 
 local function load_markdown_plugins()
-  req('autolist')
+  -- req('autolist')
+  req('markdown-plus')
   -- req('render-markdown')
 end
 

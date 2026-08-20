@@ -109,7 +109,7 @@ Kset('x', '/', '<Esc>/\\%V')
 -- open file in Typora
 Kset(
   'n',
-  '<leader>t',
+  '<leader>y',
   '<cmd>lua Myfn.OpenInTypora()<CR>',
   { noremap = true, silent = true, desc = 'Open in Typora' }
 )

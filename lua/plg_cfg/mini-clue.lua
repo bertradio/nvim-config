@@ -52,9 +52,12 @@ clue.setup({
 
     { mode = 'n', keys = '<Leader>b', desc = '+buffer' },
     { mode = 'n', keys = '<Leader>e', desc = '+edit configs' },
-    { mode = 'n', keys = '<Leader>m', desc = '+pretty' },
+    { mode = 'n', keys = '<Leader>m', desc = '+md' },
+    { mode = 'n', keys = '<Leader>mf', desc = '+md footnotes' },
+    { mode = 'n', keys = '<Leader>mQ', desc = '+md callouts' },
     { mode = 'n', keys = '<Leader>p', desc = '+mini.pick' },
     { mode = 'n', keys = '<Leader>q', desc = '+sessions' },
     { mode = 'n', keys = '<Leader>s', desc = '+mini.surround' },
+    { mode = 'n', keys = '<Leader>t', desc = '+md tables' },
   },
 })

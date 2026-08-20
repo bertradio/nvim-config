@@ -141,6 +141,7 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.opt_local.foldenable = true
     vim.opt_local.foldlevel = 99
     vim.opt_local.foldlevelstart = 99
+    vim.cmd('set ft=markdown')
   end,
 })
 
