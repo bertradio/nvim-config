@@ -13,7 +13,7 @@
 -- 07/14/26 - added notifier to replace noice in part
 -- 07/19/26 - removed notifier decided to go back to system notifications - all in one place
 
-vim.pack.add({ Gh('nvim-tree/nvim-web-devicons') })
+-- vim.pack.add({ Gh('nvim-tree/nvim-web-devicons') })
 vim.pack.add({ Gh('folke/snacks.nvim') })
 
 local snacks = require('snacks')

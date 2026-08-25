@@ -43,8 +43,8 @@ require('catppuccin').setup({
         Folded = { fg = '#cccccc', bg = '#154360', italic = true },
         FoldColumn = { bg = '#262626', fg = colors.sapphire },
 
-        -- FzfLuaGrepHighlight = { fg = colors.red,    style = { 'bold' } },
-        -- FzfLuaSearch        = { fg = colors.yellow, style = { 'bold' } },
+        FzfLuaGrepHighlight = { fg = colors.red, style = { 'bold' } },
+        FzfLuaSearch = { fg = colors.yellow, style = { 'bold' } },
       }
     end,
   },

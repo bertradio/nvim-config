@@ -13,7 +13,6 @@
 -- need to load mini here so modules below will work
 vim.pack.add({
   Gh('nvim-mini/mini.nvim'),
-  Gh('nvim-tree/nvim-web-devicons'),
 })
 
 local misc = require('mini.misc')
@@ -55,19 +54,19 @@ end
 local function load_buffer_plugins()
   req('native-lsp')
   req('nvim-biscuits')
-  req('flash')
   req('hlslens')
   req('rainbow')
   req('conform')
   req('indent-blankline')
   req('mini-ai')
   req('mini-diff')
+  req('flash')
   req('mini-identscope')
   req('mini-move')
   req('mini-operators')
   req('mini-pairs')
   req('mini-surround')
-  req('pretty-comment')
+  -- req('pretty-comment')
   req('undotree')
 end
 

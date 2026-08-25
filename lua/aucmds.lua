@@ -133,11 +133,7 @@ vim.api.nvim_create_autocmd('FileType', {
   pattern = 'markdown',
   callback = function()
     vim.opt_local.foldmethod = 'expr'
-    if vim.fn.has('nvim-0.10') == 1 then
-      vim.opt_local.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-    else
-      vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-    end
+    vim.opt_local.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
     vim.opt_local.foldenable = true
     vim.opt_local.foldlevel = 99
     vim.opt_local.foldlevelstart = 99
@@ -223,7 +219,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.wo[win].cursorline = false
     vim.cmd.redraw()
 
-    vim.hl.hl_op({
+    local highlight_yank = vim.fn.has('nvim-0.13') == 1 and vim.hl.hl_op or vim.hl.on_yank
+    highlight_yank({
       higroup = 'YankHighlight',
       timeout = yank_timeout,
       on_visual = true,

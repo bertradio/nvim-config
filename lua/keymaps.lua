@@ -50,7 +50,7 @@ Kset('n', 'j', 'gj', { desc = 'Move cursor down one line' })
 -------------------------------------------------
 
 -- Write current buffer - end in normal mode
-Kset({ 'n', 'i' }, '<c-s>', '<esc><cmd>w<cr>', { desc = 'Write buffer' })
+Kset({ 'n', 'i', 'x', 'o' }, '<c-s>', '<esc><cmd>w<cr>', { desc = 'Write buffer' })
 -- Exit nvim normally
 Kset({ 'n', 'i', 'v' }, '<c-q>', '<cmd>q<cr>', { desc = 'Exit nvim' })
 
@@ -59,7 +59,7 @@ Kset({ 'n', 'i', 'v' }, '<c-q>', '<cmd>q<cr>', { desc = 'Exit nvim' })
 -------------------------------------------------
 
 -- load last file
-Kset('n', '<Leader>l', '<cmd>e#<1<cr>', { desc = 'Load last file' })
+Kset('n', '<Leader>L', '<cmd>e#<1<cr>', { desc = 'Load last file' })
 
 -- Select all text in the current buffer
 Kset('n', '<C-a>', 'ggVG', { desc = 'Select all' })
@@ -109,7 +109,7 @@ Kset('x', '/', '<Esc>/\\%V')
 -- open file in Typora
 Kset(
   'n',
-  '<leader>y',
+  '<leader>Y',
   '<cmd>lua Myfn.OpenInTypora()<CR>',
   { noremap = true, silent = true, desc = 'Open in Typora' }
 )

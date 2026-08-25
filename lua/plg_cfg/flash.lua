@@ -3,16 +3,9 @@
 --    ╰────────────────────────────╯
 
 -- modified 05/06/26 for lighter backdrop - replaced mini.jump and jump2
+-- 08/24/26 - after folke fixed 0.13 issues, re-added
 
--- vim.pack.add({ Gh('folke/flash.nvim') })
-
-vim.pack.add({
-  {
-    src = 'https://github.com/pedro757/flash.nvim.git',
-    version = 'fix/neovim-0.13-search-state',
-    name = 'flash.nvim',
-  },
-})
+vim.pack.add({ Gh('folke/flash.nvim') })
 
 local flash = require('flash')
 
@@ -55,14 +48,14 @@ Kset({ 'n', 'x', 'o' }, 'S', function()
   flash.treesitter()
 end, { desc = 'Flash Treesitter' })
 
-Kset({ 'o', 'x' }, 'R', function()
-  flash.treesitter_search()
-end, { desc = 'Treesitter Search' })
-
 Kset('o', 'r', function()
   flash.remote()
 end, { desc = 'Remote Flash' })
 
--- -- Kset('c', '<c-s>', function()
--- --   flash.toggle()
--- -- end, { desc = 'Toggle Flash Search' })
+Kset({ 'o', 'x' }, 'R', function()
+  flash.treesitter_search()
+end, { desc = 'Remote treesitter' })
+
+Kset('c', '<c-F>', function()
+  flash.toggle()
+end, { desc = 'Toggle Flash Search' })

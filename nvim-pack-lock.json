@@ -1,9 +1,5 @@
 {
   "plugins": {
-    "autolist.nvim": {
-      "rev": "339499695d3be8c44aefef1d2516464758957004",
-      "src": "https://github.com/gaoDean/autolist.nvim"
-    },
     "blink.cmp": {
       "rev": "78336bc89ee5365633bcf754d93df01678b5c08f",
       "src": "https://github.com/saghen/blink.cmp",
@@ -18,16 +14,19 @@
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "flash.nvim": {
-      "rev": "c92888d432bebeb145dad09c07ab65cc7c577184",
-      "src": "https://github.com/pedro757/flash.nvim.git",
-      "version": "'fix/neovim-0.13-search-state'"
+      "rev": "5f0f270fdc7c5b0c21d903ee85b9cb06f2ac636a",
+      "src": "https://github.com/folke/flash.nvim"
+    },
+    "fzf-lua": {
+      "rev": "05e44d38de0a79c11fba5f7bf8138791b1dbdd1e",
+      "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "indent-blankline.nvim": {
       "rev": "d28a3f70721c79e3c5f6693057ae929f3d9c0a03",
       "src": "https://github.com/lukas-reineke/indent-blankline.nvim"
     },
     "markdown-plus.nvim": {
-      "rev": "0f63b49dfb234fb4b8ffcff7582337235174c857",
+      "rev": "52f6af120a6409a5b8860cb0db01e835483d00d6",
       "src": "https://github.com/yousefhadder/markdown-plus.nvim"
     },
     "mason.nvim": {
@@ -35,7 +34,7 @@
       "src": "https://github.com/williamboman/mason.nvim"
     },
     "mini.nvim": {
-      "rev": "e58ad4b0c9e9376096b9704f98fc00d4c9448870",
+      "rev": "0caecdd7408bc0a77697a83b931c742fcc5b0349",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "noice.nvim": {
@@ -43,7 +42,7 @@
       "src": "https://github.com/folke/noice.nvim"
     },
     "nui.nvim": {
-      "rev": "a25dd472316d806eb38a5dd667c2e40da5570c75",
+      "rev": "10fc361835c856ba4233ef5ea135b919bf3dce97",
       "src": "https://github.com/MunifTanjim/nui.nvim"
     },
     "nvim-biscuits": {
