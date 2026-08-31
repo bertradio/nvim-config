@@ -88,9 +88,12 @@ files.setup({
   },
   mappings = {
     close = '<Esc>',
+    go_in = '',
     go_in_plus = '<CR>',
     reveal_cwd = '',
     synchronize = 'w',
+    reset = '=',
+    go_out = '<BS>',
   },
   options = {
     permanent_delete = false,
@@ -208,6 +211,7 @@ local bookmarks = {
   h = { '~/.config/nvim/hold', 'Hold' },
   H = { '~', 'Home' },
   l = { '~/.local/bin', 'Local bin' },
+  L = { '~/.config/nvim/lua', 'Neovim lua' },
   m = { '~/Insync/bertkleinman@outlook.com/OneDrive/My Docs/Moving Forward', 'Moving Forward' },
   n = { '~/.config/nvim', 'Neovim config' },
   o = { '~/Insync/bertkleinman@outlook.com/OneDrive/My Docs', 'OneDrive documents' },
@@ -224,7 +228,7 @@ vim.api.nvim_create_autocmd('User', {
       local path = vim.fn.expand(bookmark[1])
 
       if vim.fn.isdirectory(path) == 1 then
-        MiniFiles.set_bookmark(id, path, {
+        files.set_bookmark(id, path, {
           desc = bookmark[2],
         })
       else

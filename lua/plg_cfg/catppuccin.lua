@@ -33,7 +33,7 @@ require('catppuccin').setup({
     end,
     mocha = function(colors)
       return {
-        CursorLine = { bg = colors.surface0 },
+        -- CursorLine = { bg = colors.surface0 },
         LineNr = { bg = colors.mantle, fg = colors.overlay1 },
         Comment = {
           bg = colors.mantle,
@@ -59,4 +59,3 @@ require('catppuccin').setup({
 })
 
 vim.cmd.colorscheme('catppuccin-mocha')
--- vim.cmd.colorscheme('catppuccin')

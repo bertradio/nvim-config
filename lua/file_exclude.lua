@@ -138,6 +138,8 @@ M.extensions = {
   -- Other application-specific files
   ['efx'] = true,
   ['fxm'] = true,
+  ['gdsheet'] = true,
+  ['gddoc'] = true,
   ['glabels'] = true,
   ['jex'] = true,
   ['lnk'] = true,

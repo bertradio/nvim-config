@@ -22,7 +22,6 @@ local bracketed = require('mini.bracketed')
 local icons = require('mini.icons')
 local minput = require('mini.input')
 local misc = require('mini.misc')
-
 --  ──────────────────────────────────────────────────────
 
 align.setup({ mappings = { start = 'ga' } })

@@ -28,6 +28,7 @@ vim.api.nvim_set_hl(0, 'FlashCurrent', {
 
 flash.setup({
 
+  -- add to jumplist
   jumplist = true,
   -- add pattern to search history
   history = true,

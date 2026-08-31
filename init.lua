@@ -23,10 +23,20 @@ vim.g.clipboard = {
   cache_enabled = 1,
 }
 
+Gh = function(x)
+  return 'https://github.com/' .. x
+end
+
 -- cache for speed
 if vim.loader then
   vim.loader.enable()
 end
+
+vim.pack.add({
+  Gh('nvim-mini/mini.nvim'),
+})
+
+local misc = require('mini.misc')
 
 -- for all keymaps
 -- to check for dupes comment this out and uncomment the code below
@@ -76,5 +86,11 @@ Kset = vim.keymap.set
 vim.opt.shortmess:append('I')
 
 -- initialization files
-require('settings') -- calls options.lua
-require('plugin_setup') -- autocmds to set order of lazy loading
+-- load safely with error message
+misc.safely('now', function()
+  require('settings')
+end)
+
+misc.safely('now', function()
+  require('plugin_setup')
+end)

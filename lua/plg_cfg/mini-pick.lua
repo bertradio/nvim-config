@@ -193,11 +193,6 @@ Kset('n', '<Leader>ps', function()
   extra.pickers.history({ scope = '/' })
 end, { desc = 'search history' })
 
-Kset('n', '<Leader>pv', function()
-  local sort_frequent = visits.gen_sort.default({ recency_weight = 1 })
-  visits.select_path('', { sort = sort_frequent })
-end, { desc = 'visits - recent' })
-
 Kset('n', '<Leader>pw', function()
   pick.builtin.grep({
     pattern = vim.fn.expand('<cword>'),
@@ -221,3 +216,67 @@ Kset('n', '<Leader>pz', zoxide_picker, { noremap = true, silent = true, desc = '
 Kset('n', 'zz', function()
   extra.pickers.spellsuggest()
 end, { desc = 'spell suggest' })
+
+Kset('n', '<Leader>pv', function()
+  local sort_recent = visits.gen_sort.default({ recency_weight = 1 })
+
+  local paths = visits.list_paths('', {
+    sort = sort_recent,
+  })
+
+  paths = vim.tbl_filter(function(path)
+    local stat = vim.uv.fs_stat(path)
+    return stat and stat.type == 'file'
+  end, paths)
+
+  local items = vim.tbl_map(function(path)
+    return {
+      path = path,
+      text = path,
+    }
+  end, paths)
+
+  pick.start({
+    source = {
+      name = 'Visits - recent',
+      items = items,
+
+      show = function(buf_id, items_to_show, query)
+        local win_id = vim.fn.bufwinid(buf_id)
+        local win_width = win_id ~= -1 and vim.api.nvim_win_get_width(win_id) or 100
+
+        local date_width = 16 -- YYYY-MM-DD HH:MM
+        local separator = ' │ '
+        local path_width = math.max(20, win_width - date_width - #separator + 1)
+
+        local display_items = vim.tbl_map(function(item)
+          local stat = vim.uv.fs_stat(item.path)
+
+          local modified = ''
+          if stat and stat.mtime then
+            modified = os.date('%Y-%m-%d %H:%M', stat.mtime.sec)
+          end
+
+          local path = item.path
+          local relative = vim.fs.relpath(vim.fn.getcwd(), path)
+
+          if relative then
+            path = relative
+          end
+
+          -- Truncate long paths so the date column stays aligned.
+          if vim.fn.strdisplaywidth(path) > path_width then
+            path = '…' .. path:sub(-(path_width - 1))
+          end
+
+          return {
+            path = item.path,
+            text = string.format('%-' .. path_width .. 's%s%s', path, separator, modified),
+          }
+        end, items_to_show)
+
+        pick.default_show(buf_id, display_items, query)
+      end,
+    },
+  })
+end, { desc = 'visits - recent' })

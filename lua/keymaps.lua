@@ -167,3 +167,5 @@ Kset('n', '<leader>T', toggle_bool, { desc = 'Toggle boolean under cursor' })
 Kset('i', '<F5>', function()
   vim.api.nvim_put({ os.date('%m/%d/%y - ') }, 'c', true, true)
 end, { desc = "Insert today's date" })
+
+Kset('n', '<Leader>ee', '<cmd>edit!<CR>', { desc = 're-read buffer' })

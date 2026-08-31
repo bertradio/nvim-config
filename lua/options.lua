@@ -79,7 +79,7 @@ function M.setup()
   vim.opt.path:append('**')
 
 -- disable providers not needed (speed optimization)
-  -- stylua: ignore 
+  -- stylua: ignore
   if vim.g.enable_providers ~= true then
     vim.g.loaded_node_provider    =  0
     vim.g.loaded_perl_provider    =  0
@@ -122,11 +122,11 @@ function M.setup()
     local hl = 'DiagnosticSign' .. type
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
   end
-
-  -- ──────────────────────────────────────────────────────────────────────
-  -- Custom Fold and Status Column Configuration
-  -- ──────────────────────────────────────────────────────────────────────
 end
+
+-- ──────────────────────────────────────────────────────────────────────
+-- Custom Fold and Status Column Configuration
+-- ──────────────────────────────────────────────────────────────────────
 
 local function clean_leader(s)
   s = (s or ''):gsub('^%s*', '')

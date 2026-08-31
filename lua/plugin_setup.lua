@@ -10,11 +10,6 @@
 -- 07/09/26 replaced anonymous autocmd callbacks with named functions
 -- 08/01/26 split mini into separate files - treating each as a plugin
 
--- need to load mini here so modules below will work
-vim.pack.add({
-  Gh('nvim-mini/mini.nvim'),
-})
-
 local misc = require('mini.misc')
 
 -- load safely with error message
@@ -35,6 +30,7 @@ end
 local function load_ui_plugins()
   req('catppuccin')
   req('statusline')
+  -- req('lualine')
   req('mini')
   req('mini-clue')
   req('mini-files')
@@ -42,6 +38,8 @@ local function load_ui_plugins()
   req('mini-pick')
   req('noice')
   req('blink')
+  req('native-lsp')
+  -- req('find-file')
   if Myfn.is_windows() then
     req('bookmarks_win')
   else
@@ -52,7 +50,6 @@ end
 --  ─────────────────────────────────────────────
 
 local function load_buffer_plugins()
-  req('native-lsp')
   req('nvim-biscuits')
   req('hlslens')
   req('rainbow')
@@ -82,7 +79,7 @@ end
 local function load_markdown_plugins()
   -- req('autolist')
   req('markdown-plus')
-  -- req('render-markdown')
+  req('render-markdown')
 end
 
 --  ────────────────────────────────────────────────────────

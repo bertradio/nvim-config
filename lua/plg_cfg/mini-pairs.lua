@@ -27,4 +27,5 @@ mpairs.setup({
       register = { cr = false },
     },
   },
+  modes = { command = true },
 })

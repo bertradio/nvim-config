@@ -7,7 +7,7 @@
 -- Created: 03/21/24
 
 vim.pack.add({
-  { src = Gh('MeanderingProgrammer/markdown.nvim'), name = 'render-markdown' },
+  { src = Gh('MeanderingProgrammer/render-markdown.nvim') },
 })
 
 -- stylua: ignore 
@@ -15,5 +15,5 @@ require('render-markdown').setup({
   latex       = { enabled = false },
   html        = { enabled = false },
   yaml        = { enabled = false },
-  completions = { lsp = { enabled = true } },
+  completions = { lsp      = { enabled = true } },
 })

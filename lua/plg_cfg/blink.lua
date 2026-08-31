@@ -21,11 +21,6 @@ local blink = require('blink.cmp')
 -- stylua: ignore
 blink.setup({
 
-  snippets   = {
-    preset = 'default',
-  },
-
-  appearance = { nerd_font_variant = 'mono' },
   signature  = { enabled = true, window = { border = 'rounded' } },
 
   keymap     = {
@@ -35,7 +30,6 @@ blink.setup({
     ['<S-Tab>']   = { 'snippet_backward', 'fallback' },
     ['<Tab>']     = { 'snippet_forward', 'accept', 'fallback' },
     ['<Up>']      = { 'select_prev', 'fallback' },
-    preset        = 'default',
   },
 
   cmdline    = {
@@ -57,8 +51,7 @@ blink.setup({
       if type == '/' or type == '?' then
         return { 'buffer' }
       end
-      -- Command mode: Added '>' and '=' for broader coverage
-      if type == ':' or type == '@' or type == '>' or type == '=' then
+       if type == ':' or type == '@' then
         return { 'cmdline' }
       end
       return {}
@@ -81,18 +74,16 @@ blink.setup({
 
     documentation = {
       auto_show          = true,
-      auto_show_delay_ms = 150,
+      auto_show_delay_ms = 250,
       window             = { border = 'rounded' },
     },
 
     trigger = {
       show_in_snippet = false,
-      show_on_keyword = true,
     },
 
     ghost_text = {
-      enabled                = false,
-      show_without_selection = true,
+      enabled = false,
     },
 
     list = {
@@ -105,23 +96,9 @@ blink.setup({
 
   sources    = {
     default = { 'lsp', 'snippets', 'buffer', 'path' },
-
-    providers = {
-      buffer   = {
-        name               = 'Buffer',
-        module             = 'blink.cmp.sources.buffer',
-        score_offset       = 80,
-        min_keyword_length = 2,
-      },
-      lsp      = { name = 'LSP', module = 'blink.cmp.sources.lsp', score_offset = 80 },
-      snippets = { name = 'Snippets', module = 'blink.cmp.sources.snippets', score_offset = 80 },
-      path     = { name = 'Path', module = 'blink.cmp.sources.path', score_offset = 80 },
-    },
-
+    min_keyword_length = 2,
     per_filetype = {
-      bash     = { 'lsp', 'snippets', 'path', 'buffer' },
-      lua      = { 'snippets', 'buffer', 'lsp', 'path' },
-      markdown = { 'buffer', 'snippets', 'path' },
-    },
+         markdown = { 'buffer', 'snippets', 'path' },
+    }
   },
 })
