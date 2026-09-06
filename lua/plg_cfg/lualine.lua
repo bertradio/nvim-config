@@ -7,7 +7,7 @@
 -- Rewrite to optimize from Gemini
 
 vim.pack.add({
-  Gh('nvim-tree/nvim-web-devicons'),
+  -- Gh('nvim-tree/nvim-web-devicons'), -- commented out because disabled icons
   Gh('nvim-lualine/lualine.nvim'),
 })
 
@@ -107,14 +107,14 @@ end)
 lualine.setup({
   options = {
     theme                = 'catppuccin-nvim', -- need to use this since lualine loaded before catppuccin
-    icons_enabled        = true,
+    icons_enabled        = false,
     section_separators   = { left = '', right = '' },
     component_separators = { left = '', right = '' },
     always_divide_middle = true,
     globalstatus         = true,
-    disabled_filetypes = {
-      statusline = {'snacks_dashboard'},
-    },
+    -- disabled_filetypes = {
+    --   statusline = {'snacks_dashboard'},
+    -- },
     refresh = {
       statusline = 500,
       tabline    = 500,
@@ -139,7 +139,8 @@ lualine.setup({
       -- },
     },
     lualine_y = {},
-    lualine_z = { getWords },
+    -- lualine_z = { getWords },
+    lualine_z = {'filesize'}
   },
 
   tabline = {

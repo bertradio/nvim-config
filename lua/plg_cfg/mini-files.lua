@@ -88,7 +88,7 @@ files.setup({
   },
   mappings = {
     close = '<Esc>',
-    go_in = '',
+    go_in = 'l',
     go_in_plus = '<CR>',
     reveal_cwd = '',
     synchronize = 'w',

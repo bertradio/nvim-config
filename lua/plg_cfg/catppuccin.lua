@@ -29,6 +29,7 @@ require('catppuccin').setup({
         MiniIndentscopeSymbol = { fg = '#ffffff', nocombine = true },
         NormalFloat = { link = 'Normal' },
         SignColumn = { bg = colors.none },
+        WinSeparator = { fg = colors.overlay1, bg = colors.base },
       }
     end,
     mocha = function(colors)

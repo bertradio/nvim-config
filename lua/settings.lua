@@ -10,6 +10,7 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+
 require('options').setup()
 
 do
