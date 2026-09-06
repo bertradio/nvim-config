@@ -39,11 +39,14 @@ local function load_ui_plugins()
   req('blink')
   req('native-lsp')
   req('smart-splits')
-  if Myfn.is_windows() then
-    req('bookmarks_win')
-  else
-    req('bookmarks_linux')
-  end
+  -- req('fzf-lua')
+  req('bookmarks_linux')
+  req('yazi')
+  -- if Myfn.is_windows() then
+  --   req('bookmarks_win')
+  -- else
+  --   req('bookmarks_linux')
+  -- end
 end
 
 --  ─────────────────────────────────────────────
@@ -54,8 +57,9 @@ local function load_buffer_plugins()
   req('rainbow')
   req('conform')
   req('indent-blankline')
-  req('mini-ai')
   req('flash')
+  req('mini-ai')
+  req('mini-diff')
   req('mini-identscope')
   req('mini-move')
   req('mini-operators')

@@ -17,6 +17,10 @@
       "rev": "5f0f270fdc7c5b0c21d903ee85b9cb06f2ac636a",
       "src": "https://github.com/folke/flash.nvim"
     },
+    "fzf-lua": {
+      "rev": "05e44d38de0a79c11fba5f7bf8138791b1dbdd1e",
+      "src": "https://github.com/ibhagwan/fzf-lua"
+    },
     "indent-blankline.nvim": {
       "rev": "f1e186e44d3b7f9ae918008e2c28ce37c6023d2d",
       "src": "https://github.com/lukas-reineke/indent-blankline.nvim"
@@ -26,7 +30,7 @@
       "src": "https://github.com/nvim-lualine/lualine.nvim"
     },
     "markdown-plus.nvim": {
-      "rev": "52f6af120a6409a5b8860cb0db01e835483d00d6",
+      "rev": "03008ad1cb6f1f5a675f3822a84b54b6833d0898",
       "src": "https://github.com/yousefhadder/markdown-plus.nvim"
     },
     "mason.nvim": {
@@ -53,6 +57,10 @@
       "rev": "be2d7b2be01860b5445a007ff2bc72b29896db6b",
       "src": "https://github.com/kevinhwang91/nvim-hlslens"
     },
+    "plenary.nvim": {
+      "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
+      "src": "https://github.com/nvim-lua/plenary.nvim"
+    },
     "pretty-comment.nvim": {
       "rev": "f0d030edcf908dab73aaab273c39e6c154a4daee",
       "src": "https://github.com/Cartoone9/pretty-comment.nvim"
@@ -69,9 +77,17 @@
       "rev": "0c7abbf2f4e64e56519cb036f01e62e83e2cdcf1",
       "src": "https://github.com/mrjones2014/smart-splits.nvim"
     },
+    "snacks.nvim": {
+      "rev": "882c996cf28183f4d63640de0b4c02ec886d01f2",
+      "src": "https://github.com/folke/snacks.nvim"
+    },
     "undotree": {
       "rev": "02b69aed427b848c4dca483fc5e9524b6019c296",
       "src": "https://github.com/jiaoshijie/undotree"
+    },
+    "yazi.nvim": {
+      "rev": "372d0655f0591402a1b9e3bb4c25f71797d62128",
+      "src": "https://github.com/mikavilpas/yazi.nvim"
     }
   }
 }

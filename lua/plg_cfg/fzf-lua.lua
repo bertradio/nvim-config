@@ -248,7 +248,7 @@ fzf.setup({
 -- set keymaps
 local function maps()
   Kset('n', '<Leader>fb',  '<cmd>FzfLua buffers<cr>',            { desc = 'buffers' })
-  Kset('n', '<Leader>fc',  '<cmd>FzfLua command_history<cr>',    { desc = 'command history' })
+  Kset('n', '<Leader>fc',  '<cmd>FzfLua changes<cr>',            { desc = 'changes' })
   Kset('n', '<Leader>fd',  '<cmd>FzfLua diagnostics_document<cr>',{ desc = 'diagnostics' })
   Kset('n', '<Leader>ff',  '<cmd>FzfLua files<cr>',              { desc = 'find files' })
   Kset('n', '<Leader>fg',  '<cmd>FzfLua grep<cr>',               { desc = 'grep' })
