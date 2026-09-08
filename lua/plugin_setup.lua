@@ -39,14 +39,8 @@ local function load_ui_plugins()
   req('blink')
   req('native-lsp')
   req('smart-splits')
-  -- req('fzf-lua')
-  req('bookmarks_linux')
   req('yazi')
-  -- if Myfn.is_windows() then
-  --   req('bookmarks_win')
-  -- else
-  --   req('bookmarks_linux')
-  -- end
+  req('bookmarks_linux')
 end
 
 --  ─────────────────────────────────────────────
