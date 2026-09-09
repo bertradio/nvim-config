@@ -113,7 +113,7 @@ local function open_minifiles()
   files.open(nil, false, {
     windows = {
       max_number = 3,
-      preview = false,
+      preview = true,
       width_focus = main_width,
       width_preview = preview_width,
     },

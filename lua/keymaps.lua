@@ -59,7 +59,8 @@ Kset({ 'n', 'i', 'v' }, '<c-q>', '<cmd>q<cr>', { desc = 'Exit nvim' })
 -------------------------------------------------
 
 -- load last file
-Kset('n', '<Leader>L', '<cmd>e#<1<cr>', { desc = 'Load last file' })
+-- Kset('n', '<Leader>L', '<cmd>e#<1<cr>', { desc = 'Load last file' })
+Kset('n', '<Leader>L', '<cmd>nohlsearch<cr>', { desc = 'remove search hl' })
 
 -- Select all text in the current buffer
 Kset('n', '<C-a>', 'ggVG', { desc = 'Select all' })

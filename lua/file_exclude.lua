@@ -88,6 +88,7 @@ M.extensions = {
   ['alac'] = true,
   ['au']   = true,
   ['aup3'] = true,
+  ['aup4'] = true,
   ['flac'] = true,
   ['m4a']  = true,
   ['mid']  = true,

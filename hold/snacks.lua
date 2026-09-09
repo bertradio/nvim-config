@@ -16,11 +16,12 @@
 -- vim.pack.add({ Gh('nvim-tree/nvim-web-devicons') })
 vim.pack.add({ Gh('folke/snacks.nvim') })
 
-local snacks = require('snacks')
+local Snacks = require('snacks')
 
 -- setup for excluding files from pickers
 local file_exclude = require('file_exclude')
-local excluded = file_exclude.snacks_patterns()
+-- local excluded = file_exclude.snacks_patterns()
+local excluded = ''
 
 vim.ui.select = snacks.picker.select
 vim.ui.input = snacks.input.input
@@ -339,29 +340,29 @@ end
 -- stylua: ignore 
 local function maps()
 
-  Kset('n', '<Leader>bd', '<cmd>lua Snacks.bufdelete()<cr>',            { desc = 'delete current' })
-  Kset('n', '<Leader>sR', '<cmd>lua Snacks.picker.registers()<cr>',     { desc = 'registers' })
-  Kset('n', '<Leader>sb', '<cmd>lua Snacks.picker.buffers()<cr>',       { desc = 'buffers'})
-  Kset('n', '<Leader>sg', '<cmd>lua Snacks.picker.grep()<cr>',          { desc = 'grep' })
-  Kset('n', '<Leader>sh', '<cmd>lua Snacks.picker.help()<cr>',          { desc = 'help' })
-  Kset('n', '<Leader>sj', '<cmd>lua Snacks.picker.jumps()<cr>',         { desc = 'jumps' })
-  Kset('n', '<Leader>sl', '<cmd>lua Snacks.picker.lines()<cr>',         { desc = 'buffer lines' })
-  Kset('n', '<Leader>sm', '<cmd>lua Snacks.picker.marks()<cr>',         { desc = 'marks' })
-  Kset('n', '<Leader>sn', '<cmd>lua Snacks.picker.notifications()<cr>', { desc = 'notifications' })
-  Kset('n', '<Leader>sq', '<cmd>lua Snacks.picker.qflist()<cr>',        { desc = 'quick fix' })
-  Kset('n', '<Leader>su', '<cmd>lua Snacks.picker.undo()<cr>',          { desc = 'undo history' })
-  Kset('n', '<Leader>sy', '<cmd>lua Snacks.lazygit.open(opts)<cr>',     { desc = 'lazygit' })
-  Kset('n', '<Leader>sz', '<cmd>lua Snacks.zen()<cr>',                  { desc = 'zen mode' })
+  -- Kset('n', '<Leader>bd', '<cmd>lua Snacks.bufdelete()<cr>',            { desc = 'delete current' })
+  Kset('n', '<Leader>aR', '<cmd>lua Snacks.picker.registers()<cr>',     { desc = 'registers' })
+  Kset('n', '<Leader>ab', '<cmd>lua Snacks.picker.buffers()<cr>',       { desc = 'buffers'})
+  Kset('n', '<Leader>ag', '<cmd>lua Snacks.picker.grep()<cr>',          { desc = 'grep' })
+  Kset('n', '<Leader>ah', '<cmd>lua Snacks.picker.help()<cr>',          { desc = 'help' })
+  Kset('n', '<Leader>aj', '<cmd>lua Snacks.picker.jumps()<cr>',         { desc = 'jumps' })
+  Kset('n', '<Leader>al', '<cmd>lua Snacks.picker.lines()<cr>',         { desc = 'buffer lines' })
+  Kset('n', '<Leader>am', '<cmd>lua Snacks.picker.marks()<cr>',         { desc = 'marks' })
+  Kset('n', '<Leader>an', '<cmd>lua Snacks.picker.notifications()<cr>', { desc = 'notifications' })
+  Kset('n', '<Leader>aq', '<cmd>lua Snacks.picker.qflist()<cr>',        { desc = 'quick fix' })
+  Kset('n', '<Leader>au', '<cmd>lua Snacks.picker.undo()<cr>',          { desc = 'undo history' })
+  Kset('n', '<Leader>ay', '<cmd>lua Snacks.lazygit.open(opts)<cr>',     { desc = 'lazygit' })
+  Kset('n', '<Leader>az', '<cmd>lua Snacks.zen()<cr>',                  { desc = 'zen mode' })
   Kset('n', '<Leader>z', '<cmd>lua Snacks.picker.zoxide()<cr>',         { desc = 'Zoxide' })
 
   Kset(
     'n',
-    '<Leader>sd',
+    '<Leader>ad',
     '<cmd>lua Snacks.picker.diagnostics_buffer()<cr>',
     { desc = 'diagnostics - buffer' }
   )
 
-  Kset('n', '<Leader>sk', function()
+  Kset('n', '<Leader>ak', function()
     Snacks.picker.keymaps()
   end, { desc = 'keymaps' })
 
@@ -372,19 +373,13 @@ local function maps()
     { desc = 'Explorer' }
   )
 
-  Kset('n', '<Leader>ss', function()
+  Kset('n', '<Leader>as', function()
     Snacks.picker({
       source = 'search_history',
     })
   end, { desc = 'search history' })
 
-  Kset('n', '<space>]', function()
-    vim.cmd('wshada')
-    vim.cmd('rshada!')
-    Snacks.dashboard.open()
-  end, { desc = 'Dashboard (Synced)', silent = true })
-
-  Kset('n', '<Leader>sr', function()
+  Kset('n', '<Leader>ar', function()
     vim.cmd('wshada')
     vim.cmd('rshada!')
     oldfiles_picker()
@@ -392,47 +387,32 @@ local function maps()
 
   Kset(
     'n',
-    '<Leader>sw',
+    '<Leader>aw',
     '<cmd>lua Snacks.picker.grep_word()<cr>',
     { desc = 'grep selection or word' }
   )
 
-  Kset('n', '<leader>i', function()
-    if Snacks.indent.enabled then
-      Snacks.indent.disable()
-    else
-      Snacks.indent.enable()
-    end
-  end, { desc = 'Toggle indent Guides' })
-
-  Kset('n', '<Leader>sf', function()
+  Kset('n', '<Leader>af', function()
     Snacks.picker({
       source = 'files',
       title = Myfn.short_cwd(),
     })
   end, { desc = 'files cwd' })
 
-  Kset('n', '<Leader><space>', function()
-    Snacks.picker({
-      source = 'files',
-      title = Myfn.short_cwd(),
-    })
-  end, { desc = 'Files cwd' })
-
   Kset('n', '<Leader>ba', function()
     Snacks.bufdelete.all()
     Snacks.dashboard.open()
   end, { desc = 'delete all' })
 
-  Kset('n', '<Leader>so', function()
+  Kset('n', '<Leader>ao', function()
     Snacks.picker.lsp_symbols()
   end, { desc = 'Search document symbols' })
 
-  Kset('n', '<Leader>sp', function()
+  Kset('n', '<Leader>ap', function()
     Snacks.picker.resume()
   end, { desc = 'resume last picker' })
 
-  Kset('n', '<Leader>sB', function()
+  Kset('n', '<Leader>aB', function()
     Snacks.picker.grep_buffers()
   end, { desc = 'grep open buffers' })
 

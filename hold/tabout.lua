@@ -6,7 +6,9 @@
 
 vim.pack.add({ Gh('abecodes/tabout.nvim') })
 
-require('tabout').setup({
+local tabout = require('tabout')
+
+tabout.setup({
   tabkey = '<Tab>', -- key to trigger tabout, set to an empty string to disable
   backwards_tabkey = '<S-Tab>', -- key to trigger backwards tabout, set to an empty string to disable
   act_as_tab = true, -- shift content if tab out is not possible
@@ -22,6 +24,7 @@ require('tabout').setup({
     { open = '(', close = ')' },
     { open = '[', close = ']' },
     { open = '{', close = '}' },
+    { open = '<', close = '>' },
   },
   ignore_beginning = true, --[[ if the cursor is at the beginning of a filled element it will rather tab out than shift the content ]]
   exclude = {}, -- tabout will ignore these filetypes

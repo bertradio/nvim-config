@@ -41,6 +41,8 @@ flash.setup({
   },
 })
 
+-- Keyboard shortcuts
+
 Kset({ 'n', 'x', 'o' }, 's', function()
   flash.jump()
 end, { desc = 'Flash' })

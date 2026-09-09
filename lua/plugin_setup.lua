@@ -30,16 +30,16 @@ end
 local function load_ui_plugins()
   req('catppuccin')
   req('lualine')
+  req('noice')
   req('mini')
   req('mini-clue')
   req('mini-files')
   req('mini-sessions')
   req('mini-pick')
-  req('noice')
   req('blink')
   req('native-lsp')
   req('smart-splits')
-  req('yazi')
+  req('fzf-lua')
   req('bookmarks_linux')
 end
 
@@ -59,7 +59,7 @@ local function load_buffer_plugins()
   req('mini-operators')
   req('mini-pairs')
   req('mini-surround')
-  -- req('pretty-comment')
+  req('pretty-comment')
   req('undotree')
 end
 
