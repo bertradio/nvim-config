@@ -53,7 +53,7 @@ clue.setup({
     { mode = 'n', keys = '<Leader>b', desc = '+buffer' },
     { mode = 'n', keys = '<Leader>d', desc = '+diff' },
     { mode = 'n', keys = '<Leader>e', desc = '+edit configs' },
-    { mode = 'n', keys = '<Leader>f', desc = '+fzf' },
+    { mode = 'n', keys = '<Leader>f', desc = '+snacks' },
     { mode = 'n', keys = '<Leader>h', desc = '+headings' },
     { mode = 'n', keys = '<Leader>l', desc = '+lists' },
     { mode = 'n', keys = '<Leader>lt', desc = '+list toggles' },

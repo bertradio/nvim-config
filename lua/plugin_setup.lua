@@ -39,7 +39,7 @@ local function load_ui_plugins()
   req('blink')
   req('native-lsp')
   req('smart-splits')
-  req('fzf-lua')
+  req('snacks')
   req('bookmarks_linux')
 end
 
@@ -50,7 +50,6 @@ local function load_buffer_plugins()
   req('hlslens')
   req('rainbow')
   req('conform')
-  req('indent-blankline')
   req('flash')
   req('mini-ai')
   req('mini-diff')
@@ -94,6 +93,15 @@ vim.api.nvim_create_autocmd('UIEnter', {
 vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile', 'BufReadPost' }, {
   once = true,
   callback = load_buffer_plugins,
+})
+
+-- indent-blankline enters existing windows during setup, which is not allowed
+-- from a BufReadPre callback.
+vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
+  once = true,
+  callback = function()
+    req('indent-blankline')
+  end,
 })
 
 -- Load on the first entry into Insert mode

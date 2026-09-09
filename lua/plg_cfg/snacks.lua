@@ -20,7 +20,13 @@ local snacks = require('snacks')
 
 -- setup for excluding files from pickers
 local file_exclude = require('file_exclude')
-local excluded = file_exclude.snacks_patterns()
+local excluded = {}
+
+for extension in pairs(file_exclude.extensions) do
+  excluded[#excluded + 1] = '*.' .. extension
+end
+
+table.sort(excluded)
 
 vim.ui.select = snacks.picker.select
 vim.ui.input = snacks.input.input
@@ -245,7 +251,7 @@ snacks.setup({
     explorer = {
 
       layout = {
-        { preview = true },
+        preview = true,
         layout = {
           box = 'horizontal',
           height = 0.85,
@@ -322,7 +328,7 @@ local function oldfiles_picker()
     end
   end
 
-  Snacks.picker.pick({
+  snacks.picker.pick({
     title = 'Recent',
     items = items,
     format = 'file',
@@ -339,41 +345,35 @@ end
 -- stylua: ignore 
 local function maps()
 
-  Kset('n', '<Leader>bd', '<cmd>lua Snacks.bufdelete()<cr>',            { desc = 'delete current' })
-  Kset('n', '<Leader>sR', '<cmd>lua Snacks.picker.registers()<cr>',     { desc = 'registers' })
-  Kset('n', '<Leader>sb', '<cmd>lua Snacks.picker.buffers()<cr>',       { desc = 'buffers'})
-  Kset('n', '<Leader>sg', '<cmd>lua Snacks.picker.grep()<cr>',          { desc = 'grep' })
-  Kset('n', '<Leader>sh', '<cmd>lua Snacks.picker.help()<cr>',          { desc = 'help' })
-  Kset('n', '<Leader>sj', '<cmd>lua Snacks.picker.jumps()<cr>',         { desc = 'jumps' })
-  Kset('n', '<Leader>sl', '<cmd>lua Snacks.picker.lines()<cr>',         { desc = 'buffer lines' })
-  Kset('n', '<Leader>sm', '<cmd>lua Snacks.picker.marks()<cr>',         { desc = 'marks' })
-  Kset('n', '<Leader>sn', '<cmd>lua Snacks.picker.notifications()<cr>', { desc = 'notifications' })
-  Kset('n', '<Leader>sq', '<cmd>lua Snacks.picker.qflist()<cr>',        { desc = 'quick fix' })
-  Kset('n', '<Leader>su', '<cmd>lua Snacks.picker.undo()<cr>',          { desc = 'undo history' })
-  Kset('n', '<Leader>sy', '<cmd>lua Snacks.lazygit.open(opts)<cr>',     { desc = 'lazygit' })
-  Kset('n', '<Leader>sz', '<cmd>lua Snacks.zen()<cr>',                  { desc = 'zen mode' })
-  Kset('n', '<Leader>z', '<cmd>lua Snacks.picker.zoxide()<cr>',         { desc = 'Zoxide' })
+  Kset('n', '<Leader>fR', function() snacks.picker.registers() end,            { desc = 'registers' })
+  Kset('n', '<Leader>fb', function() snacks.picker.buffers() end,              { desc = 'buffers'})
+  Kset('n', '<Leader>fd', function() snacks.picker.diagnostics_buffer() end,   { desc = 'diagnostics - buffer' })
+  Kset('n', '<Leader>fg', function() snacks.picker.grep() end,                 { desc = 'grep' })
+  Kset('n', '<Leader>fh', function() snacks.picker.help() end,                 { desc = 'help' })
+  Kset('n', '<Leader>fj', function() snacks.picker.jumps() end,                { desc = 'jumps' })
+  Kset('n', '<Leader>fl', function() snacks.picker.lines() end,                { desc = 'buffer lines' })
+  Kset('n', '<Leader>fm', function() snacks.picker.marks() end,                { desc = 'marks' })
+  Kset('n', '<Leader>fn', function() snacks.picker.notifications() end,        { desc = 'notifications' })
+  Kset('n', '<Leader>fq', function() snacks.picker.qflist() end,               { desc = 'quick fix' })
+  Kset('n', '<Leader>fu', function() snacks.picker.undo() end,                 { desc = 'undo history' })
+  Kset('n', '<Leader>fy', function() snacks.lazygit.open() end,                { desc = 'lazygit' })
+  Kset('n', '<Leader>fz', function() snacks.zen() end,                         { desc = 'zen mode' })
+  Kset('n', '<Leader>z',  function() snacks.picker.zoxide() end,               { desc = 'Zoxide' })
 
-  Kset(
-    'n',
-    '<Leader>sd',
-    '<cmd>lua Snacks.picker.diagnostics_buffer()<cr>',
-    { desc = 'diagnostics - buffer' }
-  )
-
-  Kset('n', '<Leader>sk', function()
-    Snacks.picker.keymaps()
+  Kset('n', '<Leader>fk', function()
+    snacks.picker.keymaps()
   end, { desc = 'keymaps' })
 
-  Kset(
-    'n',
-    '<Leader>x',
-    '<cmd>lua Snacks.explorer({ auto_close = true, include = {"%.md"}, layout = { preset = "sidebar", preview = true } } )<cr>',
-    { desc = 'Explorer' }
-  )
+  Kset('n', '<Leader>x', function()
+    snacks.explorer({
+      auto_close = true,
+      include = { '%.md' },
+      layout = { preset = 'sidebar', preview = true },
+    })
+  end, { desc = 'Explorer' })
 
-  Kset('n', '<Leader>ss', function()
-    Snacks.picker({
+  Kset('n', '<Leader>fs', function()
+    snacks.picker({
       source = 'search_history',
     })
   end, { desc = 'search history' })
@@ -381,76 +381,69 @@ local function maps()
   Kset('n', '<space>]', function()
     vim.cmd('wshada')
     vim.cmd('rshada!')
-    Snacks.dashboard.open()
+    snacks.dashboard.open()
   end, { desc = 'Dashboard (Synced)', silent = true })
 
-  Kset('n', '<Leader>sr', function()
+  Kset('n', '<Leader>fr', function()
     vim.cmd('wshada')
     vim.cmd('rshada!')
     oldfiles_picker()
   end, { desc = 'Old Files (Synced)' })
 
-  Kset(
-    'n',
-    '<Leader>sw',
-    '<cmd>lua Snacks.picker.grep_word()<cr>',
-    { desc = 'grep selection or word' }
-  )
+  Kset('n', '<Leader>fw', function()
+    snacks.picker.grep_word()
+  end, { desc = 'grep selection or word' })
 
   Kset('n', '<leader>i', function()
-    if Snacks.indent.enabled then
-      Snacks.indent.disable()
+    if snacks.indent.enabled then
+      snacks.indent.disable()
     else
-      Snacks.indent.enable()
+      snacks.indent.enable()
     end
   end, { desc = 'Toggle indent Guides' })
 
-  Kset('n', '<Leader>sf', function()
-    Snacks.picker({
+  Kset('n', '<Leader>ff', function()
+    snacks.picker({
       source = 'files',
       title = Myfn.short_cwd(),
     })
   end, { desc = 'files cwd' })
 
-  Kset('n', '<Leader><space>', function()
-    Snacks.picker({
-      source = 'files',
-      title = Myfn.short_cwd(),
-    })
-  end, { desc = 'Files cwd' })
+  -- Kset('n', '<Leader><space>', function()
+  --   snacks.picker({
+  --     source = 'files',
+  --     title = Myfn.short_cwd(),
+  --   })
+  -- end, { desc = 'Files cwd' })
 
   Kset('n', '<Leader>ba', function()
-    Snacks.bufdelete.all()
-    Snacks.dashboard.open()
+    snacks.bufdelete.all()
+    snacks.dashboard.open()
   end, { desc = 'delete all' })
 
-  Kset('n', '<Leader>so', function()
-    Snacks.picker.lsp_symbols()
+  Kset('n', '<Leader>fo', function()
+    snacks.picker.lsp_symbols()
   end, { desc = 'Search document symbols' })
 
-  Kset('n', '<Leader>sp', function()
-    Snacks.picker.resume()
+  Kset('n', '<Leader>fp', function()
+    snacks.picker.resume()
   end, { desc = 'resume last picker' })
 
-  Kset('n', '<Leader>sB', function()
-    Snacks.picker.grep_buffers()
+  Kset('n', '<Leader>fB', function()
+    snacks.picker.grep_buffers()
   end, { desc = 'grep open buffers' })
-
-  Kset('n', '<Leader>.', function()
-    Snacks.picker.smart({
-      -- title = 'Smart',
-  })
-  end, { desc = 'Smart files' })
 
 end
 
 maps()
 
+local notification_group = vim.api.nvim_create_augroup('SnacksNotifications', { clear = true })
+
 -- Colorscheme changed
 vim.api.nvim_create_autocmd('ColorScheme', {
-  group = augroup,
+  group = notification_group,
   callback = function()
-    notify(('Colorscheme: %s'):format(vim.g.colors_name or 'unknown'), vim.log.levels.INFO, {
+    vim.notify(('Colorscheme: %s'):format(vim.g.colors_name or 'unknown'), vim.log.levels.INFO, {
       title = 'Theme',
     })
   end,
@@ -458,30 +451,30 @@ vim.api.nvim_create_autocmd('ColorScheme', {
 
 -- Recording a macro
 vim.api.nvim_create_autocmd('RecordingEnter', {
-  group = augroup,
+  group = notification_group,
   callback = function()
-    notify(('Recording macro @%s'):format(vim.fn.reg_recording()), vim.log.levels.INFO, {
+    vim.notify(('Recording macro @%s'):format(vim.fn.reg_recording()), vim.log.levels.INFO, {
       title = 'Macro',
     })
   end,
 })
 
 vim.api.nvim_create_autocmd('RecordingLeave', {
-  group = augroup,
+  group = notification_group,
   callback = function()
     vim.defer_fn(function()
-      notify('Macro recording finished', vim.log.levels.INFO, { title = 'Macro' })
+      vim.notify('Macro recording finished', vim.log.levels.INFO, { title = 'Macro' })
     end, 50)
   end,
 })
 
 -- Optionally notify when text is yanked
 vim.api.nvim_create_autocmd('TextYankPost', {
-  group = augroup,
+  group = notification_group,
   callback = function()
     local count = vim.v.event.regcontents and #vim.v.event.regcontents or 0
     if count > 5 then
-      notify(('Yanked %d lines'):format(count), vim.log.levels.INFO, {
+      vim.notify(('Yanked %d lines'):format(count), vim.log.levels.INFO, {
         title = 'Yank',
       })
     end
