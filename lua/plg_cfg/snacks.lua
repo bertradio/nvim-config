@@ -29,6 +29,80 @@ end
 
 table.sort(excluded)
 
+local function casefold(value)
+  return (value or ''):lower()
+end
+
+local function case_insensitive_file_sort(a, b)
+  local a_score = a.score or 0
+  local b_score = b.score or 0
+
+  if a_score ~= b_score then
+    return a_score > b_score
+  end
+
+  local a_name = casefold(a.file or a.text)
+  local b_name = casefold(b.file or b.text)
+
+  if a_name ~= b_name then
+    return a_name < b_name
+  end
+
+  return (a.idx or math.huge) < (b.idx or math.huge)
+end
+
+local explorer_tree = require('snacks.explorer.tree')
+
+-- Snacks hard-codes a case-sensitive comparison in Tree:walk().
+-- Override the traversal so tree order and branch markers stay in sync.
+function explorer_tree:walk(node, fn, opts)
+  local abort = fn(node)
+  if abort ~= nil then
+    return abort
+  end
+
+  local children = vim.tbl_values(node.children)
+  table.sort(children, function(a, b)
+    if a.dir ~= b.dir then
+      return a.dir
+    end
+
+    local a_name = casefold(a.name)
+    local b_name = casefold(b.name)
+    if a_name ~= b_name then
+      return a_name < b_name
+    end
+
+    return a.name < b.name
+  end)
+
+  for index, child in ipairs(children) do
+    child.last = index == #children
+    abort = false
+    if child.dir and (child.open or (opts and opts.all)) then
+      abort = self:walk(child, fn, opts)
+    else
+      abort = fn(child)
+    end
+    if abort then
+      return true
+    end
+  end
+
+  return false
+end
+
+local function case_insensitive_explorer_sort(a, b)
+  local a_name = casefold(a.sort)
+  local b_name = casefold(b.sort)
+
+  if a_name ~= b_name then
+    return a_name < b_name
+  end
+
+  return (a.idx or math.huge) < (b.idx or math.huge)
+end
+
 vim.ui.select = snacks.picker.select
 vim.ui.input = snacks.input.input
 
@@ -55,7 +129,7 @@ snacks.setup({
   --  ──────── dashboard config ────────
 
   dashboard    = {
-    enabled  = true,
+    enabled  = false,
     autokeys = "123456789abcdefghijklmnopqrstuvwxyz",
     width    = 50,
     row      = 4,
@@ -193,6 +267,8 @@ snacks.setup({
     files = {
       layout = { preset = 'my_default' },
       exclude = excluded,
+      matcher = { sort_empty = true },
+      sort = case_insensitive_file_sort,
     },
 
     grep = {
@@ -251,6 +327,9 @@ snacks.setup({
     },
 
     explorer = {
+
+      matcher = { sort_empty = true },
+      sort = case_insensitive_explorer_sort,
 
       layout = {
         preview = true,
