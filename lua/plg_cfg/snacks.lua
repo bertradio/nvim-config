@@ -113,9 +113,9 @@ snacks.setup({
   -- only include those not defined elsewhere
 
   bigfile      = { enabled = true },
-  explorer     = { enabled = true },
   indent       = { enabled = true },
   input        = { enabled = true, border = 'double' },
+  notifier     = { enabled = true },
   quickfile    = { enabled = true },
   rename       = { enabled = true },
   scope        = { enabled = true },

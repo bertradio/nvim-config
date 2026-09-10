@@ -24,6 +24,7 @@ vim.api.nvim_set_hl(0, 'NoiceCmdlinePopupBorder', { fg = '#FFA500', bg = 'none' 
 vim.api.nvim_set_hl(0, 'NoiceCmdlineIcon', { fg = '#FFA500' })
 
 require('noice').setup({
+  notify = { enabled = false },
   lsp = {
     signature = {
       enabled = false,
