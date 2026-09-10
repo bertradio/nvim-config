@@ -12,6 +12,7 @@
 -- 06/05/26 - Tweaks as per claude
 -- 07/14/26 - added notifier to replace noice in part
 -- 07/19/26 - removed notifier decided to go back to system notifications - all in one place
+-- 09/09/26 - Revised by codex for new file_exclude - changed shortcuts to start with f (s used for surround)
 
 vim.pack.add({ Gh('nvim-tree/nvim-web-devicons') })
 vim.pack.add({ Gh('folke/snacks.nvim') })
@@ -41,7 +42,6 @@ snacks.setup({
   explorer     = { enabled = true },
   indent       = { enabled = true },
   input        = { enabled = true, border = 'double' },
-  lazygit      = { enabled = true },
   quickfile    = { enabled = true },
   rename       = { enabled = true },
   scope        = { enabled = true },
@@ -49,27 +49,28 @@ snacks.setup({
   terminal     = { enabled = true },
 
   image        = { enabled = false },
+  lazygit      = { enabled = false },
   words        = { enabled = false },
 
   --  ──────── dashboard config ────────
 
   dashboard    = {
-    enabled  = false,
+    enabled  = true,
     autokeys = "123456789abcdefghijklmnopqrstuvwxyz",
     width    = 50,
     row      = 4,
 
     sections = {
-      {
-        -- header  = "If it ain't broke, don't fix it!\n"
-        -- section = "header",
-      },
+      -- {
+      --   header  = "If it ain't broke, don't fix it!\n",
+      --   section = "header",
+      -- },
       {
         section = "recent_files",
         cwd = false,
         padding = 0,
         indent  = 2,
-        limit   = 15, -- max number of recent files to display
+        limit   = 10, -- max number of recent files to display
       },
       -- Empty text row instead of dynamic section padding
       -- inserts line between recent and keys
@@ -86,20 +87,21 @@ snacks.setup({
       header = "",
 
       keys = {
-        -- { key = "f", desc = "Find Files",
-        --   action = function()
-        --     Snacks.picker.files({ title = Myfn.short_cwd() })
-        --   end },
-        -- { key = "g", desc = "Grep",       action = function() Snacks.picker.grep() end },
-        -- { key = "m", desc = "Mini-Files", action = "<Leader>["},
-        -- { key = "r",
-        --   desc = "Recent Files",
-        --   action = "<leader>sr" },
-        --   -- action = function()
-        --   --   vim.cmd('wshada')
-        --   --   vim.cmd('rshada!')
-        --   --   snacks.picker.recent({ refresh = true, file_pos = "main" })
-        --   -- end },
+        { key = "e", desc = "Explorer", action = "<Leader>x"},
+        { key = "f", desc = "Find Files",
+          action = function()
+            Snacks.picker.files({ title = Myfn.short_cwd() })
+          end },
+        { key = "g", desc = "Grep",       action = function() Snacks.picker.grep() end },
+        { key = "m", desc = "Mini-Files", action = "<Leader>["},
+        { key = "r",
+          desc = "Recent Files",
+          action = "<leader>fr" },
+          -- action = function()
+          --   vim.cmd('wshada')
+          --   vim.cmd('rshada!')
+          --   snacks.picker.recent({ refresh = true, file_pos = "main" })
+          -- end },
         --   { key = "y", desc = "Yazi",        action = "<Leader>y" },
         { key = "q", desc = "Quit Menu", action = ":bwipeout" },
       },
@@ -357,7 +359,6 @@ local function maps()
   Kset('n', '<Leader>fq', function() snacks.picker.qflist() end,               { desc = 'quick fix' })
   Kset('n', '<Leader>fu', function() snacks.picker.undo() end,                 { desc = 'undo history' })
   Kset('n', '<Leader>fy', function() snacks.lazygit.open() end,                { desc = 'lazygit' })
-  Kset('n', '<Leader>fz', function() snacks.zen() end,                         { desc = 'zen mode' })
   Kset('n', '<Leader>z',  function() snacks.picker.zoxide() end,               { desc = 'Zoxide' })
 
   Kset('n', '<Leader>fk', function()
@@ -378,7 +379,7 @@ local function maps()
     })
   end, { desc = 'search history' })
 
-  Kset('n', '<space>]', function()
+  Kset('n', '<Leader>fD', function()
     vim.cmd('wshada')
     vim.cmd('rshada!')
     snacks.dashboard.open()
@@ -416,10 +417,10 @@ local function maps()
   --   })
   -- end, { desc = 'Files cwd' })
 
-  Kset('n', '<Leader>ba', function()
+  Kset('n', '<Leader>fa', function()
     snacks.bufdelete.all()
     snacks.dashboard.open()
-  end, { desc = 'delete all' })
+  end, { desc = 'delete all + dashboard' })
 
   Kset('n', '<Leader>fo', function()
     snacks.picker.lsp_symbols()

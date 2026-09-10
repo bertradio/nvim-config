@@ -97,12 +97,12 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile', 'BufReadPost' }, {
 
 -- indent-blankline enters existing windows during setup, which is not allowed
 -- from a BufReadPre callback.
-vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
-  once = true,
-  callback = function()
-    req('indent-blankline')
-  end,
-})
+-- vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
+--   once = true,
+--   callback = function()
+--     req('indent-blankline')
+--   end,
+-- })
 
 -- Load on the first entry into Insert mode
 vim.api.nvim_create_autocmd('InsertEnter', {
