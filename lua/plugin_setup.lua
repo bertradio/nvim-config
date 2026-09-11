@@ -38,14 +38,9 @@ local function load_ui_plugins()
   req('mini-sessions')
   req('mini-pick')
   req('native-lsp')
-<<<<<<< Updated upstream
   req('snacks') -- should com after noice and mini so it handles notifications
-=======
   req('smart-splits')
-  req('snacks')
->>>>>>> Stashed changes
   req('bookmarks_linux')
-  req('smart-splits')
   req('render-markdown') -- needs to be here to render snacks notification history
 end
 
