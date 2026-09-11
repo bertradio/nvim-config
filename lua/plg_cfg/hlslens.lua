@@ -15,11 +15,7 @@ vim.opt.shortmess:append('S')
 
 local hlslens = require('hlslens')
 
-hlslens.setup({
-  nearest_only = true,
-  nearest_float_when = 'never',
-  calm_down = false,
-})
+hlslens.setup({}) -- use defaults
 
 local function set_search_highlights()
   -- Other matches
