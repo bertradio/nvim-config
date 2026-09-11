@@ -17,10 +17,11 @@
 -- vim.pack.add({ Gh('nvim-tree/nvim-web-devicons') })
 vim.pack.add({ Gh('folke/snacks.nvim') })
 
-local snacks = require('snacks')
+local Snacks = require('snacks')
 
 -- setup for excluding files from pickers
 local file_exclude = require('file_exclude')
+<<<<<<< Updated upstream
 local excluded = {}
 
 for extension in pairs(file_exclude.extensions) do
@@ -106,6 +107,10 @@ local function case_insensitive_explorer_sort(a, b)
 
   return (a.idx or math.huge) < (b.idx or math.huge)
 end
+=======
+-- local excluded = file_exclude.snacks_patterns()
+local excluded = ''
+>>>>>>> Stashed changes
 
 vim.ui.select = snacks.picker.select
 vim.ui.input = snacks.input.input
@@ -439,6 +444,7 @@ end
 -- stylua: ignore 
 local function maps()
 
+<<<<<<< Updated upstream
   Kset('n', '<Leader>fR', function() snacks.picker.registers() end,            { desc = 'registers' })
   Kset('n', '<Leader>fb', function() snacks.picker.buffers() end,              { desc = 'buffers'})
   Kset('n', '<Leader>fd', function() snacks.picker.diagnostics_buffer() end,   { desc = 'diagnostics - buffer' })
@@ -456,6 +462,32 @@ local function maps()
 
   Kset('n', '<Leader>fk', function()
     snacks.picker.keymaps()
+=======
+  -- Kset('n', '<Leader>bd', '<cmd>lua Snacks.bufdelete()<cr>',            { desc = 'delete current' })
+  Kset('n', '<Leader>aR', '<cmd>lua Snacks.picker.registers()<cr>',     { desc = 'registers' })
+  Kset('n', '<Leader>ab', '<cmd>lua Snacks.picker.buffers()<cr>',       { desc = 'buffers'})
+  Kset('n', '<Leader>ag', '<cmd>lua Snacks.picker.grep()<cr>',          { desc = 'grep' })
+  Kset('n', '<Leader>ah', '<cmd>lua Snacks.picker.help()<cr>',          { desc = 'help' })
+  Kset('n', '<Leader>aj', '<cmd>lua Snacks.picker.jumps()<cr>',         { desc = 'jumps' })
+  Kset('n', '<Leader>al', '<cmd>lua Snacks.picker.lines()<cr>',         { desc = 'buffer lines' })
+  Kset('n', '<Leader>am', '<cmd>lua Snacks.picker.marks()<cr>',         { desc = 'marks' })
+  Kset('n', '<Leader>an', '<cmd>lua Snacks.picker.notifications()<cr>', { desc = 'notifications' })
+  Kset('n', '<Leader>aq', '<cmd>lua Snacks.picker.qflist()<cr>',        { desc = 'quick fix' })
+  Kset('n', '<Leader>au', '<cmd>lua Snacks.picker.undo()<cr>',          { desc = 'undo history' })
+  Kset('n', '<Leader>ay', '<cmd>lua Snacks.lazygit.open(opts)<cr>',     { desc = 'lazygit' })
+  Kset('n', '<Leader>az', '<cmd>lua Snacks.zen()<cr>',                  { desc = 'zen mode' })
+  Kset('n', '<Leader>z', '<cmd>lua Snacks.picker.zoxide()<cr>',         { desc = 'Zoxide' })
+
+  Kset(
+    'n',
+    '<Leader>ad',
+    '<cmd>lua Snacks.picker.diagnostics_buffer()<cr>',
+    { desc = 'diagnostics - buffer' }
+  )
+
+  Kset('n', '<Leader>ak', function()
+    Snacks.picker.keymaps()
+>>>>>>> Stashed changes
   end, { desc = 'keymaps' })
 
   Kset('n', '<Leader>x', function()
@@ -466,12 +498,18 @@ local function maps()
     })
   end, { desc = 'Explorer' })
 
+<<<<<<< Updated upstream
   Kset('n', '<Leader>fs', function()
     snacks.picker({
+=======
+  Kset('n', '<Leader>as', function()
+    Snacks.picker({
+>>>>>>> Stashed changes
       source = 'search_history',
     })
   end, { desc = 'search history' })
 
+<<<<<<< Updated upstream
   Kset('n', '<Leader>fD', function()
     vim.cmd('wshada')
     vim.cmd('rshada!')
@@ -479,11 +517,15 @@ local function maps()
   end, { desc = 'Dashboard (Synced)', silent = true })
 
   Kset('n', '<Leader>fr', function()
+=======
+  Kset('n', '<Leader>ar', function()
+>>>>>>> Stashed changes
     vim.cmd('wshada')
     vim.cmd('rshada!')
     oldfiles_picker()
   end, { desc = 'Old Files (Synced)' })
 
+<<<<<<< Updated upstream
   Kset('n', '<Leader>fw', function()
     snacks.picker.grep_word()
   end, { desc = 'grep selection or word' })
@@ -498,11 +540,23 @@ local function maps()
 
   Kset('n', '<Leader>ff', function()
     snacks.picker({
+=======
+  Kset(
+    'n',
+    '<Leader>aw',
+    '<cmd>lua Snacks.picker.grep_word()<cr>',
+    { desc = 'grep selection or word' }
+  )
+
+  Kset('n', '<Leader>af', function()
+    Snacks.picker({
+>>>>>>> Stashed changes
       source = 'files',
       title = Myfn.short_cwd(),
     })
   end, { desc = 'files cwd' })
 
+<<<<<<< Updated upstream
   -- Kset('n', '<Leader><space>', function()
   --   snacks.picker({
   --     source = 'files',
@@ -520,6 +574,23 @@ local function maps()
 
   Kset('n', '<Leader>fB', function()
     snacks.picker.grep_buffers()
+=======
+  Kset('n', '<Leader>ba', function()
+    Snacks.bufdelete.all()
+    Snacks.dashboard.open()
+  end, { desc = 'delete all' })
+
+  Kset('n', '<Leader>ao', function()
+    Snacks.picker.lsp_symbols()
+  end, { desc = 'Search document symbols' })
+
+  Kset('n', '<Leader>ap', function()
+    Snacks.picker.resume()
+  end, { desc = 'resume last picker' })
+
+  Kset('n', '<Leader>aB', function()
+    Snacks.picker.grep_buffers()
+>>>>>>> Stashed changes
   end, { desc = 'grep open buffers' })
 
   Kset('n', '<Leader>n', '<cmd>lua Snacks.notifier.show_history()<cr>', {desc = 'notification history'})
