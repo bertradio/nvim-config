@@ -31,16 +31,17 @@ local function load_ui_plugins()
   req('catppuccin')
   req('lualine')
   req('noice')
+  req('blink')
   req('mini')
   req('mini-clue')
   req('mini-files')
   req('mini-sessions')
   req('mini-pick')
-  req('blink')
   req('native-lsp')
-  req('smart-splits')
-  req('snacks')
+  req('snacks') -- should com after noice and mini so it handles notifications
   req('bookmarks_linux')
+  req('smart-splits')
+  req('render-markdown') -- needs to be here to render snacks notification history
 end
 
 --  ─────────────────────────────────────────────
@@ -60,6 +61,7 @@ local function load_buffer_plugins()
   req('mini-surround')
   req('pretty-comment')
   req('undotree')
+  -- req('colorful-winsep')
 end
 
 --  ─────────────────────────────────────────────
@@ -74,7 +76,6 @@ end
 local function load_markdown_plugins()
   -- req('autolist')
   req('markdown-plus')
-  req('render-markdown')
 end
 
 --  ────────────────────────────────────────────────────────

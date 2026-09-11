@@ -14,7 +14,7 @@
 -- 07/19/26 - removed notifier decided to go back to system notifications - all in one place
 -- 09/09/26 - Revised by codex for new file_exclude - changed shortcuts to start with f (s used for surround)
 
-vim.pack.add({ Gh('nvim-tree/nvim-web-devicons') })
+-- vim.pack.add({ Gh('nvim-tree/nvim-web-devicons') })
 vim.pack.add({ Gh('folke/snacks.nvim') })
 
 local snacks = require('snacks')
@@ -28,6 +28,10 @@ for extension in pairs(file_exclude.extensions) do
 end
 
 table.sort(excluded)
+
+local function exclude_file_item(item)
+  return item.dir or not file_exclude.is_excluded(item.file or item.text)
+end
 
 local function casefold(value)
   return (value or ''):lower()
@@ -118,12 +122,12 @@ snacks.setup({
   notifier     = { enabled = true },
   quickfile    = { enabled = true },
   rename       = { enabled = true },
-  scope        = { enabled = true },
   scroll       = { enabled = true },
   terminal     = { enabled = true },
 
   image        = { enabled = false },
   lazygit      = { enabled = false },
+  scope        = { enabled = false },
   words        = { enabled = false },
 
   --  ──────── dashboard config ────────
@@ -189,6 +193,11 @@ snacks.setup({
     layout    = "my_default",
     prompt    = '> ',
     ui_select = true,
+    styles = {
+      notification = {
+        wo = { wrap = true } -- Wrap notifications
+      }
+    },
     win       = {
       border = "double",
       preview = {
@@ -267,6 +276,7 @@ snacks.setup({
     files = {
       layout = { preset = 'my_default' },
       exclude = excluded,
+      transform = exclude_file_item,
       matcher = { sort_empty = true },
       sort = case_insensitive_file_sort,
     },
@@ -274,6 +284,7 @@ snacks.setup({
     grep = {
       layout = { preset = 'my_default' },
       exclude = excluded,
+      transform = exclude_file_item,
     },
 
     help = {
@@ -328,6 +339,8 @@ snacks.setup({
 
     explorer = {
 
+      exclude = excluded,
+      transform = exclude_file_item,
       matcher = { sort_empty = true },
       sort = case_insensitive_explorer_sort,
 
@@ -436,6 +449,7 @@ local function maps()
   Kset('n', '<Leader>fm', function() snacks.picker.marks() end,                { desc = 'marks' })
   Kset('n', '<Leader>fn', function() snacks.picker.notifications() end,        { desc = 'notifications' })
   Kset('n', '<Leader>fq', function() snacks.picker.qflist() end,               { desc = 'quick fix' })
+  Kset('n', '<Leader>ft', function() snacks.terminal() end,                    {desc = 'terminal'})
   Kset('n', '<Leader>fu', function() snacks.picker.undo() end,                 { desc = 'undo history' })
   Kset('n', '<Leader>fy', function() snacks.lazygit.open() end,                { desc = 'lazygit' })
   Kset('n', '<Leader>z',  function() snacks.picker.zoxide() end,               { desc = 'Zoxide' })
@@ -496,11 +510,6 @@ local function maps()
   --   })
   -- end, { desc = 'Files cwd' })
 
-  Kset('n', '<Leader>fa', function()
-    snacks.bufdelete.all()
-    snacks.dashboard.open()
-  end, { desc = 'delete all + dashboard' })
-
   Kset('n', '<Leader>fo', function()
     snacks.picker.lsp_symbols()
   end, { desc = 'Search document symbols' })
@@ -512,6 +521,8 @@ local function maps()
   Kset('n', '<Leader>fB', function()
     snacks.picker.grep_buffers()
   end, { desc = 'grep open buffers' })
+
+  Kset('n', '<Leader>n', '<cmd>lua Snacks.notifier.show_history()<cr>', {desc = 'notification history'})
 
 end
 

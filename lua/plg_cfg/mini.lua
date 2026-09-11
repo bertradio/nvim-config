@@ -29,6 +29,7 @@ align.setup({ mappings = { start = 'ga' } })
 bracketed.setup()
 
 icons.setup()
+icons.mock_nvim_web_devicons() -- mini.icons will replace devicons
 
 minput.setup()
 
