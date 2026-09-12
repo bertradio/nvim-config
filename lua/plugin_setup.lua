@@ -54,14 +54,13 @@ local function load_buffer_plugins()
   req('flash')
   req('mini-ai')
   req('mini-diff')
-  req('mini-identscope')
+  -- req('mini-identscope') -- replaced by snacks.scope
   req('mini-move')
   req('mini-operators')
   req('mini-pairs')
   req('mini-surround')
   req('pretty-comment')
   req('undotree')
-  -- req('colorful-winsep')
 end
 
 --  ─────────────────────────────────────────────

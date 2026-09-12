@@ -167,7 +167,7 @@ vim.api.nvim_create_autocmd('User', {
 
     Kset('n', 'gc', set_cwd_to_mini, {
       buffer = buf_id,
-      desc = 'Set cwd to current Mini.files directory',
+      desc = 'Set cwd to current mini.files directory',
     })
   end,
 })
@@ -199,7 +199,7 @@ vim.api.nvim_create_autocmd('DirChanged', {
       end
     end)
   end,
-  desc = 'Make Mini.files follow Neovim cwd',
+  desc = 'Make mini.files follow Neovim cwd',
 })
 
 -- bookmarks

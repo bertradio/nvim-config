@@ -28,7 +28,9 @@ diff.setup({
 })
 
 -- Keymaps
-Kset('n', '<Leader>do', '<cmd>lua MiniDiff.toggle_overlay()<cr>', { desc = 'toggle diff overlay' })
+Kset('n', '<Leader>do', function()
+  diff.toggle_overlay()
+end, { desc = 'toggle diff overlay' })
 
 -- Toggle
 local function set_saved_reference()
@@ -66,11 +68,11 @@ end
 Kset('n', '<Leader>dt', function()
   if vim.g.minidiff_disable then
     enable_diff()
-    vim.notify('MiniDiff enabled')
+    vim.notify('mini.diff enabled')
   else
     diff.disable()
     vim.g.minidiff_disable = true
-    vim.notify('MiniDiff disabled')
+    vim.notify('mini.diff disabled')
   end
 end, { desc = 'toggle mini.diff' })
 
@@ -87,5 +89,5 @@ Kset('n', '<Leader>ds', function()
     enable_diff()
   end
 
-  vim.notify('MiniDiff chaged source to: ' .. source_name)
+  vim.notify('mini.diff chaged source to: ' .. source_name)
 end, { desc = 'toggle mini.diff source' })

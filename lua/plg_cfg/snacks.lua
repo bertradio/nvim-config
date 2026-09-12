@@ -165,17 +165,19 @@ snacks.setup({
   -- only include those not defined elsewhere
 
   bigfile      = { enabled = true },
+  explorer     = { enabled = true },
   indent       = { enabled = true },
   input        = { enabled = true, border = 'double' },
   notifier     = { enabled = true },
   quickfile    = { enabled = true },
   rename       = { enabled = true },
+  scope        = { enabled = true },
   scroll       = { enabled = true },
   terminal     = { enabled = true },
 
   image        = { enabled = false },
   lazygit      = { enabled = false },
-  scope        = { enabled = false },
+  -- scope        = { enabled = false },
   words        = { enabled = false },
 
   --  ──────── dashboard config ────────
@@ -216,9 +218,9 @@ snacks.setup({
         { key = "e", desc = "Explorer", action = "<Leader>x"},
         { key = "f", desc = "Find Files",
           action = function()
-            Snacks.picker.files({ title = Myfn.short_cwd() })
+            snacks.picker.files({ title = Myfn.short_cwd() })
           end },
-        { key = "g", desc = "Grep",       action = function() Snacks.picker.grep() end },
+        { key = "g", desc = "Grep",       action = function() snacks.picker.grep() end },
         { key = "m", desc = "Mini-Files", action = "<Leader>["},
         { key = "r",
           desc = "Recent Files",
@@ -312,7 +314,8 @@ snacks.setup({
 
     --  ───── defaults for various pickers ─────
 
-    sources = {
+  sources = {
+
     buffers = {
       layout = { preset = 'my_default' },
     },
@@ -441,7 +444,7 @@ snacks.setup({
         tree = true,
       },
     },
-  },
+  }
 }
 })
 
@@ -499,7 +502,6 @@ local function maps()
   Kset('n', '<Leader>fq', function() snacks.picker.qflist() end,               { desc = 'quick fix' })
   Kset('n', '<Leader>ft', function() snacks.terminal() end,                    {desc = 'terminal'})
   Kset('n', '<Leader>fu', function() snacks.picker.undo() end,                 { desc = 'undo history' })
-  Kset('n', '<Leader>fy', function() snacks.lazygit.open() end,                { desc = 'lazygit' })
   Kset('n', '<Leader>z',  function() snacks.picker.zoxide() end,               { desc = 'Zoxide' })
 
   Kset('n', '<Leader>fk', function()
@@ -509,7 +511,6 @@ local function maps()
   Kset('n', '<Leader>x', function()
     snacks.explorer({
       auto_close = true,
-      include = { '%.md' },
       layout = { preset = 'sidebar', preview = true },
     })
   end, { desc = 'Explorer' })
@@ -545,8 +546,7 @@ local function maps()
   end, { desc = 'Toggle indent Guides' })
 
   Kset('n', '<Leader>ff', function()
-    snacks.picker({
-      source = 'files',
+    snacks.picker.files({
       title = Myfn.short_cwd(),
     })
   end, { desc = 'files cwd' })
@@ -570,7 +570,7 @@ local function maps()
     snacks.picker.grep_buffers()
   end, { desc = 'grep open buffers' })
 
-  Kset('n', '<Leader>n', '<cmd>lua Snacks.notifier.show_history()<cr>', {desc = 'notification history'})
+  Kset('n', '<Leader>n', '<cmd>lua snacks.notifier.show_history()<cr>', {desc = 'notification history'})
 
 end
 
