@@ -323,7 +323,25 @@ snacks.setup({
     },
 
     files = {
-      layout = { preset = 'my_default' },
+      -- layout = { preset = 'my_default' },
+      layout = {
+        hidden = { "preview" },
+        layout = {
+          backdrop = false,
+          width = 0.4,
+          min_width = 50,
+          max_width = 100,
+          height = 0.7,
+          min_height = 2,
+          box = "vertical",
+          border = true,
+          title = "{title}",
+          title_pos = "center",
+          { win = "input", height = 1, border = "bottom" },
+          { win = "list", border = "none" },
+          { win = "preview", title = "{preview}", height = 0.5, border = "top" },
+        },
+      },
       exclude = excluded,
       transform = exclude_file_item,
       matcher = { sort_empty = true },
@@ -546,7 +564,7 @@ local function maps()
     end
   end, { desc = 'Toggle indent Guides' })
 
-  Kset('n', '<Leader>ff', function()
+  Kset('n', '<Leader><space>', function()
     snacks.picker.files({
       title = Myfn.short_cwd(),
     })

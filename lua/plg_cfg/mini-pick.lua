@@ -124,7 +124,7 @@ end
 
 --  ───────── keymaps ──────────
 
-Kset('n', '<Leader><space>', files_by_name, { desc = 'mini.pick files' })
+Kset('n', '<Leader>pf', files_by_name, { desc = 'mini.pick files' })
 
 Kset('n', '<Leader>]', function()
   vim.cmd.wshada()
