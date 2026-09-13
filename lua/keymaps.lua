@@ -170,13 +170,3 @@ Kset('i', '<F5>', function()
 end, { desc = "Insert today's date" })
 
 Kset('n', '<Leader>ee', '<cmd>edit!<CR>', { desc = 're-read buffer' })
-
--- Re-assign multicursor quit cursors
-local function multicursors_clear_all()
-  vim.api.nvim_buf_clear_namespace(0, vim.api.nvim_create_namespace('nvim.multicursor'), 0, -1)
-end
-
--- bind the function to something
-Kset('n', '<leader>qq', multicursors_clear_all, {
-  desc = 'clear all (multi)cursors',
-})

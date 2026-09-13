@@ -9,10 +9,6 @@
       "rev": "edefef779ab08ce1a4a404713e3012b0d202bd35",
       "src": "https://github.com/catppuccin/nvim"
     },
-    "colorful-winsep.nvim": {
-      "rev": "6134b5cd4a38990c7b720adc90973ed32f726179",
-      "src": "https://github.com/nvim-zh/colorful-winsep.nvim"
-    },
     "conform.nvim": {
       "rev": "016802de402556da54c36bd7359b441266b01cdd",
       "src": "https://github.com/stevearc/conform.nvim"
@@ -65,12 +61,16 @@
       "rev": "f0d030edcf908dab73aaab273c39e6c154a4daee",
       "src": "https://github.com/Cartoone9/pretty-comment.nvim"
     },
+    "quicker.nvim": {
+      "rev": "4a6883cb13fe097a20a046eb55f6dffd239276e3",
+      "src": "https://github.com/stevearc/quicker.nvim"
+    },
     "rainbow-delimiters.nvim": {
       "rev": "3a0fc08dd39e8bf034a4cfef3f2845bd5f565a2e",
       "src": "https://github.com/HiPhish/rainbow-delimiters.nvim"
     },
     "render-markdown.nvim": {
-      "rev": "4663eb3ecd538bd5062628fb6d95bbe6bdca78f6",
+      "rev": "facc647f5d8110e3f20e8f793ef792fe6a78d444",
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
     "smart-splits.nvim": {

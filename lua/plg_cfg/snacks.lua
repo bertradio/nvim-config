@@ -167,7 +167,6 @@ snacks.setup({
   bigfile      = { enabled = true },
   explorer     = { enabled = true },
   indent       = { enabled = true },
-  input        = { enabled = true, border = 'double' },
   notifier     = { enabled = true },
   quickfile    = { enabled = true },
   rename       = { enabled = true },
@@ -175,10 +174,9 @@ snacks.setup({
   scroll       = { enabled = true },
   terminal     = { enabled = true },
 
-  image        = { enabled = false },
-  lazygit      = { enabled = false },
-  -- scope        = { enabled = false },
-  words        = { enabled = false },
+  -- image        = { enabled = false },
+  -- lazygit      = { enabled = false },
+  -- words        = { enabled = false },
 
   --  ──────── dashboard config ────────
 
@@ -438,6 +436,9 @@ snacks.setup({
       auto_close = true,
       diagnostics = true,
       follow_file = true,
+      trash = true,
+      replace_netrw = true,
+      git_status = false, -- disabled because a bug causes false directory entry
 
       formatters = {
         file = { filename_only = true },

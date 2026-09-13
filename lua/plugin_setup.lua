@@ -42,6 +42,7 @@ local function load_ui_plugins()
   req('smart-splits')
   req('bookmarks_linux')
   req('render-markdown') -- needs to be here to render snacks notification history
+  req('quicker')
 end
 
 --  ─────────────────────────────────────────────

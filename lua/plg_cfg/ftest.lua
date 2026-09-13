@@ -1,12 +1,6 @@
 --    ╭────────────────────────────╮
---    │       catppuccin.lua       │
+--    │        TESTING FILE        │
 --    ╰────────────────────────────╯
-
--- Updated by Perplexity 4-23-26:
---                  Removed redundant EndOfBuffer custom_highlight (show_end_of_buffer=false
---                  already handles it), removed duplicate Folded from 'all' block,
---                  removed no_italic/no_bold (defaults), added fzf integration,
---                  removed likely-invalid blink_indent key.
 
 vim.pack.add({ { src = Gh('catppuccin/nvim'), name = 'catppuccin' } })
 
