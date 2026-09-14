@@ -126,7 +126,7 @@ end
 
 Kset('n', '<Leader>pf', files_by_name, { desc = 'mini.pick files' })
 
-Kset('n', '<Leader>]', function()
+Kset('n', '<Leader>pr', function()
   vim.cmd.wshada()
   extra.pickers.oldfiles()
 end, { desc = 'mini.pick.oldfiles' })
@@ -185,7 +185,7 @@ Kset('n', '<Leader>pq', function()
   extra.pickers.list({ scope = 'quickfix' })
 end, { desc = 'quickfix' })
 
-Kset('n', '<Leader>pr', function()
+Kset('n', '<Leader>pR', function()
   extra.pickers.registers()
 end, { desc = 'registers' })
 

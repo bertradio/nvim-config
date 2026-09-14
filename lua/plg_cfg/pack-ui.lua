@@ -16,10 +16,10 @@ require('pack_ui').setup({
   auto_update = false, -- on setup, apply every available update automatically
   -- default keymaps
   keymaps = {
-    prefix = '<leader>p',
+    prefix = '<leader>r',
     status = 's', -- <leader>ps -> :PackStatus
     update_all = 'U', -- <leader>pU -> :PackUpdateAll
   },
 })
 
-Kset('n', '<Leader>pu', '<cmd>PackUpdate<cr>', { desc = 'pack-ui: update' })
+-- Kset('n', '<Leader>ru', '<cmd>PackUpdate<cr>', { desc = 'pack-ui: update' })

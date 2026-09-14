@@ -278,7 +278,7 @@ snacks.setup({
           { win = 'preview', border = 'rounded', width = 0.65, title = '{preview}' },
         },
       },
-      my_spelling = { -- single pane narrow
+      my_single_narrow = { -- single pane narrow
         layout = {
           box    = 'horizontal',
           width  = 0.5,
@@ -319,29 +319,12 @@ snacks.setup({
     },
 
     command_history = {
-      layout = { preset = 'my_spelling' },
+      layout = { preset = 'my_single_narrow' },
     },
 
     files = {
       -- layout = { preset = 'my_default' },
-      layout = {
-        hidden = { "preview" },
-        layout = {
-          backdrop = false,
-          width = 0.4,
-          min_width = 50,
-          max_width = 100,
-          height = 0.7,
-          min_height = 2,
-          box = "vertical",
-          border = true,
-          title = "{title}",
-          title_pos = "center",
-          { win = "input", height = 1, border = "bottom" },
-          { win = "list", border = "none" },
-          { win = "preview", title = "{preview}", height = 0.5, border = "top" },
-        },
-      },
+      layout = { preset = 'my_single_narrow' },
       exclude = excluded,
       transform = exclude_file_item,
       matcher = { sort_empty = true },
@@ -393,7 +376,7 @@ snacks.setup({
     },
 
     search_history = {
-      layout = { preset = 'my_spelling' },
+      layout = { preset = 'my_single_narrow' },
     },
 
     undo = {
@@ -497,7 +480,7 @@ local function oldfiles_picker()
     items = items,
     format = 'file',
     preview = 'file',
-    layout = { preset = 'my_default' },
+    layout = { preset = 'my_single_narrow' },
     matcher = { sort_empty = false },
   })
 end
@@ -511,6 +494,7 @@ local function maps()
 
   Kset('n', '<Leader>fR', function() snacks.picker.registers() end,            { desc = 'registers' })
   Kset('n', '<Leader>fb', function() snacks.picker.buffers() end,              { desc = 'buffers'})
+  Kset('n', '<leader>fc', function() snacks.picker.command_history() end,      { desc = 'Command History' })
   Kset('n', '<Leader>fd', function() snacks.picker.diagnostics_buffer() end,   { desc = 'diagnostics - buffer' })
   Kset('n', '<Leader>fg', function() snacks.picker.grep() end,                 { desc = 'grep' })
   Kset('n', '<Leader>fh', function() snacks.picker.help() end,                 { desc = 'help' })
@@ -546,7 +530,7 @@ local function maps()
     snacks.dashboard.open()
   end, { desc = 'Dashboard (Synced)', silent = true })
 
-  Kset('n', '<Leader>fr', function()
+  Kset('n', '<Leader>]', function()
     vim.cmd('wshada')
     vim.cmd('rshada!')
     oldfiles_picker()
@@ -570,12 +554,13 @@ local function maps()
     })
   end, { desc = 'files cwd' })
 
-  -- Kset('n', '<Leader><space>', function()
-  --   snacks.picker({
-  --     source = 'files',
-  --     title = Myfn.short_cwd(),
-  --   })
-  -- end, { desc = 'Files cwd' })
+  Kset('n', '<Leader>ff', function()
+    snacks.picker({
+      source = 'files',
+      title = Myfn.short_cwd(),
+      layout = { preset = 'my_default' }
+    })
+  end, { desc = 'Files cwd' })
 
   Kset('n', '<Leader>fo', function()
     snacks.picker.lsp_symbols()

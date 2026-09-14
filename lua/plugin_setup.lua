@@ -43,6 +43,7 @@ local function load_ui_plugins()
   req('bookmarks_linux')
   req('render-markdown') -- needs to be here to render snacks notification history
   req('quicker')
+  req('pack-ui')
 end
 
 --  ─────────────────────────────────────────────
