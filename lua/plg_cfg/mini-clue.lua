@@ -63,6 +63,7 @@ clue.setup({
     { mode = 'n', keys = '<Leader>p', desc = '+mini.pick' },
     { mode = 'n', keys = '<Leader>Q', desc = '+sessions' },
     { mode = 'n', keys = '<Leader>q', desc = '+quickfix' },
+    { mode = 'n', keys = '<Leader>r', desc = '+vim.pack' },
     { mode = 'n', keys = '<Leader>s', desc = '+mini.surround' },
     { mode = 'n', keys = '<Leader>t', desc = '+md tables' },
     { mode = 'n', keys = '<Leader>td', desc = '+delete' },

@@ -3,6 +3,7 @@
 --    ╰────────────────────────────╯
 
 -- 08/01/26 - split from mini.lua
+-- 09/15/26 - Replaced <leader>fp code to simplify - from Deepseek
 
 local pick = require('mini.pick')
 local extra = require('mini.extra')
@@ -25,77 +26,6 @@ pick.setup({
   },
 })
 extra.setup()
-
-local files_request = 0
-
-local function files_by_name(opts)
-  opts = opts or {}
-
-  local cwd = opts.cwd or vim.fn.getcwd()
-  local name = opts.name or 'cwd by name'
-
-  if vim.fn.executable('rg') == 0 then
-    vim.notify('ripgrep is required to list files by name', vim.log.levels.ERROR)
-    return
-  end
-
-  files_request = files_request + 1
-  local request = files_request
-
-  pick.start({
-    source = {
-      cwd = cwd,
-      items = function()
-        vim.system(
-          { 'rg', '--files', '--glob', '!**/.git/**' },
-          { cwd = cwd, text = true },
-          function(result)
-            vim.schedule(function()
-              local picker_opts = pick.get_picker_opts()
-              if
-                request ~= files_request
-                or picker_opts.source == nil
-                or picker_opts.source.cwd ~= cwd
-                or picker_opts.source.name ~= name
-              then
-                return
-              end
-
-              if result.code ~= 0 then
-                local message = vim.trim(result.stderr or '')
-                vim.notify(
-                  message ~= '' and message or 'Could not list files with ripgrep',
-                  vim.log.levels.ERROR
-                )
-                pick.set_picker_items({})
-                return
-              end
-
-              local files = vim.split(result.stdout or '', '\n', { trimempty = true })
-              files = vim.tbl_filter(function(path)
-                return not exclude.is_excluded(path)
-              end, files)
-
-              table.sort(files, function(a, b)
-                local name_a = vim.fs.basename(a):lower()
-                local name_b = vim.fs.basename(b):lower()
-
-                if name_a == name_b then
-                  return a:lower() < b:lower()
-                end
-
-                return name_a < name_b
-              end)
-
-              pick.set_picker_items(files)
-            end)
-          end
-        )
-      end,
-      name = name,
-    },
-  })
-end
 
 local function zoxide_picker()
   if vim.fn.executable('zoxide') == 0 then
@@ -124,12 +54,31 @@ end
 
 --  ───────── keymaps ──────────
 
-Kset('n', '<Leader>pf', files_by_name, { desc = 'mini.pick files' })
+Kset('n', '<Leader>pf', function()
+  local files = vim.fn.systemlist({ 'rg', '--files', '--glob', '!**/.git/**' })
+  files = vim.tbl_filter(function(path)
+    return not exclude.is_excluded(path)
+  end, files)
+
+  -- sort list by filename
+  table.sort(files, function(a, b)
+    local name_a = vim.fs.basename(a):lower()
+    local name_b = vim.fs.basename(b):lower()
+    if name_a == name_b then
+      return a:lower() < b:lower()
+    end
+    return name_a < name_b
+  end)
+
+  pick.start({
+    source = { name = 'cwd by name', items = files },
+  })
+end, { desc = 'files' })
 
 Kset('n', '<Leader>pr', function()
   vim.cmd.wshada()
   extra.pickers.oldfiles()
-end, { desc = 'mini.pick.oldfiles' })
+end, { desc = 'oldf.iles' })
 
 Kset('n', '<Leader>p.', function()
   pick.builtin.resume()
@@ -159,11 +108,11 @@ end, { desc = 'grep' })
 
 Kset('n', '<Leader>pG', function()
   pick.builtin.grep_live()
-end, { desc = 'live grep' })
+end, { desc = 'Live grep' })
 
 Kset('n', '<Leader>pH', function()
   extra.pickers.hl_groups()
-end, { desc = 'highlights' })
+end, { desc = 'Highlights' })
 
 Kset('n', '<Leader>pj', function()
   extra.pickers.list({ scope = 'jump' })
@@ -187,7 +136,7 @@ end, { desc = 'quickfix' })
 
 Kset('n', '<Leader>pR', function()
   extra.pickers.registers()
-end, { desc = 'registers' })
+end, { desc = 'Registers' })
 
 Kset('n', '<Leader>ps', function()
   extra.pickers.history({ scope = '/' })
@@ -213,9 +162,9 @@ end, { desc = 'changes' })
 
 Kset('n', '<Leader>pz', zoxide_picker, { noremap = true, silent = true, desc = 'Zoxide' })
 
-Kset('n', 'zz', function()
-  extra.pickers.spellsuggest()
-end, { desc = 'spell suggest' })
+-- Kset('n', 'zz', function()
+--   extra.pickers.spellsuggest()
+-- end, { desc = 'spell suggest' })
 
 Kset('n', '<Leader>pv', function()
   local sort_recent = visits.gen_sort.default({ recency_weight = 1 })

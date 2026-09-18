@@ -10,14 +10,11 @@
 -- 05/31/26 - moved notifications to bottom
 -- 06/01/26 - set up dashboard to replace mini.starter
 -- 06/05/26 - Tweaks as per claude
--- 07/14/26 - added notifier to replace noice in part
--- 07/19/26 - removed notifier decided to go back to system notifications - all in one place
 -- 09/09/26 - Revised by codex for new file_exclude - changed shortcuts to start with f (s used for surround)
+-- 09/15/26 - Replaced snacks with Snacks where appropriate - no local used
 
 -- vim.pack.add({ Gh('nvim-tree/nvim-web-devicons') })
 vim.pack.add({ Gh('folke/snacks.nvim') })
-
-local snacks = require('snacks')
 
 -- setup for excluding files from pickers
 local file_exclude = require('file_exclude')
@@ -42,7 +39,7 @@ function picker_preview.directory(ctx)
   ctx.preview:reset()
   ctx.preview:minimal()
 
-  local path = snacks.picker.util.path(ctx.item)
+  local path = Snacks.picker.util.path(ctx.item)
   if not path then
     ctx.preview:notify('Item has no `file`', 'error')
     return
@@ -53,7 +50,7 @@ function picker_preview.directory(ctx)
 
   local entries = {}
   for file, file_type in vim.fs.dir(path) do
-    file_type = file_type or snacks.util.path_type(path .. '/' .. file)
+    file_type = file_type or Snacks.util.path_type(path .. '/' .. file)
     if file_type == 'directory' or not file_exclude.is_excluded(file) then
       entries[#entries + 1] = { file = file, type = file_type }
     end
@@ -71,7 +68,7 @@ function picker_preview.directory(ctx)
     local is_dir = item.type == 'directory'
     local category = is_dir and 'directory' or 'file'
     local highlight = is_dir and 'Directory' or nil
-    local icon, icon_highlight = snacks.util.icon(item.file, category, {
+    local icon, icon_highlight = Snacks.util.icon(item.file, category, {
       fallback = ctx.picker.opts.icons.files,
     })
 
@@ -155,11 +152,11 @@ local function case_insensitive_explorer_sort(a, b)
   return (a.idx or math.huge) < (b.idx or math.huge)
 end
 
-vim.ui.select = snacks.picker.select
-vim.ui.input = snacks.input.input
+vim.ui.select = Snacks.picker.select
+vim.ui.input = Snacks.input.input
 
 -- stylua: ignore
-snacks.setup({
+Snacks.setup({
 
   --  ────── enable/disable modules ──────
   -- only include those not defined elsewhere
@@ -173,16 +170,16 @@ snacks.setup({
   scope        = { enabled = true },
   scroll       = { enabled = true },
   terminal     = { enabled = true },
+  words        = { enabled = true },
 
   -- image        = { enabled = false },
   -- lazygit      = { enabled = false },
-  -- words        = { enabled = false },
 
   --  ──────── dashboard config ────────
 
   dashboard    = {
     enabled  = false,
-    autokeys = "123456789abcdefghijklmnopqrstuvwxyz",
+    autokeys = "123456789abcdhijklnopstuvwxyz",
     width    = 50,
     row      = 4,
 
@@ -216,9 +213,9 @@ snacks.setup({
         { key = "e", desc = "Explorer", action = "<Leader>x"},
         { key = "f", desc = "Find Files",
           action = function()
-            snacks.picker.files({ title = Myfn.short_cwd() })
+            Snacks.picker.files({ title = Myfn.short_cwd() })
           end },
-        { key = "g", desc = "Grep",       action = function() snacks.picker.grep() end },
+        { key = "g", desc = "Grep",       action = function() Snacks.picker.grep() end },
         { key = "m", desc = "Mini-Files", action = "<Leader>["},
         { key = "r",
           desc = "Recent Files",
@@ -226,7 +223,7 @@ snacks.setup({
           -- action = function()
           --   vim.cmd('wshada')
           --   vim.cmd('rshada!')
-          --   snacks.picker.recent({ refresh = true, file_pos = "main" })
+          --   Snacks.picker.recent({ refresh = true, file_pos = "main" })
           -- end },
         --   { key = "y", desc = "Yazi",        action = "<Leader>y" },
         { key = "q", desc = "Quit Menu", action = ":bwipeout" },
@@ -323,7 +320,6 @@ snacks.setup({
     },
 
     files = {
-      -- layout = { preset = 'my_default' },
       layout = { preset = 'my_single_narrow' },
       exclude = excluded,
       transform = exclude_file_item,
@@ -475,7 +471,7 @@ local function oldfiles_picker()
     end
   end
 
-  snacks.picker.pick({
+  Snacks.picker.pick({
     title = 'Recent',
     items = items,
     format = 'file',
@@ -492,95 +488,126 @@ end
 -- stylua: ignore 
 local function maps()
 
-  Kset('n', '<Leader>fR', function() snacks.picker.registers() end,            { desc = 'registers' })
-  Kset('n', '<Leader>fb', function() snacks.picker.buffers() end,              { desc = 'buffers'})
-  Kset('n', '<leader>fc', function() snacks.picker.command_history() end,      { desc = 'Command History' })
-  Kset('n', '<Leader>fd', function() snacks.picker.diagnostics_buffer() end,   { desc = 'diagnostics - buffer' })
-  Kset('n', '<Leader>fg', function() snacks.picker.grep() end,                 { desc = 'grep' })
-  Kset('n', '<Leader>fh', function() snacks.picker.help() end,                 { desc = 'help' })
-  Kset('n', '<Leader>fj', function() snacks.picker.jumps() end,                { desc = 'jumps' })
-  Kset('n', '<Leader>fl', function() snacks.picker.lines() end,                { desc = 'buffer lines' })
-  Kset('n', '<Leader>fm', function() snacks.picker.marks() end,                { desc = 'marks' })
-  Kset('n', '<Leader>fn', function() snacks.picker.notifications() end,        { desc = 'notifications' })
-  Kset('n', '<Leader>fq', function() snacks.picker.qflist() end,               { desc = 'quick fix' })
-  Kset('n', '<Leader>ft', function() snacks.terminal() end,                    {desc = 'terminal'})
-  Kset('n', '<Leader>fu', function() snacks.picker.undo() end,                 { desc = 'undo history' })
-  Kset('n', '<Leader>z',  function() snacks.picker.zoxide() end,               { desc = 'Zoxide' })
+Kset('n', '<Leader>fB', function() Snacks.picker.grep_buffers() end,        { desc = 'grep open buffers' })
+Kset('n', '<Leader>fR', function() Snacks.picker.registers() end,           { desc = 'Registers' })
+Kset('n', '<Leader>fb', function() Snacks.picker.buffers() end,             { desc = 'buffers'})
+Kset('n', '<Leader>fc', function() Snacks.picker.command_history() end,     { desc = 'command History' })
+Kset('n', '<Leader>fd', function() Snacks.picker.diagnostics_buffer() end,  { desc = 'diagnostics - buffer' })
+Kset('n', '<Leader>fg', function() Snacks.picker.grep() end,                { desc = 'grep' })
+Kset('n', '<Leader>fh', function() Snacks.picker.help() end,                { desc = 'help' })
+Kset('n', '<Leader>fj', function() Snacks.picker.jumps() end,               { desc = 'jumps' })
+Kset('n', '<Leader>fk', function() Snacks.picker.keymaps() end,             { desc = 'keymaps' })
+Kset('n', '<Leader>fl', function() Snacks.picker.lines() end,               { desc = 'buffer lines' })
+Kset('n', '<Leader>fm', function() Snacks.picker.marks() end,               { desc = 'marks' })
+Kset('n', '<Leader>fn', function() Snacks.picker.notifications() end,       { desc = 'notifications' })
+Kset('n', '<Leader>fo', function() Snacks.picker.lsp_symbols() end,         { desc = 'search document symbols' })
+Kset('n', '<Leader>fp', function() Snacks.picker.resume() end,              { desc = 'resume last picker' })
+Kset('n', '<Leader>fq', function() Snacks.picker.qflist() end,              { desc = 'quick fix' })
+Kset('n', '<Leader>ft', function() Snacks.terminal() end,                   {desc = 'terminal'})
+Kset('n', '<Leader>fu', function() Snacks.picker.undo() end,                { desc = 'undo history' })
+Kset('n', '<Leader>fw', function() Snacks.picker.grep_word() end,           { desc = 'grep selection or word' })
 
-  Kset('n', '<Leader>fk', function()
-    snacks.picker.keymaps()
-  end, { desc = 'keymaps' })
+Kset('n', '<Leader>n',  function() Snacks.notifier.show_history() end, {desc = 'notification history'})
 
-  Kset('n', '<Leader>x', function()
-    snacks.explorer({
-      auto_close = true,
-      layout = { preset = 'sidebar', preview = true },
-    })
-  end, { desc = 'Explorer' })
+Kset('n', '<Leader>z', function()
+  if vim.fn.executable('zoxide') == 1 then
+    Snacks.picker.zoxide()
+  else
+    vim.notify('zoxide not found', vim.log.levels.WARN)
+  end
+end, { desc = 'Zoxide' })
 
-  Kset('n', '<Leader>fs', function()
-    snacks.picker({
-      source = 'search_history',
-    })
-  end, { desc = 'search history' })
+-- Spelling picker
+Kset('n', 'zz', function()
+  require('snacks').picker.spelling({
+    layout = {
+      layout = {
+        relative = "cursor",
+        row = 1,
+        col = 0,
+        width = 40,
+        height = 10,
+        box = "vertical",
+        border = "rounded",
+        { win = "input", height = 1, border = "bottom" },
+        { win = "list", border = "none" },
+      },
+    },
+  })
+end, { desc = 'Spelling Suggestions' })
 
-  Kset('n', '<Leader>fD', function()
-    vim.cmd('wshada')
-    vim.cmd('rshada!')
-    snacks.dashboard.open()
-  end, { desc = 'Dashboard (Synced)', silent = true })
+Kset('n', '<Leader>x', function()
+  Snacks.explorer({
+    auto_close = true,
+    layout = { preset = 'sidebar', preview = true },
+  })
+end, { desc = 'Snacks explorer' })
 
-  Kset('n', '<Leader>]', function()
-    vim.cmd('wshada')
-    vim.cmd('rshada!')
-    oldfiles_picker()
-  end, { desc = 'Old Files (Synced)' })
+Kset('n', '<Leader>fs', function()
+  Snacks.picker({
+    source = 'search_history',
+  })
+end, { desc = 'search history' })
 
-  Kset('n', '<Leader>fw', function()
-    snacks.picker.grep_word()
-  end, { desc = 'grep selection or word' })
+Kset('n', '<Leader>fD', function()
+  vim.cmd('wshada')
+  vim.cmd('rshada!')
+  Snacks.dashboard.open()
+end, { desc = 'Dashboard', silent = true })
 
-  Kset('n', '<leader>i', function()
-    if snacks.indent.enabled then
-      snacks.indent.disable()
-    else
-      snacks.indent.enable()
-    end
-  end, { desc = 'Toggle indent Guides' })
+Kset('n', '<Leader>]', function()
+  vim.cmd('wshada')
+  vim.cmd('rshada!')
+  oldfiles_picker()
+end, { desc = 'old Files' })
 
-  Kset('n', '<Leader><space>', function()
-    snacks.picker.files({
-      title = Myfn.short_cwd(),
-    })
-  end, { desc = 'files cwd' })
+Kset('n', '<leader>i', function()
+  if Snacks.indent.enabled then
+    Snacks.indent.disable()
+  else
+    Snacks.indent.enable()
+  end
+end, { desc = 'toggle indent Guides' })
 
-  Kset('n', '<Leader>ff', function()
-    snacks.picker({
-      source = 'files',
-      title = Myfn.short_cwd(),
-      layout = { preset = 'my_default' }
-    })
-  end, { desc = 'Files cwd' })
+Kset('n', '<Leader>ff', function()
+  Snacks.picker({
+    source = 'files',
+    title = Myfn.short_cwd(),
+    layout = { preset = 'my_default' }
+  })
+end, { desc = 'files  cwd' })
 
-  Kset('n', '<Leader>fo', function()
-    snacks.picker.lsp_symbols()
-  end, { desc = 'Search document symbols' })
+Kset('n', '<Leader><space>', function()
+  Snacks.picker.files({
+    cmd = 'fd',
+    args = { '-t', 'd', '-t', 'f', '--max-depth', '1' },
+    title = Myfn.short_cwd(),
+    layout = { preset = 'my_default' },
 
-  Kset('n', '<Leader>fp', function()
-    snacks.picker.resume()
-  end, { desc = 'resume last picker' })
+    transform = function(item)
+      item.dir = vim.fn.isdirectory(Snacks.picker.util.path(item)) == 1
+      return exclude_file_item(item)
+    end,
+    sort = function(a, b)
+      if a.dir ~= b.dir then
+        return a.dir
+      end
+      return case_insensitive_file_sort(a, b)
+    end,
+})
+end, { desc = 'files cwd only'})
 
-  Kset('n', '<Leader>fB', function()
-    snacks.picker.grep_buffers()
-  end, { desc = 'grep open buffers' })
-
-  Kset('n', '<Leader>n', '<cmd>lua snacks.notifier.show_history()<cr>', {desc = 'notification history'})
+-- Kset('n', '<Leader><space>', function()
+--   Snacks.picker.files({
+--     title = Myfn.short_cwd(),
+--   })
+-- end, { desc = 'files cwd' })
 
 end
 
 maps()
 
-local notification_group = vim.api.nvim_create_augroup('SnacksNotifications', { clear = true })
+local notification_group = vim.api.nvim_create_augroup('snacksNotifications', { clear = true })
 
 -- Colorscheme changed
 vim.api.nvim_create_autocmd('ColorScheme', {

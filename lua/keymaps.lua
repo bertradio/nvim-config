@@ -45,6 +45,9 @@ Kset('n', '<down>', 'gj', { desc = 'Move cursor down one line' })
 Kset('n', 'k', 'gk', { desc = 'Move cursor up one line' })
 Kset('n', 'j', 'gj', { desc = 'Move cursor down one line' })
 
+-- change cwd to directory of current buffer
+Kset('n', '<Leader>c', '<cmd>:cd %:p:h<cr>', { desc = 'Change cwd to match buffer' })
+
 -------------------------------------------------
 -- >>> SAVE AND QUIT
 -------------------------------------------------
@@ -60,7 +63,6 @@ Kset({ 'n', 'i', 'v' }, '<c-q>', '<cmd>q<cr>', { desc = 'Exit nvim' })
 
 -- load last file
 -- Kset('n', '<Leader>L', '<cmd>e#<1<cr>', { desc = 'Load last file' })
-Kset('n', '<Leader>L', '<cmd>nohlsearch<cr>', { desc = 'remove search hl' })
 
 -- Select all text in the current buffer
 Kset('n', '<C-a>', 'ggVG', { desc = 'Select all' })

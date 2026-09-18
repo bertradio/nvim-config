@@ -42,8 +42,6 @@ local function load_ui_plugins()
   req('smart-splits')
   req('bookmarks_linux')
   req('render-markdown') -- needs to be here to render snacks notification history
-  req('quicker')
-  req('pack-ui')
 end
 
 --  ─────────────────────────────────────────────
@@ -56,12 +54,12 @@ local function load_buffer_plugins()
   req('flash')
   req('mini-ai')
   req('mini-diff')
-  -- req('mini-identscope') -- replaced by snacks.scope
   req('mini-move')
   req('mini-operators')
   req('mini-pairs')
   req('mini-surround')
   req('pretty-comment')
+  req('quicker')
   req('undotree')
 end
 

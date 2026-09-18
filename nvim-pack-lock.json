@@ -22,7 +22,7 @@
       "src": "https://github.com/nvim-lualine/lualine.nvim"
     },
     "markdown-plus.nvim": {
-      "rev": "1d98f6d633b0bcdb5c55aedd705fcd6b67cc0ed8",
+      "rev": "f76cef58805c18d5fee7808ff5539da2490fee5c",
       "src": "https://github.com/yousefhadder/markdown-plus.nvim"
     },
     "mason.nvim": {
@@ -70,7 +70,7 @@
       "src": "https://github.com/HiPhish/rainbow-delimiters.nvim"
     },
     "render-markdown.nvim": {
-      "rev": "f94914e0486466aac53570de084a475e288ec46d",
+      "rev": "640a3ec6d538bad17c328be373c7cad0293d9589",
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
     "smart-splits.nvim": {
@@ -82,7 +82,7 @@
       "src": "https://github.com/folke/snacks.nvim"
     },
     "undotree": {
-      "rev": "02b69aed427b848c4dca483fc5e9524b6019c296",
+      "rev": "6d528dee270dfe554c0cd93227fca52ec2752827",
       "src": "https://github.com/jiaoshijie/undotree"
     }
   }
