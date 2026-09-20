@@ -555,7 +555,7 @@ Kset('n', '<Leader>fD', function()
   Snacks.dashboard.open()
 end, { desc = 'Dashboard', silent = true })
 
-Kset('n', '<Leader>]', function()
+Kset('n', '<Leader>fr', function()
   vim.cmd('wshada')
   vim.cmd('rshada!')
   oldfiles_picker()

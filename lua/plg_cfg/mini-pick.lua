@@ -187,7 +187,7 @@ Kset('n', '<Leader><space>', function()
   })
 end, { desc = 'files' })
 
-Kset('n', '<Leader>pr', function()
+Kset('n', '<Leader>]', function()
   vim.cmd.wshada()
   extra.pickers.oldfiles()
 end, { desc = 'oldfiles' })
@@ -322,7 +322,7 @@ Kset('n', '<Leader>pv', function()
         local win_id = vim.fn.bufwinid(buf_id)
         local win_width = win_id ~= -1 and vim.api.nvim_win_get_width(win_id) or 100
 
-        local date_width = 16 -- YYYY-MM-DD HH:MM
+        local date_width = 11 -- MM-DD HH:MM
         local separator = ' │ '
         local path_width = math.max(20, win_width - date_width - #separator + 1)
 
@@ -331,7 +331,7 @@ Kset('n', '<Leader>pv', function()
 
           local modified = ''
           if stat and stat.mtime then
-            modified = os.date('%Y-%m-%d %H:%M', stat.mtime.sec)
+            modified = os.date('%m-%d %H:%M', stat.mtime.sec)
           end
 
           local path = item.path
