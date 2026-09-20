@@ -569,15 +569,14 @@ Kset('n', '<leader>i', function()
   end
 end, { desc = 'toggle indent Guides' })
 
-Kset('n', '<Leader>ff', function()
-  Snacks.picker({
-    source = 'files',
-    title = Myfn.short_cwd(),
-    layout = { preset = 'my_default' }
-  })
-end, { desc = 'files  cwd' })
 
-Kset('n', '<Leader><space>', function()
+--     source = 'files',
+--     title = Myfn.short_cwd(),
+--     layout = { preset = 'my_default' }
+--   })
+-- end, { desc = 'files  cwd' })
+
+Kset('n', 'ff', function()
   Snacks.picker.files({
     cmd = 'fd',
     args = { '-t', 'd', '-t', 'f', '--max-depth', '1' },

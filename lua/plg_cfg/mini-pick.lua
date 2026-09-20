@@ -4,10 +4,14 @@
 
 -- 08/01/26 - split from mini.lua
 -- 09/15/26 - Replaced <leader>fp code to simplify - from Deepseek
+-- 09/19/26 - Moved picks window to centered on screen
+--            Added BS in explorer to move to prior dir
+--            Centered picker box and dimmed screen
 
 local pick = require('mini.pick')
 local extra = require('mini.extra')
 local exclude = require('file_exclude')
+local minput = require('mini.input')
 local visits = require('mini.visits')
 
 visits.setup()
@@ -24,7 +28,92 @@ pick.setup({
   options = {
     use_cache = true,
   },
+  window = {
+    config = function()
+      local height = math.floor(0.618 * vim.o.lines)
+      local width = math.floor(0.618 * vim.o.columns)
+
+      return {
+        anchor = 'NW',
+        height = height,
+        width = width,
+        row = math.floor(0.5 * (vim.o.lines - height)),
+        col = math.floor(0.5 * (vim.o.columns - width)),
+      }
+    end,
+  },
 })
+
+--  ───── functions to dim background when pick displays ─────
+
+local backdrop = {}
+local backdrop_group = vim.api.nvim_create_augroup('MiniPickBackdrop', { clear = true })
+
+local function close_backdrop()
+  if vim.api.nvim_win_is_valid(backdrop.win or -1) then
+    vim.api.nvim_win_close(backdrop.win, true)
+  end
+  if vim.api.nvim_buf_is_valid(backdrop.buf or -1) then
+    vim.api.nvim_buf_delete(backdrop.buf, { force = true })
+  end
+  backdrop = {}
+end
+
+local function resize_backdrop()
+  if not vim.api.nvim_win_is_valid(backdrop.win or -1) then
+    return
+  end
+
+  vim.api.nvim_win_set_config(backdrop.win, {
+    relative = 'editor',
+    row = 0,
+    col = 0,
+    width = vim.o.columns,
+    height = vim.o.lines - vim.o.cmdheight,
+  })
+end
+
+local function open_backdrop()
+  close_backdrop()
+  vim.api.nvim_set_hl(0, 'MiniPickBackdrop', { bg = '#000000' })
+
+  backdrop.buf = vim.api.nvim_create_buf(false, true)
+  backdrop.win = vim.api.nvim_open_win(backdrop.buf, false, {
+    relative = 'editor',
+    row = 0,
+    col = 0,
+    width = vim.o.columns,
+    height = vim.o.lines - vim.o.cmdheight,
+    style = 'minimal',
+    focusable = false,
+    noautocmd = true,
+    zindex = 250,
+  })
+
+  vim.wo[backdrop.win].winblend = 70 -- set dim as percent of black (0%)
+  vim.wo[backdrop.win].winhighlight = 'Normal:MiniPickBackdrop'
+  vim.cmd('redraw')
+end
+
+vim.api.nvim_create_autocmd('User', {
+  group = backdrop_group,
+  pattern = 'MiniPickStart',
+  callback = open_backdrop,
+})
+
+vim.api.nvim_create_autocmd('User', {
+  group = backdrop_group,
+  pattern = 'MiniPickStop',
+  callback = close_backdrop,
+})
+
+vim.api.nvim_create_autocmd('VimResized', {
+  group = backdrop_group,
+  callback = resize_backdrop,
+})
+
+--  ───── end functions for background dim ─────
+
 extra.setup()
 
 local function zoxide_picker()
@@ -52,9 +141,32 @@ local function zoxide_picker()
   })
 end
 
+--  ───── put grep input in middle of screen and dim background ─────
+
+local function grep_picker()
+  open_backdrop()
+
+  local pattern = minput.get({
+    prompt = '(mini.pick) Grep pattern',
+    scope = 'editor',
+    completion = 'file',
+    handlers = {
+      view = minput.gen_view.floatwin({ style = 'MM' }),
+    },
+  })
+
+  if pattern == nil then
+    close_backdrop()
+    return
+  end
+
+  pick.builtin.grep({ pattern = pattern })
+end
+
 --  ───────── keymaps ──────────
 
-Kset('n', '<Leader>pf', function()
+-- Kset('n', '<Leader>pf', function()
+Kset('n', '<Leader><space>', function()
   local files = vim.fn.systemlist({ 'rg', '--files', '--glob', '!**/.git/**' })
   files = vim.tbl_filter(function(path)
     return not exclude.is_excluded(path)
@@ -78,7 +190,7 @@ end, { desc = 'files' })
 Kset('n', '<Leader>pr', function()
   vim.cmd.wshada()
   extra.pickers.oldfiles()
-end, { desc = 'oldf.iles' })
+end, { desc = 'oldfiles' })
 
 Kset('n', '<Leader>p.', function()
   pick.builtin.resume()
@@ -99,12 +211,32 @@ end, { desc = 'diagnostics' })
 Kset('n', '<Leader>pe', function()
   extra.pickers.explorer({
     filter = exclude.mini_explorer_filter,
+  }, {
+    mappings = {
+      delete_char = '',
+      go_to_parent = {
+        char = '<BS>',
+        func = function()
+          local picker_opts = pick.get_picker_opts()
+          local cwd = picker_opts.source.cwd
+          local parent = vim.fs.dirname(cwd)
+
+          if not parent or parent == cwd then
+            return
+          end
+
+          picker_opts.source.choose({
+            fs_type = 'directory',
+            path = parent,
+            text = vim.fs.basename(parent),
+          })
+        end,
+      },
+    },
   })
 end, { desc = 'explorer' })
 
-Kset('n', '<Leader>pg', function()
-  pick.builtin.grep()
-end, { desc = 'grep' })
+Kset('n', '<Leader>pg', grep_picker, { desc = 'grep' })
 
 Kset('n', '<Leader>pG', function()
   pick.builtin.grep_live()
@@ -161,10 +293,6 @@ Kset('n', '<Leader>px', function()
 end, { desc = 'changes' })
 
 Kset('n', '<Leader>pz', zoxide_picker, { noremap = true, silent = true, desc = 'Zoxide' })
-
--- Kset('n', 'zz', function()
---   extra.pickers.spellsuggest()
--- end, { desc = 'spell suggest' })
 
 Kset('n', '<Leader>pv', function()
   local sort_recent = visits.gen_sort.default({ recency_weight = 1 })

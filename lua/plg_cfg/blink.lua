@@ -7,10 +7,11 @@
 -- Optimized for Nvim 0.12 native features and sub-100ms startup
 -- Added LuaSnip and friendly-snippets per Gemini 4-22-26
 -- Revised for mini.cmdline compatibility 5-03-26
--- 05/20/26 - Removed spelling since never used
 -- 08/06/26 - removed Luasnip and my_snippets - moved to core
+-- 09/18/26 - re-added spell for md and txt
 
 vim.pack.add({
+  Gh('ribru17/blink-cmp-spell'),
   { src = Gh('saghen/blink.cmp'), version = 'v1' },
 })
 
@@ -98,7 +99,33 @@ blink.setup({
     default = { 'lsp', 'snippets', 'buffer', 'path' },
     min_keyword_length = 2,
     per_filetype = {
-         markdown = { 'buffer', 'snippets', 'path' },
-    }
+      -- markdown = { 'buffer', 'spell', 'snippets', 'path' },
+      markdown = { 'spell', 'buffer', 'snippets', 'path' },
+      text     = { 'buffer', 'spell', 'snippets', 'path' },
+    },
+    providers = {
+      spell = { name = 'Spell', module = 'blink-cmp-spell' },
+    },
+  },
+
+  fuzzy = {
+    sorts = {
+      function(a, b)
+        local ft = vim.bo.filetype
+        if ft ~= 'markdown' and ft ~= 'text' then return end
+
+        local priority = ft == 'markdown'
+            and { spell = 1, buffer = 2 }
+          or { buffer = 1, spell = 2 }
+        local a_priority = priority[a.source_id] or 3
+        local b_priority = priority[b.source_id] or 3
+        if a_priority ~= b_priority then return a_priority < b_priority end
+        if a.source_id == 'spell' and b.source_id == 'spell' then
+          return require('blink.cmp.fuzzy.sort').sort_text(a, b)
+        end
+      end,
+      'score',
+      'sort_text',
+    },
   },
 })
