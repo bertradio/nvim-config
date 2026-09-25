@@ -13,7 +13,7 @@ local group = vim.api.nvim_create_augroup('MyMiniFiles', { clear = true })
 -- ─────────── Filters ───────────
 
 local show_dotfiles = false
-local show_excluded = false
+local show_excluded = true
 
 local function mini_files_filter(fs_entry)
   local name = fs_entry.name

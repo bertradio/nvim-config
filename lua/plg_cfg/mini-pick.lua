@@ -7,6 +7,7 @@
 -- 09/19/26 - Moved picks window to centered on screen
 --            Added BS in explorer to move to prior dir
 --            Centered picker box and dimmed screen
+-- 09/20/26 - Added control of icons in pickers
 
 local pick = require('mini.pick')
 local extra = require('mini.extra')
@@ -14,9 +15,18 @@ local exclude = require('file_exclude')
 local minput = require('mini.input')
 local visits = require('mini.visits')
 
+extra.setup()
 visits.setup()
 
+-- to over-ride no icons for a particular picke and show iconsr
+local function show_with_icons(buf_id, items, query)
+  pick.default_show(buf_id, items, query, { show_icons = true })
+end
+
 pick.setup({
+  source = {
+    show = pick.default_show, -- no icons as the default
+  },
   mappings = {
     choose_in_split = '<M-s>',
     choose_in_tabpage = '',
@@ -28,6 +38,7 @@ pick.setup({
   options = {
     use_cache = true,
   },
+  -- center window
   window = {
     config = function()
       local height = math.floor(0.618 * vim.o.lines)
@@ -50,7 +61,7 @@ local backdrop = {}
 local backdrop_group = vim.api.nvim_create_augroup('MiniPickBackdrop', { clear = true })
 
 local function close_backdrop()
-  if vim.api.nvim_win_is_valid(backdrop.win or -1) then
+  if vim.api.nvim_win_is_valid(backdrop.win or -1) then -- no icons
     vim.api.nvim_win_close(backdrop.win, true)
   end
   if vim.api.nvim_buf_is_valid(backdrop.buf or -1) then
@@ -114,8 +125,6 @@ vim.api.nvim_create_autocmd('VimResized', {
 
 --  ───── end functions for background dim ─────
 
-extra.setup()
-
 local function zoxide_picker()
   if vim.fn.executable('zoxide') == 0 then
     vim.notify('zoxide is not installed or not in PATH', vim.log.levels.ERROR)
@@ -147,7 +156,7 @@ local function grep_picker()
   open_backdrop()
 
   local pattern = minput.get({
-    prompt = '(mini.pick) Grep pattern',
+    prompt = 'Grep pattern',
     scope = 'editor',
     completion = 'file',
     handlers = {
@@ -165,7 +174,6 @@ end
 
 --  ───────── keymaps ──────────
 
--- Kset('n', '<Leader>pf', function()
 Kset('n', '<Leader><space>', function()
   local files = vim.fn.systemlist({ 'rg', '--files', '--glob', '!**/.git/**' })
   files = vim.tbl_filter(function(path)
@@ -212,6 +220,9 @@ Kset('n', '<Leader>pe', function()
   extra.pickers.explorer({
     filter = exclude.mini_explorer_filter,
   }, {
+    source = {
+      show = show_with_icons, -- display icons
+    },
     mappings = {
       delete_char = '',
       go_to_parent = {
@@ -273,26 +284,6 @@ end, { desc = 'Registers' })
 Kset('n', '<Leader>ps', function()
   extra.pickers.history({ scope = '/' })
 end, { desc = 'search history' })
-
-Kset('n', '<Leader>pw', function()
-  pick.builtin.grep({
-    pattern = vim.fn.expand('<cword>'),
-    method = 'fixed',
-  })
-end, { desc = 'grep word under cursor' })
-
-Kset('n', '<Leader>pW', function()
-  pick.builtin.grep({
-    pattern = vim.fn.expand('<cWORD>'),
-    method = 'fixed',
-  })
-end, { desc = 'grep WORD under cursor' })
-
-Kset('n', '<Leader>px', function()
-  extra.pickers.list({ scope = 'change' })
-end, { desc = 'changes' })
-
-Kset('n', '<Leader>pz', zoxide_picker, { noremap = true, silent = true, desc = 'Zoxide' })
 
 Kset('n', '<Leader>pv', function()
   local sort_recent = visits.gen_sort.default({ recency_weight = 1 })
@@ -356,4 +347,24 @@ Kset('n', '<Leader>pv', function()
       end,
     },
   })
-end, { desc = 'visits - recent' })
+end, { desc = 'visit - recent' })
+
+Kset('n', '<Leader>pw', function()
+  pick.builtin.grep({
+    pattern = vim.fn.expand('<cword>'),
+    method = 'fixed',
+  })
+end, { desc = 'grep word under cursor' })
+
+Kset('n', '<Leader>pW', function()
+  pick.builtin.grep({
+    pattern = vim.fn.expand('<cWORD>'),
+    method = 'fixed',
+  })
+end, { desc = 'grep WORD under cursor' })
+
+Kset('n', '<Leader>px', function()
+  extra.pickers.list({ scope = 'change' })
+end, { desc = 'changes' })
+
+Kset('n', '<Leader>pz', zoxide_picker, { noremap = true, silent = true, desc = 'Zoxide' })

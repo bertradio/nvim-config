@@ -26,7 +26,7 @@
       "src": "https://github.com/nvim-lualine/lualine.nvim"
     },
     "markdown-plus.nvim": {
-      "rev": "f76cef58805c18d5fee7808ff5539da2490fee5c",
+      "rev": "adb063144700fa4c3d2cdf3997f48e34f74d5dd2",
       "src": "https://github.com/yousefhadder/markdown-plus.nvim"
     },
     "markdown-table-mode.nvim": {
@@ -38,7 +38,7 @@
       "src": "https://github.com/williamboman/mason.nvim"
     },
     "mini.nvim": {
-      "rev": "4389a4f31f854ce066949ea89c72dc71564f5c20",
+      "rev": "561751e839b99a4baca36b9d963166b66d2536a6",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "noice.nvim": {
@@ -57,9 +57,9 @@
       "rev": "be2d7b2be01860b5445a007ff2bc72b29896db6b",
       "src": "https://github.com/kevinhwang91/nvim-hlslens"
     },
-    "pack-ui.nvim": {
-      "rev": "608fe1139753bc12637837c621fb8e51988a564e",
-      "src": "https://github.com/jtprogru/pack-ui.nvim"
+    "nvim-web-devicons": {
+      "rev": "58447c1fca354bbf184425e4a8d01deecbd6f3c4",
+      "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
     "plenary.nvim": {
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
@@ -92,6 +92,10 @@
     "undotree": {
       "rev": "6d528dee270dfe554c0cd93227fca52ec2752827",
       "src": "https://github.com/jiaoshijie/undotree"
+    },
+    "yazi.nvim": {
+      "rev": "d8344ddd5e58bae647002baa670de07e678b60bf",
+      "src": "https://github.com/mikavilpas/yazi.nvim"
     }
   }
 }

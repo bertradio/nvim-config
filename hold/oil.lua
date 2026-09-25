@@ -61,7 +61,7 @@ require('oil').setup({
       desc = 'Toggle file detail view',
       callback = function()
         detail = not detail
-        require('oil').set_columns(detail and { 'icon', 'size', 'mtime' } or { 'icon' })
+        require('hold.Oil').set_columns(detail and { 'icon', 'size', 'mtime' } or { 'icon' })
       end,
     },
   },
@@ -86,7 +86,7 @@ vim.api.nvim_create_autocmd('DirChanged', {
       for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
         local buf = vim.api.nvim_win_get_buf(win)
         if vim.bo[buf].filetype == 'oil' then
-          require('oil').open(vim.fn.getcwd())
+          require('hold.Oil').open(vim.fn.getcwd())
         end
       end
     end)

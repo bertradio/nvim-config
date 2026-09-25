@@ -205,28 +205,19 @@ Snacks.setup({
       },
     },
 
+    -- stylua: ignore 
     preset = {
       -- header = "If it ain't broke, don't fix it!\n",
       header = "",
 
       keys = {
-        { key = "e", desc = "Explorer", action = "<Leader>x"},
-        { key = "f", desc = "Find Files",
-          action = function()
-            Snacks.picker.files({ title = Myfn.short_cwd() })
-          end },
-        { key = "g", desc = "Grep",       action = function() Snacks.picker.grep() end },
-        { key = "m", desc = "Mini-Files", action = "<Leader>["},
-        { key = "r",
-          desc = "Recent Files",
-          action = "<leader>fr" },
-          -- action = function()
-          --   vim.cmd('wshada')
-          --   vim.cmd('rshada!')
-          --   Snacks.picker.recent({ refresh = true, file_pos = "main" })
-          -- end },
-        --   { key = "y", desc = "Yazi",        action = "<Leader>y" },
-        { key = "q", desc = "Quit Menu", action = ":bwipeout" },
+        { key = "e", desc = "Explorer",     action = "<Leader>x"},
+        { key = "f", desc = "Find Files",   action = "<Leader>ff"},
+        { key = "g", desc = "Grep",         action = "<Leader>fg"},
+        { key = "m", desc = "Mini-Files",   action = "<Leader>["},
+        { key = "r", desc = "Recent Files", action = "<leader>fr" },
+        { key = "y", desc = "Yazi",         action = "<Leader>y" },
+        { key = "q", desc = "Quit Menu",    action = ":bwipeout" },
       },
     },
   },
@@ -462,7 +453,6 @@ local function oldfiles_picker()
 
     if not seen[file] and vim.fn.filereadable(file) == 1 and not file_exclude.is_excluded(file) then
       seen[file] = true
-
       items[#items + 1] = {
         idx = #items + 1,
         file = file,
@@ -485,7 +475,12 @@ end
 --    │        key mappings        │
 --    ╰────────────────────────────╯
 
--- stylua: ignore 
+local function refresh_oldfiles()
+  vim.cmd('wshada')
+  vim.cmd('rshada!')
+end
+
+   -- stylua: ignore 
 local function maps()
 
 Kset('n', '<Leader>fB', function() Snacks.picker.grep_buffers() end,        { desc = 'grep open buffers' })
@@ -550,8 +545,7 @@ Kset('n', '<Leader>fs', function()
 end, { desc = 'search history' })
 
 Kset('n', '<Leader>fD', function()
-  vim.cmd('wshada')
-  vim.cmd('rshada!')
+  refresh_oldfiles()
   Snacks.dashboard.open()
 end, { desc = 'Dashboard', silent = true })
 
@@ -568,13 +562,6 @@ Kset('n', '<leader>i', function()
     Snacks.indent.enable()
   end
 end, { desc = 'toggle indent Guides' })
-
-
---     source = 'files',
---     title = Myfn.short_cwd(),
---     layout = { preset = 'my_default' }
---   })
--- end, { desc = 'files  cwd' })
 
 Kset('n', 'ff', function()
   Snacks.picker.files({
@@ -595,12 +582,6 @@ Kset('n', 'ff', function()
     end,
 })
 end, { desc = 'files cwd only'})
-
--- Kset('n', '<Leader><space>', function()
---   Snacks.picker.files({
---     title = Myfn.short_cwd(),
---   })
--- end, { desc = 'files cwd' })
 
 end
 

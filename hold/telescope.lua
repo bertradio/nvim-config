@@ -15,22 +15,31 @@ if has_fzf_toolchain then
     group = build_group,
     callback = function(event)
       local data = event.data
-      if data.spec.name ~= 'telescope-fzf-native.nvim' or (data.kind ~= 'install' and data.kind ~= 'update') then
+      if
+        data.spec.name ~= 'telescope-fzf-native.nvim'
+        or (data.kind ~= 'install' and data.kind ~= 'update')
+      then
         return
       end
 
-      local commands = is_windows and {
-        { 'cmake', '-S', '.', '-B', 'build', '-DCMAKE_BUILD_TYPE=Release' },
-        { 'cmake', '--build', 'build', '--config', 'Release' },
-        { 'cmake', '--install', 'build', '--prefix', 'build' },
-      } or {
-        { 'make' },
-      }
+      local commands = is_windows
+          and {
+            { 'cmake', '-S', '.', '-B', 'build', '-DCMAKE_BUILD_TYPE=Release' },
+            { 'cmake', '--build', 'build', '--config', 'Release' },
+            { 'cmake', '--install', 'build', '--prefix', 'build' },
+          }
+        or {
+          { 'make' },
+        }
 
       for _, command in ipairs(commands) do
         local result = vim.system(command, { cwd = data.path }):wait()
         if result.code ~= 0 then
-          vim.notify(result.stderr, vim.log.levels.ERROR, { title = 'telescope-fzf-native build failed' })
+          vim.notify(
+            result.stderr,
+            vim.log.levels.ERROR,
+            { title = 'telescope-fzf-native build failed' }
+          )
           break
         end
       end
@@ -159,7 +168,9 @@ end
 function Pick.browser(opts)
   opts = opts or {}
   opts.cwd = opts.cwd or uv.cwd()
-  telescope.extensions.file_browser.file_browser(vim.tbl_extend('force', { cwd_to_path = true }, opts))
+  telescope.extensions.file_browser.file_browser(
+    vim.tbl_extend('force', { cwd_to_path = true }, opts)
+  )
 end
 
 local map = (rawget(_G, 'Myfn') and Myfn.map) or Kset or vim.keymap.set
@@ -167,9 +178,15 @@ local map = (rawget(_G, 'Myfn') and Myfn.map) or Kset or vim.keymap.set
 -- stylua: ignore
 map('n', '<Leader>ab', function() Pick.browser() end, { desc = 'File Browser in cwd' })
 map('n', '<Leader>ad', '<cmd>Telescope diagnostics bufnr=0<cr>', { desc = 'Diagnostics' })
-map('n', '<Leader>af', function() Pick.files() end, { desc = 'Find files' })
-map('n', '<Leader>ag', function() Pick.grep() end, { desc = 'Live grep' })
-map('n', '<Leader>ah', function() Pick.files({ hidden = true }) end, { desc = 'Find hidden' })
+map('n', '<Leader>af', function()
+  Pick.files()
+end, { desc = 'Find files' })
+map('n', '<Leader>ag', function()
+  Pick.grep()
+end, { desc = 'Live grep' })
+map('n', '<Leader>ah', function()
+  Pick.files({ hidden = true })
+end, { desc = 'Find hidden' })
 map('n', '<Leader>ao', '<cmd>Telescope oldfiles<cr>', { desc = 'Oldfiles' })
 map('n', '<Leader>aq', '<cmd>Telescope quickfix<cr>', { desc = 'Quickfix' })
 map('n', '<Leader>as', '<cmd>Telescope search_history<cr>', { desc = 'Search history' })

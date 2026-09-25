@@ -12,7 +12,7 @@ vim.pack.add({ Gh('code-biscuits/nvim-biscuits') })
 -- stylua: ignore 
 require('nvim-biscuits').setup({
   toggle_keybind = '<Leader>B',
-  show_on_start = false,
+  show_on_start = true,
 
   default_config = {
     trim_by_words = true,

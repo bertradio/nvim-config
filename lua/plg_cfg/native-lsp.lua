@@ -18,9 +18,9 @@
 local servers = {
   bashls = {
     cmd = { 'bash-language-server', 'start' },
-    filetypes = { 'sh', 'bash', 'zsh' },
+    filetypes = { 'sh', 'bash' },
     root_markers = { '.git' },
-    settings = { bashIde = { globPattern = '**/*@(.sh|.inc|.bash|.command|.zsh)' } },
+    settings = { bashIde = { globPattern = '**/*@(.sh|.inc|.bash|.command)' } },
   },
   lua_ls = {
     cmd = { 'lua-language-server' },
@@ -55,6 +55,7 @@ local servers = {
     filetypes = { 'markdown' },
     root_markers = { '.git', '.marksman.toml' },
   },
+
   taplo = {
     cmd = { 'taplo', 'lsp', 'stdio' },
     filetypes = { 'toml' },

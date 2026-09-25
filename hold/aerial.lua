@@ -4,13 +4,13 @@
 
 vim.pack.add({ Gh('stevearc/aerial.nvim') })
 
--- require("aerial").snacks_picker({
+-- require('aerial').snacks_picker({
 --   layout = {
 --     preview = false,
---     preset = "dropdown",
---   }
+--     preset = 'dropdown',
+--   },
 -- })
---
+
 require('aerial').setup({})
 
 -- You probably also want to set a keymap to toggle aerial
