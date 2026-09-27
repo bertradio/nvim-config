@@ -21,6 +21,10 @@
       "rev": "5f0f270fdc7c5b0c21d903ee85b9cb06f2ac636a",
       "src": "https://github.com/folke/flash.nvim"
     },
+    "live-preview.nvim": {
+      "rev": "a6307fa340ed7c0d96f5c567afc8c991aad94ce0",
+      "src": "https://github.com/brianhuster/live-preview.nvim"
+    },
     "lualine.nvim": {
       "rev": "221ce6b2d999187044529f49da6554a92f740a96",
       "src": "https://github.com/nvim-lualine/lualine.nvim"
@@ -61,6 +65,10 @@
       "rev": "58447c1fca354bbf184425e4a8d01deecbd6f3c4",
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
+    "oil.nvim": {
+      "rev": "b73018b75affd13fa38e2fc94ef753b465f770d7",
+      "src": "https://github.com/stevearc/oil.nvim"
+    },
     "plenary.nvim": {
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
       "src": "https://github.com/nvim-lua/plenary.nvim"
@@ -94,7 +102,7 @@
       "src": "https://github.com/jiaoshijie/undotree"
     },
     "yazi.nvim": {
-      "rev": "d8344ddd5e58bae647002baa670de07e678b60bf",
+      "rev": "9b1206cafe09401ab455db3dbce341a869cdebb0",
       "src": "https://github.com/mikavilpas/yazi.nvim"
     }
   }

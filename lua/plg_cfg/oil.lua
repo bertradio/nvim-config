@@ -8,7 +8,8 @@
 --        simplified code
 --        removed indicators of changed oil buffer - no longer worked
 --        removed float shortcut
---        Gmini optimized for full-screen and quick startup
+--        Gemini optimized for full-screen and quick startup
+-- 09/26/26 - Optimizations and corrections to exclude and dirchanged from Codex
 
 vim.pack.add({
   'https://github.com/nvim-tree/nvim-web-devicons',
@@ -16,15 +17,8 @@ vim.pack.add({
 })
 
 local detail = false
-
--- Pre-compile hidden patterns to save cycles during render
--- local exclude_globs = require('plg_cfg.file_exclude')
-local exclude_globs = {}
-local hidden_patterns = {}
-for _, glob in ipairs(exclude_globs) do
-  local p = glob:lower():gsub('%.', '%%.'):gsub('%-', '%%-'):gsub('%*', '.*')
-  table.insert(hidden_patterns, p .. '$')
-end
+local file_exclude = require('file_exclude')
+local group = vim.api.nvim_create_augroup('OilConfig', { clear = true })
 
 -- Keymap to Start oil
 Kset('n', '=', '<cmd>Oil .<cr>', { desc = 'Oil full screen' })
@@ -32,8 +26,6 @@ Kset('n', '=', '<cmd>Oil .<cr>', { desc = 'Oil full screen' })
 -- set up oil
 -- stylua: ignore
 require('oil').setup({
-  buf_options                   = { buflisted = false, bufhidden = 'hide' },
-  columns                       = { 'icon' }, -- Uses web-devicons automatically
   delete_to_trash               = true,
   skip_confirm_for_simple_edits = true,
 
@@ -44,9 +36,7 @@ require('oil').setup({
   },
 
   win_options = {
-    conceallevel = 3,
-    signcolumn   = 'no',
-    wrap         = true,
+    wrap = true,
   },
 
   keymaps = {
@@ -60,8 +50,18 @@ require('oil').setup({
     ['gd']    = {
       desc = 'Toggle file detail view',
       callback = function()
-        detail = not detail
-        require('hold.Oil').set_columns(detail and { 'icon', 'size', 'mtime' } or { 'icon' })
+        local next_detail = not detail
+        local has_modified_buffer = false
+
+        for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+          if vim.bo[buf].filetype == 'oil' and vim.bo[buf].modified then
+            has_modified_buffer = true
+            break
+          end
+        end
+
+        require('oil').set_columns(next_detail and { 'icon', 'size', 'mtime' } or { 'icon' })
+        if not has_modified_buffer then detail = next_detail end
       end,
     },
   },
@@ -69,32 +69,32 @@ require('oil').setup({
   view_options = {
     case_insensitive = true,
     is_hidden_file   = function(name)
-      if vim.startswith(name, '.') then return true end
-      local name_lower = name:lower()
-      for _, pattern in ipairs(hidden_patterns) do
-        if name_lower:match(pattern) then return true end
-      end
-      return false
+      return vim.startswith(name, '.') or file_exclude.is_excluded(name)
     end,
   },
 })
 
 -- Optimized Directory Sync (No Float Logic)
 vim.api.nvim_create_autocmd('DirChanged', {
+  group = group,
   callback = function()
     vim.schedule(function()
       for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
         local buf = vim.api.nvim_win_get_buf(win)
         if vim.bo[buf].filetype == 'oil' then
-          require('hold.Oil').open(vim.fn.getcwd())
+          vim.api.nvim_win_call(win, function()
+            require('oil').open(vim.fn.getcwd())
+          end)
         end
       end
     end)
   end,
+  desc = 'Make Oil follow Neovim cwd',
 })
 
 -- Apply the wrap-around mapping only in Oil buffers
 vim.api.nvim_create_autocmd('FileType', {
+  group = group,
   pattern = 'oil',
   callback = function()
     Kset('n', '<Down>', function()

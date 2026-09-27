@@ -40,9 +40,10 @@ local function load_ui_plugins()
   req('native-lsp')
   req('snacks') -- should com after noice and mini so it handles notifications
   req('smart-splits')
+  req('oil')
   req('bookmarks_linux')
   req('render-markdown') -- needs to be here to render snacks notification history
-  req('yazi') -- needs to be here to render snacks notification history
+  -- req('yazi') -- needs to be here to render snacks notification history
 end
 
 --  ─────────────────────────────────────────────
@@ -56,12 +57,12 @@ local function load_buffer_plugins()
   req('mini-ai')
   req('mini-diff')
   req('mini-move')
-  req('mini-operators')
   req('mini-pairs')
   req('mini-surround')
   req('pretty-comment')
   req('quicker')
   req('undotree')
+  req('livepreview')
 end
 
 --  ─────────────────────────────────────────────
@@ -110,8 +111,8 @@ vim.api.nvim_create_autocmd('InsertEnter', {
   callback = load_insert_plugins,
 })
 
--- Load only for the first Markdown buffer
-vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
+-- load only for the first markdown buffer
+vim.api.nvim_create_autocmd({ 'bufreadpre', 'bufnewfile' }, {
   once = true,
   pattern = '*.md',
   callback = load_markdown_plugins,
