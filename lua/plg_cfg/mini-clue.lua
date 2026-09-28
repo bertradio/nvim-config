@@ -59,7 +59,6 @@ clue.setup({
     { mode = 'n', keys = '<Leader>m', desc = '+md' },
     { mode = 'n', keys = '<Leader>mf', desc = '+md footnotes' },
     { mode = 'n', keys = '<Leader>mQ', desc = '+md callouts' },
-    { mode = 'n', keys = '<Leader>p', desc = '+mini.pick' },
     { mode = 'n', keys = '<Leader>Q', desc = '+sessions' },
     { mode = 'n', keys = '<Leader>q', desc = '+quickfix' },
     { mode = 'n', keys = '<Leader>s', desc = '+mini.surround' },

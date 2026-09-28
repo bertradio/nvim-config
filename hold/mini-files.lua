@@ -2,127 +2,130 @@
 --    │       mini-files.lua       │
 --    ╰────────────────────────────╯
 
--- Created: 04/30/26
---
--- Kept separate from mini.lua because there is quite a bit here
--- and it can easily be removed if Mini.files is no longer used.
---
--- 07/13/26 from ChatGPT:
---   - Added gc to set Neovim cwd
---   - Mini.files follows external cwd changes
---   - Bookmarks are loaded from bookmarks_linux.lua
+-- 08/01/26 - split from mini.lua
 
--- ─────────── mini.files ───────────
+local files = require('mini.files')
 
-local MiniFiles = require('mini.files')
-local cwd_config = require('bookmarks_linux')
+local file_exclude = require('file_exclude')
 
 local group = vim.api.nvim_create_augroup('MyMiniFiles', { clear = true })
 
 -- ─────────── Filters ───────────
 
 local show_dotfiles = false
+local show_excluded = true
 
-local function filter_show(_)
+local function mini_files_filter(fs_entry)
+  local name = fs_entry.name
+
+  -- Hide dotfiles unless g. has enabled them.
+  if not show_dotfiles and vim.startswith(name, '.') then
+    return false
+  end
+
+  -- Always allow ordinary directories.
+  -- Dot-directories were already handled above.
+  if fs_entry.fs_type == 'directory' then
+    return true
+  end
+
+  -- Hide non-editable file types unless <a-e> has enabled them.
+  if not show_excluded and file_exclude.is_excluded(name) then
+    return false
+  end
+
   return true
 end
 
-local function filter_hide(fs_entry)
-  return not vim.startswith(fs_entry.name, '.')
+local function refresh_filter()
+  files.refresh({
+    content = {
+      filter = mini_files_filter,
+    },
+  })
 end
 
 local function toggle_dotfiles()
   show_dotfiles = not show_dotfiles
+  refresh_filter()
 
-  MiniFiles.refresh({
-    content = {
-      filter = show_dotfiles and filter_show or filter_hide,
-    },
-  })
+  vim.notify(show_dotfiles and 'Dotfiles shown' or 'Dotfiles hidden')
+end
+
+local function toggle_excluded()
+  show_excluded = not show_excluded
+  refresh_filter()
+
+  vim.notify(show_excluded and 'Excluded files shown' or 'Excluded files hidden')
 end
 
 -- ─────────── Preview ───────────
 
-local preview_enabled = true
+local preview_enabled = false
 
 local function toggle_preview()
+  local was_enabled = preview_enabled
   preview_enabled = not preview_enabled
 
-  MiniFiles.refresh({
+  files.refresh({
     windows = {
       preview = preview_enabled,
     },
   })
+
+  if was_enabled then
+    local branch = files.get_explorer_state().branch
+    table.remove(branch)
+    files.set_branch(branch)
+  end
 end
 
 -- ─────────── Setup ───────────
 
-MiniFiles.setup({
+files.setup({
   content = {
-    -- Hide dotfiles initially
-    filter = filter_hide,
-
-    -- What prefix to show to the left of file system entries
-    prefix = nil,
-
-    -- In which order to show file system entries
-    sort = nil,
+    filter = mini_files_filter,
   },
-
-  -- Module mappings created only inside the explorer.
-  -- Use an empty string to disable a mapping.
   mappings = {
-    synchronize = 'w',
-    go_in_plus = '<CR>',
-    close = 'q',
+    close = '<Esc>',
     go_in = 'l',
-    go_out = 'h',
-    go_out_plus = 'H',
-    mark_goto = 'b',
-    mark_set = 'm',
-    reset = '<BS>',
-    reveal_cwd = '@',
-    show_help = 'g?',
-    trim_left = '<',
-    trim_right = '>',
+    go_in_plus = '<CR>',
+    reveal_cwd = '',
+    synchronize = 'w',
+    reset = '=',
+    go_out = '<BS>',
   },
-
   options = {
-    -- Move deleted entries into Mini.files trash
     permanent_delete = false,
-
-    -- Use Mini.files when editing a directory
-    use_as_default_explorer = true,
-  },
-
-  windows = {
-    -- Maximum number of windows shown side by side
-    max_number = 2,
-
-    -- Show a preview of the entry under the cursor
-    preview = preview_enabled,
-
-    -- Width of focused window
-    width_focus = 40,
-
-    -- Width of non-focused window
-    width_nofocus = 15,
-
-    -- Width of preview window
-    width_preview = 55,
+    use_as_default_explorer = false,
   },
 })
 
--- ─────────── Open Mini.files ───────────
+-- set up size of panels to adjust based on screen size
+local function open_minifiles()
+  local available = vim.o.columns - 4
 
-Kset('n', '<Leader>[', function()
-  MiniFiles.open()
-end, { desc = 'Mini files' })
+  local main_width = math.max(24, math.floor(available / 3))
+  local preview_width = math.max(40, available - main_width)
+
+  preview_enabled = false
+
+  files.open(nil, false, {
+    windows = {
+      max_number = 3,
+      preview = false,
+      width_focus = main_width,
+      width_preview = preview_width,
+    },
+  })
+end
+
+Kset('n', '<Leader>[', open_minifiles, { desc = 'mini.files' })
 
 -- ─────────── Buffer-local mappings ───────────
 
 local function set_cwd_to_mini()
-  local fs_entry = MiniFiles.get_fs_entry()
+  local fs_entry = files.get_fs_entry()
 
   if not fs_entry then
     return
@@ -152,6 +155,11 @@ vim.api.nvim_create_autocmd('User', {
       desc = 'Toggle dotfiles',
     })
 
+    Kset('n', '<a-e>', toggle_excluded, {
+      buffer = buf_id,
+      desc = 'Toggle excluded files',
+    })
+
     Kset('n', '<C-p>', toggle_preview, {
       buffer = buf_id,
       desc = 'Toggle preview',
@@ -159,63 +167,76 @@ vim.api.nvim_create_autocmd('User', {
 
     Kset('n', 'gc', set_cwd_to_mini, {
       buffer = buf_id,
-      desc = 'Set cwd to current Mini.files directory',
+      desc = 'Set cwd to current mini.files directory',
     })
   end,
 })
 
--- ─────────── Bookmarks ───────────
-
-local function expand_path(path)
-  path = path:gsub('^~', vim.env.HOME)
-  path = path:gsub('%$HOME', vim.env.HOME)
-
-  return vim.fs.normalize(vim.fn.expand(path))
-end
-
 vim.api.nvim_create_autocmd('User', {
   group = group,
-  pattern = 'MiniFilesExplorerOpen',
-
-  callback = function()
-    -- Load the same bookmarks used by bookmarks_linux.lua
-    for id, path in pairs(cwd_config) do
-      local expanded = expand_path(path)
-
-      if vim.fn.isdirectory(expanded) == 1 then
-        MiniFiles.set_bookmark(id, expanded, {
-          desc = path,
-        })
-      end
-    end
-
-    -- Dynamic bookmark for the current working directory
-    MiniFiles.set_bookmark('w', function()
-      return vim.fn.getcwd()
-    end, {
-      desc = 'Current working directory',
+  pattern = 'MiniFilesWindowOpen',
+  callback = function(args)
+    vim.api.nvim_win_set_config(args.data.win_id, {
+      border = 'double',
     })
   end,
 })
 
 -- ─────────── Follow cwd changes ───────────
 
-local syncing_cwd = false
-
 vim.api.nvim_create_autocmd('DirChanged', {
   group = group,
   callback = function()
-    if not MiniFiles.get_explorer_state() then
+    if not files.get_explorer_state() then
       return
     end
 
     local cwd = vim.fs.normalize(vim.fn.getcwd())
 
     vim.schedule(function()
-      if MiniFiles.get_explorer_state() then
-        MiniFiles.set_branch({ cwd })
+      if files.get_explorer_state() then
+        files.set_branch({ cwd })
       end
     end)
   end,
-  desc = 'Make Mini.files follow Neovim cwd',
+  desc = 'Make mini.files follow Neovim cwd',
+})
+
+-- bookmarks
+
+local bookmarks = {
+  b = { '~/bin', 'Bin' },
+  c = { '~/.config', 'Config' },
+  d = { '~/.Download', 'Downloads' },
+  h = { '~/.config/nvim/hold', 'Hold' },
+  H = { '~', 'Home' },
+  l = { '~/.local/bin', 'Local bin' },
+  L = { '~/.config/nvim/lua', 'Neovim lua' },
+  m = { '~/Insync/bertkleinman@outlook.com/OneDrive/My Docs/Moving Forward', 'Moving Forward' },
+  n = { '~/.config/nvim', 'Neovim config' },
+  o = { '~/Insync/bertkleinman@outlook.com/OneDrive/My Docs', 'OneDrive documents' },
+  p = { '~/.config/nvim/lua/plg_cfg', 'Neovim plugins' },
+  t = { '~/.Temp', 'Temporary files' },
+  v = { '~/Insync/bert.kleinman@gmail.com/Google Drive', 'Google Drive' },
+  y = { '~/.config/yazi', 'Yazi config' },
+}
+
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'MiniFilesExplorerOpen',
+  callback = function()
+    for id, bookmark in pairs(bookmarks) do
+      local path = vim.fn.expand(bookmark[1])
+
+      if vim.fn.isdirectory(path) == 1 then
+        files.set_bookmark(id, path, {
+          desc = bookmark[2],
+        })
+      else
+        vim.notify(
+          ('mini.files bookmark %q skipped: directory does not exist\n%s'):format(id, path),
+          vim.log.levels.WARN
+        )
+      end
+    end
+  end,
 })

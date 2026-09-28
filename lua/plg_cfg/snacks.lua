@@ -211,11 +211,10 @@ Snacks.setup({
       header = "",
 
       keys = {
-        { key = "e", desc = "Explorer",     action = "<Leader>x"},
-        { key = "f", desc = "Find Files",   action = "<Leader>ff"},
+        { key = "e", desc = "Explorer",     action = "<Leader>["},
+      { key = "f", desc = "Find Files",   action = "<Leader><space>"},
         { key = "g", desc = "Grep",         action = "<Leader>fg"},
-        { key = "m", desc = "Mini-Files",   action = "<Leader>["},
-        { key = "r", desc = "Recent Files", action = "<leader>fr" },
+        { key = "r", desc = "Recent Files", action = "<leader>]" },
         { key = "y", desc = "Yazi",         action = "<Leader>y" },
         { key = "q", desc = "Quit Menu",    action = ":bwipeout" },
       },
@@ -380,6 +379,12 @@ Snacks.setup({
       transform = exclude_file_item,
       matcher = { sort_empty = true },
       sort = case_insensitive_explorer_sort,
+      auto_close = true,
+      diagnostics = true,
+      follow_file = true,
+      trash = true,
+      replace_netrw = true,
+      git_status = false, -- disabled because a bug causes false directory entry
 
       layout = {
         preview = true,
@@ -420,13 +425,6 @@ Snacks.setup({
           },
         },
       },
-
-      auto_close = true,
-      diagnostics = true,
-      follow_file = true,
-      trash = true,
-      replace_netrw = true,
-      git_status = false, -- disabled because a bug causes false directory entry
 
       formatters = {
         file = { filename_only = true },
@@ -531,7 +529,7 @@ Kset('n', 'zz', function()
   })
 end, { desc = 'Spelling Suggestions' })
 
-Kset('n', '<Leader>x', function()
+Kset('n', '<Leader>[', function()
   Snacks.explorer({
     auto_close = true,
     layout = { preset = 'sidebar', preview = true },
@@ -544,7 +542,8 @@ Kset('n', '<Leader>fs', function()
   })
 end, { desc = 'search history' })
 
-Kset('n', '<Leader>fD', function()
+-- Kset('n', '<Leader>fD', function()
+Kset('n', '=', function()
   refresh_oldfiles()
   Snacks.dashboard.open()
 end, { desc = 'Dashboard', silent = true })

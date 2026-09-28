@@ -86,11 +86,11 @@
       "src": "https://github.com/folke/snacks.nvim"
     },
     "undotree": {
-      "rev": "6d528dee270dfe554c0cd93227fca52ec2752827",
+      "rev": "8b52517999b1739e36e7f3c5a48a93356d9588e5",
       "src": "https://github.com/jiaoshijie/undotree"
     },
     "yazi.nvim": {
-      "rev": "88f0fffdb9ae42ef92744a8c4cf966dbda1b9282",
+      "rev": "f5f0b169beaf16bb5fca50e36015b389c168ad5e",
       "src": "https://github.com/mikavilpas/yazi.nvim"
     }
   }
