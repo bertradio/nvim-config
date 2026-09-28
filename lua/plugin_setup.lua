@@ -40,10 +40,9 @@ local function load_ui_plugins()
   req('native-lsp')
   req('snacks') -- should com after noice and mini so it handles notifications
   req('smart-splits')
-  req('oil')
   req('bookmarks_linux')
   req('render-markdown') -- needs to be here to render snacks notification history
-  -- req('yazi') -- needs to be here to render snacks notification history
+  req('yazi') -- needs to be here to render snacks notification history
 end
 
 --  ─────────────────────────────────────────────
@@ -62,7 +61,6 @@ local function load_buffer_plugins()
   req('pretty-comment')
   req('quicker')
   req('undotree')
-  req('livepreview')
 end
 
 --  ─────────────────────────────────────────────
@@ -76,6 +74,7 @@ end
 
 local function load_markdown_plugins()
   req('markdown-plus')
+  req('livepreview')
 end
 
 --  ────────────────────────────────────────────────────────

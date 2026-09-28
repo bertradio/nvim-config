@@ -174,7 +174,7 @@ end
 
 --  ───────── keymaps ──────────
 
-Kset('n', '<Leader><space>', function()
+Kset('n', '<Leader>pf', function()
   local files = vim.fn.systemlist({ 'rg', '--files', '--glob', '!**/.git/**' })
   files = vim.tbl_filter(function(path)
     return not exclude.is_excluded(path)
@@ -195,10 +195,10 @@ Kset('n', '<Leader><space>', function()
   })
 end, { desc = 'files' })
 
-Kset('n', '<Leader>]', function()
+Kset('n', '<Leader>pr', function()
   vim.cmd.wshada()
   extra.pickers.oldfiles()
-end, { desc = 'oldfiles' })
+end, { desc = 'recent' })
 
 Kset('n', '<Leader>p.', function()
   pick.builtin.resume()

@@ -17,7 +17,7 @@ conform.setup({
     lua  = { 'stylua' },
     sh   = { 'shfmt' },
     bash = { 'shfmt' },
-    -- zsh  = { 'shfmt' },
+    zsh  = { 'shfmt' },
   },
 
   format_on_save = {

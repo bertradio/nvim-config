@@ -549,11 +549,12 @@ Kset('n', '<Leader>fD', function()
   Snacks.dashboard.open()
 end, { desc = 'Dashboard', silent = true })
 
-Kset('n', '<Leader>fr', function()
+-- Kset('n', '<Leader>fr', function()
+Kset('n', '<Leader>]', function()
   vim.cmd('wshada')
   vim.cmd('rshada!')
   oldfiles_picker()
-end, { desc = 'old Files' })
+end, { desc = 'recent' })
 
 Kset('n', '<leader>i', function()
   if Snacks.indent.enabled then
@@ -563,17 +564,18 @@ Kset('n', '<leader>i', function()
   end
 end, { desc = 'toggle indent Guides' })
 
-Kset('n', 'ff', function()
-  Snacks.picker.files({
-    cmd = 'fd',
-    args = { '-t', 'd', '-t', 'f', '--max-depth', '1' },
-    title = Myfn.short_cwd(),
-    layout = { preset = 'my_default' },
+-- Kset('n', '<Leader>ff', function()
+Kset('n', '<Leader><space>', function()
+Snacks.picker.files({
+  cmd = 'fd',
+  args = { '-t', 'd', '-t', 'f', '--max-depth', '1' },
+  title = Myfn.short_cwd(),
+  layout = { preset = 'my_default' },
 
-    transform = function(item)
-      item.dir = vim.fn.isdirectory(Snacks.picker.util.path(item)) == 1
-      return exclude_file_item(item)
-    end,
+  transform = function(item)
+    item.dir = vim.fn.isdirectory(Snacks.picker.util.path(item)) == 1
+    return exclude_file_item(item)
+  end,
     sort = function(a, b)
       if a.dir ~= b.dir then
         return a.dir
