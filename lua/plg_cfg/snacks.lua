@@ -54,6 +54,9 @@ function picker_preview.directory(ctx)
     if file_type == 'directory' or not file_exclude.is_excluded(file) then
       entries[#entries + 1] = { file = file, type = file_type }
     end
+    if file_type == 'link' then
+      file_type = Snacks.util.path_type(path .. '/' .. file)
+    end
   end
 
   ctx.preview:set_lines(vim.split(string.rep('\n', #entries), '\n'))
@@ -167,14 +170,17 @@ Snacks.setup({
   notifier     = { enabled = true },
   quickfile    = { enabled = true },
   rename       = { enabled = true },
-  scope        = { enabled = true },
+  scope        = { enabled = true, treesitter = { enabled = false }, },
   scroll       = { enabled = true },
   terminal     = { enabled = true },
   words        = { enabled = true },
 
-  -- image        = { enabled = false },
-  -- lazygit      = { enabled = false },
-
+    styles = {
+      notification = {
+        wo = { wrap = true } -- Wrap notifications
+      }
+    },
+ 
   --  ──────── dashboard config ────────
 
   dashboard    = {
@@ -193,7 +199,7 @@ Snacks.setup({
         cwd = false,
         padding = 0,
         indent  = 2,
-        limit   = 10, -- max number of recent files to display
+        limit   = 9, -- max number of recent files to display
       },
       -- Empty text row instead of dynamic section padding
       -- inserts line between recent and keys
@@ -210,13 +216,13 @@ Snacks.setup({
       -- header = "If it ain't broke, don't fix it!\n",
       header = "",
 
-      keys = {
-        { key = "e", desc = "Explorer",     action = "<Leader>["},
-      { key = "f", desc = "Find Files",   action = "<Leader><space>"},
-        { key = "g", desc = "Grep",         action = "<Leader>fg"},
-        { key = "r", desc = "Recent Files", action = "<leader>]" },
-        { key = "y", desc = "Yazi",         action = "<Leader>y" },
-        { key = "q", desc = "Quit Menu",    action = ":bwipeout" },
+      keys    = {
+          { key = "e", desc = "Explorer",       action = "<Leader>["},
+          { key = "f", desc = "Find Files",     action = "<Leader><space>"},
+          { key = "g", desc = "Grep",           action = "<Leader>fg"},
+          { key = "u", desc = "Update Plugins", action = "<leader>U" },
+          { key = "y", desc = "Yazi",           action = "<Leader>y" },
+          { key = "q", desc = "Quit Menu",      action = ":bwipeout"},
       },
     },
   },
@@ -227,11 +233,8 @@ Snacks.setup({
     enabled   = true,
     layout    = "my_default",
     prompt    = '> ',
-    ui_select = true,
-    styles = {
-      notification = {
-        wo = { wrap = true } -- Wrap notifications
-      }
+    matcher = {
+      fuzzy     = false,
     },
     win       = {
       border = "double",
@@ -441,10 +444,17 @@ Snacks.setup({
 --    │       custom pickers       │
 --    ╰────────────────────────────╯
 
+local function refresh_oldfiles()
+  vim.cmd('wshada')
+  vim.cmd('rshada!')
+end
+
 -- Show Neovim's raw oldfiles list in its existing order.
 local function oldfiles_picker()
   local items = {}
   local seen = {}
+
+  refresh_oldfiles()
 
   for _, file in ipairs(vim.v.oldfiles) do
     file = vim.fn.fnamemodify(file, ':p')
@@ -473,11 +483,6 @@ end
 --    │        key mappings        │
 --    ╰────────────────────────────╯
 
-local function refresh_oldfiles()
-  vim.cmd('wshada')
-  vim.cmd('rshada!')
-end
-
    -- stylua: ignore 
 local function maps()
 
@@ -485,7 +490,8 @@ Kset('n', '<Leader>fB', function() Snacks.picker.grep_buffers() end,        { de
 Kset('n', '<Leader>fR', function() Snacks.picker.registers() end,           { desc = 'Registers' })
 Kset('n', '<Leader>fb', function() Snacks.picker.buffers() end,             { desc = 'buffers'})
 Kset('n', '<Leader>fc', function() Snacks.picker.command_history() end,     { desc = 'command History' })
-Kset('n', '<Leader>fd', function() Snacks.picker.diagnostics_buffer() end,  { desc = 'diagnostics - buffer' })
+-- Kset('n',  "<leader>fC", function() Snacks.picker.colorschemes() end, {desc = "Colorschemes" })
+Kset('n', '<Leader>fD', function() Snacks.picker.diagnostics_buffer() end,  { desc = 'diagnostics - buffer' })
 Kset('n', '<Leader>fg', function() Snacks.picker.grep() end,                { desc = 'grep' })
 Kset('n', '<Leader>fh', function() Snacks.picker.help() end,                { desc = 'help' })
 Kset('n', '<Leader>fj', function() Snacks.picker.jumps() end,               { desc = 'jumps' })
@@ -496,9 +502,9 @@ Kset('n', '<Leader>fn', function() Snacks.picker.notifications() end,       { de
 Kset('n', '<Leader>fo', function() Snacks.picker.lsp_symbols() end,         { desc = 'search document symbols' })
 Kset('n', '<Leader>fp', function() Snacks.picker.resume() end,              { desc = 'resume last picker' })
 Kset('n', '<Leader>fq', function() Snacks.picker.qflist() end,              { desc = 'quick fix' })
-Kset('n', '<Leader>ft', function() Snacks.terminal() end,                   {desc = 'terminal'})
+Kset('n', '<Leader>ft', function() Snacks.terminal() end,                   { desc = 'terminal'})
 Kset('n', '<Leader>fu', function() Snacks.picker.undo() end,                { desc = 'undo history' })
-Kset('n', '<Leader>fw', function() Snacks.picker.grep_word() end,           { desc = 'grep selection or word' })
+Kset({'n', 'x'}, '<Leader>fw', function() Snacks.picker.grep_word() end,    { desc = 'grep selection or word' })
 
 Kset('n', '<Leader>n',  function() Snacks.notifier.show_history() end, {desc = 'notification history'})
 
@@ -542,26 +548,17 @@ Kset('n', '<Leader>fs', function()
   })
 end, { desc = 'search history' })
 
--- Kset('n', '<Leader>fD', function()
-Kset('n', '=', function()
+Kset('n', '<Leader>]', function()
   refresh_oldfiles()
   Snacks.dashboard.open()
 end, { desc = 'Dashboard', silent = true })
 
 -- Kset('n', '<Leader>fr', function()
-Kset('n', '<Leader>]', function()
-  vim.cmd('wshada')
-  vim.cmd('rshada!')
+Kset('n', '<Leader>fr', function()
   oldfiles_picker()
 end, { desc = 'recent' })
 
-Kset('n', '<leader>i', function()
-  if Snacks.indent.enabled then
-    Snacks.indent.disable()
-  else
-    Snacks.indent.enable()
-  end
-end, { desc = 'toggle indent Guides' })
+Snacks.toggle.indent():map('<leader>i')
 
 -- Kset('n', '<Leader>ff', function()
 Kset('n', '<Leader><space>', function()

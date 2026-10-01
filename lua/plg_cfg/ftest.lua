@@ -15,16 +15,7 @@ require('catppuccin').setup({
   transparent_background = false,
 
   highlight_overrides = {
-    all = function(colors)
-      return {
-        FloatBorder = { link = 'Normal' },
-        FloatTitle = { link = 'Title' },
-        FoldColumn = { fg = colors.lavender, bg = colors.none },
-        MiniIndentscopeSymbol = { fg = '#ffffff', nocombine = true },
-        NormalFloat = { link = 'Normal' },
-        SignColumn = { bg = colors.none },
-      }
-    end,
+
     mocha = function(colors)
       return {
         CursorLine = { bg = colors.surface0 },

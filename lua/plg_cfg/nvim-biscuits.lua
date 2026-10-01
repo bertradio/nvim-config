@@ -5,7 +5,7 @@
 -- changed from lazy to vim.pack 3-30-26
 --
 -- Created: 07/14/25
--- 08/15/26 - Added toggle keybind and start disabled
+-- 08/15/26 - Added toggle keybind
 
 vim.pack.add({ Gh('code-biscuits/nvim-biscuits') })
 

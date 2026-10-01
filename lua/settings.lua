@@ -18,6 +18,6 @@ do
   vim.fn.mkdir(data_dir .. '/backup', 'p')
 end
 
-Myfn =
-  require('my_fns'), -- make my functions accessible
-  vim.api.nvim_set_hl(0, 'SpellBad', { fg = '#ff0000' })
+Myfn = require('my_fns') -- make my functions accessible
+
+vim.api.nvim_set_hl(0, 'SpellBad', { fg = '#ffffff', bg = '#EB727E' })

@@ -32,6 +32,9 @@ if vim.loader then
   vim.loader.enable()
 end
 
+vim.pack.add({ Gh('folke/tokyonight.nvim') })
+vim.cmd.colorscheme('tokyonight-moon')
+
 vim.pack.add({
   Gh('nvim-mini/mini.nvim'),
 })

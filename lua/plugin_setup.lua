@@ -28,7 +28,7 @@ end
 -- ────────── lazy loading set up all functions ──────────
 
 local function load_ui_plugins()
-  req('catppuccin')
+  -- req('catppuccin')
   req('lualine')
   req('noice')
   req('blink')

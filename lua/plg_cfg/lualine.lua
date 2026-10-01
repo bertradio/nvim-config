@@ -15,17 +15,6 @@ local lualine = require('lualine')
 
 --  ━━━━━ display functions for use on status line ━━━━━
 
---  ───── number of words in buffer ─────
-
--- local function getWords()
---   local wc = vim.fn.wordcount()
---   if wc['visual_words'] then
---     return wc['visual_words'] .. ' Words selected'
---   else
---     return wc['words'] .. ' Words'
---   end
--- end
-
 --  ───── whether spellcheck is on ─────
 
 local function spellOn()
@@ -54,59 +43,12 @@ vim.schedule(function()
   })
 end)
 
---  ─────── Terminal on indicator ───────
-
--- local function terminal_status()
---   local bufs = vim.api.nvim_list_bufs()
---   for _, buf in ipairs(bufs) do
---     if vim.bo[buf].buftype == 'terminal' then
---       return ' ' -- Use any icon or text you like (e.g., "TERM")
---     end
---   end
---   return ''
--- end
-
---  ───── Oil buffer tab title formatter ─────
-
-OIL_TAB_SHOW_FULL_PATH = true
---
--- local function dir_from_oil_bufname(bufnr)
---   local raw = vim.api.nvim_buf_get_name(bufnr) or ''
---   raw = raw:gsub('^oil://', ''):gsub('^oil%-trash://', '')
---   raw = raw:gsub('^/*', '')
---   return raw
--- end
---
--- local function oil_tab_fmt(name, context)
---   local bufnr = context and context.bufnr or nil
---   if not bufnr or not vim.api.nvim_buf_is_loaded(bufnr) or vim.bo[bufnr].filetype ~= 'oil' then
---     return name
---   end
---
---   local dir
---   local ok_oil, oil = pcall(require, 'oil')
---   if ok_oil and type(oil.get_current_dir) == 'function' then
---     local ok_dir, got = pcall(oil.get_current_dir, bufnr)
---     dir = ok_dir and got or oil.get_current_dir()
---   end
---
---   if not dir or dir == '' then
---     dir = dir_from_oil_bufname(bufnr)
---   end
---
---   if not OIL_TAB_SHOW_FULL_PATH then
---     return 'Oil'
---   else
---     return 'Oil: ' .. vim.fn.fnamemodify(dir, ':~')
---   end
--- end
-
 --  ━━━━━━ end helper functions ━━━━━━
 
 -- stylua: ignore 
 lualine.setup({
   options = {
-    theme                = 'catppuccin-nvim', -- need to use this since lualine loaded before catppuccin
+    theme                = 'tokyonight-moon',
     icons_enabled        = false,
     section_separators   = { left = '', right = '' },
     component_separators = { left = '', right = '' },
@@ -158,3 +100,61 @@ lualine.setup({
     },
   },
 })
+
+--  ─────── Terminal on indicator ───────
+
+-- local function terminal_status()
+--   local bufs = vim.api.nvim_list_bufs()
+--   for _, buf in ipairs(bufs) do
+--     if vim.bo[buf].buftype == 'terminal' then
+--       return ' ' -- Use any icon or text you like (e.g., "TERM")
+--     end
+--   end
+--   return ''
+-- end
+
+--  ───── Oil buffer tab title formatter ─────
+
+-- OIL_TAB_SHOW_FULL_PATH = true
+--
+-- local function dir_from_oil_bufname(bufnr)
+--   local raw = vim.api.nvim_buf_get_name(bufnr) or ''
+--   raw = raw:gsub('^oil://', ''):gsub('^oil%-trash://', '')
+--   raw = raw:gsub('^/*', '')
+--   return raw
+-- end
+--
+-- local function oil_tab_fmt(name, context)
+--   local bufnr = context and context.bufnr or nil
+--   if not bufnr or not vim.api.nvim_buf_is_loaded(bufnr) or vim.bo[bufnr].filetype ~= 'oil' then
+--     return name
+--   end
+--
+--   local dir
+--   local ok_oil, oil = pcall(require, 'oil')
+--   if ok_oil and type(oil.get_current_dir) == 'function' then
+--     local ok_dir, got = pcall(oil.get_current_dir, bufnr)
+--     dir = ok_dir and got or oil.get_current_dir()
+--   end
+--
+--   if not dir or dir == '' then
+--     dir = dir_from_oil_bufname(bufnr)
+--   end
+--
+--   if not OIL_TAB_SHOW_FULL_PATH then
+--     return 'Oil'
+--   else
+--     return 'Oil: ' .. vim.fn.fnamemodify(dir, ':~')
+--   end
+-- end
+
+--  ───── number of words in buffer ─────
+
+-- local function getWords()
+--   local wc = vim.fn.wordcount()
+--   if wc['visual_words'] then
+--     return wc['visual_words'] .. ' Words selected'
+--   else
+--     return wc['words'] .. ' Words'
+--   end
+-- end
