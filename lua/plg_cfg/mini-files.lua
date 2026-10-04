@@ -120,7 +120,7 @@ local function open_minifiles()
   })
 end
 
-Kset('n', '<Leader>[', open_minifiles, { desc = 'mini.files' })
+Kset('n', '<Leader>{', open_minifiles, { desc = 'mini.files' })
 
 -- ─────────── Buffer-local mappings ───────────
 

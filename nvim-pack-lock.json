@@ -34,7 +34,7 @@
       "src": "https://github.com/williamboman/mason.nvim"
     },
     "mini.nvim": {
-      "rev": "561751e839b99a4baca36b9d963166b66d2536a6",
+      "rev": "50f51d31c8d86a536180db5b914dcb0bb9d47976",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "noice.nvim": {
@@ -86,11 +86,11 @@
       "src": "https://github.com/folke/tokyonight.nvim"
     },
     "undotree": {
-      "rev": "8b52517999b1739e36e7f3c5a48a93356d9588e5",
+      "rev": "a6a8b1a67fc6275ed343703101384eff290b70c0",
       "src": "https://github.com/jiaoshijie/undotree"
     },
     "yazi.nvim": {
-      "rev": "688d1d48ef91bb1d29092d808a512f3293dfb34d",
+      "rev": "4bc1d0ad67abe536b7944bf374bbdd806442a4ee",
       "src": "https://github.com/mikavilpas/yazi.nvim"
     }
   }

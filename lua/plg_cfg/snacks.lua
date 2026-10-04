@@ -615,16 +615,3 @@ vim.api.nvim_create_autocmd('RecordingLeave', {
     end, 50)
   end,
 })
-
--- Optionally notify when text is yanked
-vim.api.nvim_create_autocmd('TextYankPost', {
-  group = notification_group,
-  callback = function()
-    local count = vim.v.event.regcontents and #vim.v.event.regcontents or 0
-    if count > 5 then
-      vim.notify(('Yanked %d lines'):format(count), vim.log.levels.INFO, {
-        title = 'Yank',
-      })
-    end
-  end,
-})
