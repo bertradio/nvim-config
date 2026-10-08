@@ -45,8 +45,6 @@ local misc = require('mini.misc')
 -- to check for dupes comment this out and uncomment the code below
 Kset = vim.keymap.set
 
--- check for duplicate mappings - uncomment to check for duplicate maps
--- local seen = {}
 --
 -- function Kset(mode, lhs, rhs, opts)
 --   local modes = type(mode) == 'table' and mode or { mode }

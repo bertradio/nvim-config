@@ -95,7 +95,7 @@ local function file_exists(p)
   if not p or p == '' then
     return false
   end
-  return vim.loop.fs_stat(p) ~= nil
+  return vim.uv.fs_stat(p) ~= nil
 end
 
 -- open file in Typora cross platform from ChatGPT

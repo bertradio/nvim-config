@@ -46,9 +46,24 @@ local function set_markdown_table_maps(buf)
   )
 end
 
+local function remove_code_block_navigation_maps(buf)
+  local maps = {
+    ['[b'] = '<Plug>(MarkdownPlusCodeBlockPrev)',
+    [']b'] = '<Plug>(MarkdownPlusCodeBlockNext)',
+  }
+
+  vim.api.nvim_buf_call(buf, function()
+    for lhs, rhs in pairs(maps) do
+      local map = vim.fn.maparg(lhs, 'n', false, true)
+      if map.buffer == 1 and map.rhs == rhs then vim.keymap.del('n', lhs, { buffer = buf }) end
+    end
+  end)
+end
+
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'markdown',
   callback = function(args)
     set_markdown_table_maps(args.buf)
+    remove_code_block_navigation_maps(args.buf)
   end,
 })

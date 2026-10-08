@@ -17,6 +17,7 @@
 Kset('n', '<Leader>bb', '<cmd>bd <cr>', { desc = 'delete buffer' })
 Kset('n', '<Leader>bc', '<cmd>CopyBufferName<cr>', { desc = 'path copy' })
 Kset('n', '<Leader>ba', '<cmd>%bd <cr>', { desc = 'delete all buffers' })
+Kset('n', '<Leader>bk', '<cmd>bd!<cr>', { desc = 'kill buffer' })
 
 -- Delete all buffers other than the current one
 Kset('n', '<leader>bo', function()

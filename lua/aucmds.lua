@@ -143,7 +143,7 @@ vim.api.nvim_create_autocmd('FileType', {
 
 -- create command to print from neovim in Windows
 vim.api.nvim_create_user_command('PrintFile', function()
-  if Myfn.is_windows() == 1 then
+  if Myfn.is_windows() then
     vim.cmd('!notepad /p %')
   else
     vim.cmd('!lpr %')

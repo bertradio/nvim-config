@@ -17,16 +17,12 @@
       "rev": "5f0f270fdc7c5b0c21d903ee85b9cb06f2ac636a",
       "src": "https://github.com/folke/flash.nvim"
     },
-    "live-preview.nvim": {
-      "rev": "a6307fa340ed7c0d96f5c567afc8c991aad94ce0",
-      "src": "https://github.com/brianhuster/live-preview.nvim"
-    },
     "lualine.nvim": {
       "rev": "221ce6b2d999187044529f49da6554a92f740a96",
       "src": "https://github.com/nvim-lualine/lualine.nvim"
     },
     "markdown-plus.nvim": {
-      "rev": "89c8d538ef5d68caddf44b957378e4719811b3ca",
+      "rev": "732b506911693642d8e62d89225639062374686a",
       "src": "https://github.com/yousefhadder/markdown-plus.nvim"
     },
     "mason.nvim": {
@@ -34,7 +30,7 @@
       "src": "https://github.com/williamboman/mason.nvim"
     },
     "mini.nvim": {
-      "rev": "50f51d31c8d86a536180db5b914dcb0bb9d47976",
+      "rev": "fa9037326e9996381e34a14b6350e18168618532",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "noice.nvim": {
@@ -66,11 +62,11 @@
       "src": "https://github.com/stevearc/quicker.nvim"
     },
     "rainbow-delimiters.nvim": {
-      "rev": "3a0fc08dd39e8bf034a4cfef3f2845bd5f565a2e",
+      "rev": "b55decda611755171bc5bf8f4c99603a75de4b41",
       "src": "https://github.com/HiPhish/rainbow-delimiters.nvim"
     },
     "render-markdown.nvim": {
-      "rev": "640a3ec6d538bad17c328be373c7cad0293d9589",
+      "rev": "245956d67572c137df375dbf256e96bdb07e0937",
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
     "smart-splits.nvim": {
@@ -90,7 +86,7 @@
       "src": "https://github.com/jiaoshijie/undotree"
     },
     "yazi.nvim": {
-      "rev": "4bc1d0ad67abe536b7944bf374bbdd806442a4ee",
+      "rev": "28cf20b0f6ed4899863b86b684f571317f565442",
       "src": "https://github.com/mikavilpas/yazi.nvim"
     }
   }

@@ -180,7 +180,7 @@ Snacks.setup({
         wo = { wrap = true } -- Wrap notifications
       }
     },
- 
+
   --  ──────── dashboard config ────────
 
   dashboard    = {
@@ -386,7 +386,7 @@ Snacks.setup({
       diagnostics = true,
       follow_file = true,
       trash = true,
-      replace_netrw = true,
+      replace_netrw = false,
       git_status = false, -- disabled because a bug causes false directory entry
 
       layout = {

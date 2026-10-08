@@ -241,6 +241,40 @@ local function word_status(context)
   return result
 end
 
+local function format_file_size(bytes)
+  local units = { 'B', 'KB', 'MB', 'GB', 'TB' }
+  local unit = 1
+  local size = bytes
+
+  while size >= 1024 and unit < #units do
+    size = size / 1024
+    unit = unit + 1
+  end
+
+  if unit == 1 then
+    return string.format('%d %s', size, units[unit])
+  end
+
+  return string.format('%.1f %s', size, units[unit])
+end
+
+local function file_size_status(context)
+  local name = api.nvim_buf_get_name(context.bufnr)
+  local extension = fn.fnamemodify(name, ':e'):lower()
+
+  if extension == 'txt' or extension == 'md' then
+    return word_status(context)
+  end
+
+  local size = name ~= '' and fn.getfsize(name) or -1
+
+  if size < 0 then
+    return ''
+  end
+
+  return format_file_size(size)
+end
+
 local function diagnostic_count(context, severity, prefix)
   if context.diagnostic_counts == nil then
     local ok, counts = pcall(vim.diagnostic.count, context.bufnr)
@@ -298,6 +332,10 @@ local right_components = {
   {
     value = spell_status, -- spellcheck on
     highlight = 'CoreStatusInfo',
+
+    separator_after = function()
+      return diagnostic_gap
+    end,
   },
 
   {
@@ -319,7 +357,7 @@ local right_components = {
   },
 
   {
-    value = word_status, -- number of words in buffer or selection
+    value = file_size_status, -- words for text/Markdown; file size otherwise
 
     highlight = function()
       return 'CoreStatusWords' .. mode_suffix()
@@ -546,7 +584,8 @@ function _G.CoreTabline()
 
   for index, bufnr in ipairs(buffers) do
     labels[index] = buffer_label(bufnr, duplicates)
-    widths[index] = fn.strdisplaywidth(labels[index]) + 3 -- arrow and two spaces
+    local label_padding = bufnr == current and 1 or 2
+    widths[index] = fn.strdisplaywidth(labels[index]) + 1 + label_padding -- arrow and label padding
 
     if bufnr == current then
       current_index = index
@@ -617,8 +656,10 @@ function _G.CoreTabline()
     -- Leading arrow.
     result[#result + 1] = '%#' .. transition .. '#' .. sep_right
 
-    -- Buffer label.
-    result[#result + 1] = '%#' .. current_group .. '# ' .. escape_statusline(labels[index]) .. ' '
+    -- The selected tab omits the trailing cell so its mode-colored background
+    -- ends directly at the transition arrow.
+    local trailing_space = bufnr == current and '' or ' '
+    result[#result + 1] = '%#' .. current_group .. '# ' .. escape_statusline(labels[index]) .. trailing_space
 
     result[#result + 1] = '%T'
 

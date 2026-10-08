@@ -29,7 +29,8 @@ end
 
 local function load_ui_plugins()
   -- req('catppuccin')
-  req('lualine')
+  -- req('lualine')
+  req('statusline')
   req('noice')
   req('blink')
   req('mini')
@@ -73,7 +74,7 @@ end
 
 local function load_markdown_plugins()
   req('markdown-plus')
-  req('livepreview')
+  -- req('livepreview')
 end
 
 --  ────────────────────────────────────────────────────────
