@@ -5,10 +5,13 @@
 -- Core Neovim statusline and buffer tabline.
 -- No lualine, bufferline, heirline, or mini.statusline required.
 -- 07/14/26 - Code from ChatGPT to emulate lualine entirely from core
+-- 10/08/26 - Set right to display number of works for md and txt and file
+--            size for everything else
 
 --    ╭────────────────────────────────────────────────────────╮
 --    │    To make changes in components, search for Future    │
 --    ╰────────────────────────────────────────────────────────╯
+--
 
 local api = vim.api
 local fn = vim.fn
@@ -262,7 +265,7 @@ local function file_size_status(context)
   local name = api.nvim_buf_get_name(context.bufnr)
   local extension = fn.fnamemodify(name, ':e'):lower()
 
-  if extension == 'txt' or extension == 'md' then
+  if extension == 'txt' or extension == 'md' then -- words for filetypes
     return word_status(context)
   end
 
@@ -659,7 +662,11 @@ function _G.CoreTabline()
     -- The selected tab omits the trailing cell so its mode-colored background
     -- ends directly at the transition arrow.
     local trailing_space = bufnr == current and '' or ' '
-    result[#result + 1] = '%#' .. current_group .. '# ' .. escape_statusline(labels[index]) .. trailing_space
+    result[#result + 1] = '%#'
+      .. current_group
+      .. '# '
+      .. escape_statusline(labels[index])
+      .. trailing_space
 
     result[#result + 1] = '%T'
 

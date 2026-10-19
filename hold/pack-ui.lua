@@ -16,9 +16,9 @@ require('pack_ui').setup({
   auto_update = false, -- on setup, apply every available update automatically
   -- default keymaps
   keymaps = {
-    prefix = '<leader>r',
-    status = 's', -- <leader>ps -> :PackStatus
-    update_all = 'U', -- <leader>pU -> :PackUpdateAll
+    prefix = '<Leader>r',
+    status = 's', -- <Leader>ps -> :PackStatus
+    update_all = 'U', -- <Leader>pU -> :PackUpdateAll
   },
 })
 

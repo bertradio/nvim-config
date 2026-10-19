@@ -14,4 +14,4 @@ vim.g.bullets_enabled_file_types = { 'markdown', 'text', 'txt' }
 
 vim.g.bullets_outline_levels = { 'ROM', 'ABC', 'num', 'abc', 'rom', 'std-', 'std*', 'std+', 'chk' }
 
-Kset('n', '<leader>r', 'gN', { desc = 'Renumber markdown list' })
+Kset('n', '<Leader>r', 'gN', { desc = 'Renumber markdown list' })

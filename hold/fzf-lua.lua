@@ -268,7 +268,7 @@ local function maps()
   Kset('n', '<Leader>f.',  '<cmd>FzfLua resume<cr>',             { desc = 'resume last picker' })
   -- Kset('n', 'zz',          '<cmd>FzfLua spell_suggest<cr>',      { desc = 'spell suggest' })
 
-  Kset('n', '<leader>fr', function()
+  Kset('n', '<Leader>fr', function()
     require('fzf-lua').oldfiles({
       -- stat_file = true,
       include_current_session = true,

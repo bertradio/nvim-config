@@ -5,7 +5,7 @@
 -- set up for status column to display folds with no numbers
 -- and proper icons
 
-local function _clean_leader(s)
+local function _clean_Leader(s)
   s = (s or ''):gsub('^%s*', '')
   s = s:gsub('^([%-%*#;/%%!]+)%s*', '')
   return s
@@ -25,7 +25,7 @@ function _G.MyFoldText()
 
   local prefix = string.rep(' ', ind_cols)
   local content = first:match('^%s*(.*)$') or first
-  content = _clean_leader(content)
+  content = _clean_Leader(content)
 
   local winw = vim.api.nvim_win_get_width(0)
   local padding = 10

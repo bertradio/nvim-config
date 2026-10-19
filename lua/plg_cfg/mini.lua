@@ -19,7 +19,7 @@
 
 local align = require('mini.align')
 local bracketed = require('mini.bracketed')
-local icons = require('mini.icons')
+-- local icons = require('mini.icons')
 local misc = require('mini.misc')
 
 --  ──────────────────────────────────────────────────────
@@ -28,8 +28,8 @@ align.setup({ mappings = { start = 'ga' } })
 
 bracketed.setup()
 
-icons.setup()
-icons.mock_nvim_web_devicons() -- mini.icons will replace devicons
+-- icons.setup()
+-- icons.mock_nvim_web_devicons() -- mini.icons will replace devicons
 
 --  ────── misc setup and code ───────
 

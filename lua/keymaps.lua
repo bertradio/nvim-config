@@ -20,7 +20,7 @@ Kset('n', '<Leader>ba', '<cmd>%bd <cr>', { desc = 'delete all buffers' })
 Kset('n', '<Leader>bk', '<cmd>bd!<cr>', { desc = 'kill buffer' })
 
 -- Delete all buffers other than the current one
-Kset('n', '<leader>bo', function()
+Kset('n', '<Leader>bo', function()
   local current_buf = vim.api.nvim_get_current_buf()
   local buffers = vim.api.nvim_list_bufs()
   for _, buf in ipairs(buffers) do
@@ -113,7 +113,7 @@ Kset('x', '/', '<Esc>/\\%V')
 -- open file in Typora
 Kset(
   'n',
-  '<leader>Y',
+  '<Leader>Y',
   '<cmd>lua Myfn.OpenInTypora()<CR>',
   { noremap = true, silent = true, desc = 'Open in Typora' }
 )
@@ -132,7 +132,7 @@ Kset('n', '<tab>', function()
 end, { silent = true, desc = 'Folds: Toggle' })
 
 -- update all plugins
-Kset('n', '<leader>U', function()
+Kset('n', '<Leader>U', function()
   vim.notify('Updating plugins...', vim.log.levels.INFO)
   vim.cmd('packupdate')
 end, { desc = 'Update plugins' })
@@ -163,8 +163,8 @@ local function toggle_bool()
   end
 end
 
--- Keymap: Pressing <leader>T will toggle the value
-Kset('n', '<leader>T', toggle_bool, { desc = 'Toggle boolean under cursor' })
+-- Keymap: Pressing <Leader>T will toggle the value
+Kset('n', '<Leader>T', toggle_bool, { desc = 'Toggle boolean under cursor' })
 
 -- Insert today's date
 

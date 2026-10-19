@@ -19,21 +19,21 @@ persistence.setup({
 })
 
 -- load the session for the current directory
-vim.keymap.set('n', '<leader>qs', function()
+vim.keymap.set('n', '<Leader>qs', function()
   require('persistence').load()
 end, { desc = 'load session - cwd' })
 
 -- select a session to load
-vim.keymap.set('n', '<leader>qS', function()
+vim.keymap.set('n', '<Leader>qS', function()
   require('persistence').select()
 end, { desc = 'load session - select ' })
 
 -- load the last session
-vim.keymap.set('n', '<leader>ql', function()
+vim.keymap.set('n', '<Leader>ql', function()
   require('persistence').load({ last = true })
 end, { desc = 'load session - last' })
 
 -- stop Persistence => session won't be saved on exit
-vim.keymap.set('n', '<leader>qd', function()
+vim.keymap.set('n', '<Leader>qd', function()
   require('persistence').stop()
 end, { desc = 'stop persistence' })

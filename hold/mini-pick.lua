@@ -3,7 +3,7 @@
 --    ╰────────────────────────────╯
 
 -- 08/01/26 - split from mini.lua
--- 09/15/26 - Replaced <leader>fp code to simplify - from Deepseek
+-- 09/15/26 - Replaced <Leader>fp code to simplify - from Deepseek
 -- 09/19/26 - Moved picks window to centered on screen
 --            Added BS in explorer to move to prior dir
 --            Centered picker box and dimmed screen
@@ -39,20 +39,20 @@ pick.setup({
     use_cache = true,
   },
   -- center window
-  window = {
-    config = function()
-      local height = math.floor(0.618 * vim.o.lines)
-      local width = math.floor(0.618 * vim.o.columns)
-
-      return {
-        anchor = 'NW',
-        height = height,
-        width = width,
-        row = math.floor(0.5 * (vim.o.lines - height)),
-        col = math.floor(0.5 * (vim.o.columns - width)),
-      }
-    end,
-  },
+  -- window = {
+  --   config = function()
+  --     local height = math.floor(0.618 * vim.o.lines)
+  --     local width = math.floor(0.618 * vim.o.columns)
+  --
+  --     return {
+  --       anchor = 'NW',
+  --       height = height,
+  --       width = width,
+  --       row = math.floor(0.5 * (vim.o.lines - height)),
+  --       col = math.floor(0.5 * (vim.o.columns - width)),
+  --     }
+  --   end,
+  -- },
 })
 
 --  ───── functions to dim background when pick displays ─────
@@ -175,6 +175,7 @@ end
 --  ───────── keymaps ──────────
 
 Kset('n', '<Leader>pf', function()
+  -- Kset('n', '<Leader><space>', function()
   local files = vim.fn.systemlist({ 'rg', '--files', '--glob', '!**/.git/**' })
   files = vim.tbl_filter(function(path)
     return not exclude.is_excluded(path)

@@ -13,8 +13,8 @@
 -- 09/09/26 - Revised by codex for new file_exclude - changed shortcuts to start with f (s used for surround)
 -- 09/15/26 - Replaced snacks with Snacks where appropriate - no local used
 
--- vim.pack.add({ Gh('nvim-tree/nvim-web-devicons') })
 vim.pack.add({ Gh('folke/snacks.nvim') })
+require('snacks') -- Initialize the Snacks global before startup plugin scripts run.
 
 -- setup for excluding files from pickers
 local file_exclude = require('file_exclude')
@@ -175,7 +175,7 @@ Snacks.setup({
   terminal     = { enabled = true },
   words        = { enabled = true },
 
-    styles = {
+  styles = {
       notification = {
         wo = { wrap = true } -- Wrap notifications
       }
@@ -220,7 +220,7 @@ Snacks.setup({
           { key = "e", desc = "Explorer",       action = "<Leader>["},
           { key = "f", desc = "Find Files",     action = "<Leader><space>"},
           { key = "g", desc = "Grep",           action = "<Leader>fg"},
-          { key = "u", desc = "Update Plugins", action = "<leader>U" },
+          { key = "u", desc = "Update Plugins", action = "<Leader>U" },
           { key = "y", desc = "Yazi",           action = "<Leader>y" },
           { key = "q", desc = "Quit Menu",      action = ":bwipeout"},
       },
@@ -490,7 +490,7 @@ Kset('n', '<Leader>fB', function() Snacks.picker.grep_buffers() end,        { de
 Kset('n', '<Leader>fR', function() Snacks.picker.registers() end,           { desc = 'Registers' })
 Kset('n', '<Leader>fb', function() Snacks.picker.buffers() end,             { desc = 'buffers'})
 Kset('n', '<Leader>fc', function() Snacks.picker.command_history() end,     { desc = 'command History' })
--- Kset('n',  "<leader>fC", function() Snacks.picker.colorschemes() end, {desc = "Colorschemes" })
+-- Kset('n',  "<Leader>fC", function() Snacks.picker.colorschemes() end, {desc = "Colorschemes" })
 Kset('n', '<Leader>fD', function() Snacks.picker.diagnostics_buffer() end,  { desc = 'diagnostics - buffer' })
 Kset('n', '<Leader>fg', function() Snacks.picker.grep() end,                { desc = 'grep' })
 Kset('n', '<Leader>fh', function() Snacks.picker.help() end,                { desc = 'help' })
@@ -558,7 +558,8 @@ Kset('n', '<Leader>fr', function()
   oldfiles_picker()
 end, { desc = 'recent' })
 
-Snacks.toggle.indent():map('<leader>i')
+Snacks.toggle.indent():map('<Leader>I')
+Snacks.toggle.dim():map('<Leader>D')
 
 -- Kset('n', '<Leader>ff', function()
 Kset('n', '<Leader><space>', function()
@@ -580,6 +581,9 @@ Snacks.picker.files({
     end,
 })
 end, { desc = 'files cwd only'})
+
+Kset('n','<Leader>.', function() Snacks.scratch() end, { desc = "Toggle Scratch Buffer"})
+Kset('n','<Leader>x', function() Snacks.scratch.select() end, { desc = "Select Scratch Buffer"})
 
 end
 

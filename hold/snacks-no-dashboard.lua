@@ -276,7 +276,7 @@ Kset(
 )
 
 -- Indent toggle
-Kset('n', '<leader>i', function()
+Kset('n', '<Leader>i', function()
   if Snacks.indent.enabled then
     Snacks.indent.disable()
   else

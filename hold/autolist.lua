@@ -26,8 +26,8 @@ vim.api.nvim_create_autocmd('FileType', {
     Kset('n', '<a-r>', '<cmd>AutolistRecalculate<cr>', opts)
 
     -- Cycle list types with dot-repeat.
-    Kset('n', '<leader>cn', autolist.cycle_next_dr, { buffer = args.buf, expr = true })
-    Kset('n', '<leader>cp', autolist.cycle_prev_dr, { buffer = args.buf, expr = true })
+    Kset('n', '<Leader>cn', autolist.cycle_next_dr, { buffer = args.buf, expr = true })
+    Kset('n', '<Leader>cp', autolist.cycle_prev_dr, { buffer = args.buf, expr = true })
 
     -- Recalculate lists after editing them.
     Kset('n', '>>', '<cmd>>>AutolistRecalculate<cr>', opts)

@@ -10,11 +10,11 @@ vim.pack.add({ 'https://github.com/Punity122333/hexinspector.nvim' })
 
 cmd = { 'HexEdit', 'HexInspect' }
 
-vim.keymap.set('n', '<leader>zx', function()
+vim.keymap.set('n', '<Leader>zx', function()
   require('hexinspector').open()
 end, { desc = 'Hex Editor' })
 
-vim.keymap.set('n', '<leader>zX', function()
+vim.keymap.set('n', '<Leader>zX', function()
   vim.ui.input({ prompt = 'File path: ', default = vim.fn.expand('%:p') }, function(input)
     if input and input ~= '' then
       require('hexinspector').open(input)

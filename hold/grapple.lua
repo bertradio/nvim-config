@@ -156,10 +156,10 @@ local function grapple_menu_short_paths(start_row)
 end
 
 -- ---------- keymaps ----------
-vim.keymap.set('n', '<leader>ha', g.tag, { desc = 'tag current file' })
-vim.keymap.set('n', '<leader>hd', g.untag, { desc = 'untag current file' })
+vim.keymap.set('n', '<Leader>ha', g.tag, { desc = 'tag current file' })
+vim.keymap.set('n', '<Leader>hd', g.untag, { desc = 'untag current file' })
 
 -- menu: <CR>=open, <C-d>=delete, auto-recreate on delete (box resizes)
-vim.keymap.set('n', '<leader>hh', function()
+vim.keymap.set('n', '<Leader>hh', function()
   grapple_menu_short_paths()
 end, { desc = 'menu' })

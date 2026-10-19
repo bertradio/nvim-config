@@ -33,7 +33,7 @@ conform.setup({
   },
 })
 
-Kset({ 'n', 'x' }, '<leader>P', function()
+Kset({ 'n', 'x' }, '<Leader>P', function()
   conform.format({
     lsp_format = 'fallback',
     timeout_ms = 1500,

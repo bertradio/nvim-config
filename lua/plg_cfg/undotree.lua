@@ -33,4 +33,4 @@ require('undotree').setup({
   },
 })
 
-Kset('n', '<leader>u', "<cmd>lua require('undotree').toggle()<cr>", { desc = 'toggle undo' })
+Kset('n', '<Leader>u', "<cmd>lua require('undotree').toggle()<cr>", { desc = 'toggle undo' })

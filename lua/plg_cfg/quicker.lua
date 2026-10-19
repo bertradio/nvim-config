@@ -9,12 +9,12 @@
 vim.pack.add({ Gh('stevearc/quicker.nvim') })
 
 require('quicker').setup({
-  Kset('n', '<leader>qt', function()
+  Kset('n', '<Leader>qt', function()
     require('quicker').toggle()
   end, {
     desc = 'Toggle quickfix',
   }),
-  Kset('n', '<leader>ql', function()
+  Kset('n', '<Leader>ql', function()
     require('quicker').toggle({ loclist = true })
   end, {
     desc = 'Toggle loclist',

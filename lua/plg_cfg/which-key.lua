@@ -25,12 +25,14 @@ require('which-key').setup({
 
   -- stylua: ignore
   spec = {
-    { "<leader>b",  group = "Buffer" },
-    { "<leader>c",  group = "Cycle md list type" },
-    { "<leader>d",  group = "Diff" },
-    { "<leader>e",  group = "Edit config" },
-    { "<leader>f",  group = "Fzf-lua" },
-    { "<leader>s",  group = "Snacks" },
+    { "<Leader>b",  group = "Buffer" },
+    { "<Leader>c",  group = "Cycle md list type" },
+    { "<Leader>d",  group = "Diff" },
+    { "<Leader>e",  group = "Edit config" },
+    { "<Leader>f",  group = "Snacks" },
+    { "<Leader>q",  group = "Quickfix" },
+    { "<Leader>Q",  group = "Sessions" },
+    { "<Leader>s",  group = "Surround" },
   },
 
   keys = {

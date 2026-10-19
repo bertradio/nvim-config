@@ -99,12 +99,15 @@ blink.setup({
     default = { 'lsp', 'snippets', 'buffer', 'path' },
     min_keyword_length = 2,
     per_filetype = {
-      -- markdown = { 'buffer', 'spell', 'snippets', 'path' },
       markdown = { 'spell', 'buffer', 'snippets', 'path' },
-      text     = { 'buffer', 'spell', 'snippets', 'path' },
+      text     = { 'spell', 'buffer', 'snippets', 'path' },
     },
     providers = {
-      spell = { name = 'Spell', module = 'blink-cmp-spell' },
+      spell = {
+        name = 'Spell',
+        module = 'blink-cmp-spell',
+        opts = { max_entries = 5 },
+      },
     },
   },
 
@@ -114,9 +117,7 @@ blink.setup({
         local ft = vim.bo.filetype
         if ft ~= 'markdown' and ft ~= 'text' then return end
 
-        local priority = ft == 'markdown'
-            and { spell = 1, buffer = 2 }
-          or { buffer = 1, spell = 2 }
+        local priority = { spell = 1, buffer = 2 }
         local a_priority = priority[a.source_id] or 3
         local b_priority = priority[b.source_id] or 3
         if a_priority ~= b_priority then return a_priority < b_priority end

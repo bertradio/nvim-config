@@ -88,4 +88,18 @@ vim.diagnostic.config({
   underline        = true,
   update_in_insert = false,
   virtual_text     = { spacing = 4, prefix = '●' },
+signs = {
+  text = {
+    [vim.diagnostic.severity.ERROR] = 'E',
+    [vim.diagnostic.severity.WARN] = 'W',
+    [vim.diagnostic.severity.HINT] = 'H',
+    [vim.diagnostic.severity.INFO] = 'I',
+  },
+  numhl = {
+    [vim.diagnostic.severity.ERROR] = 'DiagnosticSignError',
+    [vim.diagnostic.severity.WARN] = 'DiagnosticSignWarn',
+    [vim.diagnostic.severity.HINT] = 'DiagnosticSignHint',
+    [vim.diagnostic.severity.INFO] = 'DiagnosticSignInfo',
+  },
+},
 })

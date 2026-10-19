@@ -139,7 +139,7 @@ kset('n', '<Leader>sc', function()
 end, { desc = 'cmd history' })
 
 -- Indent toggle
-kset('n', '<leader>si', function()
+kset('n', '<Leader>si', function()
   if Snacks.indent.enabled then
     Snacks.indent.disable()
   else

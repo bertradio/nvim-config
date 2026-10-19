@@ -55,7 +55,9 @@ local function remove_code_block_navigation_maps(buf)
   vim.api.nvim_buf_call(buf, function()
     for lhs, rhs in pairs(maps) do
       local map = vim.fn.maparg(lhs, 'n', false, true)
-      if map.buffer == 1 and map.rhs == rhs then vim.keymap.del('n', lhs, { buffer = buf }) end
+      if map.buffer == 1 and map.rhs == rhs then
+        vim.keymap.del('n', lhs, { buffer = buf })
+      end
     end
   end)
 end

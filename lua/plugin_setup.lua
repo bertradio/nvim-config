@@ -25,24 +25,25 @@ local function req(plugin)
   require('plg_cfg.' .. plugin)
 end
 
+-- Snacks must register its startup handlers before files are opened.
+req('snacks')
+
 -- ────────── lazy loading set up all functions ──────────
 
 local function load_ui_plugins()
-  -- req('catppuccin')
-  -- req('lualine')
   req('statusline')
   req('noice')
   req('blink')
+  req('which-key')
   req('mini')
-  req('mini-clue')
   req('mini-sessions')
   req('native-lsp')
-  req('snacks') -- should com after noice and mini so it handles notifications
   req('smart-splits')
   req('bookmarks_linux')
   req('render-markdown') -- needs to be here to render snacks notification history
   req('yazi') -- needs to be here to render snacks notification history
   req('mini-files')
+  req('markdown-plus') -- needs to be here for scratch buffers
 end
 
 --  ─────────────────────────────────────────────
@@ -73,7 +74,6 @@ end
 --  ─────────────────────────────────────────────
 
 local function load_markdown_plugins()
-  req('markdown-plus')
   -- req('livepreview')
 end
 
