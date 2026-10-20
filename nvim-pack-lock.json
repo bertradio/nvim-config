@@ -9,16 +9,32 @@
       "src": "https://github.com/saghen/blink.cmp",
       "version": "'v1'"
     },
+    "colorful-winsep.nvim": {
+      "rev": "6134b5cd4a38990c7b720adc90973ed32f726179",
+      "src": "https://github.com/nvim-zh/colorful-winsep.nvim"
+    },
     "conform.nvim": {
       "rev": "016802de402556da54c36bd7359b441266b01cdd",
       "src": "https://github.com/stevearc/conform.nvim"
+    },
+    "dressing.nvim": {
+      "rev": "2d7c2db2507fa3c4956142ee607431ddb2828639",
+      "src": "https://github.com/stevearc/dressing.nvim"
     },
     "flash.nvim": {
       "rev": "5f0f270fdc7c5b0c21d903ee85b9cb06f2ac636a",
       "src": "https://github.com/folke/flash.nvim"
     },
+    "live-preview.nvim": {
+      "rev": "a6307fa340ed7c0d96f5c567afc8c991aad94ce0",
+      "src": "https://github.com/brianhuster/live-preview.nvim"
+    },
+    "lualine.nvim": {
+      "rev": "221ce6b2d999187044529f49da6554a92f740a96",
+      "src": "https://github.com/nvim-lualine/lualine.nvim"
+    },
     "markdown-plus.nvim": {
-      "rev": "f9331d0ad9a38fefc4200fe2c332d6fbfc793015",
+      "rev": "6e112f12a1c2561c7a71f7a9c192e5d1c1872a5b",
       "src": "https://github.com/yousefhadder/markdown-plus.nvim"
     },
     "mason.nvim": {
@@ -26,7 +42,7 @@
       "src": "https://github.com/williamboman/mason.nvim"
     },
     "mini.nvim": {
-      "rev": "66b9e643b6dabe15079be7197ee4b4d59ff98c61",
+      "rev": "4d84086ab334a88201b803d11d1086406fe7e43d",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "noice.nvim": {
@@ -44,6 +60,11 @@
     "nvim-hlslens": {
       "rev": "be2d7b2be01860b5445a007ff2bc72b29896db6b",
       "src": "https://github.com/kevinhwang91/nvim-hlslens"
+    },
+    "nvim-treesitter-textobjects": {
+      "rev": "5c7b0263797dfd1bd6202f2b219f3b53a80b2187",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
+      "version": "'main'"
     },
     "plenary.nvim": {
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
@@ -66,7 +87,7 @@
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
     "smart-splits.nvim": {
-      "rev": "ea553356370ea76dce189fb36947a424f124c04b",
+      "rev": "3629711db18279843618fda2e908700dcdc4b040",
       "src": "https://github.com/mrjones2014/smart-splits.nvim"
     },
     "snacks.nvim": {
@@ -78,7 +99,7 @@
       "src": "https://github.com/folke/tokyonight.nvim"
     },
     "undotree": {
-      "rev": "a6a8b1a67fc6275ed343703101384eff290b70c0",
+      "rev": "ae312c61558ee41316e992d3bae3afea2a77f62c",
       "src": "https://github.com/jiaoshijie/undotree"
     },
     "which-key.nvim": {
@@ -86,7 +107,7 @@
       "src": "https://github.com/folke/which-key.nvim"
     },
     "yazi.nvim": {
-      "rev": "7bfac104337295ebdf2295669719edff20b7866a",
+      "rev": "fe0ad94de52da96a2386863e99229661bed5c658",
       "src": "https://github.com/mikavilpas/yazi.nvim"
     }
   }

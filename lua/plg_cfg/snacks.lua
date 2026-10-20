@@ -386,7 +386,7 @@ Snacks.setup({
       diagnostics = true,
       follow_file = true,
       trash = true,
-      replace_netrw = false,
+      replace_netrw = true,
       git_status = false, -- disabled because a bug causes false directory entry
 
       layout = {
@@ -425,8 +425,8 @@ Snacks.setup({
               'list_scroll_down',
               mode = { 'i', 'n' },
             },
+      },
           },
-        },
       },
 
       formatters = {

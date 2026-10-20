@@ -33,7 +33,8 @@ if vim.loader then
 end
 
 vim.pack.add({ Gh('folke/tokyonight.nvim') })
-vim.cmd.colorscheme('tokyonight-moon')
+require('tokyonight').setup({})
+vim.cmd.colorscheme('tokyonight-night')
 
 vim.pack.add({
   Gh('nvim-mini/mini.nvim'),
@@ -43,9 +44,15 @@ local misc = require('mini.misc')
 
 -- for all keymaps
 -- to check for dupes comment this out and uncomment the code below
-Kset = vim.keymap.set
 
---
+-- Kset = vim.keymap.set
+
+-- trying out Snacks keymap
+vim.pack.add({ Gh('folke/snacks.nvim') })
+require('snacks') -- Initialize the Snacks global before startup plugin scripts run.
+Kset = Snacks.keymap.set
+
+-- local seen = {}
 -- function Kset(mode, lhs, rhs, opts)
 --   local modes = type(mode) == 'table' and mode or { mode }
 --

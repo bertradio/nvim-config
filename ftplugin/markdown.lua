@@ -27,3 +27,6 @@ local options = {
 for k, v in pairs(options) do
   vim.opt_local[k] = v
 end
+
+vim.b.snacks_indent = false
+vim.b.snacks_dim = false

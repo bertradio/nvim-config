@@ -40,9 +40,9 @@ local function load_ui_plugins()
   req('native-lsp')
   req('smart-splits')
   req('bookmarks_linux')
+  req('colorful-winsep')
   req('render-markdown') -- needs to be here to render snacks notification history
   req('yazi') -- needs to be here to render snacks notification history
-  req('mini-files')
   req('markdown-plus') -- needs to be here for scratch buffers
 end
 
@@ -59,7 +59,6 @@ local function load_buffer_plugins()
   req('mini-move')
   req('mini-pairs')
   req('mini-surround')
-  req('pretty-comment')
   req('quicker')
   req('undotree')
 end
@@ -73,7 +72,7 @@ end
 
 --  ─────────────────────────────────────────────
 
-local function load_markdown_plugins()
+local function load_markdown_plugins() -- most needed earlier for scratch
   -- req('livepreview')
 end
 
@@ -111,7 +110,7 @@ vim.api.nvim_create_autocmd('InsertEnter', {
 })
 
 -- load only for the first markdown buffer
-vim.api.nvim_create_autocmd({ 'bufreadpre', 'bufnewfile' }, {
+vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
   once = true,
   pattern = '*.md',
   callback = load_markdown_plugins,
