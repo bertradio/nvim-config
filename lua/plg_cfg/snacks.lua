@@ -13,7 +13,9 @@
 -- 09/09/26 - Revised by codex for new file_exclude - changed shortcuts to start with f (s used for surround)
 -- 09/15/26 - Replaced snacks with Snacks where appropriate - no local used
 
-vim.pack.add({ Gh('folke/snacks.nvim') })
+-- following line not needed since this is done in init.lua
+-- vim.pack.add({ Gh('folke/snacks.nvim') })
+
 require('snacks') -- Initialize the Snacks global before startup plugin scripts run.
 
 -- setup for excluding files from pickers
@@ -506,7 +508,7 @@ Kset('n', '<Leader>ft', function() Snacks.terminal() end,                   { de
 Kset('n', '<Leader>fu', function() Snacks.picker.undo() end,                { desc = 'undo history' })
 Kset({'n', 'x'}, '<Leader>fw', function() Snacks.picker.grep_word() end,    { desc = 'grep selection or word' })
 
-Kset('n', '<Leader>n',  function() Snacks.notifier.show_history() end, {desc = 'notification history'})
+Kset('n', '<Leader>n',  function() Snacks.notifier.show_history() end, {desc = 'Notification history'})
 
 Kset('n', '<Leader>z', function()
   if vim.fn.executable('zoxide') == 1 then
@@ -561,7 +563,6 @@ end, { desc = 'recent' })
 Snacks.toggle.indent():map('<Leader>I')
 Snacks.toggle.dim():map('<Leader>D')
 
--- Kset('n', '<Leader>ff', function()
 Kset('n', '<Leader><space>', function()
 Snacks.picker.files({
   cmd = 'fd',
@@ -580,10 +581,12 @@ Snacks.picker.files({
       return case_insensitive_file_sort(a, b)
     end,
 })
-end, { desc = 'files cwd only'})
+end, { desc = 'Files cwd only'})
 
 Kset('n','<Leader>.', function() Snacks.scratch() end, { desc = "Toggle Scratch Buffer"})
 Kset('n','<Leader>x', function() Snacks.scratch.select() end, { desc = "Select Scratch Buffer"})
+
+Kset('n','<Leader>Z', function() Snacks.zen.zoom() end, { desc = 'Toggle zoom'})
 
 end
 

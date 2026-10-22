@@ -173,3 +173,10 @@ Kset('i', '<F5>', function()
 end, { desc = "Insert today's date" })
 
 Kset('n', '<Leader>ee', '<cmd>edit!<CR>', { desc = 're-read buffer' })
+
+-- Window resizing using Neovim's built-in commands.
+-- moves in screments of 3 --  replaces smart-splits
+Kset('n', '<A-h>', '<Cmd>vertical resize -3<CR>', { desc = 'Window narrower' })
+Kset('n', '<A-l>', '<Cmd>vertical resize +3<CR>', { desc = 'Window wider' })
+Kset('n', '<A-j>', '<Cmd>resize -3<CR>', { desc = 'Window shorter' })
+Kset('n', '<A-k>', '<Cmd>resize +3<CR>', { desc = 'Window taller' })

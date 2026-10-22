@@ -38,7 +38,6 @@ local function load_ui_plugins()
   req('mini')
   req('mini-sessions')
   req('native-lsp')
-  req('smart-splits')
   req('bookmarks_linux')
   req('colorful-winsep')
   req('render-markdown') -- needs to be here to render snacks notification history

@@ -41,6 +41,6 @@ misc.setup_restore_cursor({
   ignore_filetype = { 'commit', 'gitcommit', 'gitrebase', 'xxd' },
 })
 
-Kset('n', '<Leader>C', '<cmd>lua require("mini.misc").zoom()<CR>', { desc = 'clean screen toggle' })
+Kset('n', '<Leader>C', '<cmd>lua require("mini.misc").zoom()<CR>', { desc = 'Clean screen toggle' })
 
 --  ──────────────────────────────────
