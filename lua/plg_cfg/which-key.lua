@@ -11,7 +11,8 @@ vim.o.timeoutlen = 2000
 
 require('which-key').setup({
   delay = 500,
-  preset = 'modern',
+  -- preset = 'modern',
+  preset = 'helix',
 
   -- stylua: ignore 
   layout = {
@@ -26,7 +27,6 @@ require('which-key').setup({
   -- stylua: ignore
   spec = {
     { "<Leader>b",  group = "Buffer" },
-    { "<Leader>c",  group = "Cycle md list type" },
     { "<Leader>d",  group = "Diff" },
     { "<Leader>e",  group = "Edit config" },
     { "<Leader>f",  group = "Snacks" },

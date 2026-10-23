@@ -10,6 +10,9 @@
 -- 08/03/26 - fix for Chromebook paste - otherwise crashes with nigihtly
 -- 08/04/26 - added code to check for dupllicate keymaps
 
+-- disable nvim splash screen
+vim.opt.shortmess:append('I')
+
 -- fixes problem in crostini with paste
 vim.opt.clipboard = '' -- Disable auto clipboard
 vim.g.clipboard = {
@@ -27,30 +30,49 @@ Gh = function(x)
   return 'https://github.com/' .. x
 end
 
--- cache for speed
+-- cache plugins for speed
 if vim.loader then
   vim.loader.enable()
 end
 
+-- set up colorscheme before everything
 vim.pack.add({ Gh('folke/tokyonight.nvim') })
 require('tokyonight').setup({})
 vim.cmd.colorscheme('tokyonight-night')
 
+-- trying out Snacks keymap - works fine, not sure advantage
+vim.pack.add({ Gh('folke/snacks.nvim') })
+require('snacks') -- Initialize the Snacks global before startup plugin scripts run.
+Kset = Snacks.keymap.set
+
+-- adds silent for core mappings
+-- Kset = function(mode, lhs, rhs, opts)
+--   opts = vim.tbl_extend('force', { silent = true }, opts or {})
+--   vim.keymap.set(mode, lhs, rhs, opts)
+-- end
+
+-- needed so safe loads work
 vim.pack.add({
   Gh('nvim-mini/mini.nvim'),
 })
-
 local misc = require('mini.misc')
+
+vim.pack.add({ Gh('nvim-tree/nvim-web-devicons') })
+
+-- initialization files
+-- load safely with error message
+misc.safely('now', function()
+  require('settings')
+end)
+
+misc.safely('now', function()
+  require('plugin_setup')
+end)
 
 -- for all keymaps
 -- to check for dupes comment this out and uncomment the code below
 
 -- Kset = vim.keymap.set
-
--- trying out Snacks keymap
-vim.pack.add({ Gh('folke/snacks.nvim') })
-require('snacks') -- Initialize the Snacks global before startup plugin scripts run.
-Kset = Snacks.keymap.set
 
 -- local seen = {}
 -- function Kset(mode, lhs, rhs, opts)
@@ -89,16 +111,3 @@ Kset = Snacks.keymap.set
 --
 --   vim.keymap.set(mode, lhs, rhs, opts)
 -- end
-
--- disable splash screen
-vim.opt.shortmess:append('I')
-
--- initialization files
--- load safely with error message
-misc.safely('now', function()
-  require('settings')
-end)
-
-misc.safely('now', function()
-  require('plugin_setup')
-end)

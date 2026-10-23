@@ -22,13 +22,13 @@ local cwd_config = {
   L = '$HOME/.config/nvim/lua',
   m = '$HOME/.local/share/nvim/mini.files/trash/',
   n = '$HOME/.config/nvim',
-  o = '$HOME/Insync/bertkleinman@outlook.com/OneDrive/My Docs/',
+  o = '$HOME/.OneDrive/',
   p = '$HOME/.config/nvim/lua/plg_cfg/',
-  s = '$HOME/Insync/bertkleinman@outlook.com/OneDrive/My Docs/Share/',
+  s = '$HOME/.OneDrive/Share/',
   S = '$HOME/.local/share/nvim/scratch/',
   t = '$HOME/.Temp/',
-  v = '$HOME/Insync/bert.kleinman@gmail.com/Google Drive',
-  w = '$HOME/Insync/bertkleinman@outlook.com/OneDrive/My Docs/Moving Forward/Wisteria',
+  v = '$HOME/.GoogleDrive',
+  w = '$HOME/.OneDrive/Moving Forward/Wisteria',
   y = '$HOME/.config/yazi',
 }
 

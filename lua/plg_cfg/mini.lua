@@ -41,6 +41,7 @@ misc.setup_restore_cursor({
   ignore_filetype = { 'commit', 'gitcommit', 'gitrebase', 'xxd' },
 })
 
+-- clean floating window with no tab bar or statu bar
 Kset('n', '<Leader>C', '<cmd>lua require("mini.misc").zoom()<CR>', { desc = 'Clean screen toggle' })
 
 --  ──────────────────────────────────

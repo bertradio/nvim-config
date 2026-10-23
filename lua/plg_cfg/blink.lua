@@ -12,7 +12,7 @@
 
 vim.pack.add({
   Gh('ribru17/blink-cmp-spell'),
-  { src = Gh('saghen/blink.cmp'), version = 'v1' },
+  { src = Gh('saghen/blink.cmp'), version = 'v1.10.2' },
 })
 
 local blink = require('blink.cmp')

@@ -15,7 +15,7 @@ local function set_markdown_table_maps(buf)
     silent = true,
   }
 
-  vim.keymap.set(
+  Kset(
     'i',
     -- '<Tab>',
     '<A-Left>',
@@ -23,21 +23,16 @@ local function set_markdown_table_maps(buf)
     opts
   )
 
-  vim.keymap.set(
+  Kset(
     'i',
     '<A-Down>',
     '<C-o><Plug>(MarkdownPlusTableFormat)<Plug>(MarkdownPlusTableNavDown)',
     opts
   )
 
-  vim.keymap.set(
-    'i',
-    '<A-Up>',
-    '<C-o><Plug>(MarkdownPlusTableFormat)<Plug>(MarkdownPlusTableNavUp)',
-    opts
-  )
+  Kset('i', '<A-Up>', '<C-o><Plug>(MarkdownPlusTableFormat)<Plug>(MarkdownPlusTableNavUp)', opts)
 
-  vim.keymap.set(
+  Kset(
     'i',
     -- '<S-Tab>',
     '<A-Right>',
