@@ -7,6 +7,7 @@
 -- 07/14/26 - Code from ChatGPT to emulate lualine entirely from core
 -- 10/08/26 - Set right to display number of works for md and txt and file
 --            size for everything else
+-- 10/26/26 - Show the directory Oil is viewing in place of cwd in Oil buffers
 
 --    ╭────────────────────────────────────────────────────────╮
 --    │    To make changes in components, search for Future    │
@@ -175,6 +176,19 @@ end
 
 local function short_cwd(context)
   local ok_cwd, cwd = pcall(api.nvim_win_call, context.winid, fn.getcwd)
+
+  -- In an Oil buffer show the directory being viewed, which can differ from
+  -- Neovim's cwd. Remote (non-local) Oil paths return nil and fall back to cwd.
+  if vim.bo[context.bufnr].filetype == 'oil' then
+    local ok_oil, oil = pcall(require, 'oil')
+    local dir = ok_oil and oil.get_current_dir(context.bufnr) or nil
+
+    if dir and dir ~= '' then
+      cwd = dir:gsub('/+$', '')
+      if cwd == '' then cwd = '/' end
+      ok_cwd = true
+    end
+  end
 
   if Myfn and type(Myfn.short_cwd) == 'function' then
     local ok, result = pcall(Myfn.short_cwd, {
@@ -1002,6 +1016,13 @@ api.nvim_create_autocmd({
 api.nvim_create_autocmd({ 'TextChanged', 'TextChangedI' }, {
   group = group,
   callback = schedule_word_refresh,
+})
+
+-- Refresh when Oil finishes entering a directory
+api.nvim_create_autocmd('User', {
+  group = group,
+  pattern = 'OilEnter',
+  callback = redraw,
 })
 
 api.nvim_create_autocmd({ 'BufDelete', 'BufReadPost' }, {

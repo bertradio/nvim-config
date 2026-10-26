@@ -15,6 +15,7 @@
 -- NATIVE SERVER CONFIGURATIONS (v0.13 Core)
 -- =============================================================================
 -- We now define 'root_markers' explicitly so Core knows when to attach.
+
 local servers = {
   bashls = {
     cmd = { 'bash-language-server', 'start' },
@@ -55,7 +56,6 @@ local servers = {
     filetypes = { 'markdown' },
     root_markers = { '.git', '.marksman.toml' },
   },
-
   taplo = {
     cmd = { 'taplo', 'lsp', 'stdio' },
     filetypes = { 'toml' },

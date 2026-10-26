@@ -106,13 +106,13 @@ local function open_minifiles()
   local available = vim.o.columns - 4
 
   local main_width = math.max(24, math.floor(available / 3))
-  local preview_width = math.max(40, available - main_width)
+  local preview_width = math.max(50, available - main_width)
 
   preview_enabled = false
 
   files.open(nil, false, {
     windows = {
-      max_number = 3,
+      max_number = 2,
       preview = false,
       width_focus = main_width,
       width_preview = preview_width,
@@ -120,7 +120,7 @@ local function open_minifiles()
   })
 end
 
-Kset('n', '<Leader>{', open_minifiles, { desc = 'mini.files' })
+Kset('n', '<Leader>[', open_minifiles, { desc = 'mini.files' })
 
 -- ─────────── Buffer-local mappings ───────────
 

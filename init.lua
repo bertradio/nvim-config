@@ -45,6 +45,9 @@ vim.pack.add({ Gh('folke/snacks.nvim') })
 require('snacks') -- Initialize the Snacks global before startup plugin scripts run.
 Kset = Snacks.keymap.set
 
+vim.ui.select = Snacks.picker.select
+vim.ui.input = Snacks.input.input
+
 -- adds silent for core mappings
 -- Kset = function(mode, lhs, rhs, opts)
 --   opts = vim.tbl_extend('force', { silent = true }, opts or {})

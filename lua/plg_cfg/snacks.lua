@@ -157,8 +157,9 @@ local function case_insensitive_explorer_sort(a, b)
   return (a.idx or math.huge) < (b.idx or math.huge)
 end
 
-vim.ui.select = Snacks.picker.select
-vim.ui.input = Snacks.input.input
+-- moved these to init.lua
+-- vim.ui.select = Snacks.picker.select
+-- vim.ui.input = Snacks.input.input
 
 -- stylua: ignore
 Snacks.setup({
@@ -520,24 +521,30 @@ end, { desc = 'Zoxide' })
 
 -- Spelling picker
 Kset('n', 'zz', function()
+  -- set up to include mis-spelling in title of dropdown
+  local bad = vim.fn.spellbadword()
+  local word = bad[1] == "" and vim.fn.expand("<cword>") or bad[1]
   require('snacks').picker.spelling({
     layout = {
       layout = {
         relative = "cursor",
         row = 1,
         col = 0,
-        width = 40,
+        width = 30,
         height = 10,
         box = "vertical",
         border = "rounded",
+        title = "Change " .. "\'" .. word .. "\'",
+        title_pos = "center",
         { win = "input", height = 1, border = "bottom" },
         { win = "list", border = "none" },
       },
     },
   })
-end, { desc = 'Spelling Suggestions' })
+end, { desc = 'Spelling suggestions' })
 
-Kset('n', '<Leader>[', function()
+-- Kset('n', '<Leader>[', function()
+Kset('n', '<Leader>a', function()
   Snacks.explorer({
     auto_close = true,
     layout = { preset = 'sidebar', preview = true },
