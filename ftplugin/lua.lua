@@ -15,7 +15,6 @@ local options = {
   wrap = true,
   -- don't break lines in the middle of words
   linebreak = true,
-  ft = 'lua',
 }
 
 -- use vim.opt_local to execute settings from options array defined above

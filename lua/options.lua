@@ -34,7 +34,6 @@ function M.setup()
     termguicolors  = true,
     title          = true,
     timeout        = true,
-    timeoutlen     = 800,
     virtualedit    = 'block',
     whichwrap      = '<,>,h,l',
     wrap           = true,

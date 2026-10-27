@@ -17,7 +17,6 @@ local options = {
   wrap              = true,
   linebreak         = true,  -- don't break lines in the middle of words
   showmatch         = false, -- don't match parens
-  filetype          = 'text'
 }
 
 --use vim.opt_local to execute settings from options array defined above

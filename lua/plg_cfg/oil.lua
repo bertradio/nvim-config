@@ -278,18 +278,19 @@ vim.api.nvim_create_autocmd('DirChanged', {
   desc = 'Make Oil follow Neovim cwd',
 })
 
+-- removed as per ChatFPT sincw oil handles rename
 -- Enable LSP rename-on-move from snacks
-vim.api.nvim_create_autocmd('User', {
-  group = group,
-  pattern = 'OilActionsPost',
-  callback = function(event)
-    local actions = event.data and event.data.actions
-    if actions and actions.type == 'move' and _G.Snacks then
-      Snacks.rename.on_rename_file(actions.src_url, actions.dest_url)
-    end
-  end,
-  desc = 'LSP rename on Oil file move',
-})
+-- vim.api.nvim_create_autocmd('User', {
+--   group = group,
+--   pattern = 'OilActionsPost',
+-- callback = function(event)
+--   local actions = event.data and event.data.actions
+--   if actions and actions.type == 'move' and _G.Snacks then
+--     Snacks.rename.on_rename_file(actions.src_url, actions.dest_url)
+--   end
+-- end,
+-- desc = 'LSP rename on Oil file move',
+-- })
 
 -- Apply the wrap-around mapping only in Oil buffers
 vim.api.nvim_create_autocmd('FileType', {
