@@ -10,13 +10,15 @@
 --        removed float shortcut
 --        Gemini optimized for full-screen and quick startup
 -- 09/26/26 - Optimizations and corrections to exclude and dirchanged from Codex
--- 10/26/26 - Float shortcut restored (<Leader>-) with preview, float options merged,
+-- 10/26/26 - Changes from Claude to make more useable
+--            Float shortcut restored (<Leader>-) with preview, float options merged,
 --            DirChanged follows cwd in floats too, snacks rename hook restored,
 --            pending-change indicator (red float border / winbar) re-added
 
 vim.pack.add({
-  'https://github.com/nvim-tree/nvim-web-devicons',
-  'https://github.com/stevearc/oil.nvim',
+  Gh('nvim-tree/nvim-web-devicons'),
+  Gh('stevearc/oil.nvim'),
+  Gh('benomahony/oil-git.nvim'),
 })
 
 local detail = false
@@ -25,7 +27,7 @@ local group = vim.api.nvim_create_augroup('OilConfig', { clear = true })
 
 -- Keymaps to start oil
 Kset('n', '=', '<cmd>Oil .<cr>', { desc = 'Oil full screen' })
-Kset('n', '-', function()
+Kset('n', '+', function()
   require('oil').open_float(vim.fn.getcwd(), { preview = {} })
 end, { desc = 'Oil float (with preview, cwd)' })
 

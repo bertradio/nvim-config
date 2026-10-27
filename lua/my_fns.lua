@@ -25,7 +25,7 @@ end
 -- Wrapper for mapping custom keybindings to make mapping code easier and cleaner - from internet
 -- changed from vim.keymap to vim.keymap 4-20-26
 function M.map(mode, lhs, rhs, opts)
-  local options = { noremap = true, silent = true } -- sets defaults
+  local options = { silent = true } -- sets defaults
   options = opts and vim.tbl_extend('force', options, opts)
   Kset(mode, lhs, rhs, options) -- maps key
 end
@@ -39,7 +39,7 @@ function M.map_cwd(k, dir)
     'n',
     '\\' .. k,
     '<cmd>cd! ' .. dir .. '<cr><cmd>lua vim.notify(vim.fn.getcwd(), "info", { title = "" })<cr>',
-    { noremap = true, silent = true, desc = 'Set cwd to ' .. dir }
+    { silent = true, desc = 'Set cwd to ' .. dir }
   )
 end
 

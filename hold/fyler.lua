@@ -17,6 +17,6 @@ local fyler = require('fyler')
 -- vim.keymap.set('n', '<leader>x', fyler.open, { desc = 'Fyler.nvim - Open' })
 
 -- Wrap in a function to pass additional arguments
-Kset('n', '<leader>e', function()
+Kset('n', '<leader>#', function()
   fyler.open({ kind = 'split_left_most' })
 end, { desc = 'Fyler.nvim - Open' })

@@ -56,6 +56,11 @@ local servers = {
     filetypes = { 'markdown' },
     root_markers = { '.git', '.marksman.toml' },
   },
+  rust_analyzer = {
+    cmd = { 'rust-analyzer' },
+    filetypes = { 'rust' },
+    root_markers = { 'Cargo.toml', 'rust-project.json', '.git' },
+  },
   taplo = {
     cmd = { 'taplo', 'lsp', 'stdio' },
     filetypes = { 'toml' },

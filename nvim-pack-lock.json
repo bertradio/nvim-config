@@ -30,7 +30,7 @@
       "src": "https://github.com/williamboman/mason.nvim"
     },
     "mini.nvim": {
-      "rev": "ed8683521996657ce774e5eec9d2f9b1b5ecef82",
+      "rev": "a03ad899bda446b5a81cfa99d8aeeb92241522f3",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "noice.nvim": {
@@ -53,6 +53,10 @@
       "rev": "ec309a0eaff6ea967e58c275996155ab5c16938d",
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
+    "oil-git.nvim": {
+      "rev": "95b0d83f70e5e3e889f4d2f8b70eba5185ff67b6",
+      "src": "https://github.com/benomahony/oil-git.nvim"
+    },
     "oil.nvim": {
       "rev": "d3733d933833a0e59b813ecec99341527adf0c28",
       "src": "https://github.com/stevearc/oil.nvim"
@@ -66,7 +70,7 @@
       "src": "https://github.com/stevearc/quicker.nvim"
     },
     "rainbow-delimiters.nvim": {
-      "rev": "b55decda611755171bc5bf8f4c99603a75de4b41",
+      "rev": "65734f76783705255d9ede8a6e4692e1572801a5",
       "src": "https://github.com/HiPhish/rainbow-delimiters.nvim"
     },
     "render-markdown.nvim": {
@@ -90,7 +94,7 @@
       "src": "https://github.com/folke/which-key.nvim"
     },
     "yazi.nvim": {
-      "rev": "dc8c64dcabbe8a905a133e78a1e20000dd74fb42",
+      "rev": "7867cc76999ebca7540f078a83fcaf9e8de39be9",
       "src": "https://github.com/mikavilpas/yazi.nvim"
     }
   }

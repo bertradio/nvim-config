@@ -115,7 +115,7 @@ Kset(
   'n',
   '<Leader>Y',
   '<cmd>lua Myfn.OpenInTypora()<CR>',
-  { noremap = true, silent = true, desc = 'Open in Typora' }
+  { silent = true, desc = 'Open in Typora' }
 )
 
 -- use tab in normal mode to open and close folds

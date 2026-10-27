@@ -368,4 +368,4 @@ Kset('n', '<Leader>px', function()
   extra.pickers.list({ scope = 'change' })
 end, { desc = 'changes' })
 
-Kset('n', '<Leader>pz', zoxide_picker, { noremap = true, silent = true, desc = 'Zoxide' })
+Kset('n', '<Leader>pz', zoxide_picker, { silent = true, desc = 'Zoxide' })
