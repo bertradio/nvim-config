@@ -11,9 +11,16 @@
 --        Gemini optimized for full-screen and quick startup
 -- 09/26/26 - Optimizations and corrections to exclude and dirchanged from Codex
 -- 10/26/26 - Changes from Claude to make more useable
---            Float shortcut restored (<Leader>-) with preview, float options merged,
---            DirChanged follows cwd in floats too, snacks rename hook restored,
+--            Float shortcut restored (+) with preview, float options merged,
+--            DirChanged follows cwd in floats too,
 --            pending-change indicator (red float border / winbar) re-added
+-- 10/29/26 - Cleanup from Claude review
+--            gd toggle no longer desyncs when an Oil buffer is modified,
+--            <Down>/<Up> wrap-around respects counts,
+--            DirChanged skips Oil windows with unsaved changes,
+--            indicator autocmds consolidated (BufWinEnter/FileType duplicates removed),
+--            dead snacks rename block removed (oil's lsp_file_methods handles it),
+--            watch_for_changes enabled
 
 vim.pack.add({
   Gh('nvim-tree/nvim-web-devicons'),
@@ -22,12 +29,17 @@ vim.pack.add({
 })
 
 local detail = false
+local exclude_enabled = true
 local file_exclude = require('file_exclude')
 local group = vim.api.nvim_create_augroup('OilConfig', { clear = true })
 
+local function is_dotfile(name)
+  return vim.startswith(name, '.')
+end
+
 -- Keymaps to start oil
-Kset('n', '=', '<cmd>Oil .<cr>', { desc = 'Oil full screen' })
-Kset('n', '+', function()
+Kset('n', '+', '<cmd>Oil .<cr>', { desc = 'Oil full screen' })
+Kset('n', '=', function()
   require('oil').open_float(vim.fn.getcwd(), { preview = {} })
 end, { desc = 'Oil float (with preview, cwd)' })
 
@@ -36,6 +48,13 @@ end, { desc = 'Oil float (with preview, cwd)' })
 require('oil').setup({
   delete_to_trash               = true,
   skip_confirm_for_simple_edits = true,
+  watch_for_changes             = true,
+
+  -- LSP rename on move is handled by oil itself (no snacks hook needed).
+  -- 'unmodified' also saves buffers the LSP touched, if they had no pending edits.
+  lsp_file_methods = {
+    autosave_changes = 'unmodified',
+  },
 
   -- Rounded border for :w dialogs
   confirmation = {
@@ -47,7 +66,7 @@ require('oil').setup({
     wrap = true,
   },
 
-  -- Float window (used by <Leader>-)
+  -- Float window (used by +)
   float = {
     padding     = 3,
     max_width   = 0.9,
@@ -64,29 +83,41 @@ require('oil').setup({
     ['g.']    = 'actions.toggle_hidden',
     ['<C-c>'] = 'actions.close',
     ['<C-q>'] = '<cmd>bd!<cr>',
-    ['gd']    = {
-      desc = 'Toggle file detail view',
+    ['<M-e>'] = {
+      desc = 'Toggle excluded files',
       callback = function()
-        local next_detail = not detail
-        local has_modified_buffer = false
-
         for _, buf in ipairs(vim.api.nvim_list_bufs()) do
           if vim.bo[buf].filetype == 'oil' and vim.bo[buf].modified then
-            has_modified_buffer = true
-            break
+            return vim.notify('Oil: must save or discard changes first', vim.log.levels.WARN)
           end
         end
 
-        require('oil').set_columns(next_detail and { 'icon', 'size', 'mtime' } or { 'icon' })
-        if not has_modified_buffer then detail = next_detail end
+        exclude_enabled = not exclude_enabled
+        -- Updating this through Oil's API re-renders every open Oil buffer.
+        require('oil').set_is_hidden_file(is_dotfile)
+        vim.notify('Oil: excluded files ' .. (exclude_enabled and 'hidden' or 'shown'))
+      end,
+    },
+    ['gd']    = {
+      desc = 'Toggle file detail view',
+      callback = function()
+        -- set_columns re-renders Oil buffers, so don't do it with pending edits
+        for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+          if vim.bo[buf].filetype == 'oil' and vim.bo[buf].modified then
+            return vim.notify('Oil: save or discard changes first', vim.log.levels.WARN)
+          end
+        end
+        detail = not detail
+        require('oil').set_columns(detail and { 'icon', 'size', 'mtime' } or { 'icon' })
       end,
     },
   },
 
   view_options = {
     case_insensitive = true,
-    is_hidden_file   = function(name)
-      return vim.startswith(name, '.') or file_exclude.is_excluded(name)
+    is_hidden_file   = is_dotfile,
+    is_always_hidden = function(name)
+      return exclude_enabled and file_exclude.is_excluded(name)
     end,
   },
 })
@@ -205,30 +236,37 @@ local function refresh_all_indicators()
   update_backdrop()
 end
 
-local function indicator_autocmd(events, pattern)
-  return pcall(vim.api.nvim_create_autocmd, events, {
-    group = group,
-    pattern = pattern,
-    callback = function()
-      vim.schedule(refresh_all_indicators)
-    end,
-    desc = 'Oil pending-change indicator',
-  })
+local function schedule_refresh()
+  vim.schedule(refresh_all_indicators)
 end
 
-indicator_autocmd({ 'BufWinEnter', 'TextChanged', 'TextChangedI', 'InsertLeave' }, 'oil://*')
+-- Edits in Oil buffers
+vim.api.nvim_create_autocmd({ 'TextChanged', 'TextChangedI', 'InsertLeave' }, {
+  group = group,
+  pattern = 'oil://*',
+  callback = schedule_refresh,
+  desc = 'Oil pending-change indicator',
+})
 -- Not available in every Neovim build, so register it on its own and ignore failure
-indicator_autocmd('BufModifiedSet', 'oil://*')
--- New windows (e.g. the preview) can inherit window options; re-check them
-indicator_autocmd({ 'WinNew', 'BufWinEnter', 'WinClosed', 'VimResized' }, '*')
-indicator_autocmd('FileType', 'oil')
+pcall(vim.api.nvim_create_autocmd, 'BufModifiedSet', {
+  group = group,
+  pattern = 'oil://*',
+  callback = schedule_refresh,
+  desc = 'Oil pending-change indicator',
+})
+
+-- New windows (e.g. the preview) can inherit window options; re-check them.
+-- BufWinEnter here also covers Oil buffers entering a window.
+vim.api.nvim_create_autocmd({ 'WinNew', 'BufWinEnter', 'WinClosed', 'VimResized' }, {
+  group = group,
+  callback = schedule_refresh,
+  desc = 'Oil indicator: re-check windows',
+})
 
 vim.api.nvim_create_autocmd('User', {
   group = group,
   pattern = 'OilActionsPost',
-  callback = function()
-    vim.schedule(refresh_all_indicators)
-  end,
+  callback = schedule_refresh,
   desc = 'Clear Oil indicator after changes are applied',
 })
 
@@ -239,6 +277,7 @@ vim.api.nvim_create_autocmd('ColorScheme', {
 })
 
 -- Directory sync: every Oil window (full-screen, split, or float) follows cwd.
+-- Windows with unsaved changes are skipped so pending edits are never clobbered.
 -- Floats get their preview reopened afterwards.
 vim.api.nvim_create_autocmd('DirChanged', {
   group = group,
@@ -250,7 +289,7 @@ vim.api.nvim_create_autocmd('DirChanged', {
 
       for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
         local buf = vim.api.nvim_win_get_buf(win)
-        if vim.bo[buf].filetype == 'oil' then
+        if vim.bo[buf].filetype == 'oil' and not vim.bo[buf].modified then
           vim.api.nvim_win_call(win, function()
             oil.open(cwd)
           end)
@@ -278,21 +317,7 @@ vim.api.nvim_create_autocmd('DirChanged', {
   desc = 'Make Oil follow Neovim cwd',
 })
 
--- removed as per ChatFPT sincw oil handles rename
--- Enable LSP rename-on-move from snacks
--- vim.api.nvim_create_autocmd('User', {
---   group = group,
---   pattern = 'OilActionsPost',
--- callback = function(event)
---   local actions = event.data and event.data.actions
---   if actions and actions.type == 'move' and _G.Snacks then
---     Snacks.rename.on_rename_file(actions.src_url, actions.dest_url)
---   end
--- end,
--- desc = 'LSP rename on Oil file move',
--- })
-
--- Apply the wrap-around mapping only in Oil buffers
+-- Apply the wrap-around mapping only in Oil buffers (counts respected)
 vim.api.nvim_create_autocmd('FileType', {
   group = group,
   pattern = 'oil',
@@ -301,7 +326,7 @@ vim.api.nvim_create_autocmd('FileType', {
       if vim.fn.line('.') == vim.fn.line('$') then
         vim.cmd('normal! gg')
       else
-        vim.cmd('normal! j')
+        vim.cmd('normal! ' .. vim.v.count1 .. 'j')
       end
     end, { buffer = true })
 
@@ -309,7 +334,7 @@ vim.api.nvim_create_autocmd('FileType', {
       if vim.fn.line('.') == 1 then
         vim.cmd('normal! G')
       else
-        vim.cmd('normal! k')
+        vim.cmd('normal! ' .. vim.v.count1 .. 'k')
       end
     end, { buffer = true })
   end,

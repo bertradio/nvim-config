@@ -22,7 +22,9 @@ end)
 
 -- Helper to make plg_cfg plugin requires simpler
 local function req(plugin)
-  require('plg_cfg.' .. plugin)
+  misc.safely('now', function()
+    require('plg_cfg.' .. plugin)
+  end)
 end
 
 -- Snacks must register its startup handlers before files are opened.
@@ -35,16 +37,12 @@ local function load_ui_plugins()
   req('noice')
   req('blink')
   req('which-key')
-  req('mini')
-  req('mini-sessions')
   req('mason')
   req('native-lsp')
   req('oil')
   req('bookmarks_linux')
   req('colorful-winsep')
-  req('render-markdown') -- needs to be here to render snacks notification history
-  req('yazi') -- needs to be here to render snacks notification history
-  req('markdown-plus') -- needs to be here for scratch buffers
+  req('yazi')
 end
 
 --  ─────────────────────────────────────────────
@@ -75,6 +73,8 @@ end
 
 local function load_markdown_plugins() -- most needed earlier for scratch
   -- req('livepreview')
+  req('render-markdown')
+  req('markdown-plus')
 end
 
 --  ────────────────────────────────────────────────────────
@@ -93,6 +93,7 @@ vim.api.nvim_create_autocmd('UIEnter', {
 vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile', 'BufReadPost' }, {
   once = true,
   callback = load_buffer_plugins,
+  pattern = { '*.lua', '*.sh', '*.zsh', '*.py' },
 })
 
 -- indent-blankline enters existing windows during setup, which is not allowed

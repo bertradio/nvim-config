@@ -19,6 +19,7 @@
 require('snacks') -- Initialize the Snacks global before startup plugin scripts run.
 
 -- setup for excluding files from pickers
+-- uses extensions file - same as others
 local file_exclude = require('file_exclude')
 local excluded = {}
 
@@ -590,8 +591,9 @@ Snacks.picker.files({
 })
 end, { desc = 'Files cwd only'})
 
-Kset('n','<Leader>.', function() Snacks.scratch() end, { desc = "Toggle Scratch Buffer"})
-Kset('n','<Leader>x', function() Snacks.scratch.select() end, { desc = "Select Scratch Buffer"})
+-- Removed since I rareely use
+-- Kset('n','<Leader>.', function() Snacks.scratch() end, { desc = "Toggle Scratch Buffer"})
+-- Kset('n','<Leader>x', function() Snacks.scratch.select() end, { desc = "Select Scratch Buffer"})
 
 Kset('n','<Leader>Z', function() Snacks.zen.zoom() end, { desc = 'Toggle zoom'})
 

@@ -55,11 +55,19 @@ vim.ui.input = Snacks.input.input
 -- end
 
 -- needed so safe loads work
+-- Load the error-handling helper first.
+vim.pack.add({ Gh('nvim-mini/mini.nvim') })
+local misc = require('mini.misc')
+
+-- A colorscheme failure should not stop configuration loading.
+misc.safely('now', function()
+  vim.pack.add({ Gh('folke/tokyonight.nvim') })
+  require('tokyonight').setup({})
+  vim.cmd.colorscheme('tokyonight-night')
+end)
 vim.pack.add({
   Gh('nvim-mini/mini.nvim'),
 })
-local misc = require('mini.misc')
-
 vim.pack.add({ Gh('nvim-tree/nvim-web-devicons') })
 
 -- initialization files

@@ -5,7 +5,7 @@
 vim.pack.add({ 'https://github.com/FylerOrg/fyler.nvim' })
 
 local fyler = require('fyler')
-
+fyler.setup({})
 --
 -- -- open as a left most split
 -- fyler.open({ kind = "split_left_most" })
