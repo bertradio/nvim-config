@@ -317,11 +317,13 @@ Snacks.setup({
     },
 
     files = {
-      layout = { preset = 'my_single_narrow' },
+      -- layout = { preset = 'my_single_narrow' },
+      layout = { preset = 'my_default' },
       exclude = excluded,
       transform = exclude_file_item,
       matcher = { sort_empty = true },
       sort = case_insensitive_file_sort,
+      title = 'Fuzzy search',
     },
 
     grep = {
@@ -491,11 +493,12 @@ end
 local function maps()
 
 Kset('n', '<Leader>fB', function() Snacks.picker.grep_buffers() end,        { desc = 'grep open buffers' })
-Kset('n', '<Leader>fR', function() Snacks.picker.registers() end,           { desc = 'Registers' })
+Kset('n', '<Leader>fr', function() Snacks.picker.registers() end,           { desc = 'Registers' })
 Kset('n', '<Leader>fb', function() Snacks.picker.buffers() end,             { desc = 'buffers'})
 Kset('n', '<Leader>fc', function() Snacks.picker.command_history() end,     { desc = 'command History' })
--- Kset('n',  "<Leader>fC", function() Snacks.picker.colorschemes() end, {desc = "Colorschemes" })
+Kset('n', '<Leader>fC', function() Snacks.picker.colorschemes() end,        { desc = 'colorschemes' })
 Kset('n', '<Leader>fD', function() Snacks.picker.diagnostics_buffer() end,  { desc = 'diagnostics - buffer' })
+Kset('n', '<Leader>ff', function() Snacks.picker.files() end,               { desc = 'fuzzy files' })
 Kset('n', '<Leader>fg', function() Snacks.picker.grep() end,                { desc = 'grep' })
 Kset('n', '<Leader>fh', function() Snacks.picker.help() end,                { desc = 'help' })
 Kset('n', '<Leader>fj', function() Snacks.picker.jumps() end,               { desc = 'jumps' })
@@ -564,7 +567,7 @@ Kset('n', '<Leader>]', function()
 end, { desc = 'Dashboard', silent = true })
 
 -- Kset('n', '<Leader>fr', function()
-Kset('n', '<Leader>fr', function()
+Kset('n', '<Leader>fR', function()
   oldfiles_picker()
 end, { desc = 'recent' })
 

@@ -30,55 +30,39 @@ Gh = function(x)
   return 'https://github.com/' .. x
 end
 
--- cache plugins for speed
-if vim.loader then
-  vim.loader.enable()
-end
+-- needed so safe loads work
+-- Load the error-handling helper first.
+vim.pack.add({ Gh('nvim-mini/mini.nvim') })
+vim.pack.add({ Gh('nvim-tree/nvim-web-devicons') })
+local misc = require('mini.misc')
 
 -- set up colorscheme before everything
-vim.pack.add({ Gh('folke/tokyonight.nvim') })
-require('tokyonight').setup({})
-vim.cmd.colorscheme('tokyonight-night')
+misc.safely('now', function()
+  -- A colorscheme failure should not stop configuration loading.
+  vim.pack.add({ Gh('folke/tokyonight.nvim') })
+  require('tokyonight').setup({})
+  vim.cmd.colorscheme('tokyonight-night')
 
--- trying out Snacks keymap - works fine, not sure advantage
-vim.pack.add({ Gh('folke/snacks.nvim') })
-require('snacks') -- Initialize the Snacks global before startup plugin scripts run.
-Kset = Snacks.keymap.set
+  vim.pack.add({ Gh('folke/snacks.nvim') })
+  require('snacks') -- Initialize the Snacks global before startup plugin scripts run.
+end)
+
+Kset = vim.keymap.set
 
 vim.ui.select = Snacks.picker.select
 vim.ui.input = Snacks.input.input
 
--- adds silent for core mappings
--- Kset = function(mode, lhs, rhs, opts)
---   opts = vim.tbl_extend('force', { silent = true }, opts or {})
---   vim.keymap.set(mode, lhs, rhs, opts)
--- end
+-- wrapper for misc.safely to make code clearer
+function Safereq(plugin)
+  misc.safely('now', function()
+    require(plugin)
+  end)
+end
 
--- needed so safe loads work
--- Load the error-handling helper first.
-vim.pack.add({ Gh('nvim-mini/mini.nvim') })
-local misc = require('mini.misc')
+Safereq('settings')
+Safereq('plugin_setup')
 
--- A colorscheme failure should not stop configuration loading.
-misc.safely('now', function()
-  vim.pack.add({ Gh('folke/tokyonight.nvim') })
-  require('tokyonight').setup({})
-  vim.cmd.colorscheme('tokyonight-night')
-end)
-vim.pack.add({
-  Gh('nvim-mini/mini.nvim'),
-})
-vim.pack.add({ Gh('nvim-tree/nvim-web-devicons') })
-
--- initialization files
--- load safely with error message
-misc.safely('now', function()
-  require('settings')
-end)
-
-misc.safely('now', function()
-  require('plugin_setup')
-end)
+-------------------------------------------------------------------------
 
 -- for all keymaps
 -- to check for dupes comment this out and uncomment the code below

@@ -13,7 +13,8 @@ vim.pack.add({
 
 local yazi = require('yazi')
 
-Kset('n', '<Leader>y', function()
+-- Kset('n', '<Leader>y', function()
+Kset('n', '=', function()
   yazi.yazi(nil, vim.fn.getcwd())
 end, { desc = 'Yazi' })
 
@@ -35,7 +36,7 @@ yazi.setup({
   yazi_floating_window_border = 'double',
 
   -- floating window scaling factor. 1 means 100%, 0.9 means 90%, etc.
-  floating_window_scaling_factor = 0.85,
+  floating_window_scaling_factor = 0.90,
 
   hooks = {
     -- if yazi not opening file, change cwd to one in yazi
@@ -50,7 +51,7 @@ yazi.setup({
   keymaps = {
     copy_relative_path_to_selected_files = '<c-y>',
     cycle_open_buffers                   = '<tab>',
-    grep_in_directory                    = '<c-g>',
+    -- grep_in_directory                    = '<c-g>', -- can't use, calls telescope
     open_file_in_horizontal_split        = '<c-x>',
     open_file_in_vertical_split          = '<c-v>',
     replace_in_directory                 = 'false',

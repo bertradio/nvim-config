@@ -10,7 +10,7 @@
       "version": "'v1.10.2'"
     },
     "colorful-winsep.nvim": {
-      "rev": "6134b5cd4a38990c7b720adc90973ed32f726179",
+      "rev": "7a8664fb8e91bd3435b3128c18dc814b3ddb11f5",
       "src": "https://github.com/nvim-zh/colorful-winsep.nvim"
     },
     "conform.nvim": {
@@ -22,7 +22,7 @@
       "src": "https://github.com/folke/flash.nvim"
     },
     "markdown-plus.nvim": {
-      "rev": "29d5a7e2fd1a14b63b0ef08c502b755c49c23b6b",
+      "rev": "ac14838e1bb02b31a565a0e1b4e7dc772f0afbf4",
       "src": "https://github.com/yousefhadder/markdown-plus.nvim"
     },
     "mason.nvim": {
@@ -30,7 +30,7 @@
       "src": "https://github.com/williamboman/mason.nvim"
     },
     "mini.nvim": {
-      "rev": "6d5a29e86a7352739506c28e0bc50fe214b5216f",
+      "rev": "f9ac12d7cbd2563cfc2cce9a8152fc8df2ad0d6f",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "noice.nvim": {
@@ -54,16 +54,12 @@
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
     },
     "nvim-web-devicons": {
-      "rev": "ec309a0eaff6ea967e58c275996155ab5c16938d",
+      "rev": "0dc0cfb0c6858041174a53c7aa4adaf65e994b3c",
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
-    "oil-git.nvim": {
-      "rev": "95b0d83f70e5e3e889f4d2f8b70eba5185ff67b6",
-      "src": "https://github.com/benomahony/oil-git.nvim"
-    },
-    "oil.nvim": {
-      "rev": "d3733d933833a0e59b813ecec99341527adf0c28",
-      "src": "https://github.com/stevearc/oil.nvim"
+    "pack-ui.nvim": {
+      "rev": "ba1684984424856a3df8dd62078915f2620b99da",
+      "src": "https://github.com/jtprogru/pack-ui.nvim"
     },
     "plenary.nvim": {
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
@@ -78,7 +74,7 @@
       "src": "https://github.com/HiPhish/rainbow-delimiters.nvim"
     },
     "render-markdown.nvim": {
-      "rev": "8e8795368391036643b622875a6da6a51bcd33f4",
+      "rev": "9c235bedc4f96145e63fcad5b78cd78bce8822c4",
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
     "snacks.nvim": {
@@ -98,7 +94,7 @@
       "src": "https://github.com/folke/which-key.nvim"
     },
     "yazi.nvim": {
-      "rev": "24b74d5ac9f8c7fa776d9ab14bb338512aa64954",
+      "rev": "57b634635f0532631404a891ae29bc63c3cd732c",
       "src": "https://github.com/mikavilpas/yazi.nvim"
     }
   }

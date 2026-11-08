@@ -22,4 +22,4 @@ require('pack_ui').setup({
   },
 })
 
--- Kset('n', '<Leader>ru', '<cmd>PackUpdate<cr>', { desc = 'pack-ui: update' })
+Kset('n', '<Leader>ru', '<cmd>PackUpdate<cr>', { desc = 'pack-ui: update' })

@@ -44,6 +44,14 @@ Kset('n', '=', function()
 end, { desc = 'Oil float (with preview, cwd)' })
 
 -- set up oil
+-- Oil resolves preview paths asynchronously. A superseded preview buffer can be
+-- wiped before its scheduled callback runs, so avoid indexing an invalid buffer.
+local oil_util = require('oil.util')
+local is_oil_bufnr = oil_util.is_oil_bufnr
+oil_util.is_oil_bufnr = function(bufnr)
+  return vim.api.nvim_buf_is_valid(bufnr) and is_oil_bufnr(bufnr)
+end
+
 -- stylua: ignore
 require('oil').setup({
   delete_to_trash               = true,
@@ -285,7 +293,6 @@ vim.api.nvim_create_autocmd('DirChanged', {
     vim.schedule(function()
       local oil = require('oil')
       local cwd = vim.fn.getcwd()
-      local curwin = vim.api.nvim_get_current_win()
 
       for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
         local buf = vim.api.nvim_win_get_buf(win)
@@ -293,23 +300,6 @@ vim.api.nvim_create_autocmd('DirChanged', {
           vim.api.nvim_win_call(win, function()
             oil.open(cwd)
           end)
-
-          if vim.api.nvim_win_get_config(win).relative ~= '' then
-            vim.defer_fn(function()
-              if not vim.api.nvim_win_is_valid(win) then
-                return
-              end
-              vim.api.nvim_win_call(win, function()
-                local entry = oil.get_cursor_entry()
-                if entry and entry.type == 'file' then
-                  pcall(oil.open_preview, {})
-                end
-              end)
-              if vim.api.nvim_win_is_valid(curwin) then
-                vim.api.nvim_set_current_win(curwin)
-              end
-            end, 30)
-          end
         end
       end
     end)

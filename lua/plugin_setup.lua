@@ -9,45 +9,40 @@
 -- 05/20/26 added function to make code clearer
 -- 07/09/26 replaced anonymous autocmd callbacks with named functions
 -- 08/01/26 split mini into separate files - treating each as a plugin
-
-local misc = require('mini.misc')
+-- 11/05/26 - modified to use mini.misc.safely
 
 -- load safely with error message
-misc.safely('now', function()
-  require('keymaps')
-end)
-misc.safely('now', function()
-  require('aucmds')
-end)
+Safereq('keymaps')
+Safereq('aucmds')
 
 -- Helper to make plg_cfg plugin requires simpler
 local function req(plugin)
-  misc.safely('now', function()
-    require('plg_cfg.' .. plugin)
-  end)
+  Safereq('plg_cfg.' .. plugin)
 end
 
 -- Snacks must register its startup handlers before files are opened.
 req('snacks')
 
 -- ────────── lazy loading set up all functions ──────────
+local misc = require('mini.misc')
 
-local function load_ui_plugins()
+-- initial loads on UI
+misc.safely('event:UIEnter', function()
   req('statusline')
   req('noice')
   req('blink')
   req('which-key')
   req('mason')
   req('native-lsp')
-  req('oil')
-  req('bookmarks_linux')
-  req('colorful-winsep')
   req('yazi')
-end
+  req('colorful-winsep')
+  req('bookmarks_linux')
+end)
 
 --  ─────────────────────────────────────────────
 
-local function load_buffer_plugins()
+-- pn enter/new buffer
+misc.safely('event:BufReadPre,BufNewFile,BufReadPost', function()
   req('nvim-biscuits')
   req('hlslens')
   req('rainbow')
@@ -56,69 +51,25 @@ local function load_buffer_plugins()
   req('mini-ai')
   req('mini-diff')
   req('mini-move')
-  req('mini-pairs')
   req('mini-surround')
   req('quicker')
   req('undotree')
-end
+end)
 
 --  ─────────────────────────────────────────────
 
-local function load_insert_plugins()
+-- on first insert
+misc.safely('event:InsertEnter', function()
+  req('mini-pairs')
   req('my_abbrevs')
   require('my_snippets').setup()
-end
+end)
 
 --  ─────────────────────────────────────────────
 
-local function load_markdown_plugins() -- most needed earlier for scratch
-  -- req('livepreview')
+misc.safely('filetype:markdown', function()
   req('render-markdown')
   req('markdown-plus')
-end
+end)
 
 --  ────────────────────────────────────────────────────────
-
---    ╭──────────────────────────────────────────────────╮
---    │    ───── autocmds to run functions once ─────    │
---    ╰──────────────────────────────────────────────────╯
-
--- Load when the UI starts; this also sets the load order
-vim.api.nvim_create_autocmd('UIEnter', {
-  once = true,
-  callback = load_ui_plugins,
-})
-
--- Load when entering the first buffer
-vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile', 'BufReadPost' }, {
-  once = true,
-  callback = load_buffer_plugins,
-  pattern = { '*.lua', '*.sh', '*.zsh', '*.py' },
-})
-
--- indent-blankline enters existing windows during setup, which is not allowed
--- from a BufReadPre callback.
--- vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
---   once = true,
---   callback = function()
---     req('indent-blankline')
---   end,
--- })
-
--- Load on the first entry into Insert mode
-vim.api.nvim_create_autocmd('InsertEnter', {
-  once = true,
-  callback = load_insert_plugins,
-})
-
--- load only for the first markdown buffer
-vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
-  once = true,
-  pattern = '*.md',
-  callback = load_markdown_plugins,
-})
-
--- vim.api.nvim_create_user_command('Mason', function()
---   req('mason')
---   vim.cmd.Mason()
--- end, {})

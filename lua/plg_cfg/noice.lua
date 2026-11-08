@@ -8,8 +8,8 @@ vim.pack.add({
   Gh('MunifTanjim/nui.nvim'),
   Gh('folke/noice.nvim'),
 })
-
 -- UI Customization: Orange theme for commandline border and icon
+
 vim.api.nvim_create_autocmd('ColorScheme', {
   pattern = '*',
   desc = 'Custom Noice highlights for orange theme',
