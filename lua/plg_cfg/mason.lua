@@ -7,7 +7,7 @@
 -- Created: 12/10/23
 
 vim.pack.add({
-  Gh('williamboman/mason.nvim'),
+  Gh('mason-org/mason.nvim'),
 })
 
 require('mason').setup()

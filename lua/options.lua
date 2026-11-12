@@ -16,6 +16,8 @@ function M.setup()
     conceallevel   = 0,
     copyindent     = true,
     expandtab      = true,
+    guicursor      = 'n-v-c-sm:block,i-ci-ve:ver25-Cursor,r-cr-o:hor20,a:blinkwait700-blinkoff400-blinkon250',
+    laststatus     = 3,
     linebreak      = true,
     listchars      = { eol = '↲', tab = '▸ ', trail = '·' },
     number         = false,
@@ -29,31 +31,27 @@ function M.setup()
     softtabstop    = 2,
     splitbelow     = true,
     splitright     = true,
-    laststatus     = 3,
     tabstop        = 2,
     termguicolors  = true,
-    title          = true,
     timeout        = true,
+    timeoutlen     = 1000,
+    title          = true,
     virtualedit    = 'block',
     whichwrap      = '<,>,h,l',
     wrap           = true,
-    guicursor      = 'n-v-c-sm:block,i-ci-ve:ver25-Cursor,r-cr-o:hor20,a:blinkwait700-blinkoff400-blinkon250',
 
     -- SEARCH
     ignorecase     = true,
     incsearch      = true,
     smartcase      = true,
-    hlsearch       = false,
 
     -- SYSTEM
     backup         = true,
     backupcopy     = 'yes',
     confirm        = true,
     clipboard      = 'unnamedplus',
-    history        = 100,
     swapfile       = true,
     undofile       = true,
-    undolevels     = 100,
     spell          = false,
 
     -- neovim 0.12 / blink.cmp optimizations
@@ -86,10 +84,6 @@ function M.setup()
     vim.g.loaded_ruby_provider    =  0
   end
 
-  -- activate built-in undo for nvim 0.12+
-  -- vim.cmd('packadd nvim.undotree')
-  -- Kset('n', '<leader>u', require('undotree').open, { desc = 'Undotree' })
-
   -- disable built-in plugins not needed
   local disabled_builtins = {
     '2html_plugin',
@@ -118,12 +112,6 @@ function M.setup()
   for _, plugin in ipairs(disabled_builtins) do
     vim.g['loaded_' .. plugin] = 1
   end
-
-  -- local signs = { Error = 'E', Warn = 'W', Hint = 'H', Info = 'I' }
-  -- for type, icon in pairs(signs) do
-  --   local hl = 'DiagnosticSign' .. type
-  --   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-  -- end
 end
 
 -- ──────────────────────────────────────────────────────────────────────

@@ -36,21 +36,27 @@ vim.pack.add({ Gh('nvim-mini/mini.nvim') })
 vim.pack.add({ Gh('nvim-tree/nvim-web-devicons') })
 local misc = require('mini.misc')
 
--- set up colorscheme before everything
+-- A colorscheme failure should not stop configuration loading.
+-- so wrap in misc.safely
 misc.safely('now', function()
-  -- A colorscheme failure should not stop configuration loading.
   vim.pack.add({ Gh('folke/tokyonight.nvim') })
-  require('tokyonight').setup({})
+  require('tokyonight').setup({
+    on_colors = function(colors)
+      colors.comment = '#8993b5'
+    end,
+  })
   vim.cmd.colorscheme('tokyonight-night')
-
-  vim.pack.add({ Gh('folke/snacks.nvim') })
-  require('snacks') -- Initialize the Snacks global before startup plugin scripts run.
 end)
 
-Kset = vim.keymap.set
+-- Snacks is required by later configuration.
+-- so don't wrap in misc.safely
+vim.pack.add({ Gh('folke/snacks.nvim') })
+require('snacks')
 
 vim.ui.select = Snacks.picker.select
 vim.ui.input = Snacks.input.input
+
+Kset = vim.keymap.set
 
 -- wrapper for misc.safely to make code clearer
 function Safereq(plugin)
@@ -61,48 +67,3 @@ end
 
 Safereq('settings')
 Safereq('plugin_setup')
-
--------------------------------------------------------------------------
-
--- for all keymaps
--- to check for dupes comment this out and uncomment the code below
-
--- Kset = vim.keymap.set
-
--- local seen = {}
--- function Kset(mode, lhs, rhs, opts)
---   local modes = type(mode) == 'table' and mode or { mode }
---
---   -- Capture the caller now, while its stack information exists.
---   local caller = debug.getinfo(2, 'Sl')
---   local current = {
---     file = caller and caller.short_src or 'unknown',
---     line = caller and caller.currentline or 0,
---   }
---
---   for _, m in ipairs(modes) do
---     local key = m .. '\0' .. lhs
---     local previous = seen[key]
---
---     if previous then
---       vim.schedule(function()
---         vim.notify(
---           string.format(
---             'Duplicate keymap:\n\n%s  %s\n\nPrevious: %s:%d\nCurrent:  %s:%d',
---             m,
---             lhs,
---             previous.file,
---             previous.line,
---             current.file,
---             current.line
---           ),
---           vim.log.levels.WARN
---         )
---       end)
---     end
---
---     seen[key] = current
---   end
---
---   vim.keymap.set(mode, lhs, rhs, opts)
--- end

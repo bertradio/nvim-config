@@ -6,10 +6,8 @@
 -- Optimized for Neovim 0.13+ (Zero external dependencies for configs)
 -- Code from Gemini to replace nvim-lspconfig
 
---   Gh('folke/lazydev.nvim'),
--- })
---
--- require('lazydev').setup()
+vim.pack.add({ Gh('folke/lazydev.nvim') })
+require('lazydev').setup()
 
 -- =============================================================================
 -- NATIVE SERVER CONFIGURATIONS (v0.13 Core)
@@ -37,9 +35,9 @@ local servers = {
             'ui',
             'ya',
             'vim',
-            '_G.Kset',
-            '_G.Myfn',
-            '_G.Gh',
+            -- '_G.Kset',
+            -- '_G.Myfn',
+            -- '_G.Gh',
             'Gh',
             'Kset',
             'Myfn',
@@ -55,11 +53,6 @@ local servers = {
     cmd = { 'marksman', 'server' },
     filetypes = { 'markdown' },
     root_markers = { '.git', '.marksman.toml' },
-  },
-  rust_analyzer = {
-    cmd = { 'rust-analyzer' },
-    filetypes = { 'rust' },
-    root_markers = { 'Cargo.toml', 'rust-project.json', '.git' },
   },
   taplo = {
     cmd = { 'taplo', 'lsp', 'stdio' },

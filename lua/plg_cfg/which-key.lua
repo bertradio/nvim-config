@@ -6,21 +6,10 @@
 
 vim.pack.add({ Gh('folke/which-key.nvim') })
 
-vim.o.timeout = true
-vim.o.timeoutlen = 2000
-
 require('which-key').setup({
   delay = 500,
   -- preset = 'modern',
   preset = 'helix', -- display lower right as mini.clue
-
-  -- stylua: ignore 
-  -- layout = {
-  --   align   = 'center',
-  --   width   = { min = 25 },
-  --   spacing = 8,
-  -- },
-
 
   --  ───── labels for second character ─────
 
