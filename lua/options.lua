@@ -149,6 +149,9 @@ vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.opt.foldlevel = 99
 vim.opt.foldtext = 'v:lua.MyFoldText()'
 
+-- from claude
+vim.g.markdown_recommended_style = 0
+
 -- fillchars + statuscolumn logic
 -- this forces the fold column to be empty unless it's an icon
 vim.opt.fillchars = {

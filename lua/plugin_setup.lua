@@ -26,6 +26,11 @@ req('snacks')
 -- ────────── lazy loading set up all functions ──────────
 local misc = require('mini.misc')
 
+misc.setup_restore_cursor({
+  center = false,
+  ignore_filetype = { 'commit', 'gitcommit', 'gitrebase', 'xxd' },
+})
+
 -- initial loads on UI
 misc.safely('event:UIEnter', function()
   req('statusline')
@@ -35,7 +40,6 @@ misc.safely('event:UIEnter', function()
   req('which-key')
   req('mason')
   req('native-lsp')
-  req('tree-sitter-manager')
   req('yazi')
   -- req('mini-sessions')
   req('colorful-winsep')
@@ -44,8 +48,9 @@ end)
 
 --  ─────────────────────────────────────────────
 
--- pn enter/new buffer
+-- on enter/new buffer
 misc.safely('event:BufReadPre,BufNewFile,BufReadPost', function()
+  req('tree-sitter-manager')
   req('nvim-biscuits')
   req('hlslens')
   req('rainbow')
