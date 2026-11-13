@@ -6,8 +6,11 @@
 -- Optimized for Neovim 0.13+ (Zero external dependencies for configs)
 -- Code from Gemini to replace nvim-lspconfig
 
-vim.pack.add({ Gh('folke/lazydev.nvim') })
-require('lazydev').setup()
+-- protect if lazydev fails - from claude
+pcall(function()
+  vim.pack.add({ Gh('folke/lazydev.nvim') })
+  require('lazydev').setup()
+end)
 
 -- =============================================================================
 -- NATIVE SERVER CONFIGURATIONS (v0.13 Core)

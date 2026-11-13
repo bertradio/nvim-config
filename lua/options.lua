@@ -162,8 +162,12 @@ vim.opt.fillchars = {
   foldsep = ' ',
 }
 
+local fcs = vim.opt.fillchars:get()
+
 function _G.MyStatusColumn()
-  local fcs = vim.opt.fillchars:get()
+  if vim.v.virtnum ~= 0 then
+    return ''
+  end
   local lnum = vim.v.lnum
 
   local mark_char = ''

@@ -1,15 +1,5 @@
 -- file_exclude.lua
 
--- Exclusions for mini.files
---
--- Usage:
---   local exclude = require('file_exclude')
---
---   exclude.is_excluded('picture.jpg')
---   exclude.mini_files_filter(fs_entry)
---   exclude.toggle_mini()
---   exclude.fzf_exclude_args()
-
 local M = {}
 
 -- Store extensions in lowercase.

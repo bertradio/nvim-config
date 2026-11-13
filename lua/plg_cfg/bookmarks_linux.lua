@@ -20,7 +20,6 @@ local cwd_config = {
   H = '$HOME/',
   l = '$HOME/.local/bin',
   L = '$HOME/.config/nvim/lua',
-  m = '$HOME/.local/share/nvim/mini.files/trash/',
   n = '$HOME/.config/nvim',
   o = '$HOME/.OneDrive/',
   p = '$HOME/.config/nvim/lua/plg_cfg/',
@@ -142,4 +141,4 @@ Myfn.map(
 )
 Myfn.map('n', '<Leader>es', '<cmd>e ' .. cfg .. '/lua/settings.lua<cr>', { desc = 'settings.lua' })
 
-return cwd_config -- makes the list of bookmarks available to mini-files, etc.
+return cwd_config -- makes the list of bookmarks available

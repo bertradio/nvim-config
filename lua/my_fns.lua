@@ -26,7 +26,7 @@ end
 -- changed from vim.keymap to vim.keymap 4-20-26
 function M.map(mode, lhs, rhs, opts)
   local options = { silent = true } -- sets defaults
-  options = opts and vim.tbl_extend('force', options, opts)
+  options = vim.tbl_extend('force', options, opts or {})
   Kset(mode, lhs, rhs, options) -- maps key
 end
 
@@ -228,7 +228,7 @@ function M.OpenInTypora()
 end
 
 -- create command CopyBufferName  to copy buffer path to clipboard
--- bound to <Leader>cb in keymaps.lua
+-- bound to <Leader>bc in keymaps.lua
 local function copy_buffer_name()
   local path = vim.fn.expand('%:p')
   local quoted = '"' .. path .. '"'
