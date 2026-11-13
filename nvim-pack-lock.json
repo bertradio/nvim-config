@@ -34,7 +34,7 @@
       "src": "https://github.com/mason-org/mason.nvim"
     },
     "mini.nvim": {
-      "rev": "3d0cf05999ec1084dd660649a09f38b9d0d49e16",
+      "rev": "4d32e018f7cfcc0ba95357465516be615c542fef",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "noice.nvim": {
@@ -74,7 +74,7 @@
       "src": "https://github.com/HiPhish/rainbow-delimiters.nvim"
     },
     "render-markdown.nvim": {
-      "rev": "9c235bedc4f96145e63fcad5b78cd78bce8822c4",
+      "rev": "8801162e041e34c64d0d1397cd1f353a14b01950",
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
     "snacks.nvim": {

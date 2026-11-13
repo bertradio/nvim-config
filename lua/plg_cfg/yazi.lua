@@ -38,11 +38,14 @@ yazi.setup({
   -- floating window scaling factor. 1 means 100%, 0.9 means 90%, etc.
   floating_window_scaling_factor = 0.90,
 
+  -- only overriding one hook; yazi fills in defaults for the rest
+  ---@diagnostic disable-next-line: missing-fields
   hooks = {
     -- if yazi not opening file, change cwd to one in yazi
-    yazi_closed_successfully = function(chosen_file, config, state)
-      if chosen_file == nil and state.last_directory.filename then
-        vim.fn.chdir(state.last_directory.filename)
+    yazi_closed_successfully = function(chosen_file, _, state)
+      if chosen_file == nil and state.last_directory then
+        -- tostring() gives the path without relying on plenary's type info
+        vim.fn.chdir(tostring(state.last_directory))
       end
     end,
   },
@@ -54,7 +57,7 @@ yazi.setup({
     -- grep_in_directory                    = '<c-g>', -- can't use, calls telescope
     open_file_in_horizontal_split        = '<c-x>',
     open_file_in_vertical_split          = '<c-v>',
-    replace_in_directory                 = 'false',
+    replace_in_directory                 = false,
     send_to_quickfix_list                = '<c-q>',
     show_help                            = '<f1>',
   },
