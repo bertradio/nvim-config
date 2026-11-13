@@ -7,10 +7,13 @@
 -- Code from Gemini to replace nvim-lspconfig
 
 -- protect if lazydev fails - from claude
-pcall(function()
+local ok, err = pcall(function()
   vim.pack.add({ Gh('folke/lazydev.nvim') })
   require('lazydev').setup()
 end)
+if not ok then
+  vim.notify('lazydev failed: ' .. tostring(err), vim.log.levels.WARN)
+end
 
 -- =============================================================================
 -- NATIVE SERVER CONFIGURATIONS (v0.13 Core)

@@ -7,8 +7,6 @@
 -- 07/14/26 - Code from ChatGPT to emulate lualine entirely from core
 -- 10/08/26 - Set right to display number of works for md and txt and file
 --            size for everything else
--- 10/26/26 - Show the directory Oil is viewing in place of cwd in Oil buffers,
---            red text when it differs from the cwd
 
 --    ╭────────────────────────────────────────────────────────╮
 --    │    To make changes in components, search for Future    │
@@ -189,38 +187,12 @@ local function window_cwd(context)
   return ok and normalize_dir(cwd) or nil
 end
 
--- Directory shown by an Oil buffer, or nil for non-Oil buffers.
--- Remote (non-local) Oil paths return nil.
-local function oil_dir(context)
-  if vim.bo[context.bufnr].filetype ~= 'oil' then
-    return nil
-  end
-
-  local ok, oil = pcall(require, 'oil')
-  return ok and normalize_dir(oil.get_current_dir(context.bufnr)) or nil
-end
-
-local function same_dir(a, b)
-  if a == b then
-    return true
-  end
-
-  -- Resolve symlinks so a linked path is not reported as different
-  local real_a = vim.uv.fs_realpath(a)
-  local real_b = vim.uv.fs_realpath(b)
-  return real_a ~= nil and real_a == real_b
-end
-
 local function short_cwd(context)
   local cwd = window_cwd(context)
 
-  -- In an Oil buffer show the directory being viewed, which can differ from
-  -- Neovim's cwd.
-  local shown = oil_dir(context) or cwd
-
   if Myfn and type(Myfn.short_cwd) == 'function' then
     local ok, result = pcall(Myfn.short_cwd, {
-      cwd = shown,
+      cwd = cwd,
     })
 
     if ok and result and result ~= '' then
@@ -228,19 +200,7 @@ local function short_cwd(context)
     end
   end
 
-  return fn.fnamemodify(shown or fn.getcwd(), ':~')
-end
-
--- Red text while Oil is viewing a directory other than Neovim's cwd
-local function cwd_highlight(context)
-  local dir = oil_dir(context)
-  local cwd = window_cwd(context)
-
-  if dir and cwd and not same_dir(dir, cwd) then
-    return 'CoreStatusCwdDiff'
-  end
-
-  return 'CoreStatusCwd'
+  return fn.fnamemodify(cwd or fn.getcwd(), ':~')
 end
 
 -- for macro recording indicator
@@ -375,7 +335,7 @@ local left_components = {
 
   {
     value = short_cwd, -- current path shortened
-    highlight = cwd_highlight, -- red text when Oil is outside the cwd
+    highlight = 'CoreStatusCwd',
   },
 }
 
@@ -878,14 +838,6 @@ local function set_highlights()
     bold = true,
   })
 
-  -- Same look as the cwd block, but red text (Oil dir differs from cwd).
-  -- Fixed red: theme error colors can be too close to the normal text color.
-  api.nvim_set_hl(0, 'CoreStatusCwdDiff', {
-    fg = 0xff5555,
-    bg = cwd_bg,
-    bold = true,
-  })
-
   api.nvim_set_hl(0, 'CoreStatusRecording', {
     fg = normal_bg,
     bg = recording_bg,
@@ -1064,13 +1016,6 @@ api.nvim_create_autocmd({
 api.nvim_create_autocmd({ 'TextChanged', 'TextChangedI' }, {
   group = group,
   callback = schedule_word_refresh,
-})
-
--- Refresh when Oil finishes entering a directory
-api.nvim_create_autocmd('User', {
-  group = group,
-  pattern = 'OilEnter',
-  callback = redraw,
 })
 
 api.nvim_create_autocmd({ 'BufDelete', 'BufReadPost' }, {
